@@ -89,8 +89,13 @@ Artifacts may include:
 - Concept maps
 - Annotated arguments
 - Structured notes with sources
+- Visual, video, and knowledge artifacts produced by repeatable workflows
 
 Artifacts are meant to be **read, understood, and trusted**.
+
+Knowledge artifacts are part of this same model. A decision record, organization context snapshot, project state update, imported source transcript, or active-thread summary can be an Esy artifact when it is structured, timestamped, revisitable, and auditable.
+
+Chat is not the product metaphor. Conversations may be useful sources, but Esy's responsibility is to preserve durable artifacts and the provenance behind them.
 
 ---
 

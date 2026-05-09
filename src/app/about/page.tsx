@@ -607,7 +607,7 @@ export default function AboutPage() {
                 color: theme.muted,
                 marginBottom: '0.875rem'
               }}>
-                I built ESY to evaluate whether agentic workflows can reliably produce artifacts that pass quality gates, across models, at scale, with humans in the loop for borderline outputs.
+                I built Esy to evaluate whether agentic workflows can reliably produce artifacts that pass quality gates, across models, at scale, with humans in the loop for borderline outputs.
               </p>
               <p style={{
                 fontSize: '1rem',

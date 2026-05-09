@@ -1,6 +1,6 @@
 # esy.com — Repo Context
 
-Marketing and content site for the ESY brand. For ESY ecosystem context, see `../../CLAUDE.md`. For company-level context, see `../../../CLAUDE.md`.
+Marketing and content site for the Esy brand. For Esy ecosystem context, see `../../CLAUDE.md`. For company-level context, see `../../../CLAUDE.md`.
 
 ## What This Repo Is
 
@@ -10,7 +10,7 @@ The public-facing marketing site at esy.com. Visual essays, brand storytelling, 
 
 - Not the dashboard (that's `client/app.esy.com/`)
 - Not the API (that's `server/api.esy.com/`)
-- Not a generation tool — it markets and explains what ESY does
+- Not a generation tool — it markets and explains what Esy does
 
 ## Key Documentation (In This Repo)
 
