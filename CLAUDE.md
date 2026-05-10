@@ -12,6 +12,10 @@ The public-facing marketing site at esy.com. Visual essays, brand storytelling, 
 - Not the API (that's `server/api.esy.com/`)
 - Not a generation tool — it markets and explains what Esy does
 
+## Deployment Workflow
+
+Before pushing or deploying, read `../app.esy.com/docs/DEPLOYMENT_WORKFLOW.md`. This repo follows the shared Esy workflow: run `npm run lint` and `npm run build`, use PRs for public-route/SEO/publishing/API-contract/auth/deployment-risk changes, and keep `main` deployable.
+
 ## Key Documentation (In This Repo)
 
 - `docs/brand/ESY_DEFINITION.md` — Canonical brand definition and product philosophy
