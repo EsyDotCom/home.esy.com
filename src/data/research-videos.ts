@@ -23,6 +23,31 @@ export interface ResearchVideo {
 
 export const researchVideos: ResearchVideo[] = [
   {
+    slug: "chatgpt-images-2-vs-nano-banana-2",
+    title: "ChatGPT Images 2.0: A Monster Upgrade for Educational Artifacts",
+    description:
+      "A side-by-side look at ChatGPT Images 2.0 and Nano Banana 2 (Gemini 3.1 Flash Image) across clipart with text, illustrations, infographics, and character reference sheets — and where each fits inside an automated educational artifact pipeline.",
+    category: "workflows",
+    categoryLabel: "Workflow Research",
+    durationSeconds: 600,
+    publishedAt: "2026-05-09",
+    muxPlaybackId: "EcHgOK9coz5K4rjSwOkoE7Y7O01201YMIC200RI6lNxnhs",
+    transcript: "",
+    content: `Two weeks ago, OpenAI released its biggest update of the year — and a real shift forward for AI image generation. Clearly the most significant release since Nano Banana 2 (Gemini 3.1 Flash Image) dropped earlier this year. NB2 set the bar with its powerful editing capabilities and text accuracy, which bumped the quality and detail of educational infographics you could produce — hence their mass circulation on X in recent months. My first impression of ChatGPT Images 2.0 is that it beats NB2 on both fronts. In this piece, we'll compare and explore the differences between each, their pros and cons and how each perform as components within a larger agentic workflow to produce reliable educational artifacts. Using examples such as clipart vectors with text, illustrations, infographics, and character reference sheets for animations we'll dive deep with examples and assess where each is optimal within an automated content generation pipeline.`,
+    tags: [
+      "chatgpt-images-2",
+      "nano-banana-2",
+      "gemini",
+      "image-generation",
+      "agentic-workflows",
+    ],
+    relatedSlugs: [
+      "agentic-research-pipeline-design",
+      "building-multi-agent-workflows-claude-code",
+      "mux-video-pipeline-nextjs",
+    ],
+  },
+  {
     slug: "building-multi-agent-workflows-claude-code",
     title: "Building Multi-Agent Workflows with Claude Code",
     description:

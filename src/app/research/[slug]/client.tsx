@@ -562,17 +562,46 @@ export default function ResearchVideoPageClient({
             </div>
 
             {video.description && (
-              <p
+              <div
                 style={{
-                  marginTop: isMobile ? "1rem" : "1.5rem",
-                  fontSize: isMobile ? "0.875rem" : "0.9375rem",
-                  lineHeight: 1.65,
-                  color: theme.textSecondary,
-                  wordBreak: "break-word" as const,
+                  position: "relative",
+                  marginTop: isMobile ? "1.25rem" : "1.75rem",
+                  padding: isMobile
+                    ? "1rem 1.125rem"
+                    : "1.125rem 1.375rem",
+                  borderRadius: 14,
+                  background: `linear-gradient(135deg, ${theme.accentTint} 0%, rgba(0, 168, 150, 0.02) 100%)`,
+                  border: `1px solid ${theme.accentBorder}`,
+                  overflow: "hidden",
                 }}
               >
-                {video.description}
-              </p>
+                <span
+                  aria-hidden
+                  style={{
+                    position: "absolute",
+                    top: -22,
+                    right: -22,
+                    width: 80,
+                    height: 80,
+                    borderRadius: "50%",
+                    background: `radial-gradient(circle, ${theme.accentGlow} 0%, rgba(0, 168, 150, 0) 70%)`,
+                    pointerEvents: "none",
+                  }}
+                />
+                <p
+                  style={{
+                    position: "relative",
+                    fontSize: isMobile ? "0.9375rem" : "1rem",
+                    lineHeight: 1.6,
+                    color: theme.text,
+                    margin: 0,
+                    fontWeight: 400,
+                    wordBreak: "break-word" as const,
+                  }}
+                >
+                  {video.description}
+                </p>
+              </div>
             )}
 
             {video.stages && video.stages.length > 0 && (

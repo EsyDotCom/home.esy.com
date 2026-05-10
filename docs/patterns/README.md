@@ -7,6 +7,7 @@ Reusable patterns and best practices for building visual essays and other conten
 | Document | Description |
 |----------|-------------|
 | [VISUAL_ESSAY_PERFORMANCE_PATTERNS.md](./VISUAL_ESSAY_PERFORMANCE_PATTERNS.md) | Performance optimization patterns for Lighthouse 90+ scores |
+| [BLURB_CARD_PATTERN.md](./BLURB_CARD_PATTERN.md) | Tinted accent card for short description blurbs above long-form bodies |
 
 ## Related Documentation
 

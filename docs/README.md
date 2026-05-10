@@ -35,6 +35,11 @@ This directory contains technical documentation for the Esy.com project.
   - `IMAGE_DISPLAY_PATTERNS.md` - Cover vs. Contain modes for responsive images
   - `INLINE_INTELLIGENCE.md` - Highlight-to-insight system for visual essays
 
+### SEO
+- `/seo/` - Tactical SEO patterns and field-level conventions
+  - `DESCRIPTION_FIELD_PATTERN.md` - One short field driving meta description, OG description, and listing card preview
+- `VISUAL_ESSAY_METADATA_PATTERN.md` - Visual-essay-specific metadata layout (OG / Twitter / canonical)
+
 ### Quick Start
 - `QUICK_START.md` - Getting started guide
 
