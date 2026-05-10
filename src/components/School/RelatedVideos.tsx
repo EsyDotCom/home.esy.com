@@ -50,7 +50,7 @@ export function RelatedVideos({ videos }: RelatedVideosProps) {
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         {videos.map((video) => {
           const thumb = video.muxPlaybackId
-            ? `https://image.mux.com/${video.muxPlaybackId}/thumbnail.jpg?time=0`
+            ? `https://image.mux.com/${video.muxPlaybackId}/thumbnail.jpg?time=0&width=256`
             : null;
 
           return (
@@ -79,7 +79,7 @@ export function RelatedVideos({ videos }: RelatedVideosProps) {
               <div
                 style={{
                   position: "relative",
-                  width: 96,
+                  width: 128,
                   flexShrink: 0,
                   aspectRatio: "16 / 9",
                   borderRadius: 6,
