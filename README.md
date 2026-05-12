@@ -20,6 +20,21 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Engineering Workflow
+
+This repo follows the Esy deployment workflow documented in
+[`../app.esy.com/docs/DEPLOYMENT_WORKFLOW.md`](../app.esy.com/docs/DEPLOYMENT_WORKFLOW.md).
+
+Minimum gate before pushing:
+
+```bash
+npm run lint
+npm run build
+```
+
+Use a PR for changes touching public routes, SEO, publishing, API contracts,
+auth/admin behavior, provider integrations, or deployment behavior.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
