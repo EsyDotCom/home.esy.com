@@ -104,9 +104,9 @@ export default function EssayTypeClient({ data }: EssayTypeClientProps) {
         <div className="essay-hero-content">
           {/* Breadcrumb */}
           <nav className="essay-breadcrumb">
-            <Link href="/workflows">Workflows</Link>
+            <Link href="/workflows">Agentic Workflows</Link>
             <span className="essay-breadcrumb-separator">/</span>
-            <Link href="/workflows/essay">Essay Templates</Link>
+            <Link href="/workflows/essay">Essay Workflow Templates</Link>
             <span className="essay-breadcrumb-separator">/</span>
             <span className="essay-breadcrumb-current">{data.title}</span>
           </nav>
@@ -114,11 +114,11 @@ export default function EssayTypeClient({ data }: EssayTypeClientProps) {
           {/* Badge */}
           <div className="essay-badge">
             <span className="essay-badge-icon">{data.icon}</span>
-            <span className="essay-badge-text">Essay Template</span>
+            <span className="essay-badge-text">Essay Workflow Template</span>
           </div>
 
           {/* Title */}
-          <h1 className="essay-title">{data.title} Template</h1>
+          <h1 className="essay-title">{data.title} Workflow Template</h1>
 
           {/* Subtitle */}
           <p className="essay-subtitle">{data.subtitle}</p>
@@ -127,7 +127,7 @@ export default function EssayTypeClient({ data }: EssayTypeClientProps) {
           <div className="essay-quick-stats">
             <div className="essay-quick-stat">
               <Download size={16} style={{ color: data.accentColor }} />
-              <span>1 Outline Template</span>
+              <span>1 Workflow Template</span>
             </div>
             <div className="essay-quick-stat">
               <Zap size={16} style={{ color: '#f59e0b' }} />
@@ -152,7 +152,7 @@ export default function EssayTypeClient({ data }: EssayTypeClientProps) {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
             <h2 className="essay-section-title" style={{ marginBottom: 0 }}>
               <Download size={24} className="essay-section-title-icon" style={{ color: data.accentColor }} />
-              Essay Outline Template
+              Essay Outline Workflow Template
             </h2>
             <button
               onClick={copyOutline}

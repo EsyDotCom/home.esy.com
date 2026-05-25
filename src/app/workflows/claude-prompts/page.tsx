@@ -4,7 +4,7 @@ import CategoryPageClient from '../(categories)/CategoryPageClient';
 import { getTemplatesBySubcategory } from '@/lib/templates';
 
 export const metadata: Metadata = {
-  title: 'Claude Prompts for Research & Analysis | Esy Templates',
+  title: 'Claude Prompts for Research & Analysis | Esy Prompts',
   description: 'Discover Claude prompts for nuanced research assistance, literature reviews, bias analysis, and evidence-based writing. Harness Claude\'s analytical depth for academic excellence.',
   keywords: 'Claude prompts, Anthropic Claude prompts, Claude for research, academic Claude prompts, literature review prompts, bias analysis prompts, Claude academic writing',
   openGraph: {

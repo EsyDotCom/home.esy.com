@@ -4,18 +4,18 @@ import CategoryPageClient from '../(categories)/CategoryPageClient';
 import { getTemplatesBySubcategory } from '@/lib/templates';
 
 export const metadata: Metadata = {
-  title: 'SEO Writing Prompts & Content Templates | Esy Templates',
+  title: 'SEO Writing Prompts & Content Workflow Templates | Esy Prompts',
   description: 'Professional SEO writing prompts for blog outlines, keyword expansion, competitor analysis, landing pages, and meta descriptions. Create content that ranks and converts.',
-  keywords: 'SEO writing prompts, SEO content prompts, blog outline generator, keyword research prompts, SEO copywriting, content marketing prompts, SEO templates',
+  keywords: 'SEO writing prompts, SEO content prompts, blog outline generator, keyword research prompts, SEO copywriting, content marketing prompts, SEO workflow templates',
   openGraph: {
-    title: 'SEO Writing Prompts & Content Templates | Esy',
+    title: 'SEO Writing Prompts & Content Workflow Templates | Esy',
     description: 'Professional SEO writing prompts for content that ranks and converts.',
     url: 'https://esy.com/workflows/seo-writing-prompts',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'SEO Writing Prompts & Content Templates | Esy',
+    title: 'SEO Writing Prompts & Content Workflow Templates | Esy',
     description: 'Professional SEO writing prompts for content that ranks and converts.',
   },
   robots: {

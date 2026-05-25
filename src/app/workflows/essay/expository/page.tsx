@@ -3,21 +3,21 @@ import { FileText } from 'lucide-react';
 import EssayTypeClient, { EssayTypeData } from '../EssayTypeClient';
 
 export const metadata: Metadata = {
-  title: 'Expository Essay Template & Outline | Informative Writing Structure | Esy',
-  description: 'Free expository essay template with outline, paragraph structure, and AI prompts. Learn how to write clear, informative essays that explain topics effectively.',
+  title: 'Expository Essay Workflow Template & Outline | Informative Writing Structure | Esy',
+  description: 'Free expository essay workflow template with outline, paragraph structure, and AI prompts. Learn how to write clear, informative essays that explain topics effectively.',
   keywords: [
-    'expository essay template',
+    'expository essay workflow template',
     'expository essay outline',
     'how to write an expository essay',
     'expository essay structure',
-    'informative essay template',
+    'informative essay workflow template',
     'explanatory essay outline',
     'expository writing examples',
     'expository essay topics',
   ],
   openGraph: {
-    title: 'Expository Essay Template & Outline | Esy',
-    description: 'Free expository essay template with informative writing structure and AI prompts.',
+    title: 'Expository Essay Workflow Template & Outline | Esy',
+    description: 'Free expository essay workflow template with informative writing structure and AI prompts.',
     url: 'https://esy.com/workflows/essay/expository',
     type: 'website',
   },

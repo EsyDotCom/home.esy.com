@@ -52,8 +52,8 @@ const pathways = [
     icon: FileText,
     label: 'Start Building',
     title: 'Workflow Templates',
-    description: 'Choose a research template and let Esy handle structure, citations, and verification. Every claim traced to a source.',
-    cta: 'Browse Templates',
+    description: 'Choose a workflow template and let Esy handle structure, citations, and verification. Every claim traced to a source.',
+    cta: 'Browse Workflow Templates',
     href: '/workflows',
   },
   {

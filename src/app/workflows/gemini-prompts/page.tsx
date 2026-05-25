@@ -4,7 +4,7 @@ import CategoryPageClient from '../(categories)/CategoryPageClient';
 import { getTemplatesBySubcategory } from '@/lib/templates';
 
 export const metadata: Metadata = {
-  title: 'Gemini Prompts for Academic Research | Esy Templates',
+  title: 'Gemini Prompts for Academic Research | Esy Prompts',
   description: 'Explore Google Gemini prompts for graduate-level essays, source evaluation, academic outlines, and research expansion. Leverage Gemini\'s reasoning for superior academic work.',
   keywords: 'Gemini prompts, Google Gemini prompts, Gemini for research, academic Gemini prompts, graduate essay prompts, AI research prompts, Gemini academic writing',
   openGraph: {

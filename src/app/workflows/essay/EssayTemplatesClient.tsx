@@ -103,25 +103,25 @@ export default function EssayTemplatesClient() {
           <nav className="essay-breadcrumb">
             <Link href="/workflows">
               <ArrowLeft size={16} />
-              Workflows
+              Agentic Workflows
             </Link>
             <span className="essay-breadcrumb-separator">/</span>
-            <span className="essay-breadcrumb-current">Essay Templates</span>
+            <span className="essay-breadcrumb-current">Essay Workflow Templates</span>
           </nav>
 
           {/* Badge */}
           <div className="essay-badge">
             <FileText size={16} className="essay-badge-icon" />
-            <span className="essay-badge-text">Essay Templates</span>
+            <span className="essay-badge-text">Essay Workflow Templates</span>
           </div>
 
           {/* Title */}
-          <h1 className="essay-title">Essay Templates & AI Prompts</h1>
+          <h1 className="essay-title">Essay Workflow Templates & AI Prompts</h1>
 
           {/* Subtitle */}
           <p className="essay-subtitle">
-            Download ready-to-use essay outlines or generate custom essays with AI prompts. 
-            Each template includes a structural breakdown and 2-3 specialized prompts for 
+            Move beyond a blank AI prompt with ready-to-use essay workflow templates.
+            Each workflow template includes a structural breakdown and 2-3 specialized prompts for
             thesis development, body paragraphs, and revision.
           </p>
 
@@ -130,7 +130,7 @@ export default function EssayTemplatesClient() {
             <div className="essay-stat">
               <Download size={18} className="essay-stat-icon" style={{ color: '#9f7aea' }} />
               <span className="essay-stat-text">
-                <strong>5</strong> Outline Templates
+                <strong>5</strong> Workflow Templates
               </span>
             </div>
             <div className="essay-stat">
@@ -209,7 +209,7 @@ export default function EssayTemplatesClient() {
               {/* CTA */}
               <div className="essay-card-footer">
                 <span className="essay-card-cta">
-                  View Templates
+                  View Workflow Templates
                   <ArrowRight size={16} />
                 </span>
                 <span className="essay-card-meta">
@@ -224,7 +224,7 @@ export default function EssayTemplatesClient() {
       {/* What's Included Section */}
       <section className="essay-container essay-section">
         <div className="essay-included-card">
-          <h2 className="essay-included-title">What&apos;s Included in Each Template</h2>
+          <h2 className="essay-included-title">What&apos;s Included in Each Workflow Template</h2>
 
           <div className="essay-included-grid">
             {/* Outline Template */}
@@ -287,7 +287,7 @@ export default function EssayTemplatesClient() {
       {/* Coming Soon Section */}
       <section className="essay-container essay-coming-soon">
         <h2 className="essay-coming-soon-title">Coming Soon</h2>
-        <p className="essay-coming-soon-text">More essay templates are on the way:</p>
+        <p className="essay-coming-soon-text">More essay workflow templates are on the way:</p>
         <div className="essay-coming-soon-tags">
           {['Persuasive', 'Analytical', 'Compare/Contrast', 'Narrative', 'Synthesis'].map((type) => (
             <span key={type} className="essay-coming-soon-tag">{type}</span>
@@ -300,7 +300,7 @@ export default function EssayTemplatesClient() {
         <div className="essay-cta-section">
           <h2 className="essay-cta-title">Ready to write better essays?</h2>
           <p className="essay-cta-text">
-            Use our AI-powered editor to bring these templates to life with intelligent writing assistance.
+            Use our AI-powered editor to bring these workflow templates to life with intelligent writing assistance.
           </p>
           <div className="essay-cta-buttons">
             <Link

@@ -94,18 +94,18 @@ const creationPaths = [
 const valueProps = [
   {
     icon: Layers,
-    title: 'Multi-step workflows',
-    description: 'Not single prompts — guided processes from idea to output',
+    title: 'Beyond AI prompts',
+    description: 'Move from one-off prompts to guided, repeatable workflows',
   },
   {
     icon: Zap,
-    title: 'Run or customize',
-    description: 'Use as-is for speed, or adjust to fit your exact needs',
+    title: 'Choose a workflow template',
+    description: 'Start with the kind of work you want to create',
   },
   {
     icon: Sparkles,
-    title: 'Reliable results',
-    description: 'Structured approaches that produce trustworthy artifacts',
+    title: 'Finish the work',
+    description: 'Research, writing, review, and formatting in one process',
   },
 ];
 
@@ -198,7 +198,7 @@ export default function TemplatesClient() {
               Home
             </Link>
             <span>›</span>
-            <span style={{ color: theme.muted }}>Workflows</span>
+            <span style={{ color: theme.muted }}>Agentic Workflows</span>
           </div>
 
           {/* Title */}
@@ -213,7 +213,7 @@ export default function TemplatesClient() {
               color: theme.text,
             }}
           >
-            From idea to <span style={{ color: theme.accent }}>artifact</span>
+            Agentic <span style={{ color: theme.accent }}>Workflows</span>
           </h1>
 
           {/* Subtitle */}
@@ -226,14 +226,14 @@ export default function TemplatesClient() {
               marginBottom: '2.5rem',
             }}
           >
-            Templates are step-by-step workflows that guide Esy from your initial concept to a polished,
-            research-backed result you can trust.
+            Move beyond one-off AI prompts. Choose a workflow template and let Esy
+            guide the research, writing, review, and formatting.
           </p>
 
           {/* Search */}
           <div ref={searchBarRef} style={{ maxWidth: '480px' }}>
             <SearchBar
-              placeholder="Search by topic, goal, or output type..."
+              placeholder="Search workflow templates..."
               value={searchQuery}
               onChange={(value) => setSearchQuery(value)}
               context="templates"
@@ -318,7 +318,7 @@ export default function TemplatesClient() {
             What do you want to create?
           </h2>
           <p style={{ fontSize: '1rem', color: theme.subtle }}>
-            Choose a path to see relevant templates
+            Choose a workflow template instead of starting from a blank prompt
           </p>
         </div>
 
@@ -436,10 +436,10 @@ export default function TemplatesClient() {
                   marginBottom: '0.5rem',
                 }}
               >
-                Templates
+                Workflow Templates
               </h2>
               <p style={{ fontSize: '1rem', color: theme.subtle, margin: 0, maxWidth: '520px' }}>
-                Each workflow runs research, outlining, drafting, and formatting — producing a polished artifact.
+                Each workflow template gives Esy a repeatable process for turning an idea into finished work.
               </p>
             </div>
           </div>
@@ -502,7 +502,7 @@ export default function TemplatesClient() {
                           letterSpacing: '0.03em',
                         }}
                       >
-                        Workflow
+                        Workflow Template
                       </span>
                       {template.engine && (
                         <span
@@ -689,7 +689,7 @@ export default function TemplatesClient() {
               lineHeight: 1.6,
             }}
           >
-            Pick a template and run it in Esy. Adjust as needed, or use it as-is.
+            Pick a workflow template and run it in Esy. Adjust as needed, or use it as-is.
           </p>
           <Link
             href="https://app.esy.com"

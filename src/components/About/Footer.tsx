@@ -64,7 +64,7 @@ const Footer: React.FC<FooterProps> = ({ currentTheme }) => {
             </h4>
             <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
               <Link href="/features/" style={{ color: currentTheme.muted, textDecoration: 'none', fontSize: '0.938rem' }}>Features</Link>
-              <Link href="/workflows/" style={{ color: currentTheme.muted, textDecoration: 'none', fontSize: '0.938rem' }}>Templates</Link>
+              <Link href="/workflows/" style={{ color: currentTheme.muted, textDecoration: 'none', fontSize: '0.938rem' }}>Agentic Workflows</Link>
               <Link href="/pricing/" style={{ color: currentTheme.muted, textDecoration: 'none', fontSize: '0.938rem' }}>Pricing</Link>
               <Link href="/roadmap/" style={{ color: currentTheme.muted, textDecoration: 'none', fontSize: '0.938rem' }}>Roadmap</Link>
             </nav>

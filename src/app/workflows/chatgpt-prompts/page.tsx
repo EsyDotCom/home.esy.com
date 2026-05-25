@@ -4,7 +4,7 @@ import CategoryPageClient from '../(categories)/CategoryPageClient';
 import { getTemplatesBySubcategory } from '@/lib/templates';
 
 export const metadata: Metadata = {
-  title: 'ChatGPT Prompts for Academic Writing | Esy Templates',
+  title: 'ChatGPT Prompts for Academic Writing | Esy Prompts',
   description: 'Discover powerful ChatGPT prompts optimized for academic writing, research synthesis, argument analysis, and critical thinking. Enhance your essays and research papers with AI assistance.',
   keywords: 'ChatGPT prompts, academic writing prompts, ChatGPT for essays, AI writing prompts, research prompts, academic ChatGPT, essay writing AI',
   openGraph: {

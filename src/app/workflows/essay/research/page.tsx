@@ -3,10 +3,10 @@ import { BookOpen } from 'lucide-react';
 import EssayTypeClient, { EssayTypeData } from '../EssayTypeClient';
 
 export const metadata: Metadata = {
-  title: 'Research Essay Template & Outline | Academic Research Paper Structure | Esy',
-  description: 'Free research essay template with academic paper outline, methodology structure, and AI prompts for literature reviews, source integration, and thesis development.',
+  title: 'Research Essay Workflow Template & Outline | Academic Research Paper Structure | Esy',
+  description: 'Free research essay workflow template with academic paper outline, methodology structure, and AI prompts for literature reviews, source integration, and thesis development.',
   keywords: [
-    'research essay template',
+    'research essay workflow template',
     'research paper outline',
     'academic research paper structure',
     'how to write a research paper',
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     'research methodology',
   ],
   openGraph: {
-    title: 'Research Essay Template & Outline | Esy',
-    description: 'Free research essay template with academic paper structure and AI prompts.',
+    title: 'Research Essay Workflow Template & Outline | Esy',
+    description: 'Free research essay workflow template with academic paper structure and AI prompts.',
     url: 'https://esy.com/workflows/essay/research',
     type: 'website',
   },

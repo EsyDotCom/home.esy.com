@@ -343,7 +343,7 @@ export default function CategoryPageClient({
               color: elevatedDarkTheme.text,
             }}
           >
-            Explore All Templates
+            Explore All Workflow Templates
           </h2>
           <p
             style={{
@@ -354,7 +354,7 @@ export default function CategoryPageClient({
               margin: '0 auto 2rem',
             }}
           >
-            Browse our complete library of AI prompts and writing frameworks.
+            Browse our complete library of AI prompts and workflow templates.
           </p>
           <Link
             href="/workflows"
@@ -374,7 +374,7 @@ export default function CategoryPageClient({
               boxShadow: `0 4px 15px ${accentColor}40`,
             }}
           >
-            Browse All Templates
+            Browse All Workflow Templates
             <ArrowRight size={18} />
           </Link>
         </section>

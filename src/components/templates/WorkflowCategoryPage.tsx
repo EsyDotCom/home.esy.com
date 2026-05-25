@@ -104,7 +104,7 @@ export default function WorkflowCategoryPage({
               }}
             >
               <ArrowLeft size={16} />
-              Workflows
+              Agentic Workflows
             </Link>
             <span style={{ color: theme.border }}>/</span>
             <span style={{ color: theme.text }}>{breadcrumbLabel}</span>
@@ -157,7 +157,7 @@ export default function WorkflowCategoryPage({
             }}
           >
             <p style={{ fontSize: '1.125rem', marginBottom: '0.5rem' }}>
-              No templates available yet.
+              No workflow templates available yet.
             </p>
           </div>
         ) : (
@@ -215,7 +215,7 @@ export default function WorkflowCategoryPage({
                           textTransform: 'uppercase',
                         }}
                       >
-                        Workflow
+                        Workflow Template
                       </span>
                       {template.engine && (
                         <span
@@ -344,7 +344,7 @@ export default function WorkflowCategoryPage({
               color: theme.text,
             }}
           >
-            Explore All Templates
+            Explore All Workflow Templates
           </h2>
           <p
             style={{
@@ -355,7 +355,7 @@ export default function WorkflowCategoryPage({
               margin: '0 auto 2rem',
             }}
           >
-            Discover workflows for visual essays, infographics, academic writing, and more.
+            Discover workflow templates for visual essays, infographics, academic writing, and more.
           </p>
           <Link
             href="/workflows"
@@ -375,7 +375,7 @@ export default function WorkflowCategoryPage({
               boxShadow: `0 4px 15px ${theme.accent}40`,
             }}
           >
-            Browse All Templates
+            Browse All Workflow Templates
             <ArrowRight size={18} />
           </Link>
         </section>

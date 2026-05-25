@@ -55,7 +55,7 @@ export default function ArtifactDetailTemplate({
       <div className="adt-hero-wrapper">
         {/* ═══ Breadcrumb ═══════════════════════════════════════ */}
         <nav className="adt-breadcrumb" aria-label="Breadcrumb">
-          <Link href="/workflows">Templates</Link>
+          <Link href="/workflows">Agentic Workflows</Link>
           <span className="adt-breadcrumb-sep" aria-hidden="true">
             <ChevronRight size={12} />
           </span>
@@ -72,7 +72,7 @@ export default function ArtifactDetailTemplate({
             {/* Badges */}
             <div className="adt-hero-badges">
               <span className="adt-badge adt-badge--category">
-                Workflow
+                Workflow Template
               </span>
               {engine && (
                 <span className="adt-badge adt-badge--engine">
@@ -212,10 +212,10 @@ export default function ArtifactDetailTemplate({
         </section>
       )}
 
-      {/* ═══ Related Templates ═══════════════════════════════ */}
+      {/* ═══ Related Workflow Templates ══════════════════════ */}
       {relatedTemplates.length > 0 && (
         <section className="adt-related-section">
-          <h3>Related Templates</h3>
+          <h3>Related Workflow Templates</h3>
           <TemplateGrid templates={relatedTemplates} columns={3} />
         </section>
       )}

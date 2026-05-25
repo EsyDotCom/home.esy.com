@@ -29,23 +29,46 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!template) {
     return {
-      title: 'Template Not Found | Esy',
+      title: 'Workflow Template Not Found | Esy',
+    };
+  }
+
+  if (template.isWorkflow) {
+    return {
+      title: `${template.title} | Esy Workflow Templates`,
+      description: template.description,
+      keywords: template.tags,
+      openGraph: {
+        title: `${template.title} | Esy Workflow Templates`,
+        description: template.shortDescription,
+        url: `https://esy.com/workflows/${template.slug}`,
+        type: 'article',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${template.title} | Esy Workflow Templates`,
+        description: template.shortDescription,
+      },
+      robots: {
+        index: true,
+        follow: true,
+      },
     };
   }
 
   return {
-    title: `${template.title} - AI Prompt | Esy Templates`,
+    title: `${template.title} - AI Prompt | Esy Prompts`,
     description: template.description,
     keywords: template.tags,
     openGraph: {
-      title: `${template.title} | Esy Templates`,
+      title: `${template.title} | Esy Prompts`,
       description: template.shortDescription,
       url: `https://esy.com/workflows/${template.slug}`,
       type: 'article',
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${template.title} | Esy Templates`,
+      title: `${template.title} | Esy Prompts`,
       description: template.shortDescription,
     },
     robots: {
