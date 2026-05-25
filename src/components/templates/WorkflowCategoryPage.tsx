@@ -93,7 +93,7 @@ export default function WorkflowCategoryPage({
             }}
           >
             <Link
-              href="/templates"
+              href="/workflows"
               style={{
                 color: theme.muted,
                 textDecoration: 'none',
@@ -104,7 +104,7 @@ export default function WorkflowCategoryPage({
               }}
             >
               <ArrowLeft size={16} />
-              Templates
+              Workflows
             </Link>
             <span style={{ color: theme.border }}>/</span>
             <span style={{ color: theme.text }}>{breadcrumbLabel}</span>
@@ -173,7 +173,7 @@ export default function WorkflowCategoryPage({
               return (
                 <Link
                   key={template.id}
-                  href={`/templates/${template.slug}`}
+                  href={`/workflows/${template.slug}`}
                   style={{ textDecoration: 'none', color: 'inherit' }}
                   onMouseEnter={() => setHoveredCard(template.id)}
                   onMouseLeave={() => setHoveredCard(null)}
@@ -358,7 +358,7 @@ export default function WorkflowCategoryPage({
             Discover workflows for visual essays, infographics, academic writing, and more.
           </p>
           <Link
-            href="/templates"
+            href="/workflows"
             style={{
               display: 'inline-flex',
               alignItems: 'center',

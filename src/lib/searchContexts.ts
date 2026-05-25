@@ -39,8 +39,8 @@ export const SEARCH_CONTEXTS: Record<SearchContext, SearchContextConfig> = {
     context: 'templates',
     placeholder: 'Search templates...',
     dataSource: 'templates',
-    searchUrl: '/templates?search=',
-    resultUrlPattern: '/templates/',
+    searchUrl: '/workflows?search=',
+    resultUrlPattern: '/workflows/',
     shouldAlwaysExpand: true,
     description: 'Search through writing templates and frameworks'
   },
@@ -112,7 +112,7 @@ export const getSearchContextConfig = (context: SearchContext): SearchContextCon
  */
 export const getSearchContextFromPath = (pathname: string): SearchContext => {
   if (pathname?.startsWith('/prompt-library')) return 'prompt-library';
-  if (pathname?.startsWith('/templates')) return 'templates';
+  if (pathname?.startsWith('/workflows')) return 'templates';
   if (pathname?.startsWith('/glossary')) return 'glossary';
   if (pathname?.startsWith('/school')) return 'school';
   if (pathname?.startsWith('/scrollytelling')) return 'scrollytelling';

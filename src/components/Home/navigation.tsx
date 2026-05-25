@@ -103,7 +103,7 @@ export default function Navigation({
         const isSchoolArticle = normalizedPath.includes('/school/articles/');
         const isCoursesPage = normalizedPath === '/courses' || normalizedPath.startsWith('/courses/');
         const isBlogArticle = normalizedPath.includes('/blog/') && normalizedPath !== '/blog';
-        const isTemplatesPage = normalizedPath === '/templates' || normalizedPath.startsWith('/templates/');
+        const isTemplatesPage = normalizedPath === '/workflows' || normalizedPath.startsWith('/workflows/');
         const isDocsPage = normalizedPath === '/docs' || normalizedPath.startsWith('/docs/');
         const isAgentsPage = normalizedPath === '/agents' || normalizedPath.startsWith('/agents/');
         const isModelsPage = normalizedPath === '/models' || normalizedPath.startsWith('/models/');
@@ -485,14 +485,14 @@ export default function Navigation({
             {/* Templates (hidden on mobile, available in hamburger menu) */}
             {!isMobile && (
               <Link
-                href="/templates/"
-                className={`nav-link nav-link-templates ${pathname?.startsWith('/templates') ? 'active' : ''}`}
+                href="/workflows/"
+                className={`nav-link nav-link-templates ${pathname?.startsWith('/workflows') ? 'active' : ''}`}
                 style={{
                   color: isLightMode ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
                   textShadow: 'none',
                 }}
               >
-                Templates
+                Workflows
               </Link>
             )}
 
@@ -609,12 +609,12 @@ export default function Navigation({
             </Link>
 
             <Link 
-              href="/templates/" 
-              className={`mnav-item ${normalizedPathForNav.startsWith('/templates') ? 'mnav-item--active' : ''}`}
+              href="/workflows/" 
+              className={`mnav-item ${normalizedPathForNav.startsWith('/workflows') ? 'mnav-item--active' : ''}`}
               onClick={() => setIsMobileMenuOpen(false)}
               style={{ animationDelay: '0.12s' }}
             >
-              <span className="mnav-item__label">Templates</span>
+              <span className="mnav-item__label">Workflows</span>
               <span className="mnav-item__desc">Production-ready research formats</span>
             </Link>
 

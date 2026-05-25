@@ -51,7 +51,7 @@ export default function Footer () {
         const isSchoolPage = normalizedPath === '/school' || normalizedPath.startsWith('/school/');
         const isSchoolArticle = normalizedPath.includes('/school/articles/');
         const isCoursesPage = normalizedPath === '/courses' || normalizedPath.startsWith('/courses/');
-        const isTemplatesPage = normalizedPath === '/templates' || normalizedPath.startsWith('/templates/');
+        const isTemplatesPage = normalizedPath === '/workflows' || normalizedPath.startsWith('/workflows/');
         const isDocsPage = normalizedPath === '/docs' || normalizedPath.startsWith('/docs/');
         const isAgentsPage = normalizedPath === '/agents' || normalizedPath.startsWith('/agents/');
         const isModelsPage = normalizedPath === '/models' || normalizedPath.startsWith('/models/');
@@ -270,7 +270,7 @@ export default function Footer () {
           <FooterColumn 
             title="Explore"
             links={[
-              { href: "/templates/", text: "Templates" },
+              { href: "/workflows/", text: "Workflows" },
               { href: "/agents/", text: "Agents" },
               { href: "/glossary/", text: "Glossary" },
             ]}

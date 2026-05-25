@@ -3,7 +3,7 @@ title: "Citation Verification"
 category: "verification"
 description: "The automated process of validating that citations in AI-generated content reference real, accessible sources with accurate metadata."
 tldr: "Citation verification is the process of checking every source reference in AI-generated content against real databases — confirming that papers exist, authors match, DOIs resolve, and quotes are accurate. Without it, AI-generated research is unreliable by default."
-inEsy: "Citation verification runs as a dedicated agent stage in every research-oriented Esy workflow. Sources are validated against academic databases before the artifact is finalized. Failed citations are flagged or removed automatically. [Browse Templates](/templates/)"
+inEsy: "Citation verification runs as a dedicated agent stage in every research-oriented Esy workflow. Sources are validated against academic databases before the artifact is finalized. Failed citations are flagged or removed automatically. [Browse Templates](/workflows/)"
 relatedTerms: ["hallucination", "agentic-workflow", "structured-output", "pipeline-orchestration"]
 workflowStages:
   - id: "extract"

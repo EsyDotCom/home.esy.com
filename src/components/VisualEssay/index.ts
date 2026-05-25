@@ -26,7 +26,7 @@
  * @import '@/components/VisualEssay/cinematic-base.css';
  * ```
  * 
- * Template Reference: /templates/visual-essay-template-v2.txt
+ * Template Reference: /workflows/visual-essay-template-v2.txt
  */
 
 // ===========================================

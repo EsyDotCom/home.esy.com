@@ -36,6 +36,17 @@ const nextConfig = {
   // Redirect legacy paths to /essays/
   async redirects() {
     return [
+      // Templates renamed to Workflows (May 2026)
+      {
+        source: '/templates',
+        destination: '/workflows',
+        permanent: true,
+      },
+      {
+        source: '/templates/:path*',
+        destination: '/workflows/:path*',
+        permanent: true,
+      },
       // Redirect /essays/visual/etymology to /essays/etymology/
       {
         source: '/essays/visual/the-word-dick',

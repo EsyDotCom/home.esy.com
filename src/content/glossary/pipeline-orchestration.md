@@ -3,7 +3,7 @@ title: "Pipeline Orchestration"
 category: "infrastructure"
 description: "The system that coordinates the execution order, data flow, and error handling across multiple agents in an agentic workflow."
 tldr: "Pipeline orchestration is the infrastructure layer that decides which agent runs when, what data passes between stages, and what happens when something fails. It's the execution engine underneath an agentic workflow — the thing that turns a template definition into a running pipeline."
-inEsy: "Esy's orchestration layer executes template-defined workflows: scheduling agent stages, routing data between them, handling retries, and assembling the final artifact. The user runs a template; orchestration handles everything between intent and output. [Browse Templates](/templates/)"
+inEsy: "Esy's orchestration layer executes template-defined workflows: scheduling agent stages, routing data between them, handling retries, and assembling the final artifact. The user runs a template; orchestration handles everything between intent and output. [Browse Templates](/workflows/)"
 relatedTerms: ["agentic-workflow", "structured-output", "citation-verification"]
 workflowStages:
   - id: "template"

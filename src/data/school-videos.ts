@@ -81,7 +81,7 @@ Your finished infographic is ready to download. Every data point links back to t
 
 **"Global Water Scarcity Indicators"** — A regional comparison infographic visualizing access rates, consumption trends, and infrastructure gaps across 40 countries.
 
-Open the [Research Infographic](/templates/research-infographic) to get started.`,
+Open the [Research Infographic](/workflows/research-infographic) to get started.`,
     tags: ["infographics", "workflow", "data visualization", "research"],
     relatedSlugs: [
       "write-argumentative-essay",
@@ -152,7 +152,7 @@ Your finished essay is ready to download with formatted headers, in-text citatio
 
 **"The Case for Universal Basic Income"** — A synthesis essay threading economic research, pilot-program data from Finland and Stockton, and philosophical arguments into a cohesive position paper.
 
-Open the [Argumentative Essay Builder](/templates/argumentative-essay-builder) to get started.`,
+Open the [Argumentative Essay Builder](/workflows/argumentative-essay-builder) to get started.`,
     tags: ["essays", "workflow", "argumentative", "academic writing"],
     relatedSlugs: [
       "create-analytical-essay",
@@ -223,7 +223,7 @@ Your polished analytical essay is ready with a works-cited page, consistent form
 
 **"Power Dynamics in Orwell's 1984"** — A Foucauldian analysis of surveillance architecture, Newspeak as linguistic control, and the Party's institutional power structures across the narrative.
 
-Open the [Analytical Essay](/templates/analytical-essay) to get started.`,
+Open the [Analytical Essay](/workflows/analytical-essay) to get started.`,
     tags: ["essays", "workflow", "analytical", "literary analysis", "close reading"],
     relatedSlugs: [
       "write-argumentative-essay",
@@ -294,7 +294,7 @@ Your finished expository essay is ready with headers, source attributions, and a
 
 **"Comparing Keynesian and Austrian Economics"** — A point-by-point compare/contrast essay examining fiscal policy philosophy, market intervention approaches, and business cycle theories across both schools.
 
-Open the [Expository Essay](/templates/expository-essay) to get started.`,
+Open the [Expository Essay](/workflows/expository-essay) to get started.`,
     tags: ["essays", "workflow", "expository", "academic writing"],
     relatedSlugs: [
       "write-argumentative-essay",
@@ -365,7 +365,7 @@ Your finished narrative essay is ready with clean formatting and a polished fina
 
 **"Finding Home in a Foreign Language"** — A lyrical essay exploring identity and belonging through the daily friction and unexpected intimacy of learning to think in a second language.
 
-Open the [Narrative Essay](/templates/narrative-essay) to get started.`,
+Open the [Narrative Essay](/workflows/narrative-essay) to get started.`,
     tags: ["essays", "workflow", "narrative", "creative writing", "personal essay"],
     relatedSlugs: [
       "craft-college-application-essay",
@@ -436,7 +436,7 @@ Your research paper is ready with academic formatting — title page, running he
 
 **"Renewable Energy Adoption in Developing Nations"** — An economics paper analyzing policy frameworks, foreign direct investment trends, and infrastructure barriers across twelve sub-Saharan African nations.
 
-Open the [Research Paper](/templates/research-paper) to get started.`,
+Open the [Research Paper](/workflows/research-paper) to get started.`,
     tags: ["research", "workflow", "academic writing", "literature review"],
     relatedSlugs: [
       "write-argumentative-essay",
@@ -507,7 +507,7 @@ Your polished personal statement is ready to paste into the Common App, upload t
 
 **"Overcoming Adversity: A First-Generation Story"** — A Common App personal statement weaving family immigration history, academic perseverance, and community mentorship into a narrative about redefining what's possible.
 
-Open the [College Application Essay](/templates/college-application-essay) to get started.`,
+Open the [College Application Essay](/workflows/college-application-essay) to get started.`,
     tags: ["essays", "workflow", "college application", "personal statement", "admissions"],
     relatedSlugs: [
       "write-narrative-essay",

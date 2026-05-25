@@ -48,8 +48,8 @@ const ConditionalNavigation = () => {
   const isEssaysPage = normalizedPath === '/essays';
   
   // Check if we're on templates pages
-  const isTemplatesPage = normalizedPath?.startsWith('/templates');
-  const isTemplatesIndex = normalizedPath === '/templates';
+  const isTemplatesPage = normalizedPath?.startsWith('/workflows');
+  const isTemplatesIndex = normalizedPath === '/workflows';
   
   // Check if we're on the homepage
   const isHomepage = normalizedPath === '' || normalizedPath === '/';

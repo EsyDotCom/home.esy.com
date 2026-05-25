@@ -282,7 +282,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
               {/* CTAs */}
               <div className="ic-hero-ctas">
                 <Link 
-                  href="/templates"
+                  href="/workflows"
                   style={{ 
                     display: 'inline-flex', 
                     alignItems: 'center', 
@@ -437,7 +437,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
           </p>
           <div className="ic-final-cta-buttons">
             <Link 
-              href="/templates"
+              href="/workflows"
               className="ic-cta-primary ic-cta-primary--large"
             >
               <span>Browse Templates</span>

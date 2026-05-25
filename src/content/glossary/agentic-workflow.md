@@ -3,7 +3,7 @@ title: "Agentic Workflow"
 category: "workflows"
 description: "A multi-step automated process where AI agents execute tasks, make decisions, and hand off results without human intervention at each stage."
 tldr: "An agentic workflow is a pipeline where AI agents autonomously execute a sequence of tasks — research, verification, structuring, QA — passing output between stages without requiring human input at every step. The human defines the intent; agents handle the execution."
-inEsy: "Every Esy template is an agentic workflow. When you run a template, agents execute research, citation verification, and content structuring in sequence — producing a publishable artifact. [Browse Templates](/templates/)"
+inEsy: "Every Esy template is an agentic workflow. When you run a template, agents execute research, citation verification, and content structuring in sequence — producing a publishable artifact. [Browse Templates](/workflows/)"
 relatedTerms: ["pipeline-orchestration", "structured-output", "hallucination", "citation-verification"]
 workflowStages:
   - id: "sources"
