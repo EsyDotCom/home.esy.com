@@ -48,7 +48,7 @@ export default function TemplateCard({ template, showCategory = true }: Template
 
   return (
     <Link
-      href={`/templates/${template.slug}/`}
+      href={`/workflows/${template.slug}/`}
       style={{ textDecoration: 'none' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

@@ -543,7 +543,7 @@ export default function ResearchClient() {
           </p>
 
           <Link
-            href="/templates"
+            href="/workflows"
             style={{
               display: "inline-flex",
               alignItems: "center",

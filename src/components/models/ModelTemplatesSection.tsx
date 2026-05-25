@@ -79,7 +79,7 @@ export default function ModelTemplatesSection({ templates }: ModelTemplatesSecti
           <tr key={template.slug}>
             <td>
               <Link
-                href={`/templates/${template.slug}`}
+                href={`/workflows/${template.slug}`}
                 style={{
                   fontWeight: 500,
                   color: theme.text,

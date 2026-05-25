@@ -514,7 +514,7 @@ const ESYLandingPage = () => {
                 <ArrowRight size={18} />
               </a>
               
-              <Link href="/templates/special-education" style={{
+              <Link href="/workflows/special-education" style={{
                 padding: '1rem 2rem',
                 backgroundColor: 'transparent',
                 border: '1px solid rgba(139, 92, 246, 0.3)',

@@ -112,15 +112,15 @@ export interface ModelCategoryInfo {
 export const MODEL_CATEGORY_MAP: Record<string, ModelCategoryInfo> = {
   ChatGPT: {
     label: 'ChatGPT Prompts',
-    href: '/templates/chatgpt-prompts',
+    href: '/workflows/chatgpt-prompts',
   },
   Gemini: {
     label: 'Gemini Prompts',
-    href: '/templates/gemini-prompts',
+    href: '/workflows/gemini-prompts',
   },
   Claude: {
     label: 'Claude Prompts',
-    href: '/templates/claude-prompts',
+    href: '/workflows/claude-prompts',
   },
 };
 
@@ -128,60 +128,60 @@ export const MODEL_CATEGORY_MAP: Record<string, ModelCategoryInfo> = {
 export const SUBCATEGORY_CATEGORY_MAP: Record<string, ModelCategoryInfo> = {
   seo: {
     label: 'SEO Writing Prompts',
-    href: '/templates/seo-writing-prompts',
+    href: '/workflows/seo-writing-prompts',
   },
   chatgpt: {
     label: 'ChatGPT Prompts',
-    href: '/templates/chatgpt-prompts',
+    href: '/workflows/chatgpt-prompts',
   },
   gemini: {
     label: 'Gemini Prompts',
-    href: '/templates/gemini-prompts',
+    href: '/workflows/gemini-prompts',
   },
   claude: {
     label: 'Claude Prompts',
-    href: '/templates/claude-prompts',
+    href: '/workflows/claude-prompts',
   },
   // Essay templates
   'essay-argumentative': {
     label: 'Argumentative Essay',
-    href: '/templates/essay/argumentative',
+    href: '/workflows/essay/argumentative',
   },
   'essay-college-application': {
     label: 'College Application Essay',
-    href: '/templates/essay/college-application',
+    href: '/workflows/essay/college-application',
   },
   'essay-research': {
     label: 'Research Essay',
-    href: '/templates/essay/research',
+    href: '/workflows/essay/research',
   },
   'essay-mla-format': {
     label: 'MLA Format Essay',
-    href: '/templates/essay/mla-format',
+    href: '/workflows/essay/mla-format',
   },
   'essay-expository': {
     label: 'Expository Essay',
-    href: '/templates/essay/expository',
+    href: '/workflows/essay/expository',
   },
   'essay-analytical': {
     label: 'Analytical Essay',
-    href: '/templates/essay/analytical',
+    href: '/workflows/essay/analytical',
   },
   'essay-narrative': {
     label: 'Narrative Essay',
-    href: '/templates/essay/narrative',
+    href: '/workflows/essay/narrative',
   },
 };
 
 /**
  * Generate breadcrumb items for a template detail page.
- * Returns items for: Templates → {Model} Prompts → {Template Title}
+ * Returns items for: Workflows → {Model} Prompts → {Template Title}
  */
 export function getTemplateBreadcrumbs(template: Template): BreadcrumbItem[] {
   const items: BreadcrumbItem[] = [
     {
-      label: 'Templates',
-      href: '/templates',
+      label: 'Workflows',
+      href: '/workflows',
     },
   ];
 
@@ -205,7 +205,7 @@ export function getTemplateBreadcrumbs(template: Template): BreadcrumbItem[] {
   else {
     items.push({
       label: 'Prompts',
-      href: '/templates',
+      href: '/workflows',
     });
   }
 
@@ -231,7 +231,7 @@ export function getTemplateBreadcrumbJsonLd(template: Template, baseUrl: string 
       '@type': 'ListItem',
       position: index + 1,
       name: item.label,
-      item: item.href ? `${baseUrl}${item.href}` : `${baseUrl}/templates/${template.slug}`,
+      item: item.href ? `${baseUrl}${item.href}` : `${baseUrl}/workflows/${template.slug}`,
     })),
   };
 }

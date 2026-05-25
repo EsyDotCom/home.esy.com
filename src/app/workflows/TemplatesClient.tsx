@@ -1,0 +1,720 @@
+'use client';
+
+import React, { useState, useMemo, useRef } from 'react';
+import Link from 'next/link';
+import {
+  ArrowRight,
+  FileText,
+  Clock,
+  BarChart3,
+  Sparkles,
+  Layers,
+  Zap,
+  GraduationCap,
+} from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useScrollHeaderSearch } from '@/hooks/useScrollHeaderSearch';
+import {
+  getWorkflowTemplates,
+  searchTemplates,
+} from '@/lib/templates';
+import SearchBar from '@/components/SearchBar/SearchBar';
+
+// Navy Calm Light Theme
+const theme = {
+  bg: '#FFFFFF',
+  elevated: '#F8FAFC',
+  surface: '#F1F5F9',
+  text: '#0A2540',
+  muted: 'rgba(10, 37, 64, 0.7)',
+  subtle: 'rgba(10, 37, 64, 0.5)',
+  faint: 'rgba(10, 37, 64, 0.35)',
+  border: 'rgba(10, 37, 64, 0.08)',
+  divider: 'rgba(10, 37, 64, 0.05)',
+  accent: '#00A896',
+  accentLight: 'rgba(0, 168, 150, 0.08)',
+  accentBorder: 'rgba(0, 168, 150, 0.2)',
+};
+
+// Intent-based creation paths with enhanced metadata
+const creationPaths = [
+  {
+    id: 'visual-essays',
+    title: 'Visual Essays',
+    tagline: 'Scroll-driven narratives',
+    description: 'Research + writing + visuals in immersive, explorable stories',
+    href: '/workflows/visual-essays',
+    icon: FileText,
+    category: 'visual-essay',
+    count: 12,
+  },
+  // {
+  //   id: 'timelines',
+  //   title: 'Timelines',
+  //   tagline: 'Chronological narratives',
+  //   description: 'Historical overviews and event sequences made visual',
+  //   href: '/workflows?category=timeline',
+  //   icon: Clock,
+  //   category: 'timeline',
+  //   count: 8,
+  // },
+  {
+    id: 'infographics',
+    title: 'Infographics',
+    tagline: 'Data-driven visuals',
+    description: 'Complex information distilled into clear visual summaries',
+    href: '/workflows/infographics',
+    icon: BarChart3,
+    category: 'infographic',
+    count: 6,
+  },
+  {
+    id: 'academic-essays',
+    title: 'Academic Essays',
+    tagline: 'Scholarly writing',
+    description: 'Research-backed essays with proper structure, citations, and academic rigor',
+    href: '/workflows/academic-essays',
+    icon: GraduationCap,
+    category: 'template',
+    count: 6,
+  },
+  // {
+  //   id: 'explainers',
+  //   title: 'Explainers',
+  //   tagline: 'Clear breakdowns',
+  //   description: 'Complex topics made accessible for any audience',
+  //   href: '/workflows?category=explainer',
+  //   icon: BookOpen,
+  //   category: 'explainer',
+  //   count: 10,
+  // },
+];
+
+// Value propositions
+const valueProps = [
+  {
+    icon: Layers,
+    title: 'Multi-step workflows',
+    description: 'Not single prompts — guided processes from idea to output',
+  },
+  {
+    icon: Zap,
+    title: 'Run or customize',
+    description: 'Use as-is for speed, or adjust to fit your exact needs',
+  },
+  {
+    icon: Sparkles,
+    title: 'Reliable results',
+    description: 'Structured approaches that produce trustworthy artifacts',
+  },
+];
+
+export default function TemplatesClient() {
+  const router = useRouter();
+  const searchBarRef = useRef<HTMLDivElement>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+
+  useScrollHeaderSearch(searchBarRef);
+
+  // Search only workflow templates (not legacy prompt pages)
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return [];
+    }
+    const results = searchTemplates(searchQuery).filter((t) => t.isWorkflow);
+    return results.slice(0, 8).map((template) => ({
+      id: template.id,
+      title: template.title,
+      description: template.shortDescription,
+      category: template.subcategory,
+      slug: `/workflows/${template.slug}`,
+      type: 'category' as const,
+      isPro: template.isPro || false,
+      metadata: {
+        difficulty: template.difficulty,
+        tags: template.tags,
+        category: template.category,
+      },
+    }));
+  }, [searchQuery]);
+
+  const handleResultSelect = (result: { slug?: string; href?: string }) => {
+    const href = result.slug || result.href;
+    if (href) {
+      router.push(href);
+    }
+  };
+
+  const workflowTemplates = getWorkflowTemplates();
+
+  const handlePathClick = (href: string) => {
+    router.push(href);
+  };
+
+  return (
+    <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.text }}>
+      {/* Hero Section */}
+      <section
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '7rem 2rem 4rem',
+          position: 'relative',
+        }}
+      >
+        {/* Grid Background Pattern */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `
+              linear-gradient(rgba(10, 37, 64, 0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(10, 37, 64, 0.03) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+            maskImage: 'radial-gradient(ellipse at center, black 0%, transparent 70%)',
+            WebkitMaskImage: 'radial-gradient(ellipse at center, black 0%, transparent 70%)',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+        />
+        
+        {/* Content */}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          {/* Breadcrumb */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              marginBottom: '2rem',
+              fontSize: '0.875rem',
+              color: theme.subtle,
+            }}
+          >
+            <Link href="/" style={{ color: theme.subtle, textDecoration: 'none' }}>
+              Home
+            </Link>
+            <span>›</span>
+            <span style={{ color: theme.muted }}>Workflows</span>
+          </div>
+
+          {/* Title */}
+          <h1
+            style={{
+              fontFamily: 'var(--font-literata)',
+              fontSize: 'clamp(2.75rem, 6vw, 4.5rem)',
+              fontWeight: 300,
+              lineHeight: 1.1,
+              marginBottom: '1.25rem',
+              letterSpacing: '-0.02em',
+              color: theme.text,
+            }}
+          >
+            From idea to <span style={{ color: theme.accent }}>artifact</span>
+          </h1>
+
+          {/* Subtitle */}
+          <p
+            style={{
+              fontSize: 'clamp(1.0625rem, 2vw, 1.25rem)',
+              lineHeight: 1.6,
+              color: theme.muted,
+              maxWidth: '600px',
+              marginBottom: '2.5rem',
+            }}
+          >
+            Templates are step-by-step workflows that guide Esy from your initial concept to a polished,
+            research-backed result you can trust.
+          </p>
+
+          {/* Search */}
+          <div ref={searchBarRef} style={{ maxWidth: '480px' }}>
+            <SearchBar
+              placeholder="Search by topic, goal, or output type..."
+              value={searchQuery}
+              onChange={(value) => setSearchQuery(value)}
+              context="templates"
+              inputFontSize="0.9375rem"
+              showDropdown={searchQuery.length > 0}
+              searchResults={searchResults}
+              onResultSelect={handleResultSelect}
+              maxResults={8}
+              isLightMode={true}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Value Props - Subtle, Horizontal */}
+      <section
+        style={{
+          borderTop: `1px solid ${theme.divider}`,
+          borderBottom: `1px solid ${theme.divider}`,
+          background: theme.elevated,
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            padding: 'clamp(2rem, 4vh, 3rem) clamp(1.5rem, 5vw, 3rem)',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '2rem',
+          }}
+        >
+          {valueProps.map((prop, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+              <div
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '10px',
+                  background: theme.bg,
+                  border: `1px solid ${theme.border}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <prop.icon size={18} style={{ color: theme.accent }} />
+              </div>
+              <div>
+                <h3 style={{ fontSize: '0.9375rem', fontWeight: 600, color: theme.text, marginBottom: '0.25rem' }}>
+                  {prop.title}
+                </h3>
+                <p style={{ fontSize: '0.875rem', color: theme.subtle, lineHeight: 1.5, margin: 0 }}>
+                  {prop.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Creation Paths - Primary Navigation */}
+      <section
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: 'clamp(4rem, 8vh, 6rem) clamp(1.5rem, 5vw, 3rem)',
+        }}
+      >
+        <div style={{ marginBottom: '2.5rem' }}>
+          <h2
+            style={{
+              fontFamily: 'var(--font-literata)',
+              fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+              fontWeight: 300,
+              letterSpacing: '-0.02em',
+              color: theme.text,
+              marginBottom: '0.5rem',
+            }}
+          >
+            What do you want to create?
+          </h2>
+          <p style={{ fontSize: '1rem', color: theme.subtle }}>
+            Choose a path to see relevant templates
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '1rem',
+          }}
+        >
+          {creationPaths.map((path) => {
+            const IconComponent = path.icon;
+            const isHovered = hoveredPath === path.id;
+            return (
+              <button
+                key={path.id}
+                onClick={() => handlePathClick(path.href)}
+                onMouseEnter={() => setHoveredPath(path.id)}
+                onMouseLeave={() => setHoveredPath(null)}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  padding: '1.5rem',
+                  background: isHovered ? theme.bg : theme.elevated,
+                  border: `1px solid ${isHovered ? theme.accentBorder : theme.border}`,
+                  borderRadius: '16px',
+                  cursor: 'pointer',
+                  transition: 'all 0.25s ease',
+                  textAlign: 'left',
+                  boxShadow: isHovered ? '0 8px 24px rgba(10, 37, 64, 0.08)' : 'none',
+                  transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
+                }}
+              >
+                <div
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '12px',
+                    background: isHovered ? theme.accentLight : theme.bg,
+                    border: `1px solid ${isHovered ? theme.accentBorder : theme.border}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '1rem',
+                    transition: 'all 0.25s ease',
+                  }}
+                >
+                  <IconComponent
+                    size={22}
+                    style={{ color: isHovered ? theme.accent : theme.subtle, transition: 'color 0.25s ease' }}
+                  />
+                </div>
+                <h3
+                  style={{
+                    fontSize: '1.125rem',
+                    fontWeight: 500,
+                    color: theme.text,
+                    marginBottom: '0.25rem',
+                  }}
+                >
+                  {path.title}
+                </h3>
+                <span
+                  style={{
+                    fontSize: '0.8125rem',
+                    color: theme.accent,
+                    fontWeight: 500,
+                    marginBottom: '0.5rem',
+                  }}
+                >
+                  {path.tagline}
+                </span>
+                <p
+                  style={{
+                    fontSize: '0.875rem',
+                    color: theme.subtle,
+                    lineHeight: 1.5,
+                    margin: 0,
+                  }}
+                >
+                  {path.description}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Workflow Templates — Primary Showcase */}
+      <section
+        id="workflow-templates"
+        style={{
+          background: theme.elevated,
+          borderTop: `1px solid ${theme.divider}`,
+          borderBottom: `1px solid ${theme.divider}`,
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            padding: 'clamp(4rem, 8vh, 6rem) clamp(1.5rem, 5vw, 3rem)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '2.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+            <div>
+              <h2
+                style={{
+                  fontFamily: 'var(--font-literata)',
+                  fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+                  fontWeight: 300,
+                  letterSpacing: '-0.02em',
+                  color: theme.text,
+                  marginBottom: '0.5rem',
+                }}
+              >
+                Templates
+              </h2>
+              <p style={{ fontSize: '1rem', color: theme.subtle, margin: 0, maxWidth: '520px' }}>
+                Each workflow runs research, outlining, drafting, and formatting — producing a polished artifact.
+              </p>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
+              gap: '1.25rem',
+            }}
+          >
+            {workflowTemplates.map((template) => {
+              const isHovered = hoveredCard === template.id;
+              const stageCount = template.workflowStages?.length || 0;
+              return (
+                <Link
+                  key={template.id}
+                  href={`/workflows/${template.slug}`}
+                  style={{ textDecoration: 'none' }}
+                  onMouseEnter={() => setHoveredCard(template.id)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                >
+                  <article
+                    style={{
+                      background: theme.bg,
+                      border: `1px solid ${isHovered ? theme.accentBorder : theme.border}`,
+                      borderRadius: '16px',
+                      padding: '1.75rem',
+                      transition: 'all 0.3s ease',
+                      boxShadow: isHovered
+                        ? '0 16px 40px rgba(10, 37, 64, 0.1)'
+                        : '0 2px 8px rgba(10, 37, 64, 0.04)',
+                      transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    {/* Top row: badges */}
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexWrap: 'wrap',
+                        gap: '0.5rem',
+                        marginBottom: '1rem',
+                      }}
+                    >
+                      <span
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          padding: '0.2rem 0.5rem',
+                          background: theme.accentLight,
+                          color: theme.accent,
+                          borderRadius: '6px',
+                          fontSize: '0.6875rem',
+                          fontWeight: 600,
+                          letterSpacing: '0.03em',
+                        }}
+                      >
+                        Workflow
+                      </span>
+                      {template.engine && (
+                        <span
+                          style={{
+                            padding: '0.2rem 0.5rem',
+                            background: 'rgba(10, 37, 64, 0.04)',
+                            color: theme.subtle,
+                            borderRadius: '6px',
+                            fontSize: '0.6875rem',
+                            fontWeight: 500,
+                          }}
+                        >
+                          {template.engine}
+                        </span>
+                      )}
+                      {template.difficulty && (
+                        <span
+                          style={{
+                            padding: '0.2rem 0.5rem',
+                            color: template.difficulty === 'advanced' ? '#EF4444' : template.difficulty === 'intermediate' ? '#F59E0B' : '#2A9D8F',
+                            fontSize: '0.6875rem',
+                            fontWeight: 500,
+                          }}
+                        >
+                          {template.difficulty}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Title */}
+                    <h3
+                      style={{
+                        fontFamily: 'var(--font-literata)',
+                        fontSize: '1.25rem',
+                        fontWeight: 400,
+                        letterSpacing: '-0.01em',
+                        lineHeight: 1.3,
+                        marginBottom: '0.5rem',
+                        color: theme.text,
+                      }}
+                    >
+                      {template.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p
+                      style={{
+                        fontSize: '0.9375rem',
+                        color: theme.muted,
+                        lineHeight: 1.6,
+                        marginBottom: '1.25rem',
+                        flexGrow: 1,
+                      }}
+                    >
+                      {template.shortDescription}
+                    </p>
+
+                    {/* Workflow stage dots */}
+                    {stageCount > 0 && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '1rem' }}>
+                        {template.workflowStages!.map((stage, i) => (
+                          <React.Fragment key={stage.id}>
+                            <div
+                              style={{
+                                width: stage.isFinal ? '10px' : '8px',
+                                height: stage.isFinal ? '10px' : '8px',
+                                borderRadius: '50%',
+                                background: stage.isFinal ? theme.accent : isHovered ? theme.accent : `rgba(10, 37, 64, 0.15)`,
+                                transition: 'all 0.3s ease',
+                                transitionDelay: isHovered ? `${i * 60}ms` : '0ms',
+                                boxShadow: stage.isFinal ? `0 0 8px ${theme.accent}40` : 'none',
+                              }}
+                              title={stage.label}
+                            />
+                            {i < stageCount - 1 && (
+                              <div
+                                style={{
+                                  width: '16px',
+                                  height: '1px',
+                                  background: isHovered ? `rgba(0, 168, 150, 0.4)` : `rgba(10, 37, 64, 0.1)`,
+                                  transition: 'all 0.3s ease',
+                                  transitionDelay: isHovered ? `${i * 60}ms` : '0ms',
+                                }}
+                              />
+                            )}
+                          </React.Fragment>
+                        ))}
+                        <span
+                          style={{
+                            fontSize: '0.6875rem',
+                            color: theme.faint,
+                            marginLeft: '0.5rem',
+                          }}
+                        >
+                          {stageCount} stages
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Meta row */}
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        paddingTop: '0.75rem',
+                        borderTop: `1px solid ${theme.divider}`,
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        {template.estimatedTime && (
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8125rem', color: theme.subtle }}>
+                            <Clock size={13} />
+                            {template.estimatedTime}
+                          </span>
+                        )}
+                        {template.outputFormats && (
+                          <span style={{ fontSize: '0.8125rem', color: theme.faint }}>
+                            {template.outputFormats.join(' · ')}
+                          </span>
+                        )}
+                      </div>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.375rem',
+                          color: theme.accent,
+                          fontSize: '0.8125rem',
+                          fontWeight: 500,
+                        }}
+                      >
+                        View
+                        <ArrowRight
+                          size={14}
+                          style={{
+                            transform: isHovered ? 'translateX(3px)' : 'translateX(0)',
+                            transition: 'transform 0.2s ease',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </article>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - Clean, Minimal */}
+      <section
+        style={{
+          background: theme.text,
+          color: theme.bg,
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            padding: 'clamp(4rem, 8vh, 6rem) clamp(1.5rem, 5vw, 3rem)',
+            textAlign: 'center',
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: 'var(--font-literata)',
+              fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+              fontWeight: 300,
+              letterSpacing: '-0.02em',
+              marginBottom: '1rem',
+            }}
+          >
+            Ready to start?
+          </h2>
+          <p
+            style={{
+              fontSize: '1.125rem',
+              opacity: 0.8,
+              marginBottom: '2rem',
+              maxWidth: '480px',
+              margin: '0 auto 2rem',
+              lineHeight: 1.6,
+            }}
+          >
+            Pick a template and run it in Esy. Adjust as needed, or use it as-is.
+          </p>
+          <Link
+            href="https://app.esy.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.625rem',
+              padding: '1rem 2rem',
+              background: theme.accent,
+              color: '#FFFFFF',
+              border: 'none',
+              borderRadius: '10px',
+              fontSize: '1rem',
+              fontWeight: 600,
+              textDecoration: 'none',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            Open Esy
+            <ArrowRight size={18} />
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}

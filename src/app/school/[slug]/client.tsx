@@ -534,7 +534,7 @@ export default function VideoPageClient({ video, related }: VideoPageClientProps
                     Open the template and create your first artifact in minutes.
                   </p>
                   <Link
-                    href={`/templates/${video.templateSlug}`}
+                    href={`/workflows/${video.templateSlug}`}
                     style={{
                       display: "inline-flex",
                       alignItems: "center",

@@ -685,7 +685,7 @@ export default function ResearchVideoPageClient({
                     minutes.
                   </p>
                   <Link
-                    href={`/templates/${video.templateSlug}`}
+                    href={`/workflows/${video.templateSlug}`}
                     style={{
                       display: "inline-flex",
                       alignItems: "center",

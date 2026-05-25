@@ -633,7 +633,7 @@ export default function AboutPage() {
               }}>
                 That work is ongoing. The same infrastructure is available to other engineers through my{' '}
                 <Link
-                  href="/templates"
+                  href="/workflows"
                   style={{ color: theme.accent, textDecoration: 'none', borderBottom: `1px solid ${theme.accent}` }}
                 >
                   templates

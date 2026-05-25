@@ -55,11 +55,11 @@ export default function ArtifactDetailTemplate({
       <div className="adt-hero-wrapper">
         {/* ═══ Breadcrumb ═══════════════════════════════════════ */}
         <nav className="adt-breadcrumb" aria-label="Breadcrumb">
-          <Link href="/templates">Templates</Link>
+          <Link href="/workflows">Templates</Link>
           <span className="adt-breadcrumb-sep" aria-hidden="true">
             <ChevronRight size={12} />
           </span>
-          <Link href="/templates">{categoryLabel}</Link>
+          <Link href="/workflows">{categoryLabel}</Link>
           <span className="adt-breadcrumb-sep" aria-hidden="true">
             <ChevronRight size={12} />
           </span>

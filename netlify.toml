@@ -23,6 +23,19 @@
 # Note: For qa.esy.com as a separate site, configure headers in that site's settings
 # or deploy with NEXT_PUBLIC_IS_QA=true to enable noindex meta tags
 
+# Templates renamed to Workflows (May 2026) — preserve SEO on the old route
+[[redirects]]
+  from = "/templates/*"
+  to = "/workflows/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/templates"
+  to = "/workflows/"
+  status = 301
+  force = true
+
 # Redirect /essays/visual/* to /essays/* (canonical URLs)
 [[redirects]]
   from = "/essays/visual/*"

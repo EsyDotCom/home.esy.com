@@ -667,7 +667,7 @@ export default function SchoolVideosClient() {
           </p>
 
           <Link
-            href="/templates"
+            href="/workflows"
             style={{
               display: "inline-flex",
               alignItems: "center",
