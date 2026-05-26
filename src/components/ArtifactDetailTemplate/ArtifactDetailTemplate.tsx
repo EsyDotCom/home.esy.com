@@ -31,6 +31,7 @@ export default function ArtifactDetailTemplate({
     title,
     description,
     workflowStages,
+    workflowDetails,
     outputFormats,
     estimatedTime,
     inputRequirements,
@@ -40,7 +41,14 @@ export default function ArtifactDetailTemplate({
     subcategory,
   } = template;
 
-  const esyEditorUrl = `https://app.esy.com?workflow=${template.slug}`;
+  // Deep-link into the app.esy.com workflow runner.
+  // The dashboard exposes each workflow at /workflows/{slug} — the SAME path
+  // shape as this marketing detail page, just on a different host:
+  //   esy.com/workflows/{slug}        → browse / learn
+  //   app.esy.com/workflows/{slug}    → configure & launch
+  // (See docs/strategy/sessions/2026-05-25-workflow-detail-page-layout-and-design.md
+  //  for the full URL-contract rationale.)
+  const esyEditorUrl = `https://app.esy.com/workflows/${template.slug}`;
 
   // Readable subcategory label
   const categoryLabel = subcategory
@@ -55,7 +63,7 @@ export default function ArtifactDetailTemplate({
       <div className="adt-hero-wrapper">
         {/* ═══ Breadcrumb ═══════════════════════════════════════ */}
         <nav className="adt-breadcrumb" aria-label="Breadcrumb">
-          <Link href="/workflows">Templates</Link>
+          <Link href="/workflows">Agentic Workflows</Link>
           <span className="adt-breadcrumb-sep" aria-hidden="true">
             <ChevronRight size={12} />
           </span>
@@ -72,7 +80,7 @@ export default function ArtifactDetailTemplate({
             {/* Badges */}
             <div className="adt-hero-badges">
               <span className="adt-badge adt-badge--category">
-                Workflow
+                Workflow Template
               </span>
               {engine && (
                 <span className="adt-badge adt-badge--engine">
@@ -128,94 +136,168 @@ export default function ArtifactDetailTemplate({
         </section>
       </div>
 
+      {/* ═══ Spec At-a-Glance (What You Provide / What You Get) ═ */}
+      <section className="adt-band adt-band--elevated">
+        <div className="adt-band-inner adt-spec-section">
+          {/* Inputs */}
+          <div className="adt-spec-block">
+            <h3>What You Provide</h3>
+            <ul className="adt-spec-list">
+              {inputRequirements && inputRequirements.length > 0 ? (
+                inputRequirements.map((req, i) => (
+                  <li key={i} className="adt-spec-item">
+                    <Upload size={18} className="adt-spec-icon" />
+                    <span>{req}</span>
+                  </li>
+                ))
+              ) : (
+                <li className="adt-spec-item">
+                  <Upload size={18} className="adt-spec-icon" />
+                  <span>A topic, citation, or research question</span>
+                </li>
+              )}
+            </ul>
+          </div>
+
+          {/* Outputs */}
+          <div className="adt-spec-block">
+            <h3>What You Get</h3>
+            <ul className="adt-spec-list">
+              <li className="adt-spec-item">
+                <Download size={18} className="adt-spec-icon" />
+                <span>
+                  A publication-ready artifact produced by the full workflow pipeline
+                </span>
+              </li>
+              {engine && (
+                <li className="adt-spec-item">
+                  <Cpu size={18} className="adt-spec-icon" />
+                  <span>Generated with {engine}</span>
+                </li>
+              )}
+              {estimatedTime && (
+                <li className="adt-spec-item">
+                  <Clock size={18} className="adt-spec-icon" />
+                  <span>Delivered in {estimatedTime}</span>
+                </li>
+              )}
+            </ul>
+
+            {/* Format badges */}
+            {outputFormats && outputFormats.length > 0 && (
+              <div className="adt-format-badges">
+                {outputFormats.map((fmt) => (
+                  <span key={fmt} className="adt-format-badge">
+                    {fmt}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* ═══ Workflow Visualization ═══════════════════════════ */}
       {workflowStages && workflowStages.length > 0 && (
-        <section className="adt-workflow-section">
-          <div className="adt-workflow-inner">
+        <section className="adt-band adt-band--default adt-workflow-section">
+          <div className="adt-band-inner adt-workflow-inner">
             <p className="adt-section-eyebrow">How this workflow runs</p>
             <WorkflowCircuit stages={workflowStages} />
           </div>
         </section>
       )}
 
-      {/* ═══ What You Provide / What You Get ══════════════════ */}
-      <section className="adt-spec-section">
-        {/* Inputs */}
-        <div className="adt-spec-block">
-          <h3>What You Provide</h3>
-          <ul className="adt-spec-list">
-            {inputRequirements && inputRequirements.length > 0 ? (
-              inputRequirements.map((req, i) => (
-                <li key={i} className="adt-spec-item">
-                  <Upload size={18} className="adt-spec-icon" />
-                  <span>{req}</span>
+      {/* ═══ Workflow Details ══════════════════════════════════ */}
+      {workflowDetails && workflowDetails.length > 0 && (
+        <section className="adt-steps-section">
+          <header className="adt-steps-header">
+            <p className="adt-section-eyebrow">Inside the workflow</p>
+            <h2>What happens at each step</h2>
+          </header>
+
+          <ol className="adt-steps">
+            {workflowDetails.map((detail, index) => {
+              const isBeforeAfter =
+                detail.examples?.length === 2 &&
+                detail.examples[0].label.toLowerCase() === 'before' &&
+                detail.examples[1].label.toLowerCase() === 'after';
+
+              return (
+                <li key={detail.id} className="adt-step">
+                  <div className="adt-step-marker" aria-hidden="true">
+                    <span className="adt-step-number">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+
+                  <div className="adt-step-body">
+                    <h3 className="adt-step-title">{detail.title}</h3>
+                    <p className="adt-step-desc">{detail.description}</p>
+
+                    {detail.examples && detail.examples.length > 0 && (
+                      isBeforeAfter ? (
+                        <div className="adt-step-prompt">
+                          <div className="adt-step-prompt-row">
+                            <span className="adt-step-prompt-label">Before</span>
+                            <p className="adt-step-prompt-text adt-step-prompt-text--before">
+                              {detail.examples[0].value}
+                            </p>
+                          </div>
+                          <div className="adt-step-prompt-arrow" aria-hidden="true">
+                            <ArrowRight size={14} />
+                          </div>
+                          <div className="adt-step-prompt-row">
+                            <span className="adt-step-prompt-label adt-step-prompt-label--accent">
+                              After
+                            </span>
+                            <p className="adt-step-prompt-text">
+                              {detail.examples[1].value}
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        <dl className="adt-step-meta">
+                          {detail.examples.map((example) => (
+                            <div key={example.label} className="adt-step-meta-row">
+                              <dt>{example.label}</dt>
+                              <dd>{example.value}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      )
+                    )}
+                  </div>
                 </li>
-              ))
-            ) : (
-              <li className="adt-spec-item">
-                <Upload size={18} className="adt-spec-icon" />
-                <span>A topic, citation, or research question</span>
-              </li>
-            )}
-          </ul>
-        </div>
-
-        {/* Outputs */}
-        <div className="adt-spec-block">
-          <h3>What You Get</h3>
-          <ul className="adt-spec-list">
-            <li className="adt-spec-item">
-              <Download size={18} className="adt-spec-icon" />
-              <span>
-                A publication-ready artifact produced by the full workflow pipeline
-              </span>
-            </li>
-            {engine && (
-              <li className="adt-spec-item">
-                <Cpu size={18} className="adt-spec-icon" />
-                <span>Generated with {engine}</span>
-              </li>
-            )}
-            {estimatedTime && (
-              <li className="adt-spec-item">
-                <Clock size={18} className="adt-spec-icon" />
-                <span>Delivered in {estimatedTime}</span>
-              </li>
-            )}
-          </ul>
-
-          {/* Format badges */}
-          {outputFormats && outputFormats.length > 0 && (
-            <div className="adt-format-badges">
-              {outputFormats.map((fmt) => (
-                <span key={fmt} className="adt-format-badge">
-                  {fmt}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+              );
+            })}
+          </ol>
+        </section>
+      )}
 
       {/* ═══ Sample Artifacts ════════════════════════════════ */}
       {sampleArtifacts && sampleArtifacts.length > 0 && (
-        <section className="adt-samples-section">
-          <h3>Example Outputs</h3>
-          <div className="adt-samples-grid">
-            {sampleArtifacts.map((sample, i) => (
-              <div key={i} className="adt-sample-card">
-                <p className="adt-sample-title">{sample.title}</p>
-                <p className="adt-sample-desc">{sample.description}</p>
-              </div>
-            ))}
+        <section className="adt-band adt-band--elevated">
+          <div className="adt-band-inner adt-samples-section">
+            <header className="adt-samples-header">
+              <p className="adt-section-eyebrow">From this workflow</p>
+              <h3>Example outputs</h3>
+            </header>
+            <div className="adt-samples-grid">
+              {sampleArtifacts.map((sample, i) => (
+                <div key={i} className="adt-sample-card">
+                  <p className="adt-sample-title">{sample.title}</p>
+                  <p className="adt-sample-desc">{sample.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}
 
-      {/* ═══ Related Templates ═══════════════════════════════ */}
+      {/* ═══ Related Workflow Templates ══════════════════════ */}
       {relatedTemplates.length > 0 && (
         <section className="adt-related-section">
-          <h3>Related Templates</h3>
+          <h3>Related Workflow Templates</h3>
           <TemplateGrid templates={relatedTemplates} columns={3} />
         </section>
       )}

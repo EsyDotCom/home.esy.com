@@ -3,10 +3,10 @@ import { FileCheck } from 'lucide-react';
 import EssayTypeClient, { EssayTypeData } from '../EssayTypeClient';
 
 export const metadata: Metadata = {
-  title: 'MLA Format Essay Template | Proper MLA Citation & Formatting Guide | Esy',
-  description: 'Free MLA format essay template with proper formatting, in-text citations, Works Cited examples, and AI prompts. Master MLA 9th edition style for humanities courses.',
+  title: 'MLA Format Essay Workflow Template | Proper MLA Citation & Formatting Guide | Esy',
+  description: 'Free MLA format essay workflow template with proper formatting, in-text citations, Works Cited examples, and AI prompts. Master MLA 9th edition style for humanities courses.',
   keywords: [
-    'MLA format essay template',
+    'MLA format essay workflow template',
     'MLA format example',
     'MLA citation generator',
     'MLA Works Cited',
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     'how to cite MLA',
   ],
   openGraph: {
-    title: 'MLA Format Essay Template | Esy',
-    description: 'Free MLA format essay template with proper formatting and citation examples.',
+    title: 'MLA Format Essay Workflow Template | Esy',
+    description: 'Free MLA format essay workflow template with proper formatting and citation examples.',
     url: 'https://esy.com/workflows/essay/mla-format',
     type: 'website',
   },

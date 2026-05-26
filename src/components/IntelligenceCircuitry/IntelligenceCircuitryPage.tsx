@@ -301,7 +301,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                       : '0 4px 12px rgba(91, 33, 182, 0.25)' 
                   }}
                 >
-                  <span>Browse Templates</span>
+                  <span>Browse Workflow Templates</span>
                   <ArrowRight size={18} />
                 </Link>
                 <Link href="/essays/" style={{ 
@@ -433,14 +433,14 @@ const IntelligenceCircuitryPage: React.FC = () => {
             Build something <span className="ic-gradient-text">auditable.</span>
           </h2>
           <p className="ic-final-cta-description">
-            Start from a template. Let agents handle the pipeline.
+            Start from a workflow template. Let agents handle the pipeline.
           </p>
           <div className="ic-final-cta-buttons">
             <Link 
               href="/workflows"
               className="ic-cta-primary ic-cta-primary--large"
             >
-              <span>Browse Templates</span>
+              <span>Browse Workflow Templates</span>
               <ArrowRight size={20} />
             </Link>
             <Link href="/research" className="ic-cta-secondary">

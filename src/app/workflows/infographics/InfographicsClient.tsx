@@ -9,7 +9,7 @@ export default function InfographicsClient() {
 
   return (
     <WorkflowCategoryPage
-      title="Infographic Templates"
+      title="Infographic Workflow Templates"
       breadcrumbLabel="Infographics"
       subtitle="Turn citations, datasets, and research concepts into publication-ready infographics — no prompting required."
       templates={templates}

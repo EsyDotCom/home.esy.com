@@ -15,7 +15,7 @@ export default function VisualEssaysClient() {
 
   return (
     <WorkflowCategoryPage
-      title="Visual Essay Templates"
+      title="Visual Essay Workflow Templates"
       breadcrumbLabel="Visual Essays"
       subtitle="Scroll-driven narratives that combine research, writing, and interactive visualizations into a single explorable artifact."
       templates={templates}

@@ -682,7 +682,7 @@ export default function SchoolVideosClient() {
               transition: "all 0.2s ease",
             }}
           >
-            Browse Templates
+            Browse Workflow Templates
             <ArrowRight size={16} />
           </Link>
         </div>

@@ -3,10 +3,10 @@ import { PenTool } from 'lucide-react';
 import EssayTypeClient, { EssayTypeData } from '../EssayTypeClient';
 
 export const metadata: Metadata = {
-  title: 'Argumentative Essay Template & Outline | Free Download + AI Prompts | Esy',
-  description: 'Free argumentative essay template with downloadable outline, structural breakdown, and AI writing prompts. Learn how to write compelling arguments with thesis, evidence, and counterarguments.',
+  title: 'Argumentative Essay Workflow Template & Outline | Free Download + AI Prompts | Esy',
+  description: 'Free argumentative essay workflow template with downloadable outline, structural breakdown, and AI writing prompts. Learn how to write compelling arguments with thesis, evidence, and counterarguments.',
   keywords: [
-    'argumentative essay template',
+    'argumentative essay workflow template',
     'argumentative essay outline',
     'how to write an argumentative essay',
     'argumentative essay structure',
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     'debate essay outline',
   ],
   openGraph: {
-    title: 'Argumentative Essay Template & Outline | Esy',
-    description: 'Free argumentative essay template with outline, structure guide, and AI prompts.',
+    title: 'Argumentative Essay Workflow Template & Outline | Esy',
+    description: 'Free argumentative essay workflow template with outline, structure guide, and AI prompts.',
     url: 'https://esy.com/workflows/essay/argumentative',
     type: 'website',
   },

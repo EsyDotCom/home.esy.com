@@ -2,11 +2,11 @@ import { Metadata } from 'next';
 import VisualEssaysClient from './VisualEssaysClient';
 
 export const metadata: Metadata = {
-  title: 'Visual Essay Templates | Scroll-Driven Narratives & Interactive Stories | Esy',
+  title: 'Visual Essay Workflow Templates | Scroll-Driven Narratives & Interactive Stories | Esy',
   description:
     'Create immersive, scroll-driven visual essays that combine research, writing, and interactive visualizations. Turn complex topics into explorable stories with Esy workflow templates.',
   keywords: [
-    'visual essay templates',
+    'visual essay workflow templates',
     'interactive essays',
     'scroll-driven narratives',
     'data visualization essays',
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     'explorable explanations',
   ],
   openGraph: {
-    title: 'Visual Essay Templates | Esy',
+    title: 'Visual Essay Workflow Templates | Esy',
     description:
       'Immersive, scroll-driven visual essays — research, writing, and interactive visuals in one artifact.',
     url: 'https://esy.com/workflows/visual-essays',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Visual Essay Templates | Esy',
+    title: 'Visual Essay Workflow Templates | Esy',
     description:
       'Create interactive, scroll-driven visual essays with Esy workflow templates.',
   },

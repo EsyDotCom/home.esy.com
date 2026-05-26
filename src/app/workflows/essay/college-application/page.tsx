@@ -3,21 +3,21 @@ import { GraduationCap } from 'lucide-react';
 import EssayTypeClient, { EssayTypeData } from '../EssayTypeClient';
 
 export const metadata: Metadata = {
-  title: 'College Application Essay Template | Personal Statement Outline + AI Prompts | Esy',
-  description: 'Free college application essay template with personal statement outline, Common App essay structure, and AI writing prompts. Stand out in admissions with authentic storytelling.',
+  title: 'College Application Essay Workflow Template | Personal Statement Outline + AI Prompts | Esy',
+  description: 'Free college application essay workflow template with personal statement outline, Common App essay structure, and AI writing prompts. Stand out in admissions with authentic storytelling.',
   keywords: [
-    'college application essay template',
-    'personal statement template',
+    'college application essay workflow template',
+    'personal statement workflow template',
     'Common App essay outline',
     'college essay examples',
     'how to write a college essay',
-    'admissions essay template',
+    'admissions essay workflow template',
     'college essay structure',
-    'personal narrative template',
+    'personal narrative workflow template',
   ],
   openGraph: {
-    title: 'College Application Essay Template | Esy',
-    description: 'Free college application essay template with personal statement structure and AI prompts.',
+    title: 'College Application Essay Workflow Template | Esy',
+    description: 'Free college application essay workflow template with personal statement structure and AI prompts.',
     url: 'https://esy.com/workflows/essay/college-application',
     type: 'website',
   },

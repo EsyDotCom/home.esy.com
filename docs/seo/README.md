@@ -15,6 +15,7 @@ This folder is for **patterns and conventions** — the repeatable techniques we
 | Document | Description |
 |----------|-------------|
 | [DESCRIPTION_FIELD_PATTERN.md](./DESCRIPTION_FIELD_PATTERN.md) | One short content field that does triple-duty as meta description, OG description, and listing card preview |
+| [WORKFLOW_URL_NAMING_STANDARD.md](./WORKFLOW_URL_NAMING_STANDARD.md) | Canonical `/workflows` route and "Workflow Template" naming standard |
 
 ## When To Add Here
 

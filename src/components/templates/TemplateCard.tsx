@@ -46,6 +46,8 @@ export default function TemplateCard({ template, showCategory = true }: Template
     }
   };
 
+  const cardBadgeLabel = template.isWorkflow ? 'Workflow Template' : template.category;
+
   return (
     <Link
       href={`/workflows/${template.slug}/`}
@@ -95,7 +97,7 @@ export default function TemplateCard({ template, showCategory = true }: Template
                   letterSpacing: '0.05em',
                 }}
               >
-                {template.category}
+                {cardBadgeLabel}
               </span>
             )}
             {template.difficulty && (

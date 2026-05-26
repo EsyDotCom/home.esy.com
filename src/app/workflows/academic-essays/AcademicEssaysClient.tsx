@@ -9,7 +9,7 @@ export default function AcademicEssaysClient() {
 
   return (
     <WorkflowCategoryPage
-      title="Academic Essay Templates"
+      title="Academic Essay Workflow Templates"
       breadcrumbLabel="Academic Essays"
       subtitle="Structured workflows for every major essay type — research, outlining, drafting, and citation formatting, handled automatically."
       templates={templates}
