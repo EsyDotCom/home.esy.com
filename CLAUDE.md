@@ -16,6 +16,15 @@ The public-facing marketing site at esy.com. Visual essays, brand storytelling, 
 
 Before pushing or deploying, read `../app.esy.com/docs/DEPLOYMENT_WORKFLOW.md`. This repo follows the shared Esy workflow: run `npm run lint` and `npm run build`, use PRs for public-route/SEO/publishing/API-contract/auth/deployment-risk changes, and keep `main` deployable.
 
+### Direct push vs PR (this repo's quick rule)
+
+Per the shared workflow's "When Direct Push To Main Is Allowed" section, this is a marketing/copy-heavy repo so the carve-out gets used often. The heuristic:
+
+- **Direct push to `main`:** 1–2 line copy edits, typos, sentence rewrites, metadata/comment changes, tiny style tweaks with no behavior change. Run a build first if the change isn't trivially safe.
+- **PR required:** anything that touches structure, routes, components, navigation behavior, data shape, image domains, or the artifact/workflow taxonomy. Also anything covered by the shared workflow's "Direct push is not acceptable for" list.
+
+When in doubt, open the PR — agent overhead is cheap, broken `main` isn't.
+
 ## Key Documentation (In This Repo)
 
 - `docs/brand/ESY_DEFINITION.md` — Canonical brand definition and product philosophy
