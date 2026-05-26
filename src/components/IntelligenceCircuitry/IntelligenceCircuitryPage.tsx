@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Clock, Sun, Moon } from 'lucide-react';
 import CircuitCanvas from './CircuitCanvas';
+import ClipArtWordmark from './ClipArtWordmark';
 import { publishedVisualEssays, CATEGORY_COLORS, isNewEssay, type VisualEssay } from '@/data/visualEssays';
 import { publishedInfographics, CLUSTER_LABELS, INFOGRAPHIC_CATEGORY_COLORS } from '@/data/infographics';
 import './IntelligenceCircuitryPage.css';
@@ -36,6 +37,42 @@ const ARTIFACT_SOURCE_COUNTS: Record<string, number> = {
 const featuredArtifacts = FEATURED_ESSAY_IDS
   .map(id => publishedVisualEssays.find(e => e.id === id))
   .filter((e): e is VisualEssay => e !== undefined);
+
+// clip.art's actual catalog style vocabulary (sourced from clip.art's
+// generation form). Rendered as visual pills in the case study to convey
+// catalog breadth.
+const CLIPART_CATALOG_STYLES = [
+  'Flat', 'Minimal', 'Line Art', 'Black & White', 'Cartoon',
+  'Mascot', 'Sticker', 'Emoji', 'Vintage', 'Watercolor',
+  'Storybook', 'Isometric', 'Clay', 'Chibi', 'Pixel',
+  'Kawaii', '3D', 'Doodle',
+];
+
+// Real catalog assets pulled directly from clip.art's homepage CDN
+// (extracted via CDP from https://clip.art on 2026-05-25). URLs follow
+// the pattern: https://images.clip.art/{category}/{slug}.webp
+// Each entry is display-only in the case study grid (no outbound links).
+//
+// To refresh: visit clip.art, inspect <img> elements, replace this list.
+// Keep 12 items for a clean 4×3 desktop grid (3×4 tablet, 2×6 mobile).
+const CLIPART_SHOWCASE: Array<{
+  url: string;
+  alt: string;
+  category: string;
+}> = [
+  { url: 'https://images.clip.art/christmas/decorated-christmas-tree-gifts-fxjmtg.webp', alt: 'Decorated Christmas Tree with Gifts', category: 'christmas' },
+  { url: 'https://images.clip.art/halloween/grinning-jack-o-lantern-candle-r2avcr.webp', alt: "Grinning Jack-O'-Lantern with Candle", category: 'halloween' },
+  { url: 'https://images.clip.art/school/chemistry-set-bubbling-beakers-rd9f4o.webp', alt: 'Chemistry Set with Bubbling Beakers', category: 'school' },
+  { url: 'https://images.clip.art/flower/watercolor-lavender-flowers-bqkae5.webp', alt: 'Watercolor Lavender Flowers', category: 'flower' },
+  { url: 'https://images.clip.art/cat/cozy-black-cat-on-pumpkin-1c6qun.webp', alt: 'Cozy Black Cat on Pumpkin', category: 'cat' },
+  { url: 'https://images.clip.art/school/friendly-yellow-school-bus-hjo5n2.webp', alt: 'Friendly Yellow School Bus', category: 'school' },
+  { url: 'https://images.clip.art/christmas/jolly-santa-claus-red-bag-9wgk2i.webp', alt: 'Jolly Santa Claus with Red Bag', category: 'christmas' },
+  { url: 'https://images.clip.art/halloween/haunted-mansion-on-a-hill-8n93he.webp', alt: 'Haunted Mansion on a Hill', category: 'halloween' },
+  { url: 'https://images.clip.art/flower/colorful-flat-style-flowers-ouw8rl.webp', alt: 'Colorful Flat Style Flowers', category: 'flower' },
+  { url: 'https://images.clip.art/pumpkin/cozy-stack-orange-pumpkins-iw5c5x.webp', alt: 'Cozy Stack of Orange Pumpkins', category: 'pumpkin' },
+  { url: 'https://images.clip.art/free/lady-gardener-with-vegetables-jyy951.webp', alt: 'Lady Gardener with Vegetables', category: 'free' },
+  { url: 'https://images.clip.art/free/the-letter-a-large-colorful-with-red-apples-surrounding-it-gsg2sj.webp', alt: 'Letter A with Apples', category: 'free' },
+];
 
 /**
  * Get the hero image for an essay with fallback chain:
@@ -189,6 +226,28 @@ const IntelligenceCircuitryPage: React.FC = () => {
     if (theme === 'navy-dark') return 'ic-page--navy-dark';
     return ''; // dark theme is default, no class needed
   };
+
+  // Stagger the clip.art catalog grid when the case study scrolls into view.
+  const catalogGridRef = useRef<HTMLDivElement>(null);
+  const [catalogInView, setCatalogInView] = useState(false);
+
+  useEffect(() => {
+    const grid = catalogGridRef.current;
+    if (!grid) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setCatalogInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    );
+
+    observer.observe(grid);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className={`ic-page ${getThemeClass()}`}>
@@ -354,7 +413,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
               Artifacts produced by <span className="ic-gradient-text">these workflows</span>
             </h2>
             <p className="ic-section-description">
-              Every artifact below was generated through Esy's agentic pipeline — automated research, citation verification, and QA. Source counts and verification status are attached.
+              Every artifact below was generated through an Esy workflow. Each run captures full provenance — sources, prompts, models, processing, and cost.
             </p>
           </div>
 
@@ -424,28 +483,143 @@ const IntelligenceCircuitryPage: React.FC = () => {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          FINAL CTA
+          CASE STUDY — clip.art runs on Esy
+          Immersive two-column treatment: story on the left (live
+          indicator, headline, body, style pill row, CTAs), 4×3
+          catalog grid on the right pulled directly from clip.art's
+          live CDN. Repeatable template for future case studies
+          (micro.film, lazy.dev, etc.).
+          ══════════════════════════════════════════════════════════════ */}
+      {CLIPART_SHOWCASE.length > 0 && (
+        <section className="ic-casestudy-section">
+          <div className="ic-casestudy-bg-glow" aria-hidden="true" />
+          <div className="ic-casestudy-container">
+            <div className="ic-casestudy-grid">
+              {/* ── Story column ── */}
+              <div className="ic-casestudy-story">
+                <div className="ic-casestudy-meta-row">
+                  <span className="ic-casestudy-live">
+                    <span className="ic-casestudy-live-dot" aria-hidden="true" />
+                    Live · In Production
+                  </span>
+                  <span className="ic-casestudy-tag">Case Study</span>
+                </div>
+
+              <h2 className="ic-casestudy-title">
+                <span className="ic-casestudy-title-link" aria-label="clip.art">
+                  <ClipArtWordmark className="ic-casestudy-wordmark" />
+                </span>
+                <span className="ic-casestudy-title-tail">runs on Esy</span>
+              </h2>
+
+                <p className="ic-casestudy-description">
+                  Consumer marketplace for clip art, coloring pages, and
+                  illustrations. Esy workflows generate, post-process, and
+                  store every asset — provenance per run on prompt, model,
+                  processing, storage, and cost.
+                </p>
+
+                <div className="ic-casestudy-styles">
+                  <span className="ic-casestudy-styles-label">
+                    {CLIPART_CATALOG_STYLES.length} styles supported
+                  </span>
+                  <div className="ic-casestudy-style-pills">
+                    {CLIPART_CATALOG_STYLES.map((style) => (
+                      <span key={style} className="ic-casestudy-style-pill">
+                        {style}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="ic-casestudy-ctas">
+                  <Link
+                    href="/workflows/generate-clip-art-asset/"
+                    className="ic-casestudy-cta ic-casestudy-cta--primary"
+                  >
+                    See the workflow
+                    <ArrowRight size={14} />
+                  </Link>
+                </div>
+              </div>
+
+              {/* ── Catalog grid (4×3) — real clip.art CDN assets ── */}
+              <div
+                className="ic-casestudy-catalog"
+                aria-label="Sample assets from clip.art's catalog"
+              >
+                <div
+                  ref={catalogGridRef}
+                  className={`ic-casestudy-catalog-grid${
+                    catalogInView ? ' ic-casestudy-catalog-grid--in-view' : ''
+                  }`}
+                >
+                  {CLIPART_SHOWCASE.map((art) => (
+                    <div
+                      key={art.url}
+                      className="ic-casestudy-tile"
+                      aria-label={art.alt}
+                    >
+                      <Image
+                        src={art.url}
+                        alt={art.alt}
+                        width={228}
+                        height={228}
+                        className="ic-casestudy-tile-image"
+                        sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 175px"
+                        unoptimized
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ══════════════════════════════════════════════════════════════
+          FINAL CTA — Engineer-first close
+          Elevated cream surface (in navy-calm) sits between the case
+          study above and the dark navy footer below, giving the page
+          a clear three-step rhythm: content → close → end. Includes
+          the Esy operating-model strip so visitors leave with a
+          mental model of what they're stepping into.
           ══════════════════════════════════════════════════════════════ */}
       <section className="ic-final-cta-section">
-        <div className="ic-final-cta-background" />
+        <div className="ic-final-cta-background" aria-hidden="true" />
         <div className="ic-final-cta-container">
           <h2 className="ic-final-cta-headline">
-            Build something <span className="ic-gradient-text">auditable.</span>
+            Build something <span className="ic-final-cta-headline-accent">auditable.</span>
           </h2>
+
           <p className="ic-final-cta-description">
-            Start from a workflow template. Let agents handle the pipeline.
+            Pick a workflow template. Let agents run the pipeline. Get back
+            a publishable artifact with full provenance — sources, prompts,
+            models, processing, and cost.
           </p>
+
           <div className="ic-final-cta-buttons">
-            <Link 
+            <Link
               href="/workflows"
-              className="ic-cta-primary ic-cta-primary--large"
+              className="ic-final-cta-btn ic-final-cta-btn--primary"
             >
               <span>Browse Workflow Templates</span>
-              <ArrowRight size={20} />
+              <ArrowRight size={18} />
             </Link>
-            <Link href="/research" className="ic-cta-secondary">
+            <Link href="/research" className="ic-final-cta-btn ic-final-cta-btn--secondary">
               <span>Follow the Research</span>
             </Link>
+          </div>
+
+          <div className="ic-final-cta-pipeline" aria-label="Esy operating model">
+            <span className="ic-final-cta-pipeline-step">Workflow Template</span>
+            <span className="ic-final-cta-pipeline-arrow" aria-hidden="true">→</span>
+            <span className="ic-final-cta-pipeline-step">Run</span>
+            <span className="ic-final-cta-pipeline-arrow" aria-hidden="true">→</span>
+            <span className="ic-final-cta-pipeline-step ic-final-cta-pipeline-step--accent">
+              Audited Artifact
+            </span>
           </div>
         </div>
       </section>

@@ -69,6 +69,24 @@ Workflows are designed to **externalize cognition** — making thinking visible,
 - Visual and scrollytelling workflows
 - Learning and concept-mapping workflows
 
+### URL and Naming Standard
+
+Use `/workflows` as the canonical public URL for Esy's workflow library.
+
+Do not use `/templates` as the primary product route. "Templates" alone sounds like static prompts, documents, or design assets. Esy's product category is workflows: repeatable processes that agents can run.
+
+When referring to prebuilt workflow starting points in user-facing copy, use **Workflow Template**. This keeps the SEO value of "template" while making the product meaning clear.
+
+Preferred language:
+- **Agentic Workflows** for the page, navigation, and breadcrumb label.
+- **Workflow Template** for cards, badges, detail pages, and reusable starting points.
+- **workflow template** in sentence case inside body copy.
+
+Avoid:
+- **Templates** as a standalone nav, heading, badge, or breadcrumb label.
+- **Prompt templates** for workflow pages, unless the page is specifically about legacy AI prompts.
+- `/templates` as the canonical route.
+
 ---
 
 ## Artifacts

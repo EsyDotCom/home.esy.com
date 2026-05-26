@@ -15,7 +15,7 @@ const nextConfig = {
     }
   }),
   images: {
-    domains: ['images.unsplash.com', 'upload.wikimedia.org', 'images.metmuseum.org', 'images.esy.com'],
+    domains: ['images.unsplash.com', 'upload.wikimedia.org', 'images.metmuseum.org', 'images.esy.com', 'images.clip.art'],
     ...(process.env.NODE_ENV === 'production' && {
       unoptimized: true
     })

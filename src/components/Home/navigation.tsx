@@ -113,6 +113,7 @@ export default function Navigation({
         const isGlossaryPage = normalizedPath === '/glossary' || normalizedPath.startsWith('/glossary/');
         const isResearchPage = normalizedPath === '/research' || normalizedPath.startsWith('/research/');
         const isInfographicsPage = normalizedPath === '/infographics' || normalizedPath.startsWith('/infographics/');
+        const isClipArtPage = normalizedPath === '/clip-art' || normalizedPath.startsWith('/clip-art/');
         // Check for 404 page - Next.js uses various paths
         // Also check body classes as fallback since pathname might not be reliable
         const hasNotFoundBodyClass = typeof window !== 'undefined' && (
@@ -127,7 +128,7 @@ export default function Navigation({
         const isSchoolOrCoursesSection = isSchoolArticle || isCoursesPage;
         
         // Pages that always use light theme (Navy Calm)
-        const isAlwaysLightPage = isEssaysPage || isAboutPage || isSchoolPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isResearchPage || isInfographicsPage;
+        const isAlwaysLightPage = isEssaysPage || isAboutPage || isSchoolPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isResearchPage || isInfographicsPage || isClipArtPage;
         
         // Check for homepage themes
         if (isHomepage) {
@@ -478,6 +479,16 @@ export default function Navigation({
                         <span className="nav-artifact-desc">Citation-verified visual data</span>
                       </div>
                     </Link>
+                    <Link
+                      href="/clip-art/"
+                      className="nav-artifact-item"
+                      onClick={() => setIsArtifactsOpen(false)}
+                    >
+                      <div className="nav-artifact-content">
+                        <span className="nav-artifact-title">Clip Art</span>
+                        <span className="nav-artifact-desc">Isolated visual assets, generated &amp; reviewed</span>
+                      </div>
+                    </Link>
                   </div>
                 </div>
             </div>
@@ -606,6 +617,16 @@ export default function Navigation({
             >
               <span className="mnav-item__label">Infographics</span>
               <span className="mnav-item__desc">Citation-verified visual data</span>
+            </Link>
+
+            <Link
+              href="/clip-art/"
+              className={`mnav-item ${normalizedPathForNav.startsWith('/clip-art') ? 'mnav-item--active' : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{ animationDelay: '0.10s' }}
+            >
+              <span className="mnav-item__label">Clip Art</span>
+              <span className="mnav-item__desc">Isolated visual assets, generated &amp; reviewed</span>
             </Link>
 
             <Link 

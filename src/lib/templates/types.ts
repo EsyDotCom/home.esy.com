@@ -22,6 +22,23 @@ export interface WorkflowDetail {
   examples?: { label: string; value: string }[];
 }
 
+// Example output rendered in the "Example outputs" section of a workflow detail page.
+// For visual workflows (clip art, infographics, covers), set `imageUrl` to render the
+// card image-first. For text workflows (essays, research), omit `imageUrl` and the card
+// falls back to a title + description block.
+export interface SampleArtifact {
+  title: string;
+  description: string;
+  // Absolute URL (e.g. https://images.esy.com/...) or root-relative path
+  // (e.g. /sample-artifacts/clip-art/friendly-fox.png). When present, the card
+  // renders image-first.
+  imageUrl?: string;
+  // Falls back to `title` when omitted.
+  imageAlt?: string;
+  // Controls the preview frame's aspect ratio. Defaults to '1:1'.
+  imageAspectRatio?: '1:1' | '3:4' | '4:3' | '16:9';
+}
+
 // Pricing for premium prompts
 export interface TemplatePricing {
   type: 'free' | 'premium';
@@ -64,7 +81,7 @@ export interface Template {
   outputFormats?: string[]; // e.g., ['PNG', 'SVG', 'PDF']
   estimatedTime?: string; // e.g., '~2 min'
   inputRequirements?: string[]; // e.g., ['Citation or DOI', 'Data (optional)']
-  sampleArtifacts?: { title: string; description: string }[];
+  sampleArtifacts?: SampleArtifact[];
   engine?: string; // e.g., 'Nano Banana Pro', 'Claude Opus'
 }
 

@@ -1,0 +1,387 @@
+/*
+ * Clip Art — Index Page
+ *
+ * Design: Navy Calm Light Theme (canonical brand palette).
+ * Mirrors the token block and rhythm of `infographics.css` so that
+ * Essays, Infographics, and Clip Art read as siblings under "Artifacts".
+ *
+ * Intentional deviations from `infographics.css`:
+ *  - No coverflow hero. Clip art has no single "featured" piece to spotlight.
+ *  - Card image-wrap uses --color-elevated so transparent edges are visible.
+ *  - Layout is the same masonry primitive — never normalize aspect ratios,
+ *    since clip art can be square, portrait, or landscape.
+ *  - Adds a single navy-pill CTA at the bottom pointing to the workflow.
+ *
+ * Follows UI/UX Design Expert agent standards:
+ *  - 8px spacing grid
+ *  - Cormorant Garamond (editorial) + Inter (UI)
+ *  - WCAG AA contrast
+ *  - Mobile-first breakpoints: 480, 640, 768, 1024, 1200, 1280
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+
+/* ============================================
+   DESIGN TOKENS — Navy Calm Light Theme
+   (Mirrors infographics.css / visual-essays.css canonical tokens)
+   ============================================ */
+.ca-page {
+  --color-bg: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-elevated: #F8FAFC;
+
+  --color-border: rgba(10, 37, 64, 0.08);
+  --color-border-strong: rgba(10, 37, 64, 0.15);
+
+  --color-text: #0A2540;
+  --color-text-secondary: rgba(10, 37, 64, 0.7);
+  --color-text-tertiary: rgba(10, 37, 64, 0.5);
+
+  --color-accent: #00A896;
+  --color-accent-muted: rgba(0, 168, 150, 0.08);
+  --color-accent-glow: rgba(0, 168, 150, 0.15);
+
+  --font-editorial: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, sans-serif;
+
+  --space-unit: 8px;
+  --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-fast: 0.15s ease;
+
+  --header-height: 80px;
+}
+
+
+/* ============================================
+   PAGE BASE
+   ============================================ */
+.ca-page {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  padding-top: var(--header-height);
+}
+
+.ca-page * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.clip-art-loading {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+
+/* ============================================
+   HERO — Typographic only (centered editorial)
+   ============================================ */
+.ca-hero {
+  text-align: center;
+  padding: calc(var(--space-unit) * 6) calc(var(--space-unit) * 3) calc(var(--space-unit) * 3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+@media (min-width: 768px) {
+  .ca-hero {
+    padding: calc(var(--space-unit) * 8) calc(var(--space-unit) * 6) calc(var(--space-unit) * 4);
+  }
+}
+
+.ca-hero__title {
+  font-family: var(--font-editorial);
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: calc(var(--space-unit) * 1);
+}
+
+.ca-hero__subtitle {
+  font-family: var(--font-editorial);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-style: italic;
+  color: var(--color-text-secondary);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+
+/* Stats Bar (under hero) */
+.ca-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--space-unit) * 2);
+  padding: calc(var(--space-unit) * 2.5) calc(var(--space-unit) * 3) 0;
+  font-size: 0.6875rem;
+  color: var(--color-text-tertiary);
+  flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .ca-stats {
+    gap: calc(var(--space-unit) * 3);
+    font-size: 0.75rem;
+    padding-top: calc(var(--space-unit) * 3);
+  }
+}
+
+.ca-stat {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--space-unit) * 0.75);
+}
+
+.ca-stat__value {
+  font-family: var(--font-editorial);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+@media (min-width: 768px) {
+  .ca-stat__value {
+    font-size: 1.125rem;
+  }
+}
+
+.ca-stat__label {
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.ca-stat__divider {
+  opacity: 0.3;
+}
+
+
+/* ============================================
+   FILTER PILLS (mirrors .infographics-filters)
+   ============================================ */
+.ca-filters {
+  padding: calc(var(--space-unit) * 3) calc(var(--space-unit) * 4);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: calc(var(--space-unit) * 1);
+  border-bottom: 1px solid var(--color-border);
+}
+
+@media (min-width: 768px) {
+  .ca-filters {
+    padding: calc(var(--space-unit) * 3) calc(var(--space-unit) * 8);
+  }
+}
+
+.ca-filter {
+  padding: calc(var(--space-unit) * 0.875) calc(var(--space-unit) * 2.5);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.ca-filter:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.ca-filter--active {
+  background: var(--color-text);
+  border-color: var(--color-text);
+  color: var(--color-bg);
+}
+
+
+/* ============================================
+   MASONRY GALLERY (mirrors .infographics-masonry)
+   Cards stack naturally — clip art aspect ratios are preserved.
+   ============================================ */
+.ca-masonry {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--space-unit) * 4) calc(var(--space-unit) * 3);
+  columns: 1;
+  column-gap: calc(var(--space-unit) * 3);
+}
+
+@media (min-width: 640px) {
+  .ca-masonry {
+    columns: 2;
+    padding: calc(var(--space-unit) * 5) calc(var(--space-unit) * 4);
+  }
+}
+
+@media (min-width: 1024px) {
+  .ca-masonry {
+    columns: 3;
+    padding: calc(var(--space-unit) * 6) calc(var(--space-unit) * 6);
+  }
+}
+
+@media (min-width: 1280px) {
+  .ca-masonry {
+    padding: calc(var(--space-unit) * 6) calc(var(--space-unit) * 8);
+  }
+}
+
+
+/* ============================================
+   CARD (mirrors .infographic-card)
+   Image renders at natural aspect ratio — NEVER cropped or letterboxed.
+   Image-wrap uses --color-elevated so transparent edges read as
+   "isolated on neutral" instead of disappearing into a white card.
+   ============================================ */
+.ca-card {
+  display: block;
+  break-inside: avoid;
+  margin-bottom: calc(var(--space-unit) * 3);
+  text-decoration: none;
+  color: inherit;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  transition: all var(--transition);
+}
+
+.ca-card:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: 0 8px 32px rgba(10, 37, 64, 0.08);
+  transform: translateY(-2px);
+}
+
+.ca-card__image-wrap {
+  overflow: hidden;
+  line-height: 0;
+  background: var(--color-elevated);
+}
+
+.ca-card__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.4s ease;
+}
+
+.ca-card:hover .ca-card__image {
+  transform: scale(1.02);
+}
+
+.ca-card__meta {
+  padding: calc(var(--space-unit) * 1.5) calc(var(--space-unit) * 2) calc(var(--space-unit) * 2);
+}
+
+.ca-card__style {
+  display: inline-block;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-bottom: calc(var(--space-unit) * 0.75);
+}
+
+.ca-card__title {
+  font-family: var(--font-editorial);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--color-text);
+  transition: color var(--transition-fast);
+}
+
+.ca-card:hover .ca-card__title {
+  color: var(--color-accent);
+}
+
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+.ca-empty {
+  text-align: center;
+  padding: calc(var(--space-unit) * 12) calc(var(--space-unit) * 4);
+  color: var(--color-text-tertiary);
+  font-family: var(--font-editorial);
+  font-size: 1rem;
+  font-style: italic;
+}
+
+
+/* ============================================
+   COMING SOON + WORKFLOW CTA
+   (mirrors .ig-coming-soon + .ig-hero__cta pattern)
+   ============================================ */
+.ca-coming-soon {
+  padding: calc(var(--space-unit) * 8) calc(var(--space-unit) * 4) calc(var(--space-unit) * 10);
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+}
+
+@media (min-width: 768px) {
+  .ca-coming-soon {
+    padding: calc(var(--space-unit) * 10) calc(var(--space-unit) * 8) calc(var(--space-unit) * 12);
+  }
+}
+
+.ca-coming-soon__text {
+  font-family: var(--font-editorial);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--color-text-tertiary);
+  max-width: 480px;
+  margin: 0 auto calc(var(--space-unit) * 3);
+  line-height: 1.6;
+}
+
+.ca-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--space-unit) * 1);
+  padding: calc(var(--space-unit) * 1.5) calc(var(--space-unit) * 3);
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-radius: 100px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.ca-cta:hover {
+  transform: translateX(2px);
+  box-shadow: 0 4px 16px rgba(10, 37, 64, 0.15);
+}
+
+.ca-cta svg {
+  transition: transform var(--transition);
+}
+
+.ca-cta:hover svg {
+  transform: translateX(3px);
+}
+
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .ca-page * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

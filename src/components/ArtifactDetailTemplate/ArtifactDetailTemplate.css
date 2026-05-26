@@ -587,7 +587,15 @@
 
 @media (min-width: 640px) {
   .adt-samples-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Tighter thumbnail layout once we have room — keeps clip-art samples
+   from rendering at ~600px wide, which dominates the page. */
+@media (min-width: 1024px) {
+  .adt-samples-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -596,13 +604,59 @@
   border: 1px solid rgba(10, 37, 64, 0.08);
   border-radius: 12px;
   padding: 24px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   box-shadow: 0 1px 2px rgba(10, 37, 64, 0.02);
 }
 
 .adt-sample-card:hover {
   border-color: rgba(0, 168, 150, 0.25);
   box-shadow: 0 2px 8px rgba(10, 37, 64, 0.04);
+}
+
+/* Image-first variant — used by visual workflows (clip art, infographics, covers). */
+.adt-sample-card--media {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.adt-sample-card--media:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10, 37, 64, 0.06);
+}
+
+.adt-sample-image {
+  position: relative;
+  width: 100%;
+  background:
+    linear-gradient(180deg, #FCFDFE 0%, #F4F7FA 100%);
+  border-bottom: 1px solid rgba(10, 37, 64, 0.05);
+  overflow: hidden;
+}
+
+.adt-sample-image--1-1 { aspect-ratio: 1 / 1; }
+.adt-sample-image--3-4 { aspect-ratio: 3 / 4; }
+.adt-sample-image--4-3 { aspect-ratio: 4 / 3; }
+.adt-sample-image--16-9 { aspect-ratio: 16 / 9; }
+
+.adt-sample-image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 24px;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.adt-sample-card--media:hover .adt-sample-image img {
+  transform: scale(1.03);
+}
+
+.adt-sample-card--media .adt-sample-body {
+  padding: 20px 24px 24px;
 }
 
 .adt-sample-title {
