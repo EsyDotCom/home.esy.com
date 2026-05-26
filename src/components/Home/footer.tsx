@@ -71,10 +71,15 @@ export default function Footer () {
                                normalizedPath === '/404' || 
                                normalizedPath === '/not-found' ||
                                hasNotFoundBodyClass;
-        
-        // Pages that always use light theme (Navy Calm)
-        const isAlwaysLightPage = isEssaysPage || isAboutPage || isSchoolPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isResearchPage || isInfographicsPage;
-        
+
+        // Reference unused page flags so future per-page overrides can re-attach
+        // without re-discovering them. Navy Dark is the sitewide default footer;
+        // pages opt out via explicit branches (models, 404, school articles, courses).
+        // NOTE: the homepage intentionally falls through to the default Navy Dark
+        // footer even when the IC page itself is in light/navy-calm mode — the
+        // user wants a single, consistent footer treatment across the site.
+        void (isHomepage || isEssaysPage || isAboutPage || isSchoolPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isResearchPage || isInfographicsPage);
+
         if (isModelsPage) {
           // Check localStorage for models page theme
           const storedTheme = localStorage.getItem('theme-models');
@@ -123,15 +128,6 @@ export default function Footer () {
             setIsLightMode(false);
             setIsNavyDark(true);
           }
-        } else if (isAlwaysLightPage) {
-          setIsLightMode(true);
-          setIsNavyDark(false);
-        } else if (isHomepage) {
-          const icPage = document.querySelector('.ic-page');
-          const isNavyCalmLight = icPage?.classList.contains('ic-page--light') || icPage?.classList.contains('ic-page--navy-calm');
-          const isNavyDarkMode = icPage?.classList.contains('ic-page--navy-dark');
-          setIsLightMode(isNavyCalmLight || false);
-          setIsNavyDark(isNavyDarkMode || false);
         } else if (isSchoolArticle || isCoursesPage) {
           // Check localStorage for school page theme (articles + courses)
           const storedTheme = localStorage.getItem('theme-school');
@@ -232,7 +228,10 @@ export default function Footer () {
     const logoTheme = isLightMode ? 'light' : isNavyDark ? 'navy-dark' : 'dark';
 
     return (
-      <footer className={`footer ${isLightMode ? 'footer--light' : ''}`} style={footerStyles.footer}>
+      <footer
+        className={`footer${isLightMode ? ' footer--light' : ''}${isNavyDark ? ' footer--navy-dark' : ''}`}
+        style={footerStyles.footer}
+      >
         {/* Subtle accent line at top */}
         <div style={footerStyles.footerOverlay} />
         
@@ -244,7 +243,7 @@ export default function Footer () {
             <p className="footer-desc" style={{ color: theme.muted }}>
               Agentic workflow templates that automate research, verify citations, and deliver publishable artifacts.
               <br />
-              <strong style={{ color: isLightMode ? theme.text : 'inherit' }}>Automate &amp; audit.</strong>
+              <strong style={{ color: isLightMode || isNavyDark ? theme.text : 'inherit' }}>Automate &amp; audit.</strong>
             </p>
             <div className="footer-socials">
               <a href="https://synthesize.esy.com" target="_blank" className="social-link" aria-label="Substack">

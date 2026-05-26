@@ -199,33 +199,39 @@ export default function WorkflowCategoryPage({
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '0.5rem',
+                        gap: '0.375rem',
                         marginBottom: '0.75rem',
+                        flexWrap: 'wrap',
+                        minWidth: 0,
                       }}
                     >
                       <span
                         style={{
-                          padding: '0.2rem 0.625rem',
+                          padding: '0.2rem 0.5rem',
                           background: theme.accentLight,
                           color: theme.accent,
                           borderRadius: '100px',
-                          fontSize: '0.6875rem',
+                          fontSize: '0.625rem',
                           fontWeight: 600,
                           letterSpacing: '0.04em',
                           textTransform: 'uppercase',
+                          whiteSpace: 'nowrap',
+                          lineHeight: 1.4,
                         }}
                       >
-                        Workflow Template
+                        Workflow
                       </span>
                       {template.engine && (
                         <span
                           style={{
-                            padding: '0.2rem 0.625rem',
+                            padding: '0.2rem 0.5rem',
                             background: theme.surface,
                             color: theme.subtle,
                             borderRadius: '100px',
-                            fontSize: '0.6875rem',
+                            fontSize: '0.625rem',
                             fontWeight: 500,
+                            whiteSpace: 'nowrap',
+                            lineHeight: 1.4,
                           }}
                         >
                           {template.engine}
@@ -235,8 +241,10 @@ export default function WorkflowCategoryPage({
                         <span
                           style={{
                             marginLeft: 'auto',
-                            fontSize: '0.75rem',
+                            fontSize: '0.6875rem',
                             color: theme.faint,
+                            whiteSpace: 'nowrap',
+                            lineHeight: 1.4,
                           }}
                         >
                           {template.estimatedTime}

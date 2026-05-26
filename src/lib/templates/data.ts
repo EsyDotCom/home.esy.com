@@ -3199,16 +3199,31 @@ Develop master argument framework:
         ],
       },
     ],
+    // Real artifacts produced by the Generate Clip Art Asset workflow,
+    // served from ESY R2 via images.esy.com. Each entry mirrors a record
+    // shown in app.esy.com/artifacts; key shape follows the MVP convention:
+    // artifacts/{artifact_type}/{artifact_id}/processed.webp.
     sampleArtifacts: [
       {
-        title: 'Friendly Fox Waving',
-        description:
-          'A flat 1:1 clip art asset with clean edges, transparent background, and a stored resolved prompt for review.',
+        title: "Bunny's Pancake Breakfast",
+        description: 'Cartoon style with bold outlines and flat fills — generated via gpt-image-2, post-processed, and stored as an Esy artifact.',
+        imageUrl: 'https://images.esy.com/artifacts/clip-art/artifact-12559e5e/processed.webp',
+        imageAlt: 'Cartoon blue bunny eating pancakes in bed',
+        imageAspectRatio: '1:1',
       },
       {
-        title: 'Watercolor Dinosaur Sticker',
-        description:
-          'A playful visual asset generated with a style preset, processed for background removal, and saved as an Esy artifact.',
+        title: 'Sleeping Duckling',
+        description: 'Chibi style with soft palette and clean transparent edges — runtime metadata captured for review.',
+        imageUrl: 'https://images.esy.com/artifacts/clip-art/artifact-5876fdfb/processed.webp',
+        imageAlt: 'Chibi-style sleeping yellow duckling tucked into bed',
+        imageAspectRatio: '1:1',
+      },
+      {
+        title: 'Sleeping Chipmunk Family',
+        description: 'Illustrated cartoon style with painterly shading — full provenance: prompt, model, R2 storage, and cost.',
+        imageUrl: 'https://images.esy.com/artifacts/clip-art/artifact-d0c32dbb/processed.webp',
+        imageAlt: 'Illustrated chipmunk family sleeping in a woven nest',
+        imageAspectRatio: '1:1',
       },
     ],
   },

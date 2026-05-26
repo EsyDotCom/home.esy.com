@@ -1785,6 +1785,28 @@ html {
   color: #64748b;
 }
 
+/* ─── Navy Dark theme overrides ─────────────────────────────
+   The default greys (#71717a / #a1a1aa) were tuned for a dark
+   charcoal footer. On the navy gradient (#0A2540 → #061527)
+   they read as muddy. Bright white labels with cleanly muted
+   links + a teal accent hover restore proper hierarchy.
+   ─────────────────────────────────────────────────────────── */
+.footer--navy-dark .footer-column h4 {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.footer--navy-dark .footer-link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer--navy-dark .footer-link:hover {
+  color: #00D4AA;
+}
+
+.footer--navy-dark .footer-bottom {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
 .footer--light .social-link {
   color: #64748b;
 }

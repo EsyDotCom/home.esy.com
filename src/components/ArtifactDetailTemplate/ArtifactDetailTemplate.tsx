@@ -283,12 +283,32 @@ export default function ArtifactDetailTemplate({
               <h3>Example outputs</h3>
             </header>
             <div className="adt-samples-grid">
-              {sampleArtifacts.map((sample, i) => (
-                <div key={i} className="adt-sample-card">
-                  <p className="adt-sample-title">{sample.title}</p>
-                  <p className="adt-sample-desc">{sample.description}</p>
-                </div>
-              ))}
+              {sampleArtifacts.map((sample, i) => {
+                const ratio = sample.imageAspectRatio ?? '1:1';
+                const ratioClass = `adt-sample-image--${ratio.replace(':', '-')}`;
+                const isMedia = Boolean(sample.imageUrl);
+                return (
+                  <div
+                    key={i}
+                    className={`adt-sample-card${isMedia ? ' adt-sample-card--media' : ''}`}
+                  >
+                    {isMedia && (
+                      <div className={`adt-sample-image ${ratioClass}`}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={sample.imageUrl}
+                          alt={sample.imageAlt || sample.title}
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <div className="adt-sample-body">
+                      <p className="adt-sample-title">{sample.title}</p>
+                      <p className="adt-sample-desc">{sample.description}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
