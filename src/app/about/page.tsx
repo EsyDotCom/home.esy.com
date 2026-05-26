@@ -631,12 +631,12 @@ export default function AboutPage() {
                 color: theme.muted,
                 marginBottom: '2rem'
               }}>
-                That work is ongoing. The same infrastructure is available to other engineers through my{' '}
+                That work is ongoing.                 The same infrastructure is available to other engineers through my{' '}
                 <Link
                   href="/workflows"
                   style={{ color: theme.accent, textDecoration: 'none', borderBottom: `1px solid ${theme.accent}` }}
                 >
-                  templates
+                  workflow templates
                 </Link>
                 {' '}and the API.
               </p>
