@@ -25,6 +25,12 @@ const ConditionalFooter = () => {
   if (isInfographicViewPage) {
     return null;
   }
+
+  // Individual clip-art detail pages use their own artifact wrapper
+  const isClipArtViewPage = normalizedPath?.startsWith('/clip-art/') && normalizedPath !== '/clip-art';
+  if (isClipArtViewPage) {
+    return null;
+  }
   
   // Check if we're on a prompt library page (individual prompt or category page)
   const isPromptPage = normalizedPath?.startsWith('/prompt-library/') && normalizedPath !== '/prompt-library';

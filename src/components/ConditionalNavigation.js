@@ -72,14 +72,18 @@ const ConditionalNavigation = () => {
   // Individual infographic detail pages use their own artifact toolbar
   const isInfographicViewPage = normalizedPath?.startsWith('/infographics/') && normalizedPath !== '/infographics';
 
+  // Individual clip-art detail pages use their own artifact toolbar
+  const isClipArtViewPage = normalizedPath?.startsWith('/clip-art/') && normalizedPath !== '/clip-art';
+
   // Don't render navigation on:
   // - Essay view pages (focused reading)
   // - Infographic detail pages (artifact wrapper has own toolbar)
+  // - Clip-art detail pages (artifact wrapper has own toolbar)
   // - Docs pages (own navigation)
   // - Agents pages (own sidebar navigation)
   // - Scrollytelling story pages (own header via ScrollytellingHeader)
   // - Photo essays landing page (immersive experience with own header)
-  if (isEssayViewPage || isInfographicViewPage || isDocsPage || isAgentsPage || isScrollytellingStoryPage || isPhotoEssaysPage) {
+  if (isEssayViewPage || isInfographicViewPage || isClipArtViewPage || isDocsPage || isAgentsPage || isScrollytellingStoryPage || isPhotoEssaysPage) {
     return null;
   }
 

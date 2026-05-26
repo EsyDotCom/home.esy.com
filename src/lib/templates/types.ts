@@ -83,6 +83,8 @@ export interface Template {
   inputRequirements?: string[]; // e.g., ['Citation or DOI', 'Data (optional)']
   sampleArtifacts?: SampleArtifact[];
   engine?: string; // e.g., 'Nano Banana Pro', 'Claude Opus'
+  // Secondary CTA on workflow detail pages ("Explore Artifacts").
+  exploreArtifactsHref?: string;
 }
 
 export interface TemplateSubcategory {

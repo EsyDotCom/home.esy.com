@@ -24,6 +24,8 @@ export type ClipArtStyle =
   | 'illustrated'
   | 'watercolor';
 
+export type ClipArtAspectRatio = '1:1' | '3:4' | '4:3' | '16:9';
+
 export interface ClipArtArtifact {
   /** Maps 1:1 to the artifact ID in app.esy.com/artifacts. */
   id: string;
@@ -35,6 +37,8 @@ export interface ClipArtArtifact {
   style: ClipArtStyle;
   /** Public R2 URL via images.esy.com. */
   imageUrl: string;
+  /** Raw (pre-processed) asset URL — kept for provenance comparisons. */
+  rawImageUrl?: string;
   imageAlt: string;
   /**
    * Intrinsic dimensions of the source asset. Used to render at natural
@@ -49,6 +53,26 @@ export interface ClipArtArtifact {
   /** Free-text subject group used for grouping in the UI. */
   subjectGroup?: string;
   generatedAt?: string;
+  /** Provider model that produced the raw asset. */
+  engine?: string;
+  /** Resolved prompt sent to the provider. */
+  prompt?: string;
+  /** Background removal pipeline (none = kept). */
+  backgroundRemoval?: 'birefnet-light' | 'none';
+  /** Output format(s) available on the CDN. */
+  formats?: string[];
+}
+
+/** Derives the aspect ratio label from width/height (returns 'custom' for non-standard ratios). */
+export function getClipArtAspectRatio(
+  artifact: Pick<ClipArtArtifact, 'width' | 'height'>,
+): ClipArtAspectRatio | 'custom' {
+  const ratio = artifact.width / artifact.height;
+  if (Math.abs(ratio - 1) < 0.02) return '1:1';
+  if (Math.abs(ratio - 3 / 4) < 0.02) return '3:4';
+  if (Math.abs(ratio - 4 / 3) < 0.02) return '4:3';
+  if (Math.abs(ratio - 16 / 9) < 0.02) return '16:9';
+  return 'custom';
 }
 
 export const clipArtArtifacts: ClipArtArtifact[] = [
@@ -61,12 +85,19 @@ export const clipArtArtifacts: ClipArtArtifact[] = [
     style: 'cartoon',
     imageUrl:
       'https://images.esy.com/artifacts/clip-art/artifact-12559e5e/processed.webp',
+    rawImageUrl:
+      'https://images.esy.com/artifacts/clip-art/artifact-12559e5e/raw.png',
     imageAlt: 'Cartoon blue bunny eating pancakes in bed',
     width: 1024,
     height: 1024,
     tags: ['bunny', 'breakfast', 'pancakes', 'animal', 'cute'],
     subjectGroup: 'animals',
     generatedAt: '2026-05-16',
+    engine: 'gpt-image-2',
+    prompt:
+      'Cartoon-style clip art of a blue bunny sitting up in bed eating a stack of pancakes, bold outlines, flat color fills, friendly expression, isolated on white background.',
+    backgroundRemoval: 'birefnet-light',
+    formats: ['WEBP', 'PNG'],
   },
   {
     id: 'artifact-5876fdfb',
@@ -77,12 +108,19 @@ export const clipArtArtifacts: ClipArtArtifact[] = [
     style: 'chibi',
     imageUrl:
       'https://images.esy.com/artifacts/clip-art/artifact-5876fdfb/processed.webp',
+    rawImageUrl:
+      'https://images.esy.com/artifacts/clip-art/artifact-5876fdfb/raw.png',
     imageAlt: 'Chibi-style sleeping yellow duckling tucked into bed',
     width: 1024,
     height: 1024,
     tags: ['duckling', 'sleeping', 'bedtime', 'animal', 'kawaii'],
     subjectGroup: 'animals',
     generatedAt: '2026-05-16',
+    engine: 'gpt-image-2',
+    prompt:
+      'Chibi-style clip art of a small yellow duckling sleeping peacefully tucked into a tiny bed, soft pastel palette, kawaii proportions, soft outlines, isolated on white background.',
+    backgroundRemoval: 'birefnet-light',
+    formats: ['WEBP', 'PNG'],
   },
   {
     id: 'artifact-d0c32dbb',
@@ -93,12 +131,19 @@ export const clipArtArtifacts: ClipArtArtifact[] = [
     style: 'illustrated',
     imageUrl:
       'https://images.esy.com/artifacts/clip-art/artifact-d0c32dbb/processed.webp',
+    rawImageUrl:
+      'https://images.esy.com/artifacts/clip-art/artifact-d0c32dbb/raw.png',
     imageAlt: 'Illustrated chipmunk family sleeping in a woven nest',
     width: 1024,
     height: 1024,
     tags: ['chipmunk', 'family', 'sleeping', 'nest', 'animal'],
     subjectGroup: 'animals',
     generatedAt: '2026-05-16',
+    engine: 'gpt-image-2',
+    prompt:
+      'Illustrated clip art of a chipmunk family of three sleeping curled together in a woven grass nest, painterly shading, warm autumn palette, soft lighting, isolated on white background.',
+    backgroundRemoval: 'birefnet-light',
+    formats: ['WEBP', 'PNG'],
   },
 ];
 
@@ -125,6 +170,14 @@ export const CLIP_ART_STYLE_COLORS: Record<ClipArtStyle, string> = {
 
 export function getClipArtBySlug(slug: string): ClipArtArtifact | undefined {
   return clipArtArtifacts.find((a) => a.slug === slug);
+}
+
+export function getClipArtSlugs(): string[] {
+  return clipArtArtifacts.map((a) => a.slug);
+}
+
+export function getClipArtBySubjectGroup(group: string): ClipArtArtifact[] {
+  return clipArtArtifacts.filter((a) => a.subjectGroup === group);
 }
 
 export function getUniqueStyles(): ClipArtStyle[] {

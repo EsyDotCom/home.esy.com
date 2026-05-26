@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import WorkflowCircuit from './WorkflowCircuit';
 import TemplateGrid from '@/components/templates/TemplateGrid';
+import { getExploreArtifactsHref } from '@/lib/templates/explore-artifacts';
 import type { ArtifactDetailTemplateProps } from './types';
 import './ArtifactDetailTemplate.css';
 
@@ -49,6 +50,7 @@ export default function ArtifactDetailTemplate({
   // (See docs/strategy/sessions/2026-05-25-workflow-detail-page-layout-and-design.md
   //  for the full URL-contract rationale.)
   const esyEditorUrl = `https://app.esy.com/workflows/${template.slug}`;
+  const exploreArtifactsHref = getExploreArtifactsHref(template);
 
   // Readable subcategory label
   const categoryLabel = subcategory
@@ -116,7 +118,7 @@ export default function ArtifactDetailTemplate({
                 Run in Esy
                 <ArrowRight size={16} />
               </a>
-              <Link href="/essays" className="adt-cta-secondary">
+              <Link href={exploreArtifactsHref} className="adt-cta-secondary">
                 Explore Artifacts
               </Link>
             </div>
