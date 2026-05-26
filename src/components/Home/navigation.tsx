@@ -379,12 +379,7 @@ export default function Navigation({
     return () => window.removeEventListener('scroll', handleScroll);
     }, [pathname, isLightMode, isNavyDark]);
 
-  // Toggle dropdown and close the other
-  const toggleArtifacts = useCallback(() => {
-    setIsArtifactsOpen(prev => !prev);
-    setIsLearnOpen(false);
-  }, []);
-
+  // Toggle dropdown and close the other (Learn dropdown only — Artifacts opens on hover via mouseEnter)
   const toggleLearn = useCallback(() => {
     setIsLearnOpen(prev => !prev);
     setIsArtifactsOpen(false);
@@ -442,18 +437,25 @@ export default function Navigation({
             <div 
               className="nav-dropdown-container"
               ref={artifactsDropdownRef}
+              onMouseEnter={() => {
+                setIsArtifactsOpen(true);
+                setIsLearnOpen(false);
+              }}
+              onMouseLeave={() => setIsArtifactsOpen(false)}
               >
-              <button 
-                className={`nav-dropdown-trigger ${isArtifactsOpen ? 'active' : ''}`}
+              <Link
+                href="/artifacts/"
+                className={`nav-dropdown-trigger ${isArtifactsOpen ? 'active' : ''} ${pathname === '/artifacts' || pathname?.startsWith('/artifacts/') ? 'active' : ''}`}
                 aria-expanded={isArtifactsOpen}
                 aria-haspopup="true"
-                onClick={toggleArtifacts}
+                onClick={() => setIsArtifactsOpen(false)}
                 style={{
                   color: isLightMode ? '#475569' : 'rgba(255, 255, 255, 0.85)',
+                  textDecoration: 'none',
                 }}
               >
                 <span>Artifacts</span>
-              </button>
+              </Link>
 
                 <div 
                 className={`nav-artifacts-dropdown ${isArtifactsOpen ? 'open' : ''}`}

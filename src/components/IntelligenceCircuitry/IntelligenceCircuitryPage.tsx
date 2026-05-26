@@ -363,7 +363,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                   <span>Browse Workflow Templates</span>
                   <ArrowRight size={18} />
                 </Link>
-                <Link href="/essays/" style={{ 
+                <Link href="/artifacts" style={{ 
                   display: 'inline-flex', 
                   alignItems: 'center', 
                   gap: '4px', 
