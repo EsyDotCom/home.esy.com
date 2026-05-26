@@ -20,12 +20,7 @@ function ClipArtCard({ artifact }: { artifact: ClipArtArtifact }) {
   const color = CLIP_ART_STYLE_COLORS[artifact.style] || '#6B7280';
 
   return (
-    <a
-      href={artifact.imageUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="ca-card"
-    >
+    <Link href={`/clip-art/${artifact.slug}/`} className="ca-card">
       <div className="ca-card__image-wrap">
         <Image
           src={artifact.imageUrl}
@@ -45,7 +40,7 @@ function ClipArtCard({ artifact }: { artifact: ClipArtArtifact }) {
         </span>
         <h3 className="ca-card__title">{artifact.title}</h3>
       </div>
-    </a>
+    </Link>
   );
 }
 

@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { usePathname } from 'next/navigation';
 import Logo from "@/components/Logo";
 import Link from "next/link";
-import { Menu, X, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronRight, ArrowRight } from "lucide-react";
 import HeaderSearch from "@/components/HeaderSearch/HeaderSearch";
 import NewsletterModal from "@/components/NewsletterModal/NewsletterModal";
 import { getAllPrompts } from "@/lib/prompts";
@@ -114,6 +114,7 @@ export default function Navigation({
         const isResearchPage = normalizedPath === '/research' || normalizedPath.startsWith('/research/');
         const isInfographicsPage = normalizedPath === '/infographics' || normalizedPath.startsWith('/infographics/');
         const isClipArtPage = normalizedPath === '/clip-art' || normalizedPath.startsWith('/clip-art/');
+        const isArtifactsPage = normalizedPath === '/artifacts' || normalizedPath.startsWith('/artifacts/');
         // Check for 404 page - Next.js uses various paths
         // Also check body classes as fallback since pathname might not be reliable
         const hasNotFoundBodyClass = typeof window !== 'undefined' && (
@@ -128,7 +129,7 @@ export default function Navigation({
         const isSchoolOrCoursesSection = isSchoolArticle || isCoursesPage;
         
         // Pages that always use light theme (Navy Calm)
-        const isAlwaysLightPage = isEssaysPage || isAboutPage || isSchoolPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isResearchPage || isInfographicsPage || isClipArtPage;
+        const isAlwaysLightPage = isEssaysPage || isAboutPage || isSchoolPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isResearchPage || isInfographicsPage || isClipArtPage || isArtifactsPage;
         
         // Check for homepage themes
         if (isHomepage) {
@@ -490,6 +491,16 @@ export default function Navigation({
                       </div>
                     </Link>
                   </div>
+                  <div className="nav-artifacts-footer">
+                    <Link
+                      href="/artifacts/"
+                      className="nav-artifacts-footer-link"
+                      onClick={() => setIsArtifactsOpen(false)}
+                    >
+                      All artifacts
+                      <ArrowRight size={14} aria-hidden="true" />
+                    </Link>
+                  </div>
                 </div>
             </div>
 
@@ -599,6 +610,16 @@ export default function Navigation({
 
           {/* Navigation links */}
           <nav className="mnav-body">
+            <Link
+              href="/artifacts/"
+              className={`mnav-item ${normalizedPathForNav.startsWith('/artifacts') ? 'mnav-item--active' : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{ animationDelay: '0.04s' }}
+            >
+              <span className="mnav-item__label">Artifacts</span>
+              <span className="mnav-item__desc">Essays, infographics, clip art</span>
+            </Link>
+
             <Link 
               href="/essays/" 
               className={`mnav-item ${normalizedPathForNav.startsWith('/essays') ? 'mnav-item--active' : ''}`}
