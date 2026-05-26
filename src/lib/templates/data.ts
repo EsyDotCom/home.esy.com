@@ -75,7 +75,7 @@ export const templateCategories: TemplateCategoryInfo[] = [
     name: 'Templates',
     slug: 'templates',
     description: 'Structured writing templates and frameworks',
-    count: 8,
+    count: 9,
     isComingSoon: false,
     subcategories: [
       {
@@ -125,6 +125,13 @@ export const templateCategories: TemplateCategoryInfo[] = [
         slug: 'essay-mla-format',
         name: 'MLA Format Essay',
         description: 'MLA citation and formatting templates',
+        count: 1,
+      },
+      {
+        id: 'clip-art',
+        slug: 'clip-art',
+        name: 'Clip Art',
+        description: 'Workflow templates for generating isolated visual assets',
         count: 1,
       },
     ],
@@ -3079,6 +3086,129 @@ Develop master argument framework:
         title: 'Overcoming Adversity: A First-Generation Story',
         description:
           'A Common App personal statement weaving family history, academic perseverance, and community impact into a cohesive narrative.',
+      },
+    ],
+  },
+  {
+    id: 'wf-8',
+    slug: 'generate-clip-art-asset',
+    title: 'Generate Clip Art Asset',
+    shortDescription:
+      'Generate isolated clip art with style controls, background removal, and provenance.',
+    description:
+      'Describe the asset you need, choose a style and aspect ratio, and Esy runs the clip.art image workflow. The workflow resolves the provider prompt, generates the image with gpt-image-2, removes the background with birefnet-light when enabled, and returns a review-ready visual artifact.',
+    category: 'template',
+    subcategory: 'clip-art',
+    tags: [
+      'clip-art',
+      'clip art',
+      'visual artifact',
+      'image generation',
+      'background removal',
+      'gpt-image-2',
+      'birefnet-light',
+      'workflow',
+    ],
+    difficulty: 'beginner',
+    isNew: true,
+    isFeatured: true,
+    content: '',
+    variables: [],
+    expectedOutput:
+      'A review-ready clip art artifact with raw and processed image assets, resolved prompt, style, aspect ratio, storage metadata, and cost provenance.',
+    useCases: [
+      'clip.art catalog asset generation',
+      'Isolated illustrations for packs and collections',
+      'Transparent-background clip art',
+      'Style-consistent visual asset batches',
+      'Internal review queues before publishing',
+    ],
+    relatedSlugs: ['research-infographic'],
+    model: null,
+    pricing: { type: 'premium' },
+    isWorkflow: true,
+    engine: 'gpt-image-2',
+    estimatedTime: '~30 sec',
+    outputFormats: ['PNG', 'WEBP'],
+    inputRequirements: [
+      'Clip art prompt or subject',
+      'Style preset such as flat, outline, cartoon, sticker, or watercolor',
+      'Aspect ratio: 1:1, 3:4, or 4:3',
+      'Background removal preference',
+    ],
+    workflowStages: [
+      { id: 'describe', label: 'Describe', sublabel: 'Prompt, style, and aspect ratio' },
+      { id: 'transform', label: 'Transform', sublabel: 'Turns your idea into a clear image prompt' },
+      { id: 'generate', label: 'Generate', sublabel: 'gpt-image-2 image generation' },
+      { id: 'remove-background', label: 'Remove', sublabel: 'Background removal with birefnet-light' },
+      { id: 'artifact', label: 'Artifact', sublabel: 'PNG, WEBP, prompt, model, style, and run history', isFinal: true },
+    ],
+    workflowDetails: [
+      {
+        id: 'describe',
+        title: 'Describe',
+        description:
+          'Start with the subject, style, aspect ratio, and whether you want the background removed.',
+        examples: [
+          { label: 'Input', value: 'A friendly fox waving' },
+          { label: 'Style', value: 'Flat clip art, 1:1, background removed' },
+        ],
+      },
+      {
+        id: 'transform',
+        title: 'Transform',
+        description:
+          'Esy turns the rough description into a structured image prompt the model can follow.',
+        examples: [
+          { label: 'Before', value: 'A friendly fox waving' },
+          {
+            label: 'After',
+            value:
+              'A friendly fox waving, flat vector clip art, isolated object, clean edges, centered composition, no text.',
+          },
+        ],
+      },
+      {
+        id: 'generate',
+        title: 'Generate',
+        description:
+          'The image is generated with gpt-image-2 using the transformed prompt and selected style.',
+        examples: [
+          { label: 'Model', value: 'gpt-image-2' },
+          { label: 'Output', value: 'Raw clip art image' },
+        ],
+      },
+      {
+        id: 'remove-background',
+        title: 'Remove',
+        description:
+          'When enabled, background removal creates a cleaner isolated asset for download or review.',
+        examples: [
+          { label: 'Model', value: 'birefnet-light' },
+          { label: 'Result', value: 'Transparent-background asset' },
+        ],
+      },
+      {
+        id: 'artifact',
+        title: 'Artifact',
+        description:
+          'The final result includes the image files plus the prompt, model, style, and run history.',
+        examples: [
+          { label: 'Formats', value: 'PNG, WEBP' },
+          { label: 'Provenance', value: 'Prompt, model, style, and run history' },
+        ],
+      },
+    ],
+    sampleArtifacts: [
+      {
+        title: 'Friendly Fox Waving',
+        description:
+          'A flat 1:1 clip art asset with clean edges, transparent background, and a stored resolved prompt for review.',
+      },
+      {
+        title: 'Watercolor Dinosaur Sticker',
+        description:
+          'A playful visual asset generated with a style preset, processed for background removal, and saved as an Esy artifact.',
       },
     ],
   },

@@ -11,6 +11,7 @@ import {
   Layers,
   Zap,
   GraduationCap,
+  Palette,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useScrollHeaderSearch } from '@/hooks/useScrollHeaderSearch';
@@ -67,6 +68,16 @@ const creationPaths = [
     icon: BarChart3,
     category: 'infographic',
     count: 6,
+  },
+  {
+    id: 'clip-art',
+    title: 'Clip Art',
+    tagline: 'Isolated visual assets',
+    description: 'Generate clip art with style presets, background removal, and provenance',
+    href: '/workflows/clip-art',
+    icon: Palette,
+    category: 'clip-art',
+    count: 1,
   },
   {
     id: 'academic-essays',

@@ -31,12 +31,15 @@ const colors = {
 };
 
 // ─── Layout Constants ────────────────────────────────────────────
-const NODE_W = 128;
-const NODE_H = 56;
+const NODE_W = 160;
+const NODE_H = 64;
 const NODE_RX = 10;
-const NODE_GAP = 56; // gap between nodes (horizontal)
+const NODE_GAP = 48; // gap between nodes (horizontal)
 const VERT_GAP = 40; // gap between nodes (vertical)
 const PAD = 24;
+const TOOLTIP_W = 280;
+const TOOLTIP_PAD = 12;
+const TOOLTIP_LINE_H = 16;
 
 // ─── Animation Constants ─────────────────────────────────────────
 const CYCLE_MS = 5400;
@@ -51,6 +54,28 @@ function clamp01(t: number) {
   return Math.max(0, Math.min(1, t));
 }
 
+function wrapTooltipText(text: string, maxChars = 34): string[] {
+  const words = text.split(' ');
+  const lines: string[] = [];
+  let current = '';
+
+  words.forEach((word) => {
+    const next = current ? `${current} ${word}` : word;
+    if (next.length > maxChars && current) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = next;
+    }
+  });
+
+  if (current) {
+    lines.push(current);
+  }
+
+  return lines;
+}
+
 // ─── Component ───────────────────────────────────────────────────
 const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '' }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -61,6 +86,7 @@ const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '
   const [phase, setPhase] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [isHorizontal, setIsHorizontal] = useState(true);
+  const [hoveredStage, setHoveredStage] = useState<number | null>(null);
 
   const n = stages.length;
 
@@ -210,6 +236,24 @@ const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '
   };
 
   const ballPos = getBallPos(phase);
+  const tooltipStage =
+    hoveredStage !== null && stages[hoveredStage]?.sublabel
+      ? stages[hoveredStage]
+      : null;
+  const tooltipPos =
+    hoveredStage !== null && nodePositions[hoveredStage]
+      ? nodePositions[hoveredStage]
+      : null;
+  const tooltipLines = tooltipStage?.sublabel
+    ? wrapTooltipText(tooltipStage.sublabel)
+    : [];
+  const tooltipH = TOOLTIP_PAD * 2 + 18 + tooltipLines.length * TOOLTIP_LINE_H;
+  const tooltipX = tooltipPos
+    ? Math.max(8, Math.min(tooltipPos.x - TOOLTIP_W / 2, svgW - TOOLTIP_W - 8))
+    : 0;
+  const tooltipY = tooltipPos
+    ? tooltipPos.y - NODE_H / 2 - tooltipH - 14
+    : 0;
 
   // Unique filter IDs to avoid conflicts
   const filterId = 'wc-ball-glow';
@@ -296,7 +340,13 @@ const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '
           const finalPulse = stage.isFinal && isFinalPulsing(phase);
 
           return (
-            <g key={stage.id} transform={`translate(${pos.x}, ${pos.y})`}>
+            <g
+              key={stage.id}
+              transform={`translate(${pos.x}, ${pos.y})`}
+              onMouseEnter={() => setHoveredStage(i)}
+              onMouseLeave={() => setHoveredStage(null)}
+              style={{ cursor: stage.sublabel ? 'help' : 'default' }}
+            >
               {/* Final node accent glow ring */}
               {stage.isFinal && (
                 <rect
@@ -332,11 +382,14 @@ const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '
                 strokeWidth={active ? 1.5 : 1}
                 style={{ transition: 'stroke 0.3s ease, stroke-width 0.3s ease' }}
               />
+              {stage.sublabel && (
+                <title>{`${stage.label}: ${stage.sublabel}`}</title>
+              )}
 
               {/* Label */}
               <text
                 x={0}
-                y={stage.sublabel ? -7 : 0}
+                y={0}
                 fill={colors.textPrimary}
                 fontSize="13"
                 fontWeight="600"
@@ -346,22 +399,6 @@ const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '
               >
                 {stage.label}
               </text>
-
-              {/* Sublabel */}
-              {stage.sublabel && (
-                <text
-                  x={0}
-                  y={10}
-                  fill={colors.textSecondary}
-                  fontSize="10.5"
-                  fontWeight="400"
-                  fontFamily="Inter, -apple-system, sans-serif"
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                >
-                  {stage.sublabel}
-                </text>
-              )}
 
               {/* Check mark */}
               {checked && !stage.isFinal && (
@@ -384,6 +421,46 @@ const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '
             </g>
           );
         })}
+
+        {/* Visible hover tooltip */}
+        {tooltipStage && tooltipPos && (
+          <g
+            transform={`translate(${tooltipX}, ${tooltipY})`}
+            style={{ pointerEvents: 'none' }}
+          >
+            <rect
+              width={TOOLTIP_W}
+              height={tooltipH}
+              rx="12"
+              fill="#FFFFFF"
+              stroke="rgba(10, 37, 64, 0.12)"
+              filter={`url(#${outputFilterId})`}
+            />
+            <text
+              x={TOOLTIP_PAD}
+              y={TOOLTIP_PAD + 12}
+              fill={colors.textPrimary}
+              fontSize="11.5"
+              fontWeight="700"
+              fontFamily="Inter, -apple-system, sans-serif"
+            >
+              {tooltipStage.label}
+            </text>
+            {tooltipLines.map((line, i) => (
+              <text
+                key={line}
+                x={TOOLTIP_PAD}
+                y={TOOLTIP_PAD + 32 + i * TOOLTIP_LINE_H}
+                fill={colors.textSecondary}
+                fontSize="11"
+                fontWeight="400"
+                fontFamily="Inter, -apple-system, sans-serif"
+              >
+                {line}
+              </text>
+            ))}
+          </g>
+        )}
 
         {/* Animated energy ball */}
         {isVisible && ballPos.opacity > 0 && (

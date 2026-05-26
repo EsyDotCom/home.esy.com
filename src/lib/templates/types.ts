@@ -15,6 +15,13 @@ export interface WorkflowStage {
   isFinal?: boolean;
 }
 
+export interface WorkflowDetail {
+  id: string;
+  title: string;
+  description: string;
+  examples?: { label: string; value: string }[];
+}
+
 // Pricing for premium prompts
 export interface TemplatePricing {
   type: 'free' | 'premium';
@@ -53,6 +60,7 @@ export interface Template {
   // Workflow template fields
   isWorkflow?: boolean;
   workflowStages?: WorkflowStage[];
+  workflowDetails?: WorkflowDetail[];
   outputFormats?: string[]; // e.g., ['PNG', 'SVG', 'PDF']
   estimatedTime?: string; // e.g., '~2 min'
   inputRequirements?: string[]; // e.g., ['Citation or DOI', 'Data (optional)']
@@ -126,6 +134,10 @@ export const MODEL_CATEGORY_MAP: Record<string, ModelCategoryInfo> = {
 
 // SEO subcategory mapping (for templates without a model but with SEO subcategory)
 export const SUBCATEGORY_CATEGORY_MAP: Record<string, ModelCategoryInfo> = {
+  'clip-art': {
+    label: 'Clip Art',
+    href: '/workflows/clip-art',
+  },
   seo: {
     label: 'SEO Writing Prompts',
     href: '/workflows/seo-writing-prompts',

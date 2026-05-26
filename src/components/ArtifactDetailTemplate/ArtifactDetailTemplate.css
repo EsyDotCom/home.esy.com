@@ -238,17 +238,50 @@
   color: rgba(10, 37, 64, 0.5);
 }
 
+/* ─── Section Bands (alternating backgrounds) ─────────────── */
+.adt-band {
+  position: relative;
+  padding: clamp(56px, 8vh, 88px) 24px;
+  isolation: isolate;
+}
+
+.adt-band--default {
+  background: #FFFFFF;
+}
+
+.adt-band--elevated {
+  background: #F8FAFC;
+  border-top: 1px solid rgba(10, 37, 64, 0.06);
+  border-bottom: 1px solid rgba(10, 37, 64, 0.06);
+}
+
+/* Subtle teal halo at the top of elevated bands for brand warmth */
+.adt-band--elevated::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      rgba(0, 168, 150, 0.045) 0%,
+      transparent 70%
+    );
+  pointer-events: none;
+  z-index: -1;
+}
+
+.adt-band-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 /* ─── Workflow Section ────────────────────────────────────── */
 .adt-workflow-section {
-  background: #F8FAFC;
-  border-top: 1px solid rgba(10, 37, 64, 0.05);
-  border-bottom: 1px solid rgba(10, 37, 64, 0.05);
-  padding: 56px 24px;
+  /* layout handled by .adt-band; keep selector for scoping */
 }
 
 .adt-workflow-inner {
-  max-width: 1200px;
-  margin: 0 auto;
+  /* layout handled by .adt-band-inner; keep selector for scoping */
 }
 
 .adt-section-eyebrow {
@@ -261,11 +294,199 @@
   margin: 0 0 32px;
 }
 
+/* ─── Workflow Steps Section ───────────────────────────────── */
+.adt-steps-section {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 32px 24px 88px;
+}
+
+.adt-steps-header {
+  text-align: center;
+  margin: 0 0 56px;
+}
+
+.adt-steps-header .adt-section-eyebrow {
+  margin: 0 0 14px;
+}
+
+.adt-steps-header h2 {
+  font-family: var(--font-literata, Literata, Georgia, serif);
+  font-size: clamp(1.75rem, 3.2vw, 2.375rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #0A2540;
+  margin: 0;
+}
+
+.adt-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: adt-step;
+}
+
+.adt-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 24px;
+  padding: 32px 0;
+  border-top: 1px solid rgba(10, 37, 64, 0.07);
+}
+
+.adt-step:first-child {
+  border-top: none;
+  padding-top: 8px;
+}
+
+.adt-step:last-child {
+  padding-bottom: 8px;
+}
+
+.adt-step-marker {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.adt-step-number {
+  font-family: var(--font-literata, Literata, Georgia, serif);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #00A896;
+  font-variant-numeric: tabular-nums;
+}
+
+.adt-step-body {
+  min-width: 0;
+}
+
+.adt-step-title {
+  font-family: var(--font-literata, Literata, Georgia, serif);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #0A2540;
+  margin: 0 0 8px;
+  line-height: 1.25;
+}
+
+.adt-step-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(10, 37, 64, 0.68);
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* Generic key/value pairs for non-prompt steps */
+.adt-step-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 16px 0 0;
+}
+
+.adt-step-meta-row {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.adt-step-meta-row dt {
+  color: rgba(10, 37, 64, 0.45);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.6875rem;
+}
+
+.adt-step-meta-row dd {
+  color: #0A2540;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Before / After prompt example — featured visual */
+.adt-step-prompt {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 18px 20px;
+  background: #F8FAFC;
+  border: 1px solid rgba(10, 37, 64, 0.06);
+  border-radius: 14px;
+}
+
+.adt-step-prompt-row {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.adt-step-prompt-label {
+  margin: 0;
+  padding-top: 2px;
+  color: rgba(10, 37, 64, 0.45);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.adt-step-prompt-label--accent {
+  color: #00A896;
+}
+
+.adt-step-prompt-text {
+  margin: 0;
+  font-family: var(--font-literata, Literata, Georgia, serif);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: #0A2540;
+  font-style: italic;
+}
+
+.adt-step-prompt-text--before {
+  color: rgba(10, 37, 64, 0.55);
+}
+
+.adt-step-prompt-arrow {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 80px;
+  color: rgba(0, 168, 150, 0.6);
+}
+
+@media (max-width: 539px) {
+  .adt-step {
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    padding: 24px 0;
+  }
+
+  .adt-step-prompt-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .adt-step-prompt-arrow {
+    padding-left: 0;
+    justify-content: center;
+    transform: rotate(90deg);
+  }
+}
+
 /* ─── Spec Section (What You Provide / What You Get) ──────── */
 .adt-spec-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 64px 24px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 48px;
@@ -336,18 +557,27 @@
 
 /* ─── Sample Artifacts ────────────────────────────────────── */
 .adt-samples-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px 64px;
+  /* layout handled by .adt-band; keep selector for scoping */
+}
+
+.adt-samples-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.adt-samples-header .adt-section-eyebrow {
+  margin-bottom: 12px;
 }
 
 .adt-samples-section h3 {
   font-family: var(--font-literata, Literata, Georgia, serif);
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 500;
   color: #0A2540;
-  margin: 0 0 20px;
+  margin: 0;
+  letter-spacing: -0.015em;
 }
+
 
 .adt-samples-grid {
   display: grid;
@@ -362,15 +592,17 @@
 }
 
 .adt-sample-card {
-  background: #F8FAFC;
-  border: 1px solid rgba(10, 37, 64, 0.06);
+  background: #FFFFFF;
+  border: 1px solid rgba(10, 37, 64, 0.08);
   border-radius: 12px;
   padding: 24px;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 2px rgba(10, 37, 64, 0.02);
 }
 
 .adt-sample-card:hover {
-  border-color: rgba(0, 168, 150, 0.2);
+  border-color: rgba(0, 168, 150, 0.25);
+  box-shadow: 0 2px 8px rgba(10, 37, 64, 0.04);
 }
 
 .adt-sample-title {
@@ -418,19 +650,11 @@
     padding: 16px 16px 0;
   }
 
-  .adt-spec-section {
-    padding: 48px 16px;
-  }
-
-  .adt-workflow-section {
-    padding: 40px 16px;
+  .adt-band {
+    padding: clamp(40px, 6vh, 56px) 16px;
   }
 
   .adt-related-section {
     padding: 40px 16px 64px;
-  }
-
-  .adt-samples-section {
-    padding: 0 16px 48px;
   }
 }
