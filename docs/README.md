@@ -4,6 +4,10 @@ This directory contains technical documentation for the Esy.com project.
 
 ## Structure
 
+### Foundations
+- `/foundations/` - **Foundational principles that define how Esy thinks about workflows, artifacts, and platform vocabulary**
+  - `WORKFLOW_PRIMITIVES.md` - The three-level workflow model: `Workflow Schema` (the rules), `Workflow Template` (a predesigned workflow), `Workflow Specification` (a per-run populated instance). Rendered at `/docs/foundations`. Canonical public references at [`docs.esy.com/concepts/workflow-schemas`](https://docs.esy.com/concepts/workflow-schemas), [`/concepts/workflow-templates`](https://docs.esy.com/concepts/workflow-templates), [`/concepts/workflow-specifications`](https://docs.esy.com/concepts/workflow-specifications).
+
 ### Design & UX
 - `DESIGN_SYSTEM.md` - Core design system principles and components
 - `DESIGN_PATTERNS.md` - Common design patterns and implementations

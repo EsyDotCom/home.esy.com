@@ -8,6 +8,7 @@ import {
   FileCode,
   Palette,
   ArrowRight,
+  Box,
 } from "lucide-react";
 import { DocsPageNav } from "@/components/docs";
 
@@ -24,6 +25,13 @@ const theme = {
 };
 
 const pages = [
+  {
+    title: 'Foundations',
+    description: 'Workflow Schema, Workflow Template, Workflow Specification — the three primitives every Esy workflow is built on.',
+    href: '/docs/foundations',
+    icon: <Box className="w-5 h-5" />,
+    section: 'System',
+  },
   {
     title: 'Core Model',
     description: 'Execution architecture — how intent becomes artifact through structured workflows.',

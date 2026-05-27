@@ -390,12 +390,22 @@ const ArtifactCTA: React.FC = () => (
       Explore the workflows, inspect the methodology, or start your own.
     </p>
     <div className="artifact-cta-links">
-      <Link href="/docs/designing-visual-essays" className="artifact-cta-link">
+      <a
+        href="https://docs.esy.com/concepts/artifacts"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="artifact-cta-link"
+      >
         What&apos;s an artifact?
-      </Link>
-      <Link href="/docs/workflows" className="artifact-cta-link">
+      </a>
+      <a
+        href="https://docs.esy.com/concepts/workflow-templates"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="artifact-cta-link"
+      >
         View the workflow system
-      </Link>
+      </a>
       <a
         href="https://app.esy.com"
         target="_blank"

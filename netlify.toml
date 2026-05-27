@@ -36,6 +36,15 @@
   status = 301
   force = true
 
+# Docs migrated to docs.esy.com (May 2026) — the engineering source of truth.
+# The /docs index now forwards to the new canonical site. Subpaths under /docs/*
+# remain accessible during the transition and will be discontinued / mapped later.
+[[redirects]]
+  from = "/docs"
+  to = "https://docs.esy.com/"
+  status = 301
+  force = true
+
 # Redirect /essays/visual/* to /essays/* (canonical URLs)
 [[redirects]]
   from = "/essays/visual/*"
