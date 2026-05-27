@@ -278,9 +278,9 @@ export default function Footer () {
           <FooterColumn 
             title="Resources"
             links={[
+              { href: "https://docs.esy.com/", text: "Docs" },
               { href: "/research/", text: "Research" },
               { href: "/courses/", text: "Courses" },
-              // { href: "/docs/", text: "Docs" },
             ]}
           />
           
