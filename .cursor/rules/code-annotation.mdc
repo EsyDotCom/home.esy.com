@@ -1,0 +1,33 @@
+---
+description: Annotate meaningful code segments so PR diffs are scannable
+alwaysApply: true
+---
+
+# Code Annotation for PR Readability
+
+A reviewer should be able to scan a diff top-to-bottom and understand it without reverse-engineering the code. Annotate every meaningful segment with a brief, high-signal comment that states **intent** — what it does, and (when not obvious) why.
+
+- **Annotate:** non-trivial functions, key branches/guards, data transforms, gates, schema/contract boundaries, fallbacks, and any non-obvious decision or trade-off. One line above the segment is usually enough.
+- **Lead with intent, not syntax.**
+- **Do not narrate obvious lines** — imports, simple assignments, plain getters, self-evident one-liners. Restating the code is noise and ages badly.
+- A function-level comment plus a few in-body segment markers beats a comment on every line.
+
+The comments are the table of contents for the diff.
+
+```typescript
+// ❌ BAD — narrates syntax / no intent
+// call update then create
+try { await update(id, body); } catch { await create(body); }
+
+// ✅ GOOD — states intent + the non-obvious why
+// Template ids are stable, so try update first and fall back to create
+// for a template the API hasn't seen yet.
+try { await update(id, body); } catch { await create(body); }
+```
+
+```python
+# ✅ GOOD — segment header explains the transform's purpose
+# Text steps scale with tokens; use typical assumptions when a step
+# doesn't declare its own estimate so the panel still shows a number.
+tokens = step.get("estimatedTokens") or DEFAULT_STEP_TOKENS
+```
