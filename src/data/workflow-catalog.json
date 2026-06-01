@@ -1,58 +1,39 @@
 {
-  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog). Mirrors the platform's published, versioned workflow templates.",
-  "generatedAt": "2026-05-31T00:00:00Z",
-  "total": 3,
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows). Mirrors the platform's published, versioned workflow templates.",
+  "generatedAt": "2026-06-01T14:29:09.689714Z",
+  "total": 1,
   "items": [
     {
       "id": "generate-clip-art-asset",
       "name": "Generate Clip Art Asset",
-      "description": "Produce a single isolated clip-art asset from a topic and style preset, with optional background removal and full provenance.",
-      "shortDescription": "Topic + style preset to an isolated clip-art asset.",
-      "artifactClass": "visual",
-      "outputType": "clip-art",
-      "depth": "standard",
-      "estimatedRuntime": "1-2 min",
-      "includesQa": true,
-      "whatYouProvide": ["A subject or topic", "A style preset", "Aspect ratio"],
-      "whatYouGet": ["An isolated clip-art image", "Background-removed variant", "Generation provenance"],
-      "qaChecks": ["Subject isolated on clean background", "Style matches the selected preset"],
-      "version": "2026.05.01",
-      "cadence": "On demand",
-      "updatedAt": null
-    },
-    {
-      "id": "generate-research-report",
-      "name": "Research Report",
-      "description": "Synthesize a structured, sectioned research report on a topic, with a summary and cited sources, ready to reuse as a sub-workflow.",
-      "shortDescription": "A topic to a structured, cited research report.",
+      "description": "Generate an internal ESY visual artifact using the clip.art prompt/style contract, provider runtime policy, ESY R2 storage, and review-ready metadata.",
+      "shortDescription": "Generate a reviewable internal clip-art asset.",
       "artifactClass": "research",
-      "outputType": "research-report",
-      "depth": "standard",
-      "estimatedRuntime": "2-4 min",
+      "outputType": "visual",
+      "depth": "quick",
+      "estimatedRuntime": "30-90 sec",
       "includesQa": true,
-      "whatYouProvide": ["A research topic", "Optional context or constraints"],
-      "whatYouGet": ["A titled report with sections", "An executive summary", "A list of sources"],
-      "qaChecks": ["Sections are coherent and on-topic", "Sources are present"],
+      "whatYouProvide": [
+        "Subject prompt",
+        "Clip-art style",
+        "Aspect ratio",
+        "Background-removal preference"
+      ],
+      "whatYouGet": [
+        "Generated visual artifact",
+        "Resolved provider prompt",
+        "Provider/model/cost metadata",
+        "ESY R2 raw and processed storage references"
+      ],
+      "qaChecks": [
+        "Visual quality",
+        "Prompt fit",
+        "Background/transparency",
+        "Commercial-safe review"
+      ],
       "version": "2026.05.01",
       "cadence": "On demand",
-      "updatedAt": null
-    },
-    {
-      "id": "generate-research-infographic",
-      "name": "Research Infographic",
-      "description": "Run a research report as a sub-workflow, then render its synthesis into a vertical infographic image. Cost and provenance roll up across both.",
-      "shortDescription": "A topic to a research-backed infographic.",
-      "artifactClass": "visual",
-      "outputType": "infographic",
-      "depth": "deep",
-      "estimatedRuntime": "3-6 min",
-      "includesQa": true,
-      "whatYouProvide": ["A research topic", "Optional context or constraints"],
-      "whatYouGet": ["A vertical infographic image", "The underlying research report", "Composed cost + provenance"],
-      "qaChecks": ["Infographic reflects the report's synthesis", "Source report is linked"],
-      "version": "2026.05.01",
-      "cadence": "On demand",
-      "updatedAt": null
+      "updatedAt": "2026-05-16T20:36:43.734156Z"
     }
   ]
 }
