@@ -1,7 +1,7 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows). Mirrors the platform's published, versioned workflow templates.",
-  "generatedAt": "2026-06-01T14:29:09.689714Z",
-  "total": 1,
+  "generatedAt": "2026-06-01T14:52:52.482883Z",
+  "total": 3,
   "items": [
     {
       "id": "generate-clip-art-asset",
@@ -34,6 +34,60 @@
       "version": "2026.05.01",
       "cadence": "On demand",
       "updatedAt": "2026-05-16T20:36:43.734156Z"
+    },
+    {
+      "id": "generate-research-infographic",
+      "name": "Generate Research Infographic",
+      "description": "Produce a vertical infographic that visualizes a research report. Invokes the Generate Research Report workflow as a sub-workflow, then renders its findings as an image with gpt-image-2.",
+      "shortDescription": "Turn a research report into a vertical infographic.",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "deep",
+      "estimatedRuntime": "60-120 sec",
+      "includesQa": true,
+      "whatYouProvide": [
+        "Research topic",
+        "Aspect ratio (optional)"
+      ],
+      "whatYouGet": [
+        "Infographic image",
+        "Linked source research report"
+      ],
+      "qaChecks": [
+        "Image generated",
+        "Source report linked",
+        "On-topic"
+      ],
+      "version": "2026.05.29",
+      "cadence": "On demand",
+      "updatedAt": "2026-06-01T14:52:18.811147Z"
+    },
+    {
+      "id": "generate-research-report",
+      "name": "Generate Research Report",
+      "description": "Produce a structured, cited research report on a topic using LLM synthesis. Reusable on its own or as a sub-workflow feeding other artifacts.",
+      "shortDescription": "Synthesize a structured, cited research report.",
+      "artifactClass": "research",
+      "outputType": "research",
+      "depth": "deep",
+      "estimatedRuntime": "30-60 sec",
+      "includesQa": true,
+      "whatYouProvide": [
+        "Research topic",
+        "Audience (optional)"
+      ],
+      "whatYouGet": [
+        "Structured report (title, summary, sections)",
+        "Source list"
+      ],
+      "qaChecks": [
+        "Sections present",
+        "Sources cited",
+        "On-topic"
+      ],
+      "version": "2026.05.29",
+      "cadence": "On demand",
+      "updatedAt": "2026-06-01T14:52:18.811147Z"
     }
   ]
 }
