@@ -5,7 +5,7 @@
  *
  * esy.com is a fully static export (no runtime/ISR fetching), so the catalog
  * page renders from a committed JSON file. This script pulls the platform's
- * published templates from `GET /v1/catalog` (no auth) and writes that snapshot
+ * published templates from `GET /v1/catalog/workflows` (no auth) and writes that snapshot
  * to src/data/workflow-catalog.json. Run it (and commit the result) whenever
  * the platform's published templates change.
  *
@@ -56,7 +56,7 @@ function check() {
 }
 
 async function sync() {
-  const url = `${API_BASE.replace(/\/$/, '')}/v1/catalog`;
+  const url = `${API_BASE.replace(/\/$/, '')}/v1/catalog/workflows`;
   console.log(`Fetching catalog from ${url} …`);
 
   let payload;
@@ -78,7 +78,7 @@ async function sync() {
 
   // Re-shape to the committed snapshot format (stable key order + provenance comment).
   const snapshot = {
-    _comment: 'SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog). Mirrors the platform\'s published, versioned workflow templates.',
+    _comment: 'SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows). Mirrors the platform\'s published, versioned workflow templates.',
     generatedAt: payload.generatedAt || new Date().toISOString(),
     total: payload.items.length,
     items: payload.items,
