@@ -520,6 +520,20 @@ export default function Navigation({
               </Link>
             )}
 
+            {/* Catalog — runnable platform workflow templates (hidden on mobile, in hamburger menu) */}
+            {!isMobile && (
+              <Link
+                href="/catalog/"
+                className={`nav-link nav-link-catalog ${pathname?.startsWith('/catalog') ? 'active' : ''}`}
+                style={{
+                  color: isLightMode ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
+                  textShadow: 'none',
+                }}
+              >
+                Catalog
+              </Link>
+            )}
+
             {/* Research (hidden on mobile, available in hamburger menu) */}
             {!isMobile && (
               <Link
@@ -660,6 +674,16 @@ export default function Navigation({
             >
               <span className="mnav-item__label">Workflows</span>
               <span className="mnav-item__desc">Production-ready research formats</span>
+            </Link>
+
+            <Link
+              href="/catalog/"
+              className={`mnav-item ${normalizedPathForNav.startsWith('/catalog') ? 'mnav-item--active' : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{ animationDelay: '0.14s' }}
+            >
+              <span className="mnav-item__label">Catalog</span>
+              <span className="mnav-item__desc">Runnable workflows on the Esy platform</span>
             </Link>
 
             <Link 
