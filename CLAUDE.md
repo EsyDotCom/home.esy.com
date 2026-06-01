@@ -30,3 +30,4 @@ When in doubt, open the PR — agent overhead is cheap, broken `main` isn't.
 - `docs/brand/ESY_DEFINITION.md` — Canonical brand definition and product philosophy
 - `docs/strategy/sessions/2026-04-12-engineer-first-rebrand-and-homepage-redesign.md` — Current positioning: engineer-first
 - `docs/strategy/GROWTH_STRATEGY.md` — Growth and distribution strategy
+- `orchestration/standards/workflow-manifest-standard.md` — How workflow templates are versioned and model-pinned. Published manifests live in `src/data/workflow-manifests/`; `npm run manifests:validate` enforces that published artifacts only cite models their manifest version declares.

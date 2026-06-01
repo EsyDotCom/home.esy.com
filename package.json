@@ -7,8 +7,12 @@
   },
   "scripts": {
     "dev": "next dev",
+    "prebuild": "npm run manifests:check && npm run manifests:validate",
     "build": "next build",
     "build:static": "NODE_ENV=production next build",
+    "manifests:hash": "node scripts/hash-workflow-manifests.mjs",
+    "manifests:check": "node scripts/hash-workflow-manifests.mjs --check",
+    "manifests:validate": "node scripts/validate-artifact-provenance.mjs",
     "start": "next start",
     "start:static": "npx serve@latest out",
     "lint": "next lint",

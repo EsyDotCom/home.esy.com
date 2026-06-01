@@ -26,6 +26,25 @@ export type ClipArtStyle =
 
 export type ClipArtAspectRatio = '1:1' | '3:4' | '4:3' | '16:9';
 
+/**
+ * The models actually resolved for this run, recorded as provenance.
+ *
+ * These are NOT free-typed display strings — they are validated at build time
+ * against the referenced workflow manifest version by
+ * `scripts/validate-artifact-provenance.mjs`. If a value here is not declared
+ * in the manifest's pipeline, the build fails. This is what makes the
+ * "versions pin their models" claim structurally true rather than decorative.
+ * See `orchestration/standards/workflow-manifest-standard.md`.
+ */
+export interface ClipArtResolvedRun {
+  /** Render model identity (dated snapshot), e.g. 'gpt-image-2-2026-04-21'. */
+  renderModel: string;
+  /** Background-removal model identity, e.g. 'birefnet-light'. */
+  backgroundRemovalModel: string;
+  /** Prompt template id, e.g. 'clip-art-prompt@v1'. */
+  promptTemplate: string;
+}
+
 export interface ClipArtArtifact {
   /** Maps 1:1 to the artifact ID in app.esy.com/artifacts. */
   id: string;
@@ -53,14 +72,14 @@ export interface ClipArtArtifact {
   /** Free-text subject group used for grouping in the UI. */
   subjectGroup?: string;
   generatedAt?: string;
-  /** Provider model that produced the raw asset. */
-  engine?: string;
-  /** Resolved prompt sent to the provider. */
+  /** Workflow that produced this artifact (slug, stable across versions). */
+  workflowSlug: string;
+  /** Pinned workflow version, e.g. 'v1.0.0'. */
+  workflowVersion: string;
+  /** Models resolved for this run — validated against the manifest at build. */
+  resolved: ClipArtResolvedRun;
+  /** Resolved prompt sent to the provider (per-run text). */
   prompt?: string;
-  /** Background removal pipeline (none = kept). */
-  backgroundRemoval?: 'birefnet-light' | 'none';
-  /** Output format(s) available on the CDN. */
-  formats?: string[];
 }
 
 /** Derives the aspect ratio label from width/height (returns 'custom' for non-standard ratios). */
@@ -93,11 +112,15 @@ export const clipArtArtifacts: ClipArtArtifact[] = [
     tags: ['bunny', 'breakfast', 'pancakes', 'animal', 'cute'],
     subjectGroup: 'animals',
     generatedAt: '2026-05-16',
-    engine: 'gpt-image-2',
+    workflowSlug: 'generate-clip-art-asset',
+    workflowVersion: 'v1.0.0',
+    resolved: {
+      renderModel: 'gpt-image-2-2026-04-21',
+      backgroundRemovalModel: 'birefnet-light',
+      promptTemplate: 'clip-art-prompt@v1',
+    },
     prompt:
       'Cartoon-style clip art of a blue bunny sitting up in bed eating a stack of pancakes, bold outlines, flat color fills, friendly expression, isolated on white background.',
-    backgroundRemoval: 'birefnet-light',
-    formats: ['WEBP', 'PNG'],
   },
   {
     id: 'artifact-5876fdfb',
@@ -116,11 +139,15 @@ export const clipArtArtifacts: ClipArtArtifact[] = [
     tags: ['duckling', 'sleeping', 'bedtime', 'animal', 'kawaii'],
     subjectGroup: 'animals',
     generatedAt: '2026-05-16',
-    engine: 'gpt-image-2',
+    workflowSlug: 'generate-clip-art-asset',
+    workflowVersion: 'v1.0.0',
+    resolved: {
+      renderModel: 'gpt-image-2-2026-04-21',
+      backgroundRemovalModel: 'birefnet-light',
+      promptTemplate: 'clip-art-prompt@v1',
+    },
     prompt:
       'Chibi-style clip art of a small yellow duckling sleeping peacefully tucked into a tiny bed, soft pastel palette, kawaii proportions, soft outlines, isolated on white background.',
-    backgroundRemoval: 'birefnet-light',
-    formats: ['WEBP', 'PNG'],
   },
   {
     id: 'artifact-d0c32dbb',
@@ -139,11 +166,15 @@ export const clipArtArtifacts: ClipArtArtifact[] = [
     tags: ['chipmunk', 'family', 'sleeping', 'nest', 'animal'],
     subjectGroup: 'animals',
     generatedAt: '2026-05-16',
-    engine: 'gpt-image-2',
+    workflowSlug: 'generate-clip-art-asset',
+    workflowVersion: 'v1.0.0',
+    resolved: {
+      renderModel: 'gpt-image-2-2026-04-21',
+      backgroundRemovalModel: 'birefnet-light',
+      promptTemplate: 'clip-art-prompt@v1',
+    },
     prompt:
       'Illustrated clip art of a chipmunk family of three sleeping curled together in a woven grass nest, painterly shading, warm autumn palette, soft lighting, isolated on white background.',
-    backgroundRemoval: 'birefnet-light',
-    formats: ['WEBP', 'PNG'],
   },
 ];
 

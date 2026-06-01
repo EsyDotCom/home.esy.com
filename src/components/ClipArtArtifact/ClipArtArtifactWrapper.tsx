@@ -11,6 +11,7 @@ import {
   getClipArtBySubjectGroup,
   type ClipArtArtifact,
 } from '@/data/clip-art-artifacts';
+import { getManifest, pinLabel } from '@/lib/workflow-manifests';
 import './clip-art-artifact.css';
 
 /* ─── Icons ───────────────────────────────────────────────── */
@@ -144,6 +145,15 @@ export default function ClipArtArtifactWrapper({ artifact }: Props) {
   const styleColor = CLIP_ART_STYLE_COLORS[artifact.style] || '#6B7280';
   const aspectRatio = getClipArtAspectRatio(artifact);
   const aspectLabel = aspectRatio === 'custom' ? 'Custom' : aspectRatio;
+
+  // Provenance derived from the pinned workflow manifest (single source of
+  // truth for formats/version) + the per-run resolved models recorded on the
+  // artifact. See orchestration/standards/workflow-manifest-standard.md.
+  const pinned = getManifest(artifact.workflowSlug, artifact.workflowVersion);
+  const renderModel = artifact.resolved.renderModel;
+  const backgroundModel = artifact.resolved.backgroundRemovalModel;
+  const formats = pinned?.manifest.output_contract.formats ?? ['WEBP'];
+  const versionPin = pinned ? pinLabel(pinned) : artifact.workflowVersion;
 
   const siblings = useMemo(() => {
     if (!artifact.subjectGroup) return [];
@@ -365,20 +375,11 @@ export default function ClipArtArtifactWrapper({ artifact }: Props) {
               </span>
               <span className="ca-hero-section__meta-label">px</span>
             </span>
-            {artifact.engine && (
-              <>
-                <span
-                  className="ca-hero-section__meta-dot"
-                  aria-hidden="true"
-                />
-                <span className="ca-hero-section__meta-item">
-                  <span className="ca-hero-section__meta-value">
-                    {artifact.engine}
-                  </span>
-                  <span className="ca-hero-section__meta-label">engine</span>
-                </span>
-              </>
-            )}
+            <span className="ca-hero-section__meta-dot" aria-hidden="true" />
+            <span className="ca-hero-section__meta-item">
+              <span className="ca-hero-section__meta-value">{renderModel}</span>
+              <span className="ca-hero-section__meta-label">render model</span>
+            </span>
           </div>
           <div className="ca-hero-section__actions">
             <a
@@ -454,27 +455,27 @@ export default function ClipArtArtifactWrapper({ artifact }: Props) {
                 </div>
               </Link>
               <div className="ca-spec__card">
+                <div className="ca-spec__card-label">Workflow Version</div>
+                <div className="ca-spec__card-value ca-spec__card-value--mono">
+                  {versionPin}
+                </div>
+              </div>
+              <div className="ca-spec__card">
                 <div className="ca-spec__card-label">Style Preset</div>
                 <div className="ca-spec__card-value">
                   {styleLabel(artifact.style)}
                 </div>
               </div>
               <div className="ca-spec__card">
-                <div className="ca-spec__card-label">Engine</div>
-                <div className="ca-spec__card-value">
-                  {artifact.engine || '—'}
-                </div>
+                <div className="ca-spec__card-label">Render Model</div>
+                <div className="ca-spec__card-value">{renderModel}</div>
               </div>
               <div className="ca-spec__card">
                 <div className="ca-spec__card-label">Background</div>
                 <div className="ca-spec__card-value">
-                  {artifact.backgroundRemoval === 'birefnet-light' ? (
-                    <span className="ca-spec__bool ca-spec__bool--yes">
-                      Removed · birefnet-light
-                    </span>
-                  ) : (
-                    'Kept'
-                  )}
+                  <span className="ca-spec__bool ca-spec__bool--yes">
+                    Removed · {backgroundModel}
+                  </span>
                 </div>
               </div>
               <div className="ca-spec__card">
@@ -490,7 +491,7 @@ export default function ClipArtArtifactWrapper({ artifact }: Props) {
               <div className="ca-spec__card">
                 <div className="ca-spec__card-label">Formats</div>
                 <div className="ca-spec__card-value">
-                  {artifact.formats?.join(' · ') || 'WEBP'}
+                  {formats.join(' · ')}
                 </div>
               </div>
               <div className="ca-spec__card">

@@ -1,0 +1,57 @@
+{
+  "workflow": "generate-clip-art-asset",
+  "version": "v1.0.0",
+  "title": "Generate Clip Art Asset",
+  "released_at": "2026-05-15T00:00:00Z",
+  "status_note": "First pinned clip-art workflow. Render on ChatGPT Images 2.0, deterministic prompt template, single background remover, R2 storage.",
+  "input_contract": {
+    "prompt": { "type": "string", "required": true },
+    "style": {
+      "type": "enum",
+      "values": ["cartoon", "chibi", "illustrated", "watercolor", "flat"]
+    },
+    "aspect": { "type": "enum", "values": ["1:1", "3:4", "4:3", "16:9"] }
+  },
+  "pipeline": [
+    {
+      "stage": "resolve_prompt",
+      "kind": "prompt-template",
+      "prompt_template": "clip-art-prompt@v1"
+    },
+    {
+      "stage": "render_image",
+      "kind": "model",
+      "model": {
+        "provider": "openai",
+        "id": "gpt-image-2",
+        "snapshot": "gpt-image-2-2026-04-21"
+      }
+    },
+    {
+      "stage": "remove_background",
+      "kind": "model-routed",
+      "routing": [
+        {
+          "when": {
+            "style": ["cartoon", "chibi", "illustrated", "watercolor", "flat"]
+          },
+          "model": {
+            "provider": "fal",
+            "id": "birefnet-light",
+            "snapshot": null
+          }
+        }
+      ]
+    },
+    {
+      "stage": "store",
+      "kind": "storage",
+      "destination": "r2://artifacts/clip-art/{artifact_id}/"
+    }
+  ],
+  "output_contract": {
+    "artifact_type": "clip-art",
+    "formats": ["WEBP", "PNG"],
+    "storage_key": "artifacts/{artifact_type}/{artifact_id}/processed.webp"
+  }
+}
