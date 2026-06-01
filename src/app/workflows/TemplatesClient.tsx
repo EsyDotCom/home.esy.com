@@ -12,6 +12,8 @@ import {
   Zap,
   GraduationCap,
   Palette,
+  ShieldCheck,
+  CheckCircle2,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useScrollHeaderSearch } from '@/hooks/useScrollHeaderSearch';
@@ -19,7 +21,13 @@ import {
   getWorkflowTemplates,
   searchTemplates,
 } from '@/lib/templates';
+import {
+  getWorkflowCatalog,
+  ARTIFACT_CLASS_LABELS,
+} from '@/lib/workflow-catalog';
 import SearchBar from '@/components/SearchBar/SearchBar';
+
+const APP_URL = 'https://app.esy.com';
 
 // Navy Calm Light Theme
 const theme = {
@@ -159,6 +167,12 @@ export default function TemplatesClient() {
   };
 
   const workflowTemplates = getWorkflowTemplates();
+
+  // Published platform workflow templates, synced from api.esy.com's public
+  // catalog (src/data/workflow-catalog.json). These are the actual runnable
+  // workflows on the Esy platform — distinct from the marketing template pages
+  // above — so each links out to app.esy.com to run.
+  const platformWorkflows = getWorkflowCatalog();
 
   const handlePathClick = (href: string) => {
     router.push(href);
@@ -661,6 +675,155 @@ export default function TemplatesClient() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Live on the Esy platform — synced from the public workflow catalog */}
+      <section
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: 'clamp(4rem, 8vh, 6rem) clamp(1.5rem, 5vw, 3rem)',
+        }}
+      >
+        <div style={{ marginBottom: '2.5rem' }}>
+          <h2
+            style={{
+              fontFamily: 'var(--font-literata)',
+              fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+              fontWeight: 300,
+              letterSpacing: '-0.02em',
+              color: theme.text,
+              marginBottom: '0.5rem',
+            }}
+          >
+            Live on the Esy platform
+          </h2>
+          <p style={{ fontSize: '1rem', color: theme.subtle, margin: 0, maxWidth: '560px' }}>
+            Versioned, runnable workflow templates published on Esy. Give one inputs and it produces a
+            durable artifact with full provenance.
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))',
+            gap: '1.25rem',
+          }}
+        >
+          {platformWorkflows.map((entry) => {
+            const isHovered = hoveredCard === `pf-${entry.id}`;
+            return (
+              <a
+                key={entry.id}
+                href={`${APP_URL}/workflows/${entry.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onMouseEnter={() => setHoveredCard(`pf-${entry.id}`)}
+                onMouseLeave={() => setHoveredCard(null)}
+                style={{ textDecoration: 'none' }}
+              >
+                <article
+                  style={{
+                    background: theme.bg,
+                    border: `1px solid ${isHovered ? theme.accentBorder : theme.border}`,
+                    borderRadius: '16px',
+                    padding: '1.75rem',
+                    transition: 'all 0.3s ease',
+                    boxShadow: isHovered
+                      ? '0 16px 40px rgba(10, 37, 64, 0.1)'
+                      : '0 2px 8px rgba(10, 37, 64, 0.04)',
+                    transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  {/* Badges: artifact class + pinned version */}
+                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+                    <span
+                      style={{
+                        padding: '0.2rem 0.5rem',
+                        background: theme.accentLight,
+                        color: theme.accent,
+                        borderRadius: '6px',
+                        fontSize: '0.6875rem',
+                        fontWeight: 600,
+                        letterSpacing: '0.03em',
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      {ARTIFACT_CLASS_LABELS[entry.artifactClass] ?? entry.artifactClass}
+                    </span>
+                    <span style={{ fontSize: '0.6875rem', color: theme.faint, fontFamily: 'monospace' }}>v{entry.version}</span>
+                    {entry.includesQa && (
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.6875rem', color: theme.subtle }}>
+                        <ShieldCheck size={12} /> QA
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Title */}
+                  <h3
+                    style={{
+                      fontFamily: 'var(--font-literata)',
+                      fontSize: '1.25rem',
+                      fontWeight: 400,
+                      letterSpacing: '-0.01em',
+                      lineHeight: 1.3,
+                      marginBottom: '0.5rem',
+                      color: theme.text,
+                    }}
+                  >
+                    {entry.name}
+                  </h3>
+
+                  {/* Description */}
+                  <p style={{ fontSize: '0.9375rem', color: theme.muted, lineHeight: 1.6, marginBottom: '1.25rem', flexGrow: 1 }}>
+                    {entry.shortDescription}
+                  </p>
+
+                  {/* What you get */}
+                  {entry.whatYouGet?.length > 0 && (
+                    <div style={{ marginBottom: '1.25rem' }}>
+                      <div style={{ fontSize: '0.6875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: theme.faint, marginBottom: '0.5rem' }}>
+                        You get
+                      </div>
+                      <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                        {entry.whatYouGet.slice(0, 3).map((item, i) => (
+                          <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.8125rem', color: theme.muted }}>
+                            <CheckCircle2 size={14} style={{ color: theme.accent, flexShrink: 0, marginTop: 2 }} />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Meta row */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      paddingTop: '0.75rem',
+                      borderTop: `1px solid ${theme.divider}`,
+                    }}
+                  >
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8125rem', color: theme.subtle }}>
+                      <Clock size={13} />
+                      {entry.estimatedRuntime}
+                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: theme.accent, fontSize: '0.8125rem', fontWeight: 500 }}>
+                      Run on Esy
+                      <ArrowRight size={14} style={{ transform: isHovered ? 'translateX(3px)' : 'translateX(0)', transition: 'transform 0.2s ease' }} />
+                    </div>
+                  </div>
+                </article>
+              </a>
+            );
+          })}
         </div>
       </section>
 
