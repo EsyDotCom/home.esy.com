@@ -75,7 +75,9 @@ const GROUPS: Group[] = [
     label: 'Planned',
     blurb: 'Designed, not yet started.',
     items: [
-      { title: 'Scheduled runs', desc: 'Automate workflows on a recurring schedule.' },
+      { title: 'Generation orders', desc: 'Order many artifacts from one workflow with automated variation, and review each as it streams in — under a budget you set.' },
+      { title: 'Scheduled runs', desc: 'Run a generation order on a recurring schedule.' },
+      { title: 'Publishing pipeline', desc: 'Promote approved artifacts straight to public surfaces — generate, review, publish.' },
       { title: 'Context', desc: 'Durable organization and project memory that workflows can read from and write to.' },
       { title: 'Bring your own key', desc: 'Use your own provider credentials, or platform credits — your choice.' },
       { title: 'Finer cost provenance', desc: 'Attribute spend to the exact model running behind aggregated providers.' },
