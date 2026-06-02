@@ -288,6 +288,7 @@ export default function Footer () {
             title="Company"
             links={[
               { href: "/about/", text: "About" },
+              { href: "/roadmap/", text: "Roadmap" },
               { href: "/privacy/", text: "Privacy" },
               { href: "/terms/", text: "Terms" }
             ]}
