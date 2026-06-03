@@ -47,6 +47,18 @@ const nextConfig = {
         destination: '/workflows/:path*',
         permanent: true,
       },
+      // Retired legacy SEO subtree /workflows/essay/* (captured "essay template"
+      // back when /workflows was /templates). Superseded by /workflows/academic-essays.
+      {
+        source: '/workflows/essay',
+        destination: '/workflows/academic-essays',
+        permanent: true,
+      },
+      {
+        source: '/workflows/essay/:path*',
+        destination: '/workflows/academic-essays',
+        permanent: true,
+      },
       // Redirect /essays/visual/etymology to /essays/etymology/
       {
         source: '/essays/visual/the-word-dick',

@@ -173,34 +173,35 @@ export const SUBCATEGORY_CATEGORY_MAP: Record<string, ModelCategoryInfo> = {
     label: 'Claude Prompts',
     href: '/workflows/claude-prompts',
   },
-  // Essay templates
+  // Essay templates — breadcrumb to the Academic Essays category hub.
+  // (The legacy /workflows/essay/* SEO subtree was retired; academic-essays is canonical.)
   'essay-argumentative': {
-    label: 'Argumentative Essay',
-    href: '/workflows/essay/argumentative',
+    label: 'Academic Essays',
+    href: '/workflows/academic-essays',
   },
   'essay-college-application': {
-    label: 'College Application Essay',
-    href: '/workflows/essay/college-application',
+    label: 'Academic Essays',
+    href: '/workflows/academic-essays',
   },
   'essay-research': {
-    label: 'Research Essay',
-    href: '/workflows/essay/research',
+    label: 'Academic Essays',
+    href: '/workflows/academic-essays',
   },
   'essay-mla-format': {
-    label: 'MLA Format Essay',
-    href: '/workflows/essay/mla-format',
+    label: 'Academic Essays',
+    href: '/workflows/academic-essays',
   },
   'essay-expository': {
-    label: 'Expository Essay',
-    href: '/workflows/essay/expository',
+    label: 'Academic Essays',
+    href: '/workflows/academic-essays',
   },
   'essay-analytical': {
-    label: 'Analytical Essay',
-    href: '/workflows/essay/analytical',
+    label: 'Academic Essays',
+    href: '/workflows/academic-essays',
   },
   'essay-narrative': {
-    label: 'Narrative Essay',
-    href: '/workflows/essay/narrative',
+    label: 'Academic Essays',
+    href: '/workflows/academic-essays',
   },
 };
 
