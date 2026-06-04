@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import WorkflowPipelineStrip from './WorkflowPipelineStrip';
 
 // Navy Calm Light Theme
 const theme = {
@@ -278,51 +279,12 @@ export default function WorkflowCategoryPage({
                       {template.shortDescription}
                     </p>
 
-                    {/* Workflow stages */}
+                    {/* Workflow pipeline — shared strip, lights up on card hover. */}
                     {template.workflowStages && template.workflowStages.length > 0 && (
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.375rem',
-                          flexWrap: 'wrap',
-                        }}
-                      >
-                        {template.workflowStages.map((stage, idx) => (
-                          <React.Fragment key={stage.id}>
-                            <span
-                              style={{
-                                width: '6px',
-                                height: '6px',
-                                borderRadius: '50%',
-                                background: stage.isFinal
-                                  ? theme.accent
-                                  : theme.faint,
-                                flexShrink: 0,
-                              }}
-                            />
-                            <span
-                              style={{
-                                fontSize: '0.6875rem',
-                                color: stage.isFinal ? theme.accent : theme.faint,
-                                fontWeight: stage.isFinal ? 600 : 400,
-                              }}
-                            >
-                              {stage.label}
-                            </span>
-                            {idx < template.workflowStages!.length - 1 && (
-                              <span
-                                style={{
-                                  width: '12px',
-                                  height: '1px',
-                                  background: theme.divider,
-                                  flexShrink: 0,
-                                }}
-                              />
-                            )}
-                          </React.Fragment>
-                        ))}
-                      </div>
+                      <WorkflowPipelineStrip
+                        stages={template.workflowStages}
+                        active={isHovered}
+                      />
                     )}
                   </article>
                 </Link>

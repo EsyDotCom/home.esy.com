@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
@@ -26,6 +26,7 @@ import {
   ARTIFACT_CLASS_LABELS,
 } from '@/lib/workflow-catalog';
 import SearchBar from '@/components/SearchBar/SearchBar';
+import WorkflowPipelineStrip from '@/components/templates/WorkflowPipelineStrip';
 
 const APP_URL = 'https://app.esy.com';
 
@@ -585,45 +586,15 @@ export default function TemplatesClient() {
                       {template.shortDescription}
                     </p>
 
-                    {/* Workflow stage dots */}
+                    {/* Workflow pipeline — shared strip (flowing connector + nodes),
+                        lights up on card hover. */}
                     {stageCount > 0 && (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '1rem' }}>
-                        {template.workflowStages!.map((stage, i) => (
-                          <React.Fragment key={stage.id}>
-                            <div
-                              style={{
-                                width: stage.isFinal ? '10px' : '8px',
-                                height: stage.isFinal ? '10px' : '8px',
-                                borderRadius: '50%',
-                                background: stage.isFinal ? theme.accent : isHovered ? theme.accent : `rgba(10, 37, 64, 0.15)`,
-                                transition: 'all 0.3s ease',
-                                transitionDelay: isHovered ? `${i * 60}ms` : '0ms',
-                                boxShadow: stage.isFinal ? `0 0 8px ${theme.accent}40` : 'none',
-                              }}
-                              title={stage.label}
-                            />
-                            {i < stageCount - 1 && (
-                              <div
-                                style={{
-                                  width: '16px',
-                                  height: '1px',
-                                  background: isHovered ? `rgba(0, 168, 150, 0.4)` : `rgba(10, 37, 64, 0.1)`,
-                                  transition: 'all 0.3s ease',
-                                  transitionDelay: isHovered ? `${i * 60}ms` : '0ms',
-                                }}
-                              />
-                            )}
-                          </React.Fragment>
-                        ))}
-                        <span
-                          style={{
-                            fontSize: '0.6875rem',
-                            color: theme.faint,
-                            marginLeft: '0.5rem',
-                          }}
-                        >
-                          {stageCount} stages
-                        </span>
+                      <div style={{ marginBottom: '1rem' }}>
+                        <WorkflowPipelineStrip
+                          stages={template.workflowStages!}
+                          active={isHovered}
+                          showCount
+                        />
                       </div>
                     )}
 

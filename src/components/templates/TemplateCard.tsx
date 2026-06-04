@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Sparkles, Star } from 'lucide-react';
 import { Template } from '@/lib/templates';
+import WorkflowPipelineStrip from './WorkflowPipelineStrip';
 
 // Navy Calm Light Theme
 const theme = {
@@ -185,8 +186,17 @@ export default function TemplateCard({ template, showCategory = true }: Template
           {template.shortDescription}
         </p>
 
-        {/* Tags */}
-        {template.tags && template.tags.length > 0 && (
+        {/* Workflow pipeline — for workflow templates, the stage strip stands in
+            for tags (lights up on hover, rhymes with the detail-page circuit). */}
+        {template.isWorkflow && template.workflowStages && template.workflowStages.length > 0 && (
+          <div style={{ marginBottom: '1rem' }}>
+            <WorkflowPipelineStrip stages={template.workflowStages} active={isHovered} />
+          </div>
+        )}
+
+        {/* Tags — suppressed on workflow cards that show the pipeline strip above. */}
+        {!(template.isWorkflow && template.workflowStages && template.workflowStages.length > 0) &&
+          template.tags && template.tags.length > 0 && (
           <div
             style={{
               display: 'flex',
