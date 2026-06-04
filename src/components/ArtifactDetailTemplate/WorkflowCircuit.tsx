@@ -31,12 +31,15 @@ const colors = {
 };
 
 // ─── Layout Constants ────────────────────────────────────────────
-const NODE_W = 160;
-const NODE_H = 64;
-const NODE_RX = 10;
-const NODE_GAP = 48; // gap between nodes (horizontal)
-const VERT_GAP = 40; // gap between nodes (vertical)
-const PAD = 24;
+// Nodes are taller/wider than the original flat chips so each station can carry
+// a permanent sublabel + a numbered badge (the data used to live only in a hover
+// tooltip). Geometry stays responsive (horizontal desktop / vertical mobile).
+const NODE_W = 174;
+const NODE_H = 80;
+const NODE_RX = 14;
+const NODE_GAP = 46; // gap between nodes (horizontal)
+const VERT_GAP = 44; // gap between nodes (vertical)
+const PAD = 30;
 const TOOLTIP_W = 280;
 const TOOLTIP_PAD = 12;
 const TOOLTIP_LINE_H = 16;
@@ -52,6 +55,15 @@ function lerp(a: number, b: number, t: number) {
 
 function clamp01(t: number) {
   return Math.max(0, Math.min(1, t));
+}
+
+// Keep the in-node sublabel to one tidy line; the full text still lives in the
+// node's hover <title>. Cuts at a word boundary so we don't slice mid-word.
+function truncateLabel(text: string, maxChars = 26): string {
+  if (text.length <= maxChars) return text;
+  const slice = text.slice(0, maxChars);
+  const lastSpace = slice.lastIndexOf(' ');
+  return `${slice.slice(0, lastSpace > 12 ? lastSpace : maxChars).trimEnd()}…`;
 }
 
 function wrapTooltipText(text: string, maxChars = 34): string[] {
@@ -259,6 +271,7 @@ const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '
   const filterId = 'wc-ball-glow';
   const outputFilterId = 'wc-output-glow';
   const checkFilterId = 'wc-check-glow';
+  const nodeShadowId = 'wc-node-shadow';
 
   return (
     <div
@@ -298,6 +311,15 @@ const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          {/* Soft node drop shadow — lifts each station off the band. */}
+          <filter id={nodeShadowId} x="-40%" y="-40%" width="180%" height="200%">
+            <feDropShadow dx="0" dy="3" stdDeviation="5" floodColor="#0A2540" floodOpacity="0.08" />
+          </filter>
+          {/* Subtle vertical fill so nodes read as raised cards, not flat boxes. */}
+          <linearGradient id="wc-node-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#FFFFFF" />
+            <stop offset="100%" stopColor="#F6F9FB" />
+          </linearGradient>
           {/* Trace gradient */}
           {isHorizontal ? (
             <linearGradient id="wc-trace-grad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -312,23 +334,52 @@ const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '
           )}
         </defs>
 
-        {/* Trace lines between nodes */}
+        {/* Trace lines between nodes — a static base rail plus a dashed overlay
+            that flows continuously (when motion is allowed), so the whole
+            pipeline reads as "alive" rather than relying only on the single ball. */}
         {nodePositions.map((pos, i) => {
           if (i === 0) return null;
           const prev = nodePositions[i - 1];
           const checked = isNodeChecked(i, phase);
+          const x1 = isHorizontal ? prev.x + NODE_W / 2 : prev.x;
+          const y1 = isHorizontal ? prev.y : prev.y + NODE_H / 2;
+          const x2 = isHorizontal ? pos.x - NODE_W / 2 : pos.x;
+          const y2 = isHorizontal ? pos.y : pos.y - NODE_H / 2;
           return (
-            <line
-              key={`trace-${i}`}
-              x1={isHorizontal ? prev.x + NODE_W / 2 : prev.x}
-              y1={isHorizontal ? prev.y : prev.y + NODE_H / 2}
-              x2={isHorizontal ? pos.x - NODE_W / 2 : pos.x}
-              y2={isHorizontal ? pos.y : pos.y - NODE_H / 2}
-              stroke={checked ? colors.traceActive : colors.traceDefault}
-              strokeWidth="2"
-              strokeLinecap="round"
-              style={{ transition: 'stroke 0.4s ease' }}
-            />
+            <g key={`trace-${i}`}>
+              <line
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                stroke={checked ? colors.traceActive : colors.traceDefault}
+                strokeWidth="2"
+                strokeLinecap="round"
+                style={{ transition: 'stroke 0.4s ease' }}
+              />
+              {!reducedMotion && (
+                <line
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke={colors.ballColor}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeDasharray="2 12"
+                  opacity={checked ? 0.65 : 0.3}
+                  style={{ transition: 'opacity 0.4s ease' }}
+                >
+                  <animate
+                    attributeName="stroke-dashoffset"
+                    from="0"
+                    to="-28"
+                    dur="1.1s"
+                    repeatCount="indefinite"
+                  />
+                </line>
+              )}
+            </g>
           );
         })}
 
@@ -364,14 +415,14 @@ const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '
                 />
               )}
 
-              {/* Node background */}
+              {/* Node background — raised card (gradient + soft shadow). */}
               <rect
                 x={-NODE_W / 2}
                 y={-NODE_H / 2}
                 width={NODE_W}
                 height={NODE_H}
                 rx={NODE_RX}
-                fill={colors.nodeFill}
+                fill="url(#wc-node-fill)"
                 stroke={
                   active
                     ? colors.nodeStrokeActive
@@ -380,18 +431,54 @@ const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '
                       : colors.nodeStroke
                 }
                 strokeWidth={active ? 1.5 : 1}
+                filter={`url(#${nodeShadowId})`}
                 style={{ transition: 'stroke 0.3s ease, stroke-width 0.3s ease' }}
               />
               {stage.sublabel && (
                 <title>{`${stage.label}: ${stage.sublabel}`}</title>
               )}
 
+              {/* Top accent bar — fills in as the stage is reached (progress cue). */}
+              <rect
+                x={-16}
+                y={-NODE_H / 2 - 1}
+                width={32}
+                height={3}
+                rx={1.5}
+                fill={colors.ballColor}
+                opacity={active ? 1 : checked ? 0.55 : 0.18}
+                style={{ transition: 'opacity 0.3s ease' }}
+              />
+
+              {/* Numbered station badge (top-left, straddling the border). */}
+              <g transform={`translate(${-NODE_W / 2 + 15}, ${-NODE_H / 2})`}>
+                <circle
+                  r="11"
+                  fill={checked || active ? colors.ballColor : '#FFFFFF'}
+                  stroke={checked || active ? colors.ballColor : colors.nodeStroke}
+                  strokeWidth="1"
+                  style={{ transition: 'fill 0.3s ease, stroke 0.3s ease' }}
+                />
+                <text
+                  x={0}
+                  y={0.5}
+                  fill={checked || active ? '#FFFFFF' : colors.textSecondary}
+                  fontSize="10"
+                  fontWeight="700"
+                  fontFamily="Inter, -apple-system, sans-serif"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </text>
+              </g>
+
               {/* Label */}
               <text
                 x={0}
-                y={0}
+                y={stage.sublabel ? -8 : 0}
                 fill={colors.textPrimary}
-                fontSize="13"
+                fontSize="13.5"
                 fontWeight="600"
                 fontFamily="Inter, -apple-system, sans-serif"
                 textAnchor="middle"
@@ -400,8 +487,24 @@ const WorkflowCircuit: React.FC<WorkflowCircuitProps> = ({ stages, className = '
                 {stage.label}
               </text>
 
-              {/* Check mark */}
-              {checked && !stage.isFinal && (
+              {/* Permanent sublabel — surfaces detail that used to be hover-only. */}
+              {stage.sublabel && (
+                <text
+                  x={0}
+                  y={12}
+                  fill={colors.textSecondary}
+                  fontSize="10.5"
+                  fontWeight="400"
+                  fontFamily="Inter, -apple-system, sans-serif"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                >
+                  {truncateLabel(stage.sublabel)}
+                </text>
+              )}
+
+              {/* Check mark — only on the final (output) node once reached. */}
+              {checked && stage.isFinal && (
                 <g
                   transform={`translate(${NODE_W / 2 - 12}, ${-NODE_H / 2 - 6})`}
                   opacity={0.9}

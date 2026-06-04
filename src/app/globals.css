@@ -179,6 +179,51 @@ html {
   background: var(--text-dim);
 }
 
+/* ── Workflow pipeline strip (shared card-level pipeline vocabulary) ──
+   A flowing accent pulse travels along the connector between stage nodes so
+   workflow cards read as a live pipeline, rhyming with the Factory assembly
+   rail and the detail-page WorkflowCircuit. CSS-only (cheap across a grid). */
+@keyframes esy-pipe-flow {
+  from { background-position: 130% 0; }
+  to { background-position: -30% 0; }
+}
+
+.esy-pipe-connector {
+  width: 18px;
+  height: 1.5px;
+  flex-shrink: 0;
+  border-radius: 1px;
+  background-image: linear-gradient(
+    90deg,
+    rgba(10, 37, 64, 0.1) 0%,
+    rgba(10, 37, 64, 0.1) 40%,
+    #00a896 50%,
+    rgba(10, 37, 64, 0.1) 60%,
+    rgba(10, 37, 64, 0.1) 100%
+  );
+  background-size: 220% 100%;
+  animation: esy-pipe-flow 2.6s linear infinite;
+}
+
+/* Card-hover state — brighter track + accent pulse. */
+.esy-pipe-connector--active {
+  background-image: linear-gradient(
+    90deg,
+    rgba(0, 168, 150, 0.25) 0%,
+    rgba(0, 168, 150, 0.25) 38%,
+    #00d4aa 50%,
+    rgba(0, 168, 150, 0.25) 62%,
+    rgba(0, 168, 150, 0.25) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .esy-pipe-connector {
+    animation: none;
+    background-position: 50% 0;
+  }
+}
+
 .workflow-pipeline-scroll::-webkit-scrollbar {
   height: 4px;
 }

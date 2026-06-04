@@ -2617,6 +2617,58 @@ Develop master argument framework:
         isFinal: true,
       },
     ],
+    workflowDetails: [
+      {
+        id: 'intake',
+        title: 'Intake',
+        description:
+          'Hand Esy a citation, DOI, or topic. Optional data, statistics, and a brand palette sharpen the result.',
+        examples: [
+          { label: 'Input', value: 'DOI: 10.1038/s41586-022-05172-4' },
+          { label: 'Optional', value: 'Brand palette, key statistics' },
+        ],
+      },
+      {
+        id: 'research',
+        title: 'Research',
+        description:
+          'Esy reads the source, extracts the key findings, and pulls the figures worth visualizing.',
+        examples: [
+          { label: 'Extracts', value: 'Headline findings, comparative stats, trends' },
+          { label: 'Output', value: 'Structured fact set' },
+        ],
+      },
+      {
+        id: 'design',
+        title: 'Design',
+        description:
+          'Findings are mapped to the right chart types and arranged into a balanced, readable layout.',
+        examples: [
+          { label: 'Selects', value: 'Bar, line, and proportion charts' },
+          { label: 'Layout', value: 'Title, hero stat, supporting panels' },
+        ],
+      },
+      {
+        id: 'render',
+        title: 'Render',
+        description:
+          'Esy generates the finished visual with the selected palette and exports at production resolution.',
+        examples: [
+          { label: 'Engine', value: 'Nano Banana Pro' },
+          { label: 'Output', value: 'Composed infographic' },
+        ],
+      },
+      {
+        id: 'artifact',
+        title: 'Artifact',
+        description:
+          'The result includes print- and web-ready exports plus the resolved data, palette, and run history.',
+        examples: [
+          { label: 'Formats', value: 'PNG (2x), SVG, PDF (300 DPI)' },
+          { label: 'Provenance', value: 'Source, data, palette, run history' },
+        ],
+      },
+    ],
     sampleArtifacts: [
       {
         title: 'The Rise of Remote Work 2020–2024',
@@ -2694,6 +2746,68 @@ Develop master argument framework:
       { id: 'cite', label: 'Cite & Format', sublabel: 'APA/MLA + counterarg check' },
       { id: 'artifact', label: 'Artifact', sublabel: 'DOCX · PDF', isFinal: true },
     ],
+    workflowDetails: [
+      {
+        id: 'intake',
+        title: 'Intake',
+        description:
+          'Give Esy your topic and the stance you want to defend. Audience and required sources are optional.',
+        examples: [
+          { label: 'Topic', value: 'Should universities abolish standardized testing?' },
+          { label: 'Stance', value: 'Yes — equity outweighs predictive value' },
+        ],
+      },
+      {
+        id: 'research',
+        title: 'Research',
+        description:
+          'Esy gathers supporting evidence and maps the strongest counterarguments so the essay can answer them.',
+        examples: [
+          { label: 'Evidence', value: 'Studies on predictive validity & equity' },
+          { label: 'Counterargs', value: 'Merit signaling, comparability' },
+        ],
+      },
+      {
+        id: 'outline',
+        title: 'Outline',
+        description:
+          'Evidence is organized under a clear thesis, with each body paragraph assigned a claim and its support.',
+        examples: [
+          { label: 'Thesis', value: 'One arguable, specific claim' },
+          { label: 'Map', value: 'Claim → evidence per paragraph' },
+        ],
+      },
+      {
+        id: 'draft',
+        title: 'Draft',
+        description:
+          'Esy composes the argument — thesis, evidence paragraphs, a counterargument section, and conclusion.',
+        examples: [
+          { label: 'Structure', value: 'Intro · evidence · rebuttal · conclusion' },
+          { label: 'Output', value: 'Full argumentative draft' },
+        ],
+      },
+      {
+        id: 'cite',
+        title: 'Cite & Format',
+        description:
+          'Citations are formatted to your style and a counterargument check confirms the rebuttal holds.',
+        examples: [
+          { label: 'Citations', value: 'APA or MLA, fully formatted' },
+          { label: 'Check', value: 'Counterargument addressed' },
+        ],
+      },
+      {
+        id: 'artifact',
+        title: 'Artifact',
+        description:
+          'The finished essay is exported with formatting intact, alongside its sources and run history.',
+        examples: [
+          { label: 'Formats', value: 'DOCX, PDF' },
+          { label: 'Provenance', value: 'Sources, citations, run history' },
+        ],
+      },
+    ],
     sampleArtifacts: [
       {
         title: 'Should Universities Abolish Standardized Testing?',
@@ -2768,6 +2882,68 @@ Develop master argument framework:
       { id: 'draft', label: 'Draft', sublabel: 'Interpretive analysis' },
       { id: 'cite', label: 'Cite & Format', sublabel: 'Textual citations' },
       { id: 'artifact', label: 'Artifact', sublabel: 'DOCX · PDF', isFinal: true },
+    ],
+    workflowDetails: [
+      {
+        id: 'intake',
+        title: 'Intake',
+        description:
+          'Provide the text or subject and the analytical lens you want Esy to read it through.',
+        examples: [
+          { label: 'Source', value: 'Toni Morrison, Beloved' },
+          { label: 'Lens', value: 'Symbolism — water, trees, color' },
+        ],
+      },
+      {
+        id: 'research',
+        title: 'Research',
+        description:
+          'Esy performs a close reading, surfacing patterns, motifs, and the passages that anchor them.',
+        examples: [
+          { label: 'Finds', value: 'Recurring motifs & key passages' },
+          { label: 'Output', value: 'Annotated evidence set' },
+        ],
+      },
+      {
+        id: 'outline',
+        title: 'Outline',
+        description:
+          'The interpretation is structured around a framework, with each section tied to specific textual evidence.',
+        examples: [
+          { label: 'Framework', value: 'Motif → meaning → significance' },
+          { label: 'Map', value: 'Evidence assigned per section' },
+        ],
+      },
+      {
+        id: 'draft',
+        title: 'Draft',
+        description:
+          'Esy writes the analysis, integrating quotations and building an interpretive argument passage by passage.',
+        examples: [
+          { label: 'Method', value: 'Quote → analysis → claim' },
+          { label: 'Output', value: 'Full analytical draft' },
+        ],
+      },
+      {
+        id: 'cite',
+        title: 'Cite & Format',
+        description:
+          'Textual citations are formatted and checked against the source for accuracy.',
+        examples: [
+          { label: 'Citations', value: 'In-text + works cited' },
+          { label: 'Check', value: 'Quotes verified to source' },
+        ],
+      },
+      {
+        id: 'artifact',
+        title: 'Artifact',
+        description:
+          'The essay exports with citations and the run history that shows how each reading was reached.',
+        examples: [
+          { label: 'Formats', value: 'DOCX, PDF' },
+          { label: 'Provenance', value: 'Source, citations, run history' },
+        ],
+      },
     ],
     sampleArtifacts: [
       {
@@ -2845,6 +3021,68 @@ Develop master argument framework:
       { id: 'cite', label: 'Cite & Format', sublabel: 'Source attribution' },
       { id: 'artifact', label: 'Artifact', sublabel: 'DOCX · PDF', isFinal: true },
     ],
+    workflowDetails: [
+      {
+        id: 'intake',
+        title: 'Intake',
+        description:
+          'Name the topic and pick the organizational pattern — compare/contrast, cause/effect, definition, or process.',
+        examples: [
+          { label: 'Topic', value: 'How CRISPR gene editing works' },
+          { label: 'Pattern', value: 'Process explanation' },
+        ],
+      },
+      {
+        id: 'research',
+        title: 'Research',
+        description:
+          'Esy gathers the facts, data, and definitions needed to explain the topic accurately and objectively.',
+        examples: [
+          { label: 'Gathers', value: 'Mechanisms, data, definitions' },
+          { label: 'Output', value: 'Sourced fact set' },
+        ],
+      },
+      {
+        id: 'outline',
+        title: 'Outline',
+        description:
+          'Information is sequenced into a logical structure with clear topic sentences and transitions.',
+        examples: [
+          { label: 'Structure', value: 'Step-by-step or point-by-point' },
+          { label: 'Map', value: 'Topic sentence per section' },
+        ],
+      },
+      {
+        id: 'draft',
+        title: 'Draft',
+        description:
+          'Esy writes clear, neutral explanatory prose that moves the reader through the topic.',
+        examples: [
+          { label: 'Tone', value: 'Objective, informative' },
+          { label: 'Output', value: 'Full expository draft' },
+        ],
+      },
+      {
+        id: 'cite',
+        title: 'Cite & Format',
+        description:
+          'Facts are attributed to their sources and formatted in your chosen citation style.',
+        examples: [
+          { label: 'Citations', value: 'APA or MLA' },
+          { label: 'Check', value: 'Claims attributed to sources' },
+        ],
+      },
+      {
+        id: 'artifact',
+        title: 'Artifact',
+        description:
+          'The explainer exports cleanly with its sources and run history attached.',
+        examples: [
+          { label: 'Formats', value: 'DOCX, PDF' },
+          { label: 'Provenance', value: 'Sources, citations, run history' },
+        ],
+      },
+    ],
     sampleArtifacts: [
       {
         title: 'How CRISPR Gene Editing Works',
@@ -2920,6 +3158,68 @@ Develop master argument framework:
       { id: 'draft', label: 'Draft', sublabel: 'Scene writing' },
       { id: 'cite', label: 'Cite & Format', sublabel: 'Style & voice polish' },
       { id: 'artifact', label: 'Artifact', sublabel: 'DOCX · PDF', isFinal: true },
+    ],
+    workflowDetails: [
+      {
+        id: 'intake',
+        title: 'Intake',
+        description:
+          'Share the theme or experience, the narrative voice, and any tone or mood you want to set.',
+        examples: [
+          { label: 'Theme', value: 'A pivotal summer' },
+          { label: 'Voice', value: 'First-person, reflective' },
+        ],
+      },
+      {
+        id: 'research',
+        title: 'Research',
+        description:
+          'Esy builds out the context and setting so the story stays grounded in concrete, believable detail.',
+        examples: [
+          { label: 'Builds', value: 'Setting, period, sensory context' },
+          { label: 'Output', value: 'Background notes' },
+        ],
+      },
+      {
+        id: 'outline',
+        title: 'Outline',
+        description:
+          'The experience is shaped into a story arc with distinct scenes and a clear turning point.',
+        examples: [
+          { label: 'Arc', value: 'Setup · rising action · turn · reflection' },
+          { label: 'Map', value: 'Scene-by-scene beats' },
+        ],
+      },
+      {
+        id: 'draft',
+        title: 'Draft',
+        description:
+          'Esy writes the scenes with sensory detail, pacing, and dialogue where it fits.',
+        examples: [
+          { label: 'Craft', value: 'Show, don\'t tell; sensory detail' },
+          { label: 'Output', value: 'Full narrative draft' },
+        ],
+      },
+      {
+        id: 'cite',
+        title: 'Cite & Format',
+        description:
+          'A final pass polishes voice, tightens pacing, and locks consistent style throughout.',
+        examples: [
+          { label: 'Polish', value: 'Voice & pacing pass' },
+          { label: 'Check', value: 'Consistent tense & tone' },
+        ],
+      },
+      {
+        id: 'artifact',
+        title: 'Artifact',
+        description:
+          'The finished essay exports with formatting intact and its run history attached.',
+        examples: [
+          { label: 'Formats', value: 'DOCX, PDF' },
+          { label: 'Provenance', value: 'Draft history & run record' },
+        ],
+      },
     ],
     sampleArtifacts: [
       {
@@ -3000,6 +3300,68 @@ Develop master argument framework:
       { id: 'cite', label: 'Cite & Format', sublabel: 'Full bibliography' },
       { id: 'artifact', label: 'Artifact', sublabel: 'DOCX · PDF', isFinal: true },
     ],
+    workflowDetails: [
+      {
+        id: 'intake',
+        title: 'Intake',
+        description:
+          'Provide your research question, field, and citation format. Known sources can be supplied up front.',
+        examples: [
+          { label: 'Question', value: 'Does social media affect adolescent mental health?' },
+          { label: 'Format', value: 'APA · psychology' },
+        ],
+      },
+      {
+        id: 'research',
+        title: 'Research',
+        description:
+          'Esy conducts a literature review, synthesizing prior findings and identifying the gap your paper addresses.',
+        examples: [
+          { label: 'Reviews', value: '30+ studies synthesized' },
+          { label: 'Output', value: 'Literature review & gap' },
+        ],
+      },
+      {
+        id: 'outline',
+        title: 'Outline',
+        description:
+          'A methodology section is designed and the paper is structured from abstract through discussion.',
+        examples: [
+          { label: 'Designs', value: 'Methodology & section plan' },
+          { label: 'Structure', value: 'Abstract → methods → findings → discussion' },
+        ],
+      },
+      {
+        id: 'draft',
+        title: 'Draft',
+        description:
+          'Esy drafts the findings and discussion, building the argument from the reviewed evidence.',
+        examples: [
+          { label: 'Writes', value: 'Findings, analysis, discussion' },
+          { label: 'Output', value: 'Full paper draft' },
+        ],
+      },
+      {
+        id: 'cite',
+        title: 'Cite & Format',
+        description:
+          'Every source is formatted and a complete bibliography is assembled in your chosen style.',
+        examples: [
+          { label: 'Citations', value: 'MLA, APA, or Chicago' },
+          { label: 'Output', value: 'Full bibliography' },
+        ],
+      },
+      {
+        id: 'artifact',
+        title: 'Artifact',
+        description:
+          'The complete paper exports with bibliography, sources, and full run provenance.',
+        examples: [
+          { label: 'Formats', value: 'DOCX, PDF' },
+          { label: 'Provenance', value: 'Sources, citations, run history' },
+        ],
+      },
+    ],
     sampleArtifacts: [
       {
         title: 'The Impact of Social Media on Adolescent Mental Health',
@@ -3075,6 +3437,68 @@ Develop master argument framework:
       { id: 'draft', label: 'Draft', sublabel: 'Personal narrative' },
       { id: 'cite', label: 'Cite & Format', sublabel: 'Word count & tone' },
       { id: 'artifact', label: 'Artifact', sublabel: 'DOCX · PDF', isFinal: true },
+    ],
+    workflowDetails: [
+      {
+        id: 'intake',
+        title: 'Intake',
+        description:
+          'Give Esy the prompt, your target schools, the word limit, and the experiences you want to highlight.',
+        examples: [
+          { label: 'Prompt', value: 'Why this university? (MIT · engineering)' },
+          { label: 'Limit', value: '350 words' },
+        ],
+      },
+      {
+        id: 'research',
+        title: 'Research',
+        description:
+          'Esy researches program fit — specific labs, faculty, and values — so the essay feels genuinely tailored.',
+        examples: [
+          { label: 'Finds', value: 'Relevant labs, faculty, programs' },
+          { label: 'Output', value: 'Program-fit notes' },
+        ],
+      },
+      {
+        id: 'outline',
+        title: 'Outline',
+        description:
+          'Your experiences are arranged into a narrative arc that answers the prompt and shows growth.',
+        examples: [
+          { label: 'Arc', value: 'Hook · experience · reflection · fit' },
+          { label: 'Map', value: 'Beat-by-beat plan' },
+        ],
+      },
+      {
+        id: 'draft',
+        title: 'Draft',
+        description:
+          'Esy drafts a personal essay in an authentic voice, connecting your story to the school.',
+        examples: [
+          { label: 'Voice', value: 'Authentic, first-person' },
+          { label: 'Output', value: 'Full personal essay' },
+        ],
+      },
+      {
+        id: 'cite',
+        title: 'Cite & Format',
+        description:
+          'The draft is trimmed to the word limit and tuned for tone and admissions expectations.',
+        examples: [
+          { label: 'Fit', value: 'Trimmed to word count' },
+          { label: 'Check', value: 'Tone & prompt alignment' },
+        ],
+      },
+      {
+        id: 'artifact',
+        title: 'Artifact',
+        description:
+          'The polished essay exports ready to paste into the application, with its draft history retained.',
+        examples: [
+          { label: 'Formats', value: 'DOCX, PDF' },
+          { label: 'Provenance', value: 'Draft history & run record' },
+        ],
+      },
     ],
     sampleArtifacts: [
       {
