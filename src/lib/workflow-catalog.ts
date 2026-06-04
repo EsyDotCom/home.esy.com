@@ -1,10 +1,12 @@
 // Public workflow catalog loader.
 //
-// Reads the committed snapshot (src/data/workflow-catalog.json) synced from
-// api.esy.com's GET /v1/catalog by scripts/sync-workflow-catalog.mjs. esy.com is
-// a static export, so the /catalog page renders from this snapshot at build time
-// rather than fetching at runtime. Regenerate the snapshot with:
-//   node scripts/sync-workflow-catalog.mjs
+// Reads the committed snapshot (src/data/workflow-catalog.json). esy.com is a
+// static export (no runtime/ISR fetch), so the catalog is fetched from
+// api.esy.com's GET /v1/catalog/workflows at BUILD time: the `prebuild` npm hook
+// runs scripts/sync-workflow-catalog.mjs, which refreshes this snapshot before
+// next build. The fetch is non-fatal — on an API outage the build falls back to
+// the committed snapshot, so the public catalog can never blank. Regenerate
+// manually with: node scripts/sync-workflow-catalog.mjs
 
 import catalog from '@/data/workflow-catalog.json';
 
