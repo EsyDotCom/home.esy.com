@@ -39,18 +39,42 @@ export interface WorkflowCatalogEntry {
   updatedAt: string | null;
 }
 
+// Short, human phrase for the Intake bookend, built from the workflow's real
+// required inputs (optional ones are dropped so the cap stays terse).
+function intakeSublabel(entry: WorkflowCatalogEntry): string {
+  const required = (entry.whatYouProvide ?? []).filter((p) => !/optional/i.test(p));
+  if (required.length === 0) return 'Provide your inputs';
+  const list = required.join(', ');
+  return `Provide ${list.charAt(0).toLowerCase()}${list.slice(1)}`;
+}
+
+// Short phrase for the Artifact bookend — the workflow's headline deliverable.
+function artifactSublabel(entry: WorkflowCatalogEntry): string {
+  return entry.whatYouGet?.[0] ?? `Finished ${entry.outputType}`;
+}
+
 /**
- * Adapt a catalog entry's display stages to the card pipeline-strip shape.
- * The last stage is marked final (accented node), mirroring the detail-page rail.
+ * Adapt a catalog entry to the card/circuit pipeline-strip shape.
+ *
+ * The catalog stores only the *process* (model) stages. Every Esy workflow is
+ * intake → process → artifact, so we frame those process stages with the two
+ * universal bookends — Intake (the operator's inputs) and Artifact (the output,
+ * marked final/accented). Bookend copy is sourced from the entry's real intake
+ * (whatYouProvide) and output (whatYouGet) fields, not invented strings.
  */
 export function toPipelineStages(entry: WorkflowCatalogEntry): WorkflowStage[] {
-  const stages = entry.stages ?? [];
-  return stages.map((s, i) => ({
+  const process = (entry.stages ?? []).map((s, i) => ({
     id: `${entry.id}-stage-${i}`,
     label: s.name,
     sublabel: s.description,
-    isFinal: i === stages.length - 1,
+    isFinal: false,
   }));
+
+  return [
+    { id: `${entry.id}-intake`, label: 'Intake', sublabel: intakeSublabel(entry), isFinal: false },
+    ...process,
+    { id: `${entry.id}-artifact`, label: 'Artifact', sublabel: artifactSublabel(entry), isFinal: true },
+  ];
 }
 
 /**
