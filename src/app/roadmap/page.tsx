@@ -57,7 +57,7 @@ const GROUPS: Group[] = [
       { title: 'Research reports + chained infographics', desc: 'A research workflow that composes a sub-workflow to produce a matching infographic.' },
       { title: 'First-class artifacts', desc: 'Artifacts are produced and consumed by workflows — pipe one workflow’s output into another.' },
       { title: 'Public workflow catalog', desc: 'Browse the available workflow templates at /workflows.' },
-      { title: 'Public documentation', desc: 'Concepts and guides at docs.esy.com — workflows, runs, artifacts, costs, versioning.' },
+      { title: 'Public documentation', desc: 'Concepts and guides at /docs — workflows, runs, artifacts, costs, versioning.' },
     ],
   },
   {

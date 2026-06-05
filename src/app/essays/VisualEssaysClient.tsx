@@ -391,7 +391,7 @@ const ArtifactCTA: React.FC = () => (
     </p>
     <div className="artifact-cta-links">
       <a
-        href="https://docs.esy.com/concepts/artifacts"
+        href="/docs/concepts/artifacts"
         target="_blank"
         rel="noopener noreferrer"
         className="artifact-cta-link"
@@ -399,7 +399,7 @@ const ArtifactCTA: React.FC = () => (
         What&apos;s an artifact?
       </a>
       <a
-        href="https://docs.esy.com/concepts/workflow-templates"
+        href="/docs/concepts/workflow-templates"
         target="_blank"
         rel="noopener noreferrer"
         className="artifact-cta-link"
