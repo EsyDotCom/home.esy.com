@@ -1,13 +1,37 @@
-// Docs Navigation Structure
-// Designed to integrate with Esy's design system and be easily extensible
+/**
+ * Sidebar information architecture for docs.esy.com.
+ * Sections render top-down in the order listed here. Items support
+ * an optional `icon` (from the lucide icon map in Sidebar.tsx),
+ * an `isNew` flag, an `external` flag, and a `description` for
+ * search / hub rendering.
+ */
+
+export type NavIcon =
+  | 'home'
+  | 'rocket'
+  | 'layers'
+  | 'workflow'
+  | 'play'
+  | 'image'
+  | 'wallet'
+  | 'book'
+  | 'history'
+  | 'compass'
+  | 'cpu'
+  | 'users'
+  | 'file-text'
+  | 'palette'
+  | 'app-window'
+  | 'globe'
+  | 'plug';
 
 export interface NavItem {
   title: string;
   href: string;
   description?: string;
-  icon?: 'home' | 'workflow' | 'spec' | 'layers' | 'user-cog';
+  icon?: NavIcon;
   isNew?: boolean;
-  children?: NavItem[];
+  external?: boolean;
 }
 
 export interface NavSection {
@@ -15,94 +39,168 @@ export interface NavSection {
   items: NavItem[];
 }
 
-export const docsNavigation: NavSection[] = [
+export const navigation: NavSection[] = [
   {
-    title: "How We Build",
+    title: 'Get started',
     items: [
       {
-        title: "Overview",
-        href: "/docs",
-        description: "How Esy artifacts are made",
-        icon: "home",
+        title: 'Overview',
+        href: '/docs',
+        description: 'What the Esy docs cover and how the API is structured.',
+        icon: 'home',
       },
     ],
   },
   {
-    title: "System",
+    title: 'Concepts',
     items: [
       {
-        title: "Core Model",
-        href: "/docs/core-model",
-        description: "Execution architecture and philosophy",
-        icon: "layers",
+        title: 'Workflow schemas',
+        href: '/docs/concepts/workflow-schemas',
+        description: 'The platform contract every Workflow Template must satisfy.',
+        icon: 'layers',
+        isNew: true,
       },
       {
-        title: "Roles",
-        href: "/docs/roles",
-        description: "Agent contracts and behavior definitions",
-        icon: "user-cog",
+        title: 'Workflow templates',
+        href: '/docs/concepts/workflow-templates',
+        description: 'Reusable, versioned blueprints that produce a class of artifacts.',
+        icon: 'workflow',
       },
       {
-        title: "Workflows",
-        href: "/docs/workflows",
-        description: "Execution pipelines and step design",
-        icon: "workflow",
+        title: 'Workflow specifications',
+        href: '/docs/concepts/workflow-specifications',
+        description: 'Per-run populated instances of a Template. The deterministic blueprint production reads.',
+        icon: 'file-text',
+        isNew: true,
+      },
+      {
+        title: 'Workflow versioning',
+        href: '/docs/concepts/workflow-versioning',
+        description: 'Templates are immutable and versioned; runs pin the exact version they executed for reproducibility.',
+        icon: 'history',
+        isNew: true,
+      },
+      {
+        title: 'Runs',
+        href: '/docs/concepts/runs',
+        description: 'One execution of a workflow template, with cost and step telemetry.',
+        icon: 'play',
+      },
+      {
+        title: 'Artifacts',
+        href: '/docs/concepts/artifacts',
+        description: 'The output of a run — files, metadata, and provenance.',
+        icon: 'image',
+      },
+      {
+        title: 'Sub-workflows',
+        href: '/docs/concepts/sub-workflows',
+        description: 'How a workflow composes another workflow as a child run, with linked artifacts and rolled-up cost.',
+        icon: 'workflow',
+        isNew: true,
+      },
+      {
+        title: 'Costs',
+        href: '/docs/concepts/costs',
+        description: 'How cost is tracked across steps, runs, workflows, and projects.',
+        icon: 'wallet',
+      },
+      {
+        title: 'Budgets',
+        href: '/docs/concepts/budgets',
+        description: 'Spend limits at organization, project, or workflow scope, enforced before a run executes.',
+        icon: 'wallet',
+        isNew: true,
       },
     ],
   },
   {
-    title: "Artifacts",
+    title: 'Reference',
     items: [
       {
-        title: "Artifact Specifications",
-        href: "/docs/specs",
-        description: "Structure, metadata, authorship, and provenance",
-        icon: "spec",
+        title: 'API',
+        href: '/docs/api',
+        description: 'Endpoints, request shapes, and response schemas.',
+        icon: 'plug',
       },
       {
-        title: "Designing Visual Essays",
-        href: "/docs/designing-visual-essays",
-        description: "Design doctrine and interaction patterns",
-        icon: "layers",
+        title: 'Changelog',
+        href: '/docs/changelog',
+        description: 'API and platform changes over time.',
+        icon: 'history',
+      },
+    ],
+  },
+  {
+    title: 'Guides',
+    items: [
+      {
+        title: 'All guides',
+        href: '/docs/guides',
+        description: 'Walkthroughs for common Esy workflows.',
+        icon: 'compass',
+      },
+      {
+        title: 'Generate clip art',
+        href: '/docs/guides/generate-clip-art-asset',
+        description: 'Run the clip-art workflow end-to-end.',
+        icon: 'image',
+      },
+      {
+        title: 'Compose with artifact inputs',
+        href: '/docs/guides/compose-with-artifact-inputs',
+        description: 'Let a workflow accept an existing artifact as input — supply one or generate it.',
+        icon: 'workflow',
+        isNew: true,
+      },
+    ],
+  },
+  {
+    title: 'Resources',
+    items: [
+      {
+        title: 'Open the app',
+        href: 'https://app.esy.com',
+        description: 'Manage projects, runs, and costs in the Esy dashboard.',
+        icon: 'app-window',
+        external: true,
+      },
+      {
+        title: 'Esy on the web',
+        href: 'https://esy.com',
+        description: 'Marketing site, essays, templates, and glossary.',
+        icon: 'globe',
+        external: true,
       },
     ],
   },
 ];
 
-// Flat list of all doc pages for easy lookup
-export const allDocPages: NavItem[] = docsNavigation.flatMap(
-  (section) => section.items
-);
+/** Flat list of every nav item across all sections. */
+export const allNavItems: NavItem[] = navigation.flatMap((s) => s.items);
 
-// Get page by href
-export function getDocPageByHref(href: string): NavItem | undefined {
-  return allDocPages.find((page) => page.href === href);
+/** Look up a nav item by its href (exact match, ignoring trailing slash). */
+export function getNavItemByHref(href: string): NavItem | undefined {
+  const norm = (h: string) => (h.endsWith('/') && h.length > 1 ? h.slice(0, -1) : h);
+  const target = norm(href);
+  return allNavItems.find((item) => norm(item.href) === target);
 }
 
-// Get adjacent pages for prev/next navigation
+/** Internal-only items, used to derive prev/next page navigation. */
+export const orderedInternalPages: NavItem[] = allNavItems.filter((item) => !item.external);
+
+/** Get the items immediately before/after a given href in the flat order. */
 export function getAdjacentPages(currentHref: string): {
   prev: NavItem | null;
   next: NavItem | null;
 } {
-  const index = allDocPages.findIndex((page) => page.href === currentHref);
+  const norm = (h: string) => (h.endsWith('/') && h.length > 1 ? h.slice(0, -1) : h);
+  const target = norm(currentHref);
+  const i = orderedInternalPages.findIndex((p) => norm(p.href) === target);
+  if (i === -1) return { prev: null, next: null };
   return {
-    prev: index > 0 ? allDocPages[index - 1] : null,
-    next: index < allDocPages.length - 1 ? allDocPages[index + 1] : null,
+    prev: i > 0 ? orderedInternalPages[i - 1] : null,
+    next: i < orderedInternalPages.length - 1 ? orderedInternalPages[i + 1] : null,
   };
-}
-
-// Generate breadcrumbs from href
-export function getBreadcrumbs(
-  href: string
-): { title: string; href: string }[] {
-  const breadcrumbs = [{ title: "Docs", href: "/docs" }];
-
-  if (href !== "/docs") {
-    const page = getDocPageByHref(href);
-    if (page) {
-      breadcrumbs.push({ title: page.title, href: page.href });
-    }
-  }
-
-  return breadcrumbs;
 }

@@ -36,14 +36,10 @@
   status = 301
   force = true
 
-# Docs migrated to docs.esy.com (May 2026) — the engineering source of truth.
-# The /docs index now forwards to the new canonical site. Subpaths under /docs/*
-# remain accessible during the transition and will be discontinued / mapped later.
-[[redirects]]
-  from = "/docs"
-  to = "https://docs.esy.com/"
-  status = 301
-  force = true
+# Docs are now served natively at /docs (June 2026) — the docs.esy.com design
+# and content was migrated into this site. No redirect: /docs/* is canonical here.
+# docs.esy.com now forwards inbound traffic to esy.com/docs (configured in that
+# site's hosting, not here).
 
 # Redirect /essays/visual/* to /essays/* (canonical URLs)
 [[redirects]]

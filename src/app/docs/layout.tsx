@@ -1,57 +1,35 @@
-"use client";
+import type { Metadata } from 'next';
+import { DocsLayout } from '@/components/docs/DocsLayout';
+// Scoped here (not in the root layout) so Next only ships the docs design
+// system on /docs/* routes — it never loads on the marketing pages.
+import './docs-theme.css';
 
-import { useState, useEffect } from "react";
-import { DocsSidebar, DocsSearchModal } from "@/components/docs";
+export const metadata: Metadata = {
+  title: {
+    default: 'Docs — Esy',
+    template: '%s — Esy Docs',
+  },
+  description:
+    'API, runtime, and workflow reference for Esy — the platform for producing high-quality, reviewable artifacts.',
+  alternates: {
+    canonical: '/docs',
+  },
+  openGraph: {
+    siteName: 'Esy Docs',
+    title: 'Docs — Esy',
+    description:
+      'API, runtime, and workflow reference for Esy — the platform for producing high-quality, reviewable artifacts.',
+    url: 'https://esy.com/docs',
+    type: 'website',
+  },
+};
 
-export default function DocsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-
-  // Handle Cmd/Ctrl + K
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        setIsSearchOpen(true);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
+export default function DocsRouteLayout({ children }: { children: React.ReactNode }) {
+  // .esy-docs scopes the design system; the root layout already provides the
+  // <html>/<body> and the font CSS variables the docs theme references.
   return (
-    <div 
-      style={{ 
-        minHeight: '100vh',
-        backgroundColor: '#FFFFFF',
-      }}
-    >
-      {/* Main Content */}
-      <div style={{ 
-        display: 'flex',
-        minHeight: '100vh',
-      }}>
-        {/* Sidebar */}
-        <DocsSidebar onOpenSearch={() => setIsSearchOpen(true)} />
-
-        {/* Content Area */}
-        <main style={{ 
-          flex: 1,
-          minWidth: 0,
-        }}>
-          {children}
-        </main>
-      </div>
-
-      {/* Search Modal */}
-      <DocsSearchModal 
-        isOpen={isSearchOpen} 
-        onClose={() => setIsSearchOpen(false)} 
-      />
+    <div className="esy-docs">
+      <DocsLayout>{children}</DocsLayout>
     </div>
   );
 }
