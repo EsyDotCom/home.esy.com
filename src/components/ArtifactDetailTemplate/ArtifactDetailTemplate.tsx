@@ -39,7 +39,6 @@ export default function ArtifactDetailTemplate({
     inputRequirements,
     sampleArtifacts,
     engine,
-    pricing,
     subcategory,
   } = template;
 
@@ -129,18 +128,6 @@ export default function ArtifactDetailTemplate({
               </Link>
             </div>
           </div>
-
-          {/* Side card (pricing) */}
-          {pricing && pricing.price && (
-            <div className="adt-hero-side">
-              <div className="adt-pricing-card">
-                <p className="adt-pricing-value">
-                  ${pricing.price.toFixed(2)}
-                </p>
-                <p className="adt-pricing-label">per run</p>
-              </div>
-            </div>
-          )}
         </section>
       </div>
 

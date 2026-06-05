@@ -83,8 +83,6 @@
 
 @media (min-width: 768px) {
   .adt-hero {
-    grid-template-columns: 1fr auto;
-    gap: 64px;
     padding: 56px 24px 64px;
   }
 }
@@ -207,35 +205,6 @@
 .adt-cta-secondary:hover {
   background: rgba(10, 37, 64, 0.04);
   border-color: rgba(10, 37, 64, 0.2);
-}
-
-/* ─── Hero Side (pricing / meta) ──────────────────────────── */
-.adt-hero-side {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  min-width: 200px;
-}
-
-.adt-pricing-card {
-  background: #F8FAFC;
-  border: 1px solid rgba(10, 37, 64, 0.06);
-  border-radius: 12px;
-  padding: 24px;
-  text-align: center;
-}
-
-.adt-pricing-value {
-  font-family: var(--font-literata, Literata, Georgia, serif);
-  font-size: 2rem;
-  font-weight: 700;
-  color: #0A2540;
-  margin: 0 0 4px;
-}
-
-.adt-pricing-label {
-  font-size: 0.8125rem;
-  color: rgba(10, 37, 64, 0.5);
 }
 
 /* ─── Section Bands (alternating backgrounds) ─────────────── */
