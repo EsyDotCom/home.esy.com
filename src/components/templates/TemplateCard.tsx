@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Sparkles, Star } from 'lucide-react';
 import { Template } from '@/lib/templates';
+import { getCatalogStages } from '@/lib/workflow-catalog';
 import WorkflowPipelineStrip from './WorkflowPipelineStrip';
 
 // Navy Calm Light Theme
@@ -32,22 +33,13 @@ interface TemplateCardProps {
 export default function TemplateCard({ template, showCategory = true }: TemplateCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
-  const getCategoryColor = () => theme.accent;
-
-  const getDifficultyColor = (difficulty?: string) => {
-    switch (difficulty) {
-      case 'beginner':
-        return theme.success;
-      case 'intermediate':
-        return theme.warning;
-      case 'advanced':
-        return theme.error;
-      default:
-        return theme.subtle;
-    }
-  };
-
   const cardBadgeLabel = template.isWorkflow ? 'Workflow Template' : template.category;
+
+  // Pipeline stages from the live catalog (slug === catalog id); fall back to
+  // any locally-authored stages for templates that aren't published yet.
+  const catalogStages = getCatalogStages(template.slug);
+  const pipelineStages = catalogStages.length > 0 ? catalogStages : (template.workflowStages ?? []);
+  const hasPipeline = template.isWorkflow && pipelineStages.length > 0;
 
   return (
     <Link
@@ -99,21 +91,6 @@ export default function TemplateCard({ template, showCategory = true }: Template
                 }}
               >
                 {cardBadgeLabel}
-              </span>
-            )}
-            {template.difficulty && (
-              <span
-                style={{
-                  padding: '0.25rem 0.5rem',
-                  background: `${getDifficultyColor(template.difficulty)}15`,
-                  color: getDifficultyColor(template.difficulty),
-                  borderRadius: '6px',
-                  fontSize: '0.625rem',
-                  fontWeight: 500,
-                  textTransform: 'capitalize',
-                }}
-              >
-                {template.difficulty}
               </span>
             )}
           </div>
@@ -188,14 +165,14 @@ export default function TemplateCard({ template, showCategory = true }: Template
 
         {/* Workflow pipeline — for workflow templates, the stage strip stands in
             for tags (lights up on hover, rhymes with the detail-page circuit). */}
-        {template.isWorkflow && template.workflowStages && template.workflowStages.length > 0 && (
+        {hasPipeline && (
           <div style={{ marginBottom: '1rem' }}>
-            <WorkflowPipelineStrip stages={template.workflowStages} active={isHovered} />
+            <WorkflowPipelineStrip stages={pipelineStages} active={isHovered} />
           </div>
         )}
 
         {/* Tags — suppressed on workflow cards that show the pipeline strip above. */}
-        {!(template.isWorkflow && template.workflowStages && template.workflowStages.length > 0) &&
+        {!hasPipeline &&
           template.tags && template.tags.length > 0 && (
           <div
             style={{

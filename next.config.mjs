@@ -59,6 +59,44 @@ const nextConfig = {
         destination: '/workflows/academic-essays',
         permanent: true,
       },
+      // Workflow detail slugs adopted the verb-first standard (generate-*) to
+      // match the platform's canonical template ids (June 2026). Preserve the
+      // pre-rename SEO URLs with permanent redirects to the new slugs.
+      {
+        source: '/workflows/argumentative-essay',
+        destination: '/workflows/generate-essay-argumentative',
+        permanent: true,
+      },
+      {
+        source: '/workflows/analytical-essay',
+        destination: '/workflows/generate-essay-analytical',
+        permanent: true,
+      },
+      {
+        source: '/workflows/expository-essay',
+        destination: '/workflows/generate-essay-expository',
+        permanent: true,
+      },
+      {
+        source: '/workflows/narrative-essay',
+        destination: '/workflows/generate-essay-narrative',
+        permanent: true,
+      },
+      {
+        source: '/workflows/research-paper',
+        destination: '/workflows/generate-research-paper',
+        permanent: true,
+      },
+      {
+        source: '/workflows/college-application-essay',
+        destination: '/workflows/generate-essay-college-application',
+        permanent: true,
+      },
+      {
+        source: '/workflows/research-infographic',
+        destination: '/workflows/generate-research-infographic',
+        permanent: true,
+      },
       // Redirect /essays/visual/etymology to /essays/etymology/
       {
         source: '/essays/visual/the-word-dick',

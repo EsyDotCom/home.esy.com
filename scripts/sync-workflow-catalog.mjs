@@ -30,7 +30,7 @@ const API_BASE = process.env.ESY_API_URL || process.env.NEXT_PUBLIC_ESY_API_URL 
 
 const REQUIRED_FIELDS = [
   'id', 'name', 'description', 'shortDescription', 'artifactClass', 'outputType',
-  'depth', 'estimatedRuntime', 'includesQa', 'whatYouProvide', 'whatYouGet',
+  'depth', 'estimatedRuntime', 'includesQa', 'stages', 'whatYouProvide', 'whatYouGet',
   'qaChecks', 'version', 'cadence',
 ];
 

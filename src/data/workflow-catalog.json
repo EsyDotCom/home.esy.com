@@ -1,6 +1,6 @@
 {
-  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows). Mirrors the platform's published, versioned workflow templates.",
-  "generatedAt": "2026-06-04T23:11:51.198777Z",
+  "_comment": "SYNCED SNAPSHOT \u2014 do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows). Mirrors the platform's published, versioned workflow templates.",
+  "generatedAt": "2026-06-04T23:54:52.204147Z",
   "total": 9,
   "items": [
     {
@@ -13,6 +13,23 @@
       "depth": "standard",
       "estimatedRuntime": "40-90 sec",
       "includesQa": true,
+      "stages": [
+        {
+          "name": "Analyze",
+          "description": "Close-read the source and surface patterns.",
+          "stepCount": 1
+        },
+        {
+          "name": "Outline",
+          "description": "Frame the interpretation under a thesis.",
+          "stepCount": 1
+        },
+        {
+          "name": "Draft",
+          "description": "Compose the analysis with textual evidence.",
+          "stepCount": 1
+        }
+      ],
       "whatYouProvide": [
         "Source or subject",
         "Analytical lens (optional)",
@@ -42,6 +59,23 @@
       "depth": "standard",
       "estimatedRuntime": "40-90 sec",
       "includesQa": true,
+      "stages": [
+        {
+          "name": "Develop",
+          "description": "Develop evidence and map counterarguments.",
+          "stepCount": 1
+        },
+        {
+          "name": "Outline",
+          "description": "Organize evidence under a clear thesis.",
+          "stepCount": 1
+        },
+        {
+          "name": "Draft",
+          "description": "Compose the argument with a rebuttal.",
+          "stepCount": 1
+        }
+      ],
       "whatYouProvide": [
         "Topic",
         "Your stance",
@@ -73,6 +107,18 @@
       "depth": "quick",
       "estimatedRuntime": "30-90 sec",
       "includesQa": true,
+      "stages": [
+        {
+          "name": "Generate image",
+          "description": "Compose the clip-art prompt and call the still-image provider.",
+          "stepCount": 1
+        },
+        {
+          "name": "Remove background",
+          "description": "Remove background with fal.ai when enabled, then store in ESY R2.",
+          "stepCount": 1
+        }
+      ],
       "whatYouProvide": [
         "Subject prompt",
         "Clip-art style",
@@ -105,6 +151,23 @@
       "depth": "standard",
       "estimatedRuntime": "40-80 sec",
       "includesQa": true,
+      "stages": [
+        {
+          "name": "Angle",
+          "description": "Find a distinctive angle from the background.",
+          "stepCount": 1
+        },
+        {
+          "name": "Outline",
+          "description": "Structure a focused personal story.",
+          "stepCount": 1
+        },
+        {
+          "name": "Draft",
+          "description": "Compose a voice-driven essay.",
+          "stepCount": 1
+        }
+      ],
       "whatYouProvide": [
         "Essay prompt",
         "Personal background",
@@ -136,6 +199,23 @@
       "depth": "standard",
       "estimatedRuntime": "40-90 sec",
       "includesQa": true,
+      "stages": [
+        {
+          "name": "Develop",
+          "description": "Gather the key facts and concepts.",
+          "stepCount": 1
+        },
+        {
+          "name": "Outline",
+          "description": "Sequence the explanation logically.",
+          "stepCount": 1
+        },
+        {
+          "name": "Draft",
+          "description": "Compose a clear, balanced explanation.",
+          "stepCount": 1
+        }
+      ],
       "whatYouProvide": [
         "Topic",
         "Audience (optional)",
@@ -165,6 +245,23 @@
       "depth": "standard",
       "estimatedRuntime": "40-90 sec",
       "includesQa": true,
+      "stages": [
+        {
+          "name": "Premise",
+          "description": "Shape the premise and narrative arc.",
+          "stepCount": 1
+        },
+        {
+          "name": "Outline",
+          "description": "Sequence the scenes and turning point.",
+          "stepCount": 1
+        },
+        {
+          "name": "Draft",
+          "description": "Compose the story with reflection.",
+          "stepCount": 1
+        }
+      ],
       "whatYouProvide": [
         "Story prompt or theme",
         "Perspective (optional)",
@@ -193,6 +290,23 @@
       "depth": "deep",
       "estimatedRuntime": "60-120 sec",
       "includesQa": true,
+      "stages": [
+        {
+          "name": "Research",
+          "description": "Run the research report sub-workflow.",
+          "stepCount": 1
+        },
+        {
+          "name": "Compose",
+          "description": "Compose the infographic image prompt.",
+          "stepCount": 1
+        },
+        {
+          "name": "Render",
+          "description": "Generate the infographic image.",
+          "stepCount": 1
+        }
+      ],
       "whatYouProvide": [
         "Research topic",
         "Aspect ratio (optional)",
@@ -221,6 +335,23 @@
       "depth": "deep",
       "estimatedRuntime": "60-120 sec",
       "includesQa": true,
+      "stages": [
+        {
+          "name": "Synthesize",
+          "description": "Synthesize evidence around the question.",
+          "stepCount": 1
+        },
+        {
+          "name": "Outline",
+          "description": "Plan the standard paper sections.",
+          "stepCount": 1
+        },
+        {
+          "name": "Draft",
+          "description": "Write the cited, multi-section paper.",
+          "stepCount": 1
+        }
+      ],
       "whatYouProvide": [
         "Topic",
         "Research question (optional)",
@@ -252,6 +383,18 @@
       "depth": "deep",
       "estimatedRuntime": "30-60 sec",
       "includesQa": true,
+      "stages": [
+        {
+          "name": "Outline",
+          "description": "Plan the report structure.",
+          "stepCount": 1
+        },
+        {
+          "name": "Synthesize",
+          "description": "Write the full cited report.",
+          "stepCount": 1
+        }
+      ],
       "whatYouProvide": [
         "Research topic",
         "Audience (optional)"

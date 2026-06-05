@@ -16,7 +16,7 @@ export function getExploreArtifactsHref(
   }
 
   if (
-    template.slug === 'research-infographic' ||
+    template.slug === 'generate-research-infographic' ||
     template.tags?.includes('infographic')
   ) {
     return '/infographics/';

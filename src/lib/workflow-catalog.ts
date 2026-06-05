@@ -9,8 +9,16 @@
 // manually with: node scripts/sync-workflow-catalog.mjs
 
 import catalog from '@/data/workflow-catalog.json';
+import type { WorkflowStage } from '@/lib/templates';
 
 export type ArtifactClass = 'research' | 'visual' | 'video' | 'knowledge';
+
+/** Display-only pipeline summary from the catalog (no runtime/provider internals). */
+export interface CatalogStage {
+  name: string;
+  description: string;
+  stepCount: number;
+}
 
 export interface WorkflowCatalogEntry {
   id: string;
@@ -22,12 +30,38 @@ export interface WorkflowCatalogEntry {
   depth: string;
   estimatedRuntime: string;
   includesQa: boolean;
+  stages: CatalogStage[];
   whatYouProvide: string[];
   whatYouGet: string[];
   qaChecks: string[];
   version: string;
   cadence: string;
   updatedAt: string | null;
+}
+
+/**
+ * Adapt a catalog entry's display stages to the card pipeline-strip shape.
+ * The last stage is marked final (accented node), mirroring the detail-page rail.
+ */
+export function toPipelineStages(entry: WorkflowCatalogEntry): WorkflowStage[] {
+  const stages = entry.stages ?? [];
+  return stages.map((s, i) => ({
+    id: `${entry.id}-stage-${i}`,
+    label: s.name,
+    sublabel: s.description,
+    isFinal: i === stages.length - 1,
+  }));
+}
+
+/**
+ * Pipeline stages for a workflow by id/slug, sourced from the live catalog.
+ * Returns [] when the id isn't a published platform template, so callers can
+ * fall back to any local stages they have. Marketing slugs now equal catalog
+ * ids (verb-first generate-*), so this join is a direct id lookup.
+ */
+export function getCatalogStages(id: string): WorkflowStage[] {
+  const entry = getCatalogEntry(id);
+  return entry ? toPipelineStages(entry) : [];
 }
 
 interface CatalogSnapshot {
