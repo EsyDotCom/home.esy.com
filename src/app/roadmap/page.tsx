@@ -75,6 +75,7 @@ const GROUPS: Group[] = [
     label: 'Planned',
     blurb: 'Designed, not yet started.',
     items: [
+      { title: 'Self-describing workflow pages', desc: 'Every published workflow renders a complete page — steps, examples, and pipeline — straight from its definition, so anything authored in the Factory is publish-ready.' },
       { title: 'Generation orders', desc: 'Order many artifacts from one workflow with automated variation, and review each as it streams in — under a budget you set.' },
       { title: 'Scheduled runs', desc: 'Run a generation order on a recurring schedule.' },
       { title: 'Publishing pipeline', desc: 'Promote approved artifacts straight to public surfaces — generate, review, publish.' },
