@@ -14,6 +14,7 @@ import {
 import WorkflowCircuit from './WorkflowCircuit';
 import TemplateGrid from '@/components/templates/TemplateGrid';
 import { getExploreArtifactsHref } from '@/lib/templates/explore-artifacts';
+import { getCatalogStages } from '@/lib/workflow-catalog';
 import type { ArtifactDetailTemplateProps } from './types';
 import './ArtifactDetailTemplate.css';
 
@@ -51,6 +52,11 @@ export default function ArtifactDetailTemplate({
   //  for the full URL-contract rationale.)
   const esyEditorUrl = `https://app.esy.com/workflows/${template.slug}`;
   const exploreArtifactsHref = getExploreArtifactsHref(template);
+
+  // Workflow stages come from the live catalog (slug === catalog id); fall back
+  // to any locally-authored stages so non-published pages still render.
+  const catalogStages = getCatalogStages(template.slug);
+  const pipelineStages = catalogStages.length > 0 ? catalogStages : (workflowStages ?? []);
 
   // Readable subcategory label
   const categoryLabel = subcategory
@@ -200,11 +206,11 @@ export default function ArtifactDetailTemplate({
       </section>
 
       {/* ═══ Workflow Visualization ═══════════════════════════ */}
-      {workflowStages && workflowStages.length > 0 && (
+      {pipelineStages.length > 0 && (
         <section className="adt-band adt-band--default adt-workflow-section">
           <div className="adt-band-inner adt-workflow-inner">
             <p className="adt-section-eyebrow">How this workflow runs</p>
-            <WorkflowCircuit stages={workflowStages} />
+            <WorkflowCircuit stages={pipelineStages} />
           </div>
         </section>
       )}

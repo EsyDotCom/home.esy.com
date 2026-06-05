@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/sync-workflow-catalog.mjs || echo '⚠ catalog sync failed — building with the committed snapshot'",
     "build": "next build",
     "build:static": "NODE_ENV=production next build",
     "start": "next start",

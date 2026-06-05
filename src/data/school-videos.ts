@@ -32,7 +32,7 @@ export const schoolVideos: SchoolVideo[] = [
     durationSeconds: 145,
     publishedAt: "2026-02-17",
     muxPlaybackId: "a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M",
-    templateSlug: "research-infographic",
+    templateSlug: "generate-research-infographic",
     stages: [
       { label: "Intake", sublabel: "Citation or topic" },
       { label: "Research", sublabel: "Extract key findings" },
@@ -81,7 +81,7 @@ Your finished infographic is ready to download. Every data point links back to t
 
 **"Global Water Scarcity Indicators"** — A regional comparison infographic visualizing access rates, consumption trends, and infrastructure gaps across 40 countries.
 
-Open the [Research Infographic](/workflows/research-infographic) to get started.`,
+Open the [Research Infographic](/workflows/generate-research-infographic) to get started.`,
     tags: ["infographics", "workflow", "data visualization", "research"],
     relatedSlugs: [
       "write-argumentative-essay",
@@ -170,7 +170,7 @@ Open the [Argumentative Essay Builder](/workflows/argumentative-essay-builder) t
     durationSeconds: 350,
     publishedAt: "2026-02-10",
     muxPlaybackId: "a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M",
-    templateSlug: "analytical-essay",
+    templateSlug: "generate-essay-analytical",
     stages: [
       { label: "Intake", sublabel: "Text & lens" },
       { label: "Research", sublabel: "Source close-reading" },
@@ -223,7 +223,7 @@ Your polished analytical essay is ready with a works-cited page, consistent form
 
 **"Power Dynamics in Orwell's 1984"** — A Foucauldian analysis of surveillance architecture, Newspeak as linguistic control, and the Party's institutional power structures across the narrative.
 
-Open the [Analytical Essay](/workflows/analytical-essay) to get started.`,
+Open the [Analytical Essay](/workflows/generate-essay-analytical) to get started.`,
     tags: ["essays", "workflow", "analytical", "literary analysis", "close reading"],
     relatedSlugs: [
       "write-argumentative-essay",
@@ -241,7 +241,7 @@ Open the [Analytical Essay](/workflows/analytical-essay) to get started.`,
     durationSeconds: 320,
     publishedAt: "2026-02-06",
     muxPlaybackId: "a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M",
-    templateSlug: "expository-essay",
+    templateSlug: "generate-essay-expository",
     stages: [
       { label: "Intake", sublabel: "Topic & scope" },
       { label: "Research", sublabel: "Facts & data" },
@@ -294,7 +294,7 @@ Your finished expository essay is ready with headers, source attributions, and a
 
 **"Comparing Keynesian and Austrian Economics"** — A point-by-point compare/contrast essay examining fiscal policy philosophy, market intervention approaches, and business cycle theories across both schools.
 
-Open the [Expository Essay](/workflows/expository-essay) to get started.`,
+Open the [Expository Essay](/workflows/generate-essay-expository) to get started.`,
     tags: ["essays", "workflow", "expository", "academic writing"],
     relatedSlugs: [
       "write-argumentative-essay",
@@ -312,7 +312,7 @@ Open the [Expository Essay](/workflows/expository-essay) to get started.`,
     durationSeconds: 310,
     publishedAt: "2026-01-30",
     muxPlaybackId: "a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M",
-    templateSlug: "narrative-essay",
+    templateSlug: "generate-essay-narrative",
     stages: [
       { label: "Intake", sublabel: "Theme & voice" },
       { label: "Research", sublabel: "Context & setting" },
@@ -365,7 +365,7 @@ Your finished narrative essay is ready with clean formatting and a polished fina
 
 **"Finding Home in a Foreign Language"** — A lyrical essay exploring identity and belonging through the daily friction and unexpected intimacy of learning to think in a second language.
 
-Open the [Narrative Essay](/workflows/narrative-essay) to get started.`,
+Open the [Narrative Essay](/workflows/generate-essay-narrative) to get started.`,
     tags: ["essays", "workflow", "narrative", "creative writing", "personal essay"],
     relatedSlugs: [
       "craft-college-application-essay",
@@ -383,7 +383,7 @@ Open the [Narrative Essay](/workflows/narrative-essay) to get started.`,
     durationSeconds: 480,
     publishedAt: "2026-01-24",
     muxPlaybackId: "a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M",
-    templateSlug: "research-paper",
+    templateSlug: "generate-research-paper",
     stages: [
       { label: "Intake", sublabel: "Question & field" },
       { label: "Research", sublabel: "Literature review" },
@@ -436,7 +436,7 @@ Your research paper is ready with academic formatting — title page, running he
 
 **"Renewable Energy Adoption in Developing Nations"** — An economics paper analyzing policy frameworks, foreign direct investment trends, and infrastructure barriers across twelve sub-Saharan African nations.
 
-Open the [Research Paper](/workflows/research-paper) to get started.`,
+Open the [Research Paper](/workflows/generate-research-paper) to get started.`,
     tags: ["research", "workflow", "academic writing", "literature review"],
     relatedSlugs: [
       "write-argumentative-essay",
@@ -454,7 +454,7 @@ Open the [Research Paper](/workflows/research-paper) to get started.`,
     durationSeconds: 290,
     publishedAt: "2026-01-18",
     muxPlaybackId: "a4nOgmxGWg6gULfcBbAa00gXyfcwPnAFldF8RdsNyk8M",
-    templateSlug: "college-application-essay",
+    templateSlug: "generate-essay-college-application",
     stages: [
       { label: "Intake", sublabel: "Prompt & goals" },
       { label: "Research", sublabel: "Program research" },
@@ -507,7 +507,7 @@ Your polished personal statement is ready to paste into the Common App, upload t
 
 **"Overcoming Adversity: A First-Generation Story"** — A Common App personal statement weaving family immigration history, academic perseverance, and community mentorship into a narrative about redefining what's possible.
 
-Open the [College Application Essay](/workflows/college-application-essay) to get started.`,
+Open the [College Application Essay](/workflows/generate-essay-college-application) to get started.`,
     tags: ["essays", "workflow", "college application", "personal statement", "admissions"],
     relatedSlugs: [
       "write-narrative-essay",

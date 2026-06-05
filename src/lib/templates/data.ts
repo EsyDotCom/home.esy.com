@@ -2546,7 +2546,7 @@ Develop master argument framework:
 
   {
     id: 'wf-1',
-    slug: 'research-infographic',
+    slug: 'generate-research-infographic',
     title: 'Research Infographic',
     shortDescription:
       'Turn a citation, DOI, or research concept into a publication-ready infographic.',
@@ -2686,7 +2686,7 @@ Develop master argument framework:
   // ─── Argumentative Essay ────────────────────────────────────
   {
     id: 'wf-2',
-    slug: 'argumentative-essay',
+    slug: 'generate-essay-argumentative',
     title: 'Argumentative Essay',
     shortDescription:
       'Build a thesis-driven essay with evidence, counterarguments, and a compelling conclusion.',
@@ -2720,11 +2720,11 @@ Develop master argument framework:
       'Standardized test essay practice',
     ],
     relatedSlugs: [
-      'analytical-essay',
-      'expository-essay',
-      'narrative-essay',
-      'research-paper',
-      'college-application-essay',
+      'generate-essay-analytical',
+      'generate-essay-expository',
+      'generate-essay-narrative',
+      'generate-research-paper',
+      'generate-essay-college-application',
     ],
     model: 'Claude',
     pricing: { type: 'premium', price: 1.49 },
@@ -2825,7 +2825,7 @@ Develop master argument framework:
   // ─── Analytical Essay ───────────────────────────────────────
   {
     id: 'wf-3',
-    slug: 'analytical-essay',
+    slug: 'generate-essay-analytical',
     title: 'Analytical Essay',
     shortDescription:
       'Deconstruct a text, event, or concept through a critical analytical framework.',
@@ -2858,11 +2858,11 @@ Develop master argument framework:
       'Peer review responses',
     ],
     relatedSlugs: [
-      'argumentative-essay',
-      'expository-essay',
-      'narrative-essay',
-      'research-paper',
-      'college-application-essay',
+      'generate-essay-argumentative',
+      'generate-essay-expository',
+      'generate-essay-narrative',
+      'generate-research-paper',
+      'generate-essay-college-application',
     ],
     model: 'Claude',
     pricing: { type: 'premium', price: 1.49 },
@@ -2962,7 +2962,7 @@ Develop master argument framework:
   // ─── Expository Essay ───────────────────────────────────────
   {
     id: 'wf-4',
-    slug: 'expository-essay',
+    slug: 'generate-essay-expository',
     title: 'Expository Essay',
     shortDescription:
       'Explain a topic clearly and objectively with facts, data, and logical structure.',
@@ -2996,11 +2996,11 @@ Develop master argument framework:
       'Comparative analyses',
     ],
     relatedSlugs: [
-      'argumentative-essay',
-      'analytical-essay',
-      'narrative-essay',
-      'research-paper',
-      'college-application-essay',
+      'generate-essay-argumentative',
+      'generate-essay-analytical',
+      'generate-essay-narrative',
+      'generate-research-paper',
+      'generate-essay-college-application',
     ],
     model: 'Claude',
     pricing: { type: 'premium', price: 1.49 },
@@ -3100,7 +3100,7 @@ Develop master argument framework:
   // ─── Narrative Essay ────────────────────────────────────────
   {
     id: 'wf-5',
-    slug: 'narrative-essay',
+    slug: 'generate-essay-narrative',
     title: 'Narrative Essay',
     shortDescription:
       'Tell a compelling story grounded in personal experience, research, and vivid detail.',
@@ -3134,11 +3134,11 @@ Develop master argument framework:
       'Scholarship applications',
     ],
     relatedSlugs: [
-      'argumentative-essay',
-      'analytical-essay',
-      'expository-essay',
-      'research-paper',
-      'college-application-essay',
+      'generate-essay-argumentative',
+      'generate-essay-analytical',
+      'generate-essay-expository',
+      'generate-research-paper',
+      'generate-essay-college-application',
     ],
     model: 'Claude',
     pricing: { type: 'premium', price: 1.49 },
@@ -3238,7 +3238,7 @@ Develop master argument framework:
   // ─── Research Paper ─────────────────────────────────────────
   {
     id: 'wf-6',
-    slug: 'research-paper',
+    slug: 'generate-research-paper',
     title: 'Research Paper',
     shortDescription:
       'Produce a fully cited academic research paper with literature review, methodology, and findings.',
@@ -3274,11 +3274,11 @@ Develop master argument framework:
       'Grant proposal literature reviews',
     ],
     relatedSlugs: [
-      'argumentative-essay',
-      'analytical-essay',
-      'expository-essay',
-      'narrative-essay',
-      'college-application-essay',
+      'generate-essay-argumentative',
+      'generate-essay-analytical',
+      'generate-essay-expository',
+      'generate-essay-narrative',
+      'generate-essay-college-application',
     ],
     model: 'Claude',
     pricing: { type: 'premium', price: 1.49 },
@@ -3379,7 +3379,7 @@ Develop master argument framework:
   // ─── College Application Essay ──────────────────────────────
   {
     id: 'wf-7',
-    slug: 'college-application-essay',
+    slug: 'generate-essay-college-application',
     title: 'College Application Essay',
     shortDescription:
       'Craft a standout personal statement or supplemental essay for college admissions.',
@@ -3412,11 +3412,11 @@ Develop master argument framework:
       'Transfer application essays',
     ],
     relatedSlugs: [
-      'argumentative-essay',
-      'analytical-essay',
-      'expository-essay',
-      'narrative-essay',
-      'research-paper',
+      'generate-essay-argumentative',
+      'generate-essay-analytical',
+      'generate-essay-expository',
+      'generate-essay-narrative',
+      'generate-research-paper',
     ],
     model: 'Claude',
     pricing: { type: 'premium', price: 1.49 },
@@ -3547,7 +3547,7 @@ Develop master argument framework:
       'Style-consistent visual asset batches',
       'Internal review queues before publishing',
     ],
-    relatedSlugs: ['research-infographic'],
+    relatedSlugs: ['generate-research-infographic'],
     model: null,
     pricing: { type: 'premium' },
     isWorkflow: true,

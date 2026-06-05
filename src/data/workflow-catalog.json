@@ -1,18 +1,124 @@
 {
-  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows). Mirrors the platform's published, versioned workflow templates.",
-  "generatedAt": "2026-06-01T14:29:09.689714Z",
-  "total": 1,
+  "_comment": "SYNCED SNAPSHOT \u2014 do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows). Mirrors the platform's published, versioned workflow templates.",
+  "generatedAt": "2026-06-04T23:54:52.204147Z",
+  "total": 9,
   "items": [
+    {
+      "id": "generate-essay-analytical",
+      "name": "Generate Analytical Essay",
+      "description": "Deconstruct a text, event, or concept through a critical lens: perform close reading, identify patterns and themes, then produce a structured analytical essay grounded in specific evidence from the source.",
+      "shortDescription": "Analyze a text or concept through a critical lens.",
+      "artifactClass": "research",
+      "outputType": "writing",
+      "depth": "standard",
+      "estimatedRuntime": "40-90 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Analyze",
+          "description": "Close-read the source and surface patterns.",
+          "stepCount": 1
+        },
+        {
+          "name": "Outline",
+          "description": "Frame the interpretation under a thesis.",
+          "stepCount": 1
+        },
+        {
+          "name": "Draft",
+          "description": "Compose the analysis with textual evidence.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Source or subject",
+        "Analytical lens (optional)",
+        "Citation style (optional)"
+      ],
+      "whatYouGet": [
+        "Structured analytical essay",
+        "Interpretive thesis",
+        "Textual evidence + citations"
+      ],
+      "qaChecks": [
+        "Thesis is interpretive",
+        "Evidence is specific",
+        "Lens applied consistently"
+      ],
+      "version": "2026.06.04",
+      "cadence": "On demand",
+      "updatedAt": "2026-06-04T23:03:40.602496Z"
+    },
+    {
+      "id": "generate-essay-argumentative",
+      "name": "Generate Argumentative Essay",
+      "description": "Build a thesis-driven argumentative essay: develop supporting evidence and the strongest counterarguments, organize them under a clear thesis, then draft a fully structured essay with a counterargument section and conclusion.",
+      "shortDescription": "Draft a thesis-driven argumentative essay with rebuttals.",
+      "artifactClass": "research",
+      "outputType": "writing",
+      "depth": "standard",
+      "estimatedRuntime": "40-90 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Develop",
+          "description": "Develop evidence and map counterarguments.",
+          "stepCount": 1
+        },
+        {
+          "name": "Outline",
+          "description": "Organize evidence under a clear thesis.",
+          "stepCount": 1
+        },
+        {
+          "name": "Draft",
+          "description": "Compose the argument with a rebuttal.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Topic",
+        "Your stance",
+        "Audience (optional)",
+        "Citation style (optional)"
+      ],
+      "whatYouGet": [
+        "Structured argumentative essay",
+        "Counterargument section",
+        "Source list"
+      ],
+      "qaChecks": [
+        "Thesis is arguable",
+        "Counterargument addressed",
+        "On-topic",
+        "Sources cited"
+      ],
+      "version": "2026.06.04",
+      "cadence": "On demand",
+      "updatedAt": "2026-06-04T23:03:40.258803Z"
+    },
     {
       "id": "generate-clip-art-asset",
       "name": "Generate Clip Art Asset",
       "description": "Generate an internal ESY visual artifact using the clip.art prompt/style contract, provider runtime policy, ESY R2 storage, and review-ready metadata.",
       "shortDescription": "Generate a reviewable internal clip-art asset.",
-      "artifactClass": "research",
+      "artifactClass": "visual",
       "outputType": "visual",
       "depth": "quick",
       "estimatedRuntime": "30-90 sec",
       "includesQa": true,
+      "stages": [
+        {
+          "name": "Generate image",
+          "description": "Compose the clip-art prompt and call the still-image provider.",
+          "stepCount": 1
+        },
+        {
+          "name": "Remove background",
+          "description": "Remove background with fal.ai when enabled, then store in ESY R2.",
+          "stepCount": 1
+        }
+      ],
       "whatYouProvide": [
         "Subject prompt",
         "Clip-art style",
@@ -23,7 +129,7 @@
         "Generated visual artifact",
         "Resolved provider prompt",
         "Provider/model/cost metadata",
-        "ESY R2 raw and processed storage references"
+        "ESY R2 storage references"
       ],
       "qaChecks": [
         "Visual quality",
@@ -31,9 +137,280 @@
         "Background/transparency",
         "Commercial-safe review"
       ],
-      "version": "2026.05.01",
+      "version": "2026.05.16",
       "cadence": "On demand",
-      "updatedAt": "2026-05-16T20:36:43.734156Z"
+      "updatedAt": "2026-06-04T23:03:39.995717Z"
+    },
+    {
+      "id": "generate-essay-college-application",
+      "name": "Generate College Application Essay",
+      "description": "Draft a personal college application essay: find a distinctive angle from the applicant's background, structure a focused story, then draft a voice-driven essay that answers the prompt within the word limit.",
+      "shortDescription": "Draft a distinctive personal college application essay.",
+      "artifactClass": "research",
+      "outputType": "writing",
+      "depth": "standard",
+      "estimatedRuntime": "40-80 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Angle",
+          "description": "Find a distinctive angle from the background.",
+          "stepCount": 1
+        },
+        {
+          "name": "Outline",
+          "description": "Structure a focused personal story.",
+          "stepCount": 1
+        },
+        {
+          "name": "Draft",
+          "description": "Compose a voice-driven essay.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Essay prompt",
+        "Personal background",
+        "Program/school (optional)",
+        "Word limit (optional)"
+      ],
+      "whatYouGet": [
+        "Personal application essay",
+        "Distinctive angle",
+        "Prompt-aligned narrative"
+      ],
+      "qaChecks": [
+        "Answers the prompt",
+        "Authentic voice",
+        "Within word limit",
+        "Shows not tells"
+      ],
+      "version": "2026.06.04",
+      "cadence": "On demand",
+      "updatedAt": "2026-06-04T23:03:41.537179Z"
+    },
+    {
+      "id": "generate-essay-expository",
+      "name": "Generate Expository Essay",
+      "description": "Explain a topic clearly and objectively: organize the key facts and concepts into a logical structure, then draft a balanced expository essay that informs without arguing a side.",
+      "shortDescription": "Explain a topic clearly in a balanced expository essay.",
+      "artifactClass": "research",
+      "outputType": "writing",
+      "depth": "standard",
+      "estimatedRuntime": "40-90 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Develop",
+          "description": "Gather the key facts and concepts.",
+          "stepCount": 1
+        },
+        {
+          "name": "Outline",
+          "description": "Sequence the explanation logically.",
+          "stepCount": 1
+        },
+        {
+          "name": "Draft",
+          "description": "Compose a clear, balanced explanation.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Topic",
+        "Audience (optional)",
+        "Citation style (optional)"
+      ],
+      "whatYouGet": [
+        "Structured expository essay",
+        "Logical section flow",
+        "Source list"
+      ],
+      "qaChecks": [
+        "Objective tone",
+        "Complete coverage",
+        "Logical sequence"
+      ],
+      "version": "2026.06.04",
+      "cadence": "On demand",
+      "updatedAt": "2026-06-04T23:03:40.931989Z"
+    },
+    {
+      "id": "generate-essay-narrative",
+      "name": "Generate Narrative Essay",
+      "description": "Tell a true, reflective story: shape a premise and narrative arc, structure the scenes, then draft a narrative essay with vivid detail and a clear reflective takeaway.",
+      "shortDescription": "Shape a reflective story into a narrative essay.",
+      "artifactClass": "research",
+      "outputType": "writing",
+      "depth": "standard",
+      "estimatedRuntime": "40-90 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Premise",
+          "description": "Shape the premise and narrative arc.",
+          "stepCount": 1
+        },
+        {
+          "name": "Outline",
+          "description": "Sequence the scenes and turning point.",
+          "stepCount": 1
+        },
+        {
+          "name": "Draft",
+          "description": "Compose the story with reflection.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Story prompt or theme",
+        "Perspective (optional)",
+        "Tone (optional)"
+      ],
+      "whatYouGet": [
+        "Structured narrative essay",
+        "Clear arc + reflective takeaway"
+      ],
+      "qaChecks": [
+        "Clear arc",
+        "Vivid detail",
+        "Reflective insight"
+      ],
+      "version": "2026.06.04",
+      "cadence": "On demand",
+      "updatedAt": "2026-06-04T23:03:41.182662Z"
+    },
+    {
+      "id": "generate-research-infographic",
+      "name": "Generate Research Infographic",
+      "description": "Produce a vertical infographic that visualizes a research report. Invokes the Generate Research Report workflow as a sub-workflow, then renders its findings as an image with gpt-image-2.",
+      "shortDescription": "Turn a research report into a vertical infographic.",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "deep",
+      "estimatedRuntime": "60-120 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Research",
+          "description": "Run the research report sub-workflow.",
+          "stepCount": 1
+        },
+        {
+          "name": "Compose",
+          "description": "Compose the infographic image prompt.",
+          "stepCount": 1
+        },
+        {
+          "name": "Render",
+          "description": "Generate the infographic image.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Research topic",
+        "Aspect ratio (optional)",
+        "Existing research report (optional)"
+      ],
+      "whatYouGet": [
+        "Infographic image",
+        "Linked source research report"
+      ],
+      "qaChecks": [
+        "Image generated",
+        "Source report linked",
+        "On-topic"
+      ],
+      "version": "2026.06.01",
+      "cadence": "On demand",
+      "updatedAt": "2026-06-04T23:03:39.410895Z"
+    },
+    {
+      "id": "generate-research-paper",
+      "name": "Generate Research Paper",
+      "description": "Produce a multi-section academic research paper: synthesize the evidence around a research question, plan the standard sections, then draft a cited paper with an abstract, body sections, and references.",
+      "shortDescription": "Draft a cited, multi-section academic research paper.",
+      "artifactClass": "research",
+      "outputType": "writing",
+      "depth": "deep",
+      "estimatedRuntime": "60-120 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Synthesize",
+          "description": "Synthesize evidence around the question.",
+          "stepCount": 1
+        },
+        {
+          "name": "Outline",
+          "description": "Plan the standard paper sections.",
+          "stepCount": 1
+        },
+        {
+          "name": "Draft",
+          "description": "Write the cited, multi-section paper.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Topic",
+        "Research question (optional)",
+        "Audience (optional)",
+        "Citation style (optional)"
+      ],
+      "whatYouGet": [
+        "Multi-section research paper",
+        "Abstract + body + references",
+        "Source list"
+      ],
+      "qaChecks": [
+        "Sections present",
+        "Claims evidenced",
+        "Sources cited",
+        "On-question"
+      ],
+      "version": "2026.06.04",
+      "cadence": "On demand",
+      "updatedAt": "2026-06-04T23:03:41.800729Z"
+    },
+    {
+      "id": "generate-research-report",
+      "name": "Generate Research Report",
+      "description": "Produce a structured, cited research report on a topic using LLM synthesis. Reusable on its own or as a sub-workflow feeding other artifacts.",
+      "shortDescription": "Synthesize a structured, cited research report.",
+      "artifactClass": "research",
+      "outputType": "research",
+      "depth": "deep",
+      "estimatedRuntime": "30-60 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Outline",
+          "description": "Plan the report structure.",
+          "stepCount": 1
+        },
+        {
+          "name": "Synthesize",
+          "description": "Write the full cited report.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Research topic",
+        "Audience (optional)"
+      ],
+      "whatYouGet": [
+        "Structured report (title, summary, sections)",
+        "Source list"
+      ],
+      "qaChecks": [
+        "Sections present",
+        "Sources cited",
+        "On-topic"
+      ],
+      "version": "2026.05.29",
+      "cadence": "On demand",
+      "updatedAt": "2026-06-04T23:03:38.702386Z"
     }
   ]
 }
