@@ -111,25 +111,67 @@ const renderShape = (type: ShapeType, x: number, y: number, c: Palette, filled =
   }
 };
 
-/* ── Messy cluster glyph (reused in the "How it works" step cards) ───────── */
-const MESS_SHAPES: Array<{ type: ShapeType; x: number; y: number; delay: number; filled?: boolean }> = [
-  { type: 'circle', x: 46, y: 44, delay: 0 },
-  { type: 'triangle', x: 118, y: 38, delay: 0.5, filled: true },
-  { type: 'square', x: 128, y: 100, delay: 1.0 },
-  { type: 'hexagon', x: 42, y: 104, delay: 1.5 },
-  { type: 'diamond', x: 110, y: 120, delay: 2.0 },
-  { type: 'star', x: 80, y: 74, delay: 2.5, filled: true },
-];
-
+/* ── Messy input glyph (reused in the "How it works" step cards) ──────────
+   Beat 1 is the raw material people actually start with — a note, a saved
+   link, a goal, and a half-written prompt — drawn as loose, tilted scraps so
+   the pile reads as unorganized input rather than a tidy UI panel. Each scrap
+   floats on its own delay (synMessFloat) for a little life. */
 export const ShapeMessGlyph: React.FC<GlyphProps> = ({ theme = 'navy-calm', className, ...rest }) => {
   const c = themes[theme];
+  // Faint "handwriting" text line — the shared visual stand-in for raw content.
+  const line = (x: number, y: number, w: number, key: string) => (
+    <rect key={key} x={x} y={y} width={w} height={4} rx={2} fill={c.line} />
+  );
   return (
-    <svg viewBox="0 0 160 150" className={`syn-glyph ${className ?? ''}`} role="img" aria-label="A loose cluster of messy pieces" {...rest}>
-      {MESS_SHAPES.map((s) => (
-        <g key={`${s.type}-${s.x}`} className="syn-mess-shape" style={{ animationDelay: `${s.delay}s` }}>
-          {renderShape(s.type, s.x, s.y, c, s.filled)}
+    <svg
+      viewBox="0 0 160 150"
+      className={`syn-glyph syn-mess-glyph ${className ?? ''}`}
+      role="img"
+      aria-label="A messy pile of raw input — a note, a link, a goal, and a half-written prompt"
+      {...rest}
+    >
+      {/* Note — a scribbled scrap, tilted left and sitting at the back. */}
+      <g className="syn-mess-shape" style={{ animationDelay: '0s' }}>
+        <g transform="rotate(-11 50 66)">
+          <rect x="20" y="30" width="60" height="72" rx="8" fill={c.panelAlt} stroke={c.border} strokeWidth="1.5" />
+          <rect x="30" y="40" width="26" height="6" rx="3" fill={c.accent} opacity="0.8" />
+          {line(30, 56, 40, 'n1')}
+          {line(30, 66, 34, 'n2')}
+          {line(30, 76, 40, 'n3')}
+          {line(30, 86, 22, 'n4')}
         </g>
-      ))}
+      </g>
+
+      {/* Goal — a target ring tucked into the top-right corner. */}
+      <g className="syn-mess-shape" style={{ animationDelay: '1.2s' }}>
+        <g>
+          <circle cx="125" cy="33" r="15" fill="none" stroke={c.shape} strokeWidth="2" />
+          <circle cx="125" cy="33" r="8" fill="none" stroke={c.shape} strokeWidth="2" />
+          <circle cx="125" cy="33" r="2.6" fill={c.accent} />
+        </g>
+      </g>
+
+      {/* Half-written prompt — front card, tilted right, with a blinking-style
+          caret after a short last line so it reads as unfinished input. */}
+      <g className="syn-mess-shape" style={{ animationDelay: '0.6s' }}>
+        <g transform="rotate(9 104 86)">
+          <rect x="74" y="48" width="62" height="76" rx="8" fill={c.panel} stroke={c.accent} strokeWidth="1.5" />
+          <rect x="84" y="58" width="30" height="7" rx="3.5" fill={c.accentSoft} />
+          {line(84, 76, 42, 'p1')}
+          {line(84, 86, 36, 'p2')}
+          {line(84, 96, 22, 'p3')}
+          <rect x="110" y="92.5" width="2.6" height="11" rx="1.3" fill={c.accent} />
+        </g>
+      </g>
+
+      {/* Link — a saved URL as a rounded pill across the bottom. */}
+      <g className="syn-mess-shape" style={{ animationDelay: '1.8s' }}>
+        <g transform="rotate(-5 62 121)">
+          <rect x="26" y="111" width="74" height="20" rx="10" fill={c.panel} stroke={c.border} strokeWidth="1.5" />
+          <circle cx="39" cy="121" r="4" fill="none" stroke={c.accent} strokeWidth="2" />
+          <rect x="49" y="119" width="44" height="4" rx="2" fill={c.accent} opacity="0.7" />
+        </g>
+      </g>
     </svg>
   );
 };

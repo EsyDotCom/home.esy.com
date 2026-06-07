@@ -79,7 +79,7 @@
 
 /* Base wordmark — adjust --wordmark-size to resize globally */
 .logoWordmark {
-  --wordmark-size: 2.5rem;
+  --wordmark-size: 1.75rem;
   font-size: var(--wordmark-size);
   font-weight: 400;
   line-height: 1;
@@ -106,4 +106,18 @@
 
 .logoWordmarkDot {
   color: #00A896;
+}
+
+/* Brand "e" drawn as the Black Ops One glyph pieces (reuses the global
+   .esy-loader geometry) so it can animate like the Esy synthesis loader.
+   Sized in em so it tracks the wordmark; box height = cap height, so
+   vertical-align:baseline drops it onto the text baseline next to "sy".
+   The hover trigger lives in globals.css (CSS Modules rewrites keyframe
+   names, which would break the global esy-syn-* animations). */
+.logoWordmark .logoE {
+  width: 0.6em;
+  height: 0.55em;
+  color: #00A896;
+  vertical-align: baseline;
+  margin-right: 0.055em;
 }

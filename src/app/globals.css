@@ -2251,6 +2251,40 @@ html {
   100% { transform: translateY(28%) scale(0.86); opacity: 0.18; background-color: currentColor; }
 }
 
+/* Logo wordmark hover — the brand "e" (rendered as the loader's glyph pieces)
+   plays a synthesis motion on hover. Defined here, not in Logo.module.css,
+   because CSS Modules localizes animation-name and would break global keyframes.
+   The .esy-wordmark class is added in Logo/index.js.
+
+   These use dedicated esy-hover-* keyframes (not the loader's esy-syn-*) whose
+   0%/100% frames match the static, assembled "e". Anchoring both ends to the
+   resting state means the first hover doesn't snap into a dispersed pose — it
+   separates gracefully, pulses, then reunites, and loops seamlessly. */
+.esy-wordmark:hover .esy-e-spine { animation: esy-hover-spine 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+.esy-wordmark:hover .esy-e-bowl  { animation: esy-hover-bowl 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+.esy-wordmark:hover .esy-e-bar   { animation: esy-hover-bar 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+
+/* Start/end united (= static state) so hover-in and each loop are seamless;
+   pieces separate at mid-cycle (staggered spine→bowl→bar), pulse on reunite. */
+@keyframes esy-hover-spine {
+  0%, 100% { transform: translateX(0) scale(1); opacity: 1; background-color: currentColor; }
+  36%      { transform: translateX(-28%) scale(0.86); opacity: 0.3; background-color: currentColor; }
+  58%      { background-color: color-mix(in srgb, currentColor 76%, #ffffff); }
+  70%      { transform: translateX(0) scale(1); opacity: 1; background-color: currentColor; }
+}
+@keyframes esy-hover-bowl {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 1; background-color: currentColor; }
+  42%      { transform: translateY(-30%) scale(0.86); opacity: 0.3; background-color: currentColor; }
+  62%      { background-color: color-mix(in srgb, currentColor 76%, #ffffff); }
+  74%      { transform: translateY(0) scale(1); opacity: 1; background-color: currentColor; }
+}
+@keyframes esy-hover-bar {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 1; background-color: currentColor; }
+  48%      { transform: translateY(30%) scale(0.86); opacity: 0.3; background-color: currentColor; }
+  66%      { background-color: color-mix(in srgb, currentColor 76%, #ffffff); }
+  78%      { transform: translateY(0) scale(1); opacity: 1; background-color: currentColor; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .esy-loader .esy-e-piece {
     animation: none !important;
