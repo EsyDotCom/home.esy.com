@@ -12,6 +12,7 @@ import React, {
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
+import { EsyLoader } from '@/components/EsyLoader';
 
 const BONE_IVORY = '#E8DCC8';
 const STRATA_DARK = '#111317';
@@ -103,15 +104,9 @@ function EsyBrandedLoader({ visible }: { visible: boolean }) {
       className="turkana-3d-loader"
       style={{ opacity: visible ? 1 : 0, pointerEvents: 'none' }}
     >
-      <span style={{
-        fontFamily: 'var(--font-black-ops-one), sans-serif',
-        fontSize: '2rem',
-        letterSpacing: '0.03em',
-        lineHeight: 1,
-        userSelect: 'none',
-      }}>
-        <span style={{ color: '#00A896' }}>e</span>
-        <span style={{ color: 'rgba(255, 255, 255, 0.92)' }}>sy</span>
+      {/* Official brand loader; wrapper sets currentColor so the glyph reads on the dark viewer bg. */}
+      <span style={{ color: 'rgba(255, 255, 255, 0.92)' }}>
+        <EsyLoader size={48} label="" />
       </span>
       <span className="turkana-3d-loader__text">Loading 3D specimen&hellip;</span>
     </div>
