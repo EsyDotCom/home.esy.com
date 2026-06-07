@@ -287,7 +287,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 color: 'rgba(255, 255, 255, 0.72)', 
                 marginBottom: '32px' 
               }}>
-                Generate content at scale, manage quality with human-in-the-loop review, and keep a full record of every run. The workflow infrastructure for building vertical products on top.
+                Generate content at scale, manage quality with human-in-the-loop review, and keep a full record of every run. Esy is the workflow infrastructure for building vertical products on top.
               </p>
 
               {/* CTAs — fixed to the navy-dark hero palette. */}
