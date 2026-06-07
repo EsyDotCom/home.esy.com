@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, Clock, ArrowRight, Mail, Loader2 } from "lucide-react";
+import { Calendar, Clock, ArrowRight, Mail } from "lucide-react";
+import { EsyLoader } from "@/components/EsyLoader";
 import { type SchoolVideo, type WorkflowStage, formatDuration } from "@/data/school-videos";
 import { VideoPlayer } from "@/components/School/VideoPlayer";
 import { TranscriptToggle } from "@/components/School/TranscriptToggle";
@@ -137,7 +138,7 @@ function SidebarNewsletter() {
             }}
           >
             {status === "loading" ? (
-              <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} />
+              <EsyLoader size={14} label="" />
             ) : (
               "Subscribe"
             )}

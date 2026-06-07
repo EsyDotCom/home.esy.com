@@ -4,8 +4,9 @@ import React, { useRef, useEffect, useCallback, useState, forwardRef, useImperat
 import {
   Play, Pause, Volume2, VolumeX, Maximize, Minimize,
   SkipBack, SkipForward, Subtitles, Link2, MonitorUp,
-  Loader2, RotateCcw
+  RotateCcw
 } from 'lucide-react';
+import { EsyLoader } from '@/components/EsyLoader';
 
 interface VideoPlayerProps {
   src: string;
@@ -230,7 +231,9 @@ const VideoPlayer = forwardRef<VideoPlayerHandle, VideoPlayerProps>(({
           alignItems: 'center', justifyContent: 'center',
           backgroundColor: 'rgba(0,0,0,0.3)',
         }}>
-          <Loader2 size={40} color={accentColor} style={{ animation: 'spin 1s linear infinite' }} />
+          <span style={{ color: accentColor, display: 'inline-flex' }}>
+            <EsyLoader size={40} label="Loading video" />
+          </span>
         </div>
       )}
 

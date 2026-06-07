@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Loader2 } from "lucide-react";
+import { EsyLoader } from "@/components/EsyLoader";
 import { navyCalmLightTheme as theme } from "@/lib/theme";
 
 type Status = "idle" | "loading" | "success" | "error" | "invalid";
@@ -156,7 +156,7 @@ export function SchoolNewsletterBar() {
                 }}
               >
                 {status === "loading" ? (
-                  <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} />
+                  <EsyLoader size={16} label="" />
                 ) : (
                   "Subscribe"
                 )}
