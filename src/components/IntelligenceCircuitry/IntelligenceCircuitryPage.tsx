@@ -3,8 +3,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Clock, Sun, Moon } from 'lucide-react';
-import CircuitCanvas from './CircuitCanvas';
+import { ArrowRight, Clock } from 'lucide-react';
+import ShapeSynthesisCanvas, {
+  ShapeMessGlyph,
+  ShapeTemplateGlyph,
+  ShapeArtifactGlyph,
+} from './ShapeSynthesisCanvas';
 import ClipArtWordmark from './ClipArtWordmark';
 import { publishedVisualEssays, CATEGORY_COLORS, isNewEssay, type VisualEssay } from '@/data/visualEssays';
 import { publishedInfographics, CLUSTER_LABELS, INFOGRAPHIC_CATEGORY_COLORS } from '@/data/infographics';
@@ -203,21 +207,8 @@ const InfographicShowcaseInline: React.FC = () => {
 };
 
 const IntelligenceCircuitryPage: React.FC = () => {
-  // Theme options: 'navy-calm' (navy light), 'navy-dark' (navy dark), 'light' (violet mist), 'dark' (violet dark)
-  const [theme, setTheme] = useState<'dark' | 'light' | 'navy-calm' | 'navy-dark'>('navy-calm');
-
-  // Toggle theme - cycles through all themes
-  const toggleTheme = () => {
-    setTheme(prev => {
-      if (prev === 'navy-calm') return 'navy-dark';
-      if (prev === 'navy-dark') return 'light';
-      if (prev === 'light') return 'dark';
-      return 'navy-calm';
-    });
-  };
-
-  // Check if current theme is a dark variant
-  const isDarkTheme = theme === 'dark' || theme === 'navy-dark';
+  // Page theme is fixed to navy-calm (no user toggle); the hero is pinned dark.
+  const [theme] = useState<'dark' | 'light' | 'navy-calm' | 'navy-dark'>('navy-calm');
 
   // Get CSS class for current theme
   const getThemeClass = () => {
@@ -251,60 +242,23 @@ const IntelligenceCircuitryPage: React.FC = () => {
 
   return (
     <div className={`ic-page ${getThemeClass()}`}>
-      {/* Theme Toggle Button */}
-      <button 
-        onClick={toggleTheme}
-        className="ic-theme-toggle"
-        aria-label={`Switch theme (current: ${theme})`}
-        style={{
-          position: 'fixed',
-          bottom: '24px',
-          right: '24px',
-          zIndex: 100,
-          width: '48px',
-          height: '48px',
-          borderRadius: '50%',
-          border: isDarkTheme 
-            ? '1px solid rgba(255, 255, 255, 0.1)' 
-            : theme === 'navy-calm'
-            ? '1px solid rgba(10, 37, 64, 0.1)'
-            : '1px solid rgba(124, 58, 237, 0.1)',
-          background: isDarkTheme 
-            ? theme === 'navy-dark' ? '#0F3460' : '#1f1f23'
-            : '#FFFFFF',
-          color: isDarkTheme 
-            ? '#fafafa' 
-            : theme === 'navy-calm'
-            ? '#0A2540'
-            : '#5b21b6',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          boxShadow: isDarkTheme 
-            ? '0 4px 12px rgba(0, 0, 0, 0.3)' 
-            : theme === 'navy-calm'
-            ? '0 4px 12px rgba(10, 37, 64, 0.1)'
-            : '0 4px 12px rgba(124, 58, 237, 0.1)',
-          transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-        }}
-      >
-        {isDarkTheme ? <Sun size={20} /> : <Moon size={20} />}
-      </button>
       {/* ══════════════════════════════════════════════════════════════
-          HERO SECTION
-          Left: Headline + CTAs | Right: Circuit Visual
+          HERO SECTION — vertical & centered (headline → CTAs → synthesis band)
           ══════════════════════════════════════════════════════════════ */}
-      <section className="ic-hero">
+      {/* Above the fold is always navy-dark, regardless of the page theme the
+          visitor picks for the sections below. */}
+      <section className="ic-hero ic-hero--dark">
         <div className="ic-hero-background">
           <div className="ic-hero-gradient" />
+          {/* Structured circuit grid backdrop, scoped to the hero. */}
           <div className="ic-hero-grid" />
         </div>
 
-        <div className="ic-hero-container flex items-center justify-center px-4 lg:px-8 pt-8 lg:pt-36 pb-12 lg:pb-24">
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-16 w-full max-w-[1400px] items-center">
-            <div className="flex-1 text-white order-1 text-center lg:text-left">
-              {/* Headline */}
+        <div className="ic-hero-container flex items-start justify-center px-4 lg:px-8 pt-28 lg:pt-32 pb-16">
+          <div className="ic-hero-stack">
+            <div className="ic-hero-copy text-white">
+              {/* Keep the hero friendly: messy material goes into an easy
+                  template intake and comes back as finished work. */}
               <h1 style={{ 
                 fontFamily: 'Cormorant Garamond, Georgia, serif', 
                 fontSize: 'clamp(2.5rem, 6vw, 4rem)', 
@@ -312,33 +266,31 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 lineHeight: 1.1, 
                 letterSpacing: '-0.03em', 
                 marginBottom: '24px', 
-                color: isDarkTheme ? '#fafafa' : theme === 'navy-calm' ? '#0A2540' : '#0f172a',
+                color: '#FFFFFF',
                 maxWidth: '100%',
                 overflow: 'hidden'
               }}>
-                <span style={{ display: 'block', whiteSpace: 'nowrap' }}>Automate the pipeline.</span>
+                <span style={{ display: 'block' }}>Automate the pipeline.</span>
                 <span style={{ 
                   display: 'block', 
-                  whiteSpace: 'nowrap',
-                  background: (theme === 'navy-calm' || theme === 'navy-dark')
-                    ? 'linear-gradient(135deg, #00A896 0%, #00D4AA 100%)' 
-                    : 'linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%)', 
+                  background: 'linear-gradient(135deg, #00D4AA 0%, #5EEAD4 100%)', 
                   WebkitBackgroundClip: 'text', 
                   WebkitTextFillColor: 'transparent' 
                 }}>Audit the output.</span>
               </h1>
 
-              {/* Subheadline */}
+              {/* Subheadline — plain language for non-dev visitors: templates
+                  replace prompt engineering with a simple intake. */}
               <p style={{ 
                 fontSize: '1.125rem', 
                 lineHeight: 1.7, 
-                color: isDarkTheme ? 'rgba(250, 250, 250, 0.7)' : theme === 'navy-calm' ? '#6C757D' : 'rgba(15, 23, 42, 0.7)', 
+                color: 'rgba(255, 255, 255, 0.72)', 
                 marginBottom: '32px' 
               }}>
-                Esy runs agentic workflows that research, verify citations, and deliver publishable artifacts.
+                Generate content at scale, manage quality with human-in-the-loop review, and keep a full record of every run — the workflow infrastructure for building vertical products on top.
               </p>
 
-              {/* CTAs */}
+              {/* CTAs — fixed to the navy-dark hero palette. */}
               <div className="ic-hero-ctas">
                 <Link 
                   href="/workflows"
@@ -347,51 +299,26 @@ const IntelligenceCircuitryPage: React.FC = () => {
                     alignItems: 'center', 
                     gap: '8px', 
                     padding: '14px 24px', 
-                    background: (theme === 'navy-calm' || theme === 'navy-dark') ? '#00A896' : isDarkTheme ? '#7c3aed' : '#5b21b6', 
+                    background: '#00A896', 
                     color: '#fafafa', 
                     fontWeight: 600, 
                     fontSize: '0.9375rem', 
                     borderRadius: '10px', 
                     textDecoration: 'none', 
-                    boxShadow: (theme === 'navy-calm' || theme === 'navy-dark')
-                      ? '0 4px 12px rgba(0, 168, 150, 0.25)'
-                      : isDarkTheme 
-                      ? '0 4px 12px rgba(124, 58, 237, 0.3)' 
-                      : '0 4px 12px rgba(91, 33, 182, 0.25)' 
+                    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.2)' 
                   }}
                 >
                   <span>Browse Workflow Templates</span>
                   <ArrowRight size={18} />
                 </Link>
-                <Link href="/artifacts" style={{ 
-                  display: 'inline-flex', 
-                  alignItems: 'center', 
-                  gap: '4px', 
-                  padding: '14px 24px', 
-                  background: isDarkTheme 
-                    ? theme === 'navy-dark' ? 'rgba(0, 212, 170, 0.1)' : 'rgba(139, 92, 246, 0.12)' 
-                    : theme === 'navy-calm'
-                    ? 'rgba(10, 37, 64, 0.06)'
-                    : 'rgba(124, 58, 237, 0.08)', 
-                  border: isDarkTheme 
-                    ? theme === 'navy-dark' ? '1px solid rgba(0, 212, 170, 0.25)' : '1px solid rgba(139, 92, 246, 0.25)' 
-                    : theme === 'navy-calm'
-                    ? '1px solid rgba(10, 37, 64, 0.15)'
-                    : '1px solid rgba(124, 58, 237, 0.2)', 
-                  color: isDarkTheme ? '#fafafa' : theme === 'navy-calm' ? '#0A2540' : '#5b21b6', 
-                  fontWeight: 600, 
-                  fontSize: '0.9375rem', 
-                  borderRadius: '10px', 
-                  textDecoration: 'none' 
-                }}>
-                  <span>View Artifacts</span>
-                </Link>
               </div>
             </div>
 
-            {/* Circuit Visual - Desktop only */}
-            <div className="flex-1 justify-center items-center order-2 hidden lg:flex">
-              <CircuitCanvas theme={theme === 'navy-dark' ? 'navy-dark' : theme === 'navy-calm' ? 'navy-calm' : theme} />
+            {/* The hero product shot keeps the story simple: example messy
+                pieces → a template running the workflow → example finished work.
+                Pinned to navy-dark to match the above-the-fold treatment. */}
+            <div className="ic-hero-visual-band">
+              <ShapeSynthesisCanvas theme="navy-dark" />
             </div>
           </div>
         </div>
@@ -403,6 +330,67 @@ const IntelligenceCircuitryPage: React.FC = () => {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
+          SHAPE STORY — carry the hero language into the page
+          Shapes are not decoration here: they are the product metaphor.
+          Messy pieces become one structured, reusable, finished piece of work.
+          ══════════════════════════════════════════════════════════════ */}
+      <section className="ic-shape-story-section">
+        <div className="ic-section-container">
+          <div className="ic-shape-story-header">
+            <span className="ic-section-eyebrow">How it works</span>
+            <h2 className="ic-section-title">
+              Messy pieces in. <span className="ic-gradient-text">Finished work out.</span>
+            </h2>
+            <p className="ic-section-description">
+              Start with whatever you have — notes, links, half-formed ideas.
+              A template does the hard part and hands you something polished.
+              Three steps, no prompt-wrangling.
+            </p>
+          </div>
+
+          {/* Each step reuses the exact glyph the hero introduced, so the shape
+              language reads as one continuous story down the page. */}
+          <div className="ic-shape-story-grid">
+            <div className="ic-shape-story-card">
+              <div className="ic-shape-card-visual" aria-hidden="true">
+                <ShapeMessGlyph theme={theme} className="ic-shape-card-glyph" />
+              </div>
+              <span className="ic-shape-card-step">01</span>
+              <h3>Your messy pieces</h3>
+              <p>
+                Notes, links, goals, a few examples, a half-written prompt —
+                drop in whatever you have. No clean-up required.
+              </p>
+            </div>
+
+            <div className="ic-shape-story-card ic-shape-story-card--accent">
+              <div className="ic-shape-card-visual" aria-hidden="true">
+                <ShapeTemplateGlyph theme={theme} className="ic-shape-card-glyph" />
+              </div>
+              <span className="ic-shape-card-step">02</span>
+              <h3>Pick a template</h3>
+              <p>
+                Templates make it easy: answer a few simple questions, and Esy
+                handles the prompting, the steps, and the checks for you.
+              </p>
+            </div>
+
+            <div className="ic-shape-story-card">
+              <div className="ic-shape-card-visual" aria-hidden="true">
+                <ShapeArtifactGlyph theme={theme} className="ic-shape-card-glyph" />
+              </div>
+              <span className="ic-shape-card-step">03</span>
+              <h3>Get finished work</h3>
+              <p>
+                Out comes polished work — a report, a visual essay, an image
+                pack — with a clear record of how it was made.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
           ARTIFACTS — Unified section: Infographics + Visual Essays
           ══════════════════════════════════════════════════════════════ */}
       <section className="ic-gallery-section">
@@ -410,10 +398,10 @@ const IntelligenceCircuitryPage: React.FC = () => {
           <div className="ic-section-header">
             <span className="ic-section-eyebrow">Workflow Output</span>
             <h2 className="ic-section-title">
-              Artifacts produced by <span className="ic-gradient-text">these workflows</span>
+              Finished work from <span className="ic-gradient-text">these workflows</span>
             </h2>
             <p className="ic-section-description">
-              Every artifact below was generated through an Esy workflow. Each run captures full provenance — sources, prompts, models, processing, and cost.
+              Every piece below was produced by an Esy workflow. Each run captures full provenance — sources, prompts, models, processing, and cost.
             </p>
           </div>
 
@@ -454,7 +442,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                     >
                       {essay.category}
                     </span>
-                    <span className="ic-artifact-badge">Artifact</span>
+                    <span className="ic-artifact-badge">Finished work</span>
                     {isNewEssay(essay) && <span className="ic-artifact-new">New</span>}
                   </div>
                   <h3 className="ic-artifact-title">{essay.title}</h3>
@@ -595,7 +583,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
 
           <p className="ic-final-cta-description">
             Pick a workflow template. Let agents run the pipeline. Get back
-            a publishable artifact with full provenance — sources, prompts,
+            publishable, finished work with full provenance — sources, prompts,
             models, processing, and cost.
           </p>
 
@@ -618,7 +606,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
             <span className="ic-final-cta-pipeline-step">Run</span>
             <span className="ic-final-cta-pipeline-arrow" aria-hidden="true">→</span>
             <span className="ic-final-cta-pipeline-step ic-final-cta-pipeline-step--accent">
-              Audited Artifact
+              Finished work
             </span>
           </div>
         </div>

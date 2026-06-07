@@ -326,6 +326,12 @@
   overflow: hidden;
 }
 
+/* Above the fold is pinned to a navy-dark canvas no matter which theme the
+   visitor selects for the sections further down the page. */
+.ic-hero--dark {
+  background: linear-gradient(180deg, #0A2540 0%, #081d33 60%, #06182c 100%);
+}
+
 /* Hero Background */
 .ic-hero-background {
   position: absolute;
@@ -338,35 +344,381 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 50% at 30% 60%, rgba(167, 139, 250, 0.05) 0%, transparent 50%);
+    radial-gradient(ellipse 70% 60% at 50% 26%, rgba(0, 212, 170, 0.18) 0%, transparent 58%),
+    radial-gradient(ellipse 60% 50% at 84% 70%, rgba(94, 234, 212, 0.10) 0%, transparent 56%);
   animation: heroBreath 15s ease-in-out infinite;
 }
 
 @keyframes heroBreath {
-  0%, 100% { opacity: 0.8; }
+  0%, 100% { opacity: 0.85; }
   50% { opacity: 1; }
 }
 
+/* Structured circuit grid backdrop, scoped to the hero and faded at the edges
+   so it stays texture behind the copy. */
 .ic-hero-grid {
   position: absolute;
   inset: 0;
-  background-image: 
-    linear-gradient(rgba(10, 37, 64, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(10, 37, 64, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 50% 70% at 30% 50%, black 0%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse 50% 70% at 30% 50%, black 0%, transparent 70%);
+  background-image:
+    linear-gradient(rgba(94, 234, 212, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(94, 234, 212, 0.07) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 72% 72% at 50% 42%, black 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 72% 72% at 50% 42%, black 0%, transparent 78%);
 }
 
-/* Hero Container */
+/* Hero backdrop: a faint, drifting field of source shapes (the raw research
+   the headline promises to synthesize). Replaces the old circuit grid.
+   Masked so it stays texture behind the copy, never competing with it. */
+.synthesis-field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  mask-image: radial-gradient(ellipse 75% 80% at 65% 45%, black 0%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 80% at 65% 45%, black 0%, transparent 72%);
+}
+
+.syn-field-shape {
+  animation: synFieldDrift 16s ease-in-out infinite;
+}
+
+@keyframes synFieldDrift {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50% { transform: translateY(-10px); opacity: 0.9; }
+}
+
+/* ============================================
+   SHAPE SYNTHESIS — simple intake story + reusable glyphs
+   The hero visual is intentionally friendly: messy pieces, easy template
+   intake, Esy process, finished work.
+   ============================================ */
+
+/* Hero band is wide and airy — it sits below the CTAs as the "product shot",
+   with no heavy outer container so it breathes on the page background. */
+.synthesis-canvas-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  aspect-ratio: 1000 / 500;
+}
+
+.synthesis-canvas {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.shape-synthesis-band {
+  overflow: visible;
+}
+
+/* Shared glyph svgs. Soft drop-shadows give the template + finished-work depth. */
+.syn-glyph { overflow: visible; }
+.syn-template-glyph { filter: drop-shadow(0 18px 30px rgba(10, 37, 64, 0.14)); }
+.syn-artifact-glyph { filter: drop-shadow(0 16px 26px rgba(10, 37, 64, 0.12)); }
+
+/* The template card carries a soft shadow so it lifts off the bare background. */
+.syn-tpl-card { filter: drop-shadow(0 22px 48px rgba(0, 0, 0, 0.28)); }
+
+/* Input/output chips get a subtle lift so they don't blend into the navy. */
+.syn-io-chip { filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.32)); }
+
+/* ── Beat 1: messy pieces drift gently and out of phase ── */
+.syn-pile-shape {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: synPileFloat 6s ease-in-out infinite;
+}
+@keyframes synPileFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(6deg); }
+}
+
+/* Flow lines: static, faint dashes (no looping shimmer — keeps the scene calm). */
+.syn-conn {
+  stroke-dasharray: 2 9;
+}
+
+/* Beat 2: a soft, static focus glow behind the template (no pulsing). The
+   only motion on the page is the workflow running inside the card. */
+.syn-hub-glow {
+  opacity: 0.7;
+}
+.syn-tpl-title {
+  font-family: var(--ic-font-mono), 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+/* ── Beat 2: the realtime workflow running inside the template ──
+   One synced 6s cycle: the highlight sweeps each step, checks pop in on their
+   own beat, and the progress bar fills — so the card reads as live processing. */
+.syn-run-label {
+  font-family: var(--ic-font-mono), 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.syn-step-label {
+  font-family: var(--ic-font-body), 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+}
+.syn-work-eyebrow {
+  font-family: var(--ic-font-mono), 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+/* The active-node ring steps down the four node cards (70px apart), then resets. */
+.syn-run-highlight {
+  animation: synRunHighlight 6s ease-in-out infinite;
+}
+@keyframes synRunHighlight {
+  0%, 16% { transform: translateY(0); opacity: 0.95; }
+  22%, 40% { transform: translateY(70px); opacity: 0.95; }
+  46%, 64% { transform: translateY(140px); opacity: 0.95; }
+  70%, 90% { transform: translateY(210px); opacity: 0.95; }
+  96%, 100% { transform: translateY(210px); opacity: 0; }
+}
+
+/* Each node's check is hidden until the ring reaches that node, then holds for
+   the rest of the cycle and resets with the loop. Per-node keyframes (rather
+   than shared keyframe + delay) keep every check hidden up front and reset all
+   four together, so checks only appear once the run gets to their section. */
+.syn-step-check {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.syn-step-check--1 { animation: synCheck1 6s ease-in-out infinite; }
+.syn-step-check--2 { animation: synCheck2 6s ease-in-out infinite; }
+.syn-step-check--3 { animation: synCheck3 6s ease-in-out infinite; }
+.syn-step-check--4 { animation: synCheck4 6s ease-in-out infinite; }
+@keyframes synCheck1 {
+  0% { opacity: 0; transform: scale(0.4); }
+  6% { opacity: 1; transform: scale(1.15); }
+  9%, 96% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+@keyframes synCheck2 {
+  0%, 22% { opacity: 0; transform: scale(0.4); }
+  28% { opacity: 1; transform: scale(1.15); }
+  31%, 96% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+@keyframes synCheck3 {
+  0%, 46% { opacity: 0; transform: scale(0.4); }
+  52% { opacity: 1; transform: scale(1.15); }
+  55%, 96% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+@keyframes synCheck4 {
+  0%, 70% { opacity: 0; transform: scale(0.4); }
+  76% { opacity: 1; transform: scale(1.15); }
+  79%, 96% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+/* Progress fills left-to-right across the run, then resets. */
+.syn-progress {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: synProgress 6s ease-in-out infinite;
+}
+@keyframes synProgress {
+  0% { transform: scaleX(0.03); }
+  18% { transform: scaleX(0.26); }
+  42% { transform: scaleX(0.52); }
+  66% { transform: scaleX(0.78); }
+  88%, 100% { transform: scaleX(1); }
+}
+
+/* Finished-work chips settle in one-by-one, each verified. */
+.syn-row {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: synRowSettle 6s ease-in-out infinite;
+}
+@keyframes synRowSettle {
+  0%, 8% { opacity: 0.25; transform: translateY(6px); }
+  18%, 92% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0.25; transform: translateY(6px); }
+}
+
+/* Chip label typography (shared by messy + finished chips). */
+.syn-chip-label {
+  font-family: var(--ic-font-body), 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Output preview card: artifact title + a small type line under it. */
+.syn-output-title {
+  font-family: var(--ic-font-body), 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+}
+.syn-output-sub {
+  font-family: var(--ic-font-mono), 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+}
+
+/* Travelling bits carry a soft shadow so they read against the cards. */
+.syn-flow-bit { filter: drop-shadow(0 1px 1px rgba(10, 37, 64, 0.18)); }
+
+/* ── Step-card glyph animations (reused under "How it works") ── */
+.syn-mess-shape {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: synMessFloat 6s ease-in-out infinite;
+}
+@keyframes synMessFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(6deg); }
+}
+.syn-template-card {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: synTplBreath 5s ease-in-out infinite;
+}
+@keyframes synTplBreath {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+.syn-artifact-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: synArtifactPulse 5s ease-in-out 1.4s infinite;
+}
+@keyframes synArtifactPulse {
+  0% { opacity: 0; transform: scale(1); }
+  12% { opacity: 0.55; }
+  42% { opacity: 0; transform: scale(1.08); }
+  100% { opacity: 0; transform: scale(1.08); }
+}
+
+/* Plain-language captions under each band station. */
+.syn-caption {
+  font-family: var(--ic-font-body), 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* ── Vertical, centered hero: headline → subhead → CTAs → synthesis band ── */
+.ic-hero-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1060px;
+  margin: 0 auto;
+}
+.ic-hero-copy {
+  text-align: center;
+  max-width: 790px;
+}
+.ic-hero-stack .ic-hero-ctas {
+  justify-content: center;
+}
+
+.ic-hero-proof-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.ic-hero-proof-row span {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 212, 170, 0.4);
+  background: rgba(0, 212, 170, 0.12);
+  color: #5EEAD4;
+  font-family: var(--ic-font-mono);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ic-hero-visual-band {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .ic-hero-stack { gap: 1.75rem; }
+  .syn-caption { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .syn-pile-shape,
+  .syn-conn,
+  .syn-hub-glow,
+  .syn-tpl-card,
+  .syn-row,
+  .syn-run-highlight,
+  .syn-step-check,
+  .syn-progress,
+  .syn-mess-shape,
+  .syn-template-card,
+  .syn-artifact-pulse,
+  .syn-field-shape {
+    animation: none !important;
+  }
+}
+
+/* Hero kicker — theme-aware via tokens (teal in navy, violet elsewhere). */
+.ic-hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  margin-bottom: 20px;
+  background: var(--ic-accent-tint);
+  border: 1px solid color-mix(in srgb, var(--ic-accent) 28%, transparent);
+  border-radius: 24px;
+  font-family: var(--ic-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ic-accent);
+}
+
+.ic-hero-kicker-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ic-accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@media (max-width: 1024px) {
+  .ic-hero-kicker { margin-left: auto; margin-right: auto; }
+}
+
+/* Hero Container — top-aligned now that the hero is a tall centered stack. */
 .ic-hero-container {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   max-width: var(--ic-max-width);
   margin: 0 auto;
-  padding: calc(80px + var(--ic-space-3xl)) var(--ic-space-lg) var(--ic-space-3xl);
+  padding: 128px var(--ic-space-lg) 72px;
   width: 100%;
   position: relative;
   z-index: 1;
@@ -374,7 +726,8 @@
 
 @media (max-width: 768px) {
   .ic-hero-container {
-    padding-top: 32px;
+    padding-top: 96px;
+    padding-bottom: 52px;
   }
 }
 
@@ -760,6 +1113,355 @@
   right: 0;
   border-left: none;
   border-top: none;
+}
+
+/* ============================================
+   SHAPE STORY SECTION ("How it works")
+   Three steps reusing the hero glyphs: messy pieces → template → artifact.
+   ============================================ */
+.ic-shape-story-section {
+  padding: var(--ic-space-4xl) 0;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 12%, var(--ic-accent-tint) 0%, transparent 30%),
+    radial-gradient(circle at 88% 88%, var(--ic-accent-tint) 0%, transparent 32%),
+    var(--ic-bg);
+  border-top: 1px solid var(--ic-border-subtle);
+}
+
+.ic-shape-story-header {
+  max-width: 720px;
+  margin: 0 auto var(--ic-space-3xl);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.ic-shape-story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ic-space-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.ic-shape-story-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 28px;
+  background: var(--ic-card-bg);
+  border: 1px solid var(--ic-card-border);
+  border-radius: 24px;
+  box-shadow: var(--ic-shadow-card);
+  transition: transform 0.35s var(--ic-ease), box-shadow 0.35s var(--ic-ease), border-color 0.35s var(--ic-ease);
+}
+
+.ic-page--navy-calm .ic-shape-story-card,
+.ic-page--light .ic-shape-story-card {
+  background: #ffffff;
+}
+
+.ic-shape-story-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--ic-shadow-lg);
+  border-color: color-mix(in srgb, var(--ic-accent) 35%, transparent);
+}
+
+/* Step 2 (the template) is the key beat — give it a subtle accent frame. */
+.ic-shape-story-card--accent {
+  border-color: color-mix(in srgb, var(--ic-accent) 30%, transparent);
+  background:
+    linear-gradient(180deg, var(--ic-accent-tint) 0%, transparent 38%),
+    var(--ic-card-bg);
+}
+.ic-page--navy-calm .ic-shape-story-card--accent,
+.ic-page--light .ic-shape-story-card--accent {
+  background:
+    linear-gradient(180deg, var(--ic-accent-tint) 0%, transparent 42%),
+    #ffffff;
+}
+
+/* The glyph sits in a soft, rounded "stage" so all three line up cleanly. */
+.ic-shape-card-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 184px;
+  margin-bottom: 24px;
+  border-radius: 18px;
+  background: var(--ic-bg-alternate);
+  border: 1px solid var(--ic-border-subtle);
+}
+.ic-page--navy-calm .ic-shape-card-visual,
+.ic-page--light .ic-shape-card-visual {
+  background: var(--ic-bg-alternate);
+}
+
+.ic-shape-card-glyph {
+  height: 150px;
+  width: auto;
+  max-width: 86%;
+}
+
+.ic-shape-card-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+  background: var(--ic-accent-tint);
+  color: var(--ic-accent);
+  font-family: var(--ic-font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.ic-shape-story-card h3 {
+  margin-bottom: 10px;
+  font-size: 1.35rem;
+  font-weight: 650;
+  color: var(--ic-text);
+}
+
+.ic-shape-story-card p {
+  color: var(--ic-text-secondary);
+  line-height: 1.65;
+}
+
+/* ============================================
+   AUTOMATION SECTION
+   Templates are the front door; the real product story is repeatable content
+   automation with batch output and human review in the loop.
+   ============================================ */
+.ic-automation-section {
+  padding: var(--ic-space-4xl) var(--ic-space-lg);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(0, 212, 170, 0.18) 0%, transparent 34%),
+    radial-gradient(circle at 86% 78%, rgba(94, 234, 212, 0.12) 0%, transparent 38%),
+    linear-gradient(135deg, #0A2540 0%, #061527 100%);
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.ic-automation-container {
+  max-width: var(--ic-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--ic-space-3xl);
+  align-items: center;
+}
+
+.ic-automation-copy .ic-section-eyebrow { color: #5EEAD4; }
+.ic-automation-copy .ic-section-title { color: #ffffff; }
+.ic-automation-copy .ic-section-description { color: rgba(255, 255, 255, 0.74); }
+
+.ic-automation-accent {
+  background: linear-gradient(135deg, #00D4AA 0%, #5EEAD4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ic-automation-visual {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.ic-automation-panel {
+  position: relative;
+  min-height: 330px;
+  padding: 22px;
+  border: 1px solid rgba(94, 234, 212, 0.22);
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%),
+    rgba(255, 255, 255, 0.04);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+}
+
+.ic-automation-panel--batch {
+  background:
+    radial-gradient(circle at 50% 38%, rgba(0, 212, 170, 0.16) 0%, transparent 52%),
+    rgba(0, 212, 170, 0.06);
+  border-color: rgba(94, 234, 212, 0.34);
+}
+
+.ic-automation-panel-kicker {
+  display: inline-flex;
+  margin-bottom: 16px;
+  color: #5EEAD4;
+  font-family: var(--ic-font-mono);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ic-automation-panel h3 {
+  max-width: 260px;
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.ic-automation-panel p {
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.62;
+}
+
+.ic-automation-shape-cluster {
+  position: absolute;
+  inset: auto 22px 24px 22px;
+  height: 126px;
+}
+
+.ic-auto-shape {
+  position: absolute;
+  display: block;
+  width: 34px;
+  height: 34px;
+  border: 2px solid rgba(94, 234, 212, 0.64);
+  animation: automationShapeFloat 7s ease-in-out infinite;
+}
+
+.ic-auto-shape--circle {
+  left: 10%;
+  top: 18px;
+  border-radius: 999px;
+}
+
+.ic-auto-shape--triangle {
+  left: 42%;
+  top: 4px;
+  width: 0;
+  height: 0;
+  border: none;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 32px solid rgba(94, 234, 212, 0.34);
+  animation-delay: 0.9s;
+}
+
+.ic-auto-shape--diamond {
+  right: 12%;
+  top: 38px;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  background: rgba(94, 234, 212, 0.12);
+  animation-delay: 1.8s;
+}
+
+.ic-auto-shape--hexagon {
+  left: 33%;
+  bottom: 6px;
+  clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
+  background: rgba(94, 234, 212, 0.12);
+  animation-delay: 2.7s;
+}
+
+@keyframes automationShapeFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.72; }
+  50% { transform: translateY(-10px) rotate(6deg); opacity: 1; }
+}
+
+.ic-automation-batch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.ic-automation-batch-tile {
+  aspect-ratio: 1;
+  border-radius: 16px;
+  border: 1px solid rgba(94, 234, 212, 0.26);
+  background:
+    linear-gradient(135deg, rgba(94, 234, 212, 0.18) 0%, rgba(255, 255, 255, 0.08) 100%);
+  animation: automationTileBuild 4.6s ease-in-out infinite;
+}
+
+.ic-automation-batch-tile--3 {
+  border-color: rgba(94, 234, 212, 0.72);
+  box-shadow: 0 0 0 4px rgba(94, 234, 212, 0.1);
+}
+
+.ic-automation-batch-tile--0 { animation-delay: 0s; }
+.ic-automation-batch-tile--1 { animation-delay: 0.2s; }
+.ic-automation-batch-tile--2 { animation-delay: 0.4s; }
+.ic-automation-batch-tile--3 { animation-delay: 0.6s; }
+.ic-automation-batch-tile--4 { animation-delay: 0.8s; }
+.ic-automation-batch-tile--5 { animation-delay: 1s; }
+.ic-automation-batch-tile--6 { animation-delay: 1.2s; }
+.ic-automation-batch-tile--7 { animation-delay: 1.4s; }
+.ic-automation-batch-tile--8 { animation-delay: 1.6s; }
+
+@keyframes automationTileBuild {
+  0%, 100% { transform: scale(0.96); opacity: 0.62; }
+  35%, 72% { transform: scale(1); opacity: 1; }
+}
+
+.ic-automation-review-card {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 24px;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(94, 234, 212, 0.3);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ic-automation-review-dot {
+  grid-row: span 2;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #00A896 0%, #5EEAD4 100%);
+  box-shadow: 0 0 0 8px rgba(94, 234, 212, 0.1);
+  animation: reviewDotPulse 3.2s ease-out infinite;
+}
+
+.ic-automation-review-line {
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.ic-automation-review-line--short {
+  width: 64%;
+}
+
+@keyframes reviewDotPulse {
+  0%, 100% { box-shadow: 0 0 0 8px rgba(94, 234, 212, 0.1); }
+  50% { box-shadow: 0 0 0 14px rgba(94, 234, 212, 0.03); }
+}
+
+@media (max-width: 1024px) {
+  .ic-shape-story-grid,
+  .ic-automation-container {
+    grid-template-columns: 1fr;
+  }
+
+  .ic-automation-visual {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .ic-shape-card-glyph { height: 132px; }
+  .ic-automation-panel { min-height: 280px; }
 }
 
 /* ============================================
@@ -1842,12 +2544,6 @@
   background: none;
 }
 
-.ic-page--light .ic-hero-grid {
-  background-image: 
-    linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
-}
-
 /* Hero text - Light mode */
 .ic-page--light .ic-hero h1 {
   color: var(--ic-text) !important;
@@ -2239,12 +2935,6 @@
 
 .ic-page--navy-calm .ic-hero-gradient {
   background: none;
-}
-
-.ic-page--navy-calm .ic-hero-grid {
-  background-image: 
-    linear-gradient(rgba(10, 37, 64, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(10, 37, 64, 0.03) 1px, transparent 1px);
 }
 
 /* Hero text - Navy Calm */
@@ -2665,12 +3355,6 @@
   background:
     radial-gradient(ellipse 80% 60% at 70% 40%, rgba(0, 212, 170, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse 60% 50% at 30% 60%, rgba(0, 168, 150, 0.05) 0%, transparent 50%);
-}
-
-.ic-page--navy-dark .ic-hero-grid {
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
 /* Hero eyebrow - Navy Dark */
@@ -4142,4 +4826,39 @@
   color: #FFFFFF;
   border-color: rgba(0, 212, 170, 0.4);
   background: rgba(0, 212, 170, 0.06);
+}
+
+/* ============================================
+   HERO IS ALWAYS NAVY-DARK (above the fold)
+   The hero is pinned to the navy/teal dark palette no matter which page theme
+   the visitor picks for the sections below, so it reads the same on first
+   paint and the (transparent) site header sits on dark. Placed last and
+   scoped per theme so these out-rank the per-theme `.ic-hero` backgrounds
+   (e.g. `.ic-page--navy-calm .ic-hero { background:#fff }`) defined earlier.
+   ============================================ */
+.ic-page .ic-hero--dark,
+.ic-page--light .ic-hero--dark,
+.ic-page--navy-calm .ic-hero--dark,
+.ic-page--navy-dark .ic-hero--dark {
+  background: #0A2540 !important;
+}
+
+/* Flat navy hero — no teal glow washes. */
+.ic-hero--dark .ic-hero-gradient,
+.ic-page--light .ic-hero--dark .ic-hero-gradient,
+.ic-page--navy-calm .ic-hero--dark .ic-hero-gradient {
+  background: none !important;
+}
+
+/* Headline first line + subhead forced to light ink on the dark hero
+   (the navy-calm/light themes otherwise force these to dark text). */
+.ic-page--light .ic-hero--dark h1,
+.ic-page--light .ic-hero--dark h1 span:first-child,
+.ic-page--navy-calm .ic-hero--dark h1,
+.ic-page--navy-calm .ic-hero--dark h1 span:first-child {
+  color: #FFFFFF !important;
+}
+.ic-page--light .ic-hero--dark p,
+.ic-page--navy-calm .ic-hero--dark p {
+  color: rgba(255, 255, 255, 0.72) !important;
 }
