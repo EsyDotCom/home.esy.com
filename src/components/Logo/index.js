@@ -11,7 +11,8 @@ const Logo = ({
   wordmarkOnly = false, // Show only the text wordmark, no image
   wordmarkFont = 'zcool', // 'zcool' | 'noto' — swap to compare typefaces
   theme = 'dark', // Theme options: 'dark', 'light', 'navy-dark'
-  priority = false // Whether this image should be preloaded (for LCP optimization)
+  priority = false, // Whether this image should be preloaded (for LCP optimization)
+  animatedE = false // Render the brand "e" as glyph pieces that play the synthesis motion on hover (header only)
 }) => {
   const suffixRef = useRef(null);
   
@@ -113,10 +114,24 @@ const Logo = ({
       {(showText || wordmarkOnly) && (
         wordmarkOnly ? (
           <span
-            className={`${styles.logoWordmark} ${wordmarkFontClass}`}
+            className={`esy-wordmark ${styles.logoWordmark} ${wordmarkFontClass}`}
             style={{ color: wordmarkColor }}
+            aria-label="esy"
           >
-            <span style={{ color: '#00A896' }}>e</span>sy
+            {/* Render the brand "e" as the Black Ops One glyph pieces so it can
+                play the Esy synthesis motion on logo hover — opt-in via animatedE
+                so only the site header gets it. Everywhere else (footer, sidebars)
+                keeps a plain teal "e". */}
+            {wordmarkFont === 'blackops' && animatedE ? (
+              <span className={`esy-loader esy-loader--static ${styles.logoE}`} aria-hidden="true">
+                <span className="esy-e-piece esy-e-spine" />
+                <span className="esy-e-piece esy-e-bowl" />
+                <span className="esy-e-piece esy-e-bar" />
+              </span>
+            ) : (
+              <span style={{ color: '#00A896' }} aria-hidden="true">e</span>
+            )}
+            <span aria-hidden="true">sy</span>
           </span>
         ) : (
           <span className={styles.logoText}>esy</span>

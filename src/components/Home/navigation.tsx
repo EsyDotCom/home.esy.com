@@ -467,6 +467,7 @@ export default function Navigation({
               suffix=""
               href=""
               wordmarkOnly
+              animatedE
               wordmarkFont="blackops" // swap to "zcool" or "noto" to compare
               theme={!navOnDark ? 'light' : isNavyDark ? 'navy-dark' : 'dark'}
               size={isMobile ? 36 : 60}
@@ -648,6 +649,7 @@ export default function Navigation({
                 suffix=""
                 href=""
                 wordmarkOnly
+                animatedE
                 wordmarkFont="blackops"
                 theme={isLightMode ? 'light' : 'dark'}
                 size={36}
