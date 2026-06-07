@@ -2181,3 +2181,81 @@ html {
     max-width: 250px;
   }
 }
+
+/* ── Esy loader (the official loader) ──
+   The Black Ops One "e" rendered as its three real glyph pieces (spine/bowl/bar)
+   via clip-path on stacked boxes. The mark fills with `currentColor` so it drops
+   in wherever the old spinners sat. The verify-pulse lightens the current color
+   toward white with color-mix (a soft brand highlight, not a brightness blowout).
+   See src/components/EsyLoader.tsx. */
+.esy-loader {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  color: inherit;
+  flex-shrink: 0;
+}
+.esy-loader .esy-e-piece {
+  position: absolute;
+  inset: 0;
+  background-color: currentColor;
+  transform-origin: 50% 50%;
+  will-change: transform, background-color, opacity;
+}
+.esy-loader .esy-e-spine { clip-path: polygon(23.0% 100%, 0% 75.05%, 0% 24.95%, 23.0% 0%, 38.37% 0%, 38.37% 100%); }
+.esy-loader .esy-e-bowl  { clip-path: polygon(44.44% 59.89%, 44.44% 42.47%, 64.67% 42.47%, 64.67% 24.95%, 44.44% 24.95%, 44.44% 0%, 77.0% 0%, 100% 24.95%, 100% 59.89%); }
+.esy-loader .esy-e-bar   { clip-path: polygon(44.44% 100%, 44.44% 76.65%, 96.01% 76.65%, 96.01% 87.48%, 84.55% 100%); }
+
+/* flow — the e stays whole; a teal pulse travels through, spine → bowl → bar. */
+.esy-loader--flow .esy-e-spine { animation: esy-flow 1.9s ease-in-out infinite; }
+.esy-loader--flow .esy-e-bowl  { animation: esy-flow 1.9s ease-in-out 0.18s infinite; }
+.esy-loader--flow .esy-e-bar   { animation: esy-flow 1.9s ease-in-out 0.36s infinite; }
+@keyframes esy-flow {
+  0%, 100% { background-color: currentColor; transform: translateY(0); }
+  28%      { background-color: color-mix(in srgb, currentColor 78%, #ffffff); transform: translateY(-8%); }
+  56%      { background-color: currentColor; transform: translateY(0); }
+}
+
+/* synthesis — pieces converge into the e, a teal pulse passes, then they
+   disperse and re-form. Decisive expo settle = the engineer-first "lock". */
+.esy-loader--synthesis .esy-e-spine { animation: esy-syn-spine 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+.esy-loader--synthesis .esy-e-bowl  { animation: esy-syn-bowl  2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+.esy-loader--synthesis .esy-e-bar   { animation: esy-syn-bar   2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+@keyframes esy-syn-spine {
+  0%   { transform: translateX(-26%) scale(0.86); opacity: 0.18; background-color: currentColor; }
+  22%  { transform: translateX(0) scale(1); opacity: 1; }
+  42%  { background-color: currentColor; }
+  49%  { background-color: color-mix(in srgb, currentColor 78%, #ffffff); }
+  57%  { background-color: currentColor; }
+  80%  { transform: translateX(0) scale(1); opacity: 1; }
+  100% { transform: translateX(-26%) scale(0.86); opacity: 0.18; background-color: currentColor; }
+}
+@keyframes esy-syn-bowl {
+  0%   { transform: translateY(-28%) scale(0.86); opacity: 0.18; background-color: currentColor; }
+  8%   { transform: translateY(-28%) scale(0.86); opacity: 0.18; }
+  30%  { transform: translateY(0) scale(1); opacity: 1; }
+  49%  { background-color: currentColor; }
+  56%  { background-color: color-mix(in srgb, currentColor 78%, #ffffff); }
+  64%  { background-color: currentColor; }
+  84%  { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-28%) scale(0.86); opacity: 0.18; background-color: currentColor; }
+}
+@keyframes esy-syn-bar {
+  0%   { transform: translateY(28%) scale(0.86); opacity: 0.18; background-color: currentColor; }
+  16%  { transform: translateY(28%) scale(0.86); opacity: 0.18; }
+  38%  { transform: translateY(0) scale(1); opacity: 1; }
+  56%  { background-color: currentColor; }
+  63%  { background-color: color-mix(in srgb, currentColor 78%, #ffffff); }
+  71%  { background-color: currentColor; }
+  88%  { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(28%) scale(0.86); opacity: 0.18; background-color: currentColor; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .esy-loader .esy-e-piece {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    background-color: currentColor !important;
+  }
+}
