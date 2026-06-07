@@ -53,6 +53,9 @@ export default function Navigation({
     const [modalSource, setModalSource] = useState<'nav-tips' | 'nav-school' | 'other'>('other');
     const [isLightMode, setIsLightMode] = useState(false);
     const [isNavyDark, setIsNavyDark] = useState(false); // Track navy-dark mode specifically
+    // True while the nav overlaps the homepage's navy hero band — used to keep
+    // links/logo light over the dark hero even though the page body is light.
+    const [overHero, setOverHero] = useState(false);
   const [isArtifactsOpen, setIsArtifactsOpen] = useState(false);
   const [isLearnOpen, setIsLearnOpen] = useState(false);
   const [mobileArtifactsExpanded, setMobileArtifactsExpanded] = useState(false);
@@ -86,6 +89,30 @@ export default function Navigation({
     }
     return () => { document.body.style.overflow = ''; };
   }, [isMobileMenuOpen]);
+
+  // Track whether the nav still overlaps the homepage's navy hero. Only the
+  // homepage has a navy hero over a light body, so this is scoped there.
+  useEffect(() => {
+    const isHomepage = normalizedPathForNav === '/' || normalizedPathForNav === '';
+    if (!isHomepage) { setOverHero(false); return; }
+
+    const update = () => {
+      const hero = document.querySelector('.ic-hero') as HTMLElement | null;
+      if (!hero) { setOverHero(false); return; }
+      // Flip just before the nav clears the hero so links never sit illegibly
+      // on the seam between the navy hero and the light section below.
+      const heroBottom = hero.offsetTop + hero.offsetHeight;
+      setOverHero(window.scrollY + 80 < heroBottom);
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, [normalizedPathForNav]);
 
   // Theme detection
     useEffect(() => {
@@ -300,6 +327,28 @@ export default function Navigation({
         // Navy Dark specific colors
         const navyDarkBg = 'rgba(10, 37, 64, 0.98)';
         const navyDarkBorder = 'rgba(0, 212, 170, 0.15)';
+
+        // Homepage hero is a navy band even though the body is light. While the
+        // nav overlaps it, render the dark-hero treatment (transparent → navy)
+        // instead of the light-body white, so light links stay legible.
+        const hero = isHomepage ? (document.querySelector('.ic-hero') as HTMLElement | null) : null;
+        const overHeroNow = hero ? scrollY + 80 < hero.offsetTop + hero.offsetHeight : false;
+        if (overHeroNow) {
+          if (scrollY < 8) {
+            nav.style.background = 'transparent';
+            nav.style.boxShadow = 'none';
+            nav.style.borderBottom = 'none';
+            nav.style.backdropFilter = 'none';
+          } else {
+            const p = Math.min(scrollY / 80, 1);
+            nav.style.background = `rgba(10, 37, 64, ${0.92 * p})`;
+            nav.style.boxShadow = scrollY > 50 ? '0 2px 8px rgba(0, 0, 0, 0.35)' : 'none';
+            nav.style.borderBottom = `1px solid rgba(0, 212, 170, ${0.16 * p})`;
+            nav.style.backdropFilter = `blur(${20 * p}px)`;
+          }
+          if (navInner) (navInner as HTMLElement).style.textShadow = 'none';
+          return;
+        }
         
         if (scrollY === 0) {
           if (shouldBeTransparent) {
@@ -404,9 +453,13 @@ export default function Navigation({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
   
+    // Over the navy hero (or any non-light page), the nav shows light links and
+    // the light logo; over the light body it reverts to dark-on-light.
+    const navOnDark = !isLightMode || overHero;
+
     return (
       <>
-      <nav className={`nav ${isLightMode ? 'nav--light' : ''}`} id="nav">
+      <nav className={`nav ${!navOnDark ? 'nav--light' : ''}`} id="nav">
         <div className="nav-inner">
           {/* Logo */}
           <Link href="/" className="logo">
@@ -415,7 +468,7 @@ export default function Navigation({
               href=""
               wordmarkOnly
               wordmarkFont="blackops" // swap to "zcool" or "noto" to compare
-              theme={isLightMode ? 'light' : isNavyDark ? 'navy-dark' : 'dark'}
+              theme={!navOnDark ? 'light' : isNavyDark ? 'navy-dark' : 'dark'}
               size={isMobile ? 36 : 60}
               priority
             />
@@ -450,7 +503,7 @@ export default function Navigation({
                 aria-haspopup="true"
                 onClick={() => setIsArtifactsOpen(false)}
                 style={{
-                  color: isLightMode ? '#475569' : 'rgba(255, 255, 255, 0.85)',
+                  color: !navOnDark ? '#475569' : 'rgba(255, 255, 255, 0.85)',
                   textDecoration: 'none',
                 }}
               >
@@ -512,7 +565,7 @@ export default function Navigation({
                 href="/workflows/"
                 className={`nav-link nav-link-templates ${pathname?.startsWith('/workflows') ? 'active' : ''}`}
                 style={{
-                  color: isLightMode ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
+                  color: !navOnDark ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
                   textShadow: 'none',
                 }}
               >
@@ -526,7 +579,7 @@ export default function Navigation({
                 href="/research/"
                 className={`nav-link nav-link-research ${pathname?.startsWith('/research') ? 'active' : ''}`}
                 style={{
-                  color: isLightMode ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
+                  color: !navOnDark ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
                   textShadow: 'none',
                 }}
               >
@@ -548,18 +601,18 @@ export default function Navigation({
                   borderRadius: '8px',
                   fontSize: '14px',
                   fontWeight: 500,
-                  color: isLightMode ? '#6b7280' : 'rgba(255, 255, 255, 0.6)',
+                  color: !navOnDark ? '#6b7280' : 'rgba(255, 255, 255, 0.6)',
                   background: 'transparent',
-                  border: isLightMode ? '1px solid #e5e7eb' : '1px solid rgba(255, 255, 255, 0.15)',
+                  border: !navOnDark ? '1px solid #e5e7eb' : '1px solid rgba(255, 255, 255, 0.15)',
                   transition: 'all 0.2s ease',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = isLightMode ? '#374151' : 'rgba(255, 255, 255, 0.9)';
-                  e.currentTarget.style.borderColor = isLightMode ? '#d1d5db' : 'rgba(255, 255, 255, 0.3)';
+                  e.currentTarget.style.color = !navOnDark ? '#374151' : 'rgba(255, 255, 255, 0.9)';
+                  e.currentTarget.style.borderColor = !navOnDark ? '#d1d5db' : 'rgba(255, 255, 255, 0.3)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = isLightMode ? '#6b7280' : 'rgba(255, 255, 255, 0.6)';
-                  e.currentTarget.style.borderColor = isLightMode ? '#e5e7eb' : 'rgba(255, 255, 255, 0.15)';
+                  e.currentTarget.style.color = !navOnDark ? '#6b7280' : 'rgba(255, 255, 255, 0.6)';
+                  e.currentTarget.style.borderColor = !navOnDark ? '#e5e7eb' : 'rgba(255, 255, 255, 0.15)';
                 }}
               >
               App
@@ -572,7 +625,7 @@ export default function Navigation({
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMobileMenuOpen}
-                style={{ color: isLightMode ? '#1e293b' : '#ffffff' }}
+                style={{ color: !navOnDark ? '#1e293b' : '#ffffff' }}
               >
                 {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
