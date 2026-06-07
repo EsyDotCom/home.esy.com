@@ -104,8 +104,8 @@ function EsyBrandedLoader({ visible }: { visible: boolean }) {
       className="turkana-3d-loader"
       style={{ opacity: visible ? 1 : 0, pointerEvents: 'none' }}
     >
-      {/* Official brand loader; wrapper sets currentColor so the glyph reads on the dark viewer bg. */}
-      <span style={{ color: 'rgba(255, 255, 255, 0.92)' }}>
+      {/* Official brand loader; wrapper sets currentColor to the bright dark-mode teal so the glyph pops on the dark viewer bg. */}
+      <span style={{ color: '#2BD8BB' }}>
         <EsyLoader size={48} label="" />
       </span>
       <span className="turkana-3d-loader__text">Loading 3D specimen&hellip;</span>
