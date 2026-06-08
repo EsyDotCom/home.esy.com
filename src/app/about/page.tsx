@@ -19,25 +19,6 @@ export default function AboutPage() {
     border: '#E9ECEF'
   };
 
-  const principles = [
-    {
-      title: 'Pipelines over prompts',
-      desc: 'Workflows are predefined. You run a template, not a chat window.'
-    },
-    {
-      title: 'Artifacts over conversations',
-      desc: 'The output is a publishable thing, not a transcript.'
-    },
-    {
-      title: 'Auditable by default',
-      desc: 'Every artifact carries its source chain. Citations verified, QA logged.'
-    },
-    {
-      title: 'Agents do the work',
-      desc: 'Research, verification, structuring, QA. Agents handle the pipeline end to end.'
-    }
-  ];
-
   // Shared "letter" treatment: small uppercase eyebrow + flowing prose on the
   // light surface, so every section after the hero reads as one continuous note.
   const sectionStyle: React.CSSProperties = {
@@ -45,14 +26,15 @@ export default function AboutPage() {
     maxWidth: '800px',
     margin: '0 auto'
   };
-  // Teal eyebrow makes the brand color the section marker, so the page reads
-  // as Esy's note rather than pure black-and-white body copy.
+  // Navy eyebrow is the structural label; teal is reserved for interactive and
+  // emphasis moments (links, pull-quotes, numbers) so the accent stays distinct.
+  // Uses the lighter brand navy so it reads as blue rather than near-black.
   const eyebrowStyle: React.CSSProperties = {
-    fontSize: '0.75rem',
-    fontWeight: 600,
-    letterSpacing: '0.1em',
+    fontSize: '0.8125rem',
+    fontWeight: 700,
+    letterSpacing: '0.12em',
     textTransform: 'uppercase',
-    color: theme.accent,
+    color: '#0F3460',
     marginBottom: '1.5rem'
   };
   const proseStyle: React.CSSProperties = {
@@ -165,121 +147,33 @@ export default function AboutPage() {
       <section style={sectionStyle}>
         <p style={eyebrowStyle}>What is Esy</p>
 
-        <p style={{
-          fontSize: '1.375rem',
-          lineHeight: 1.8,
-          color: theme.muted,
-          marginBottom: '1.75rem',
-          fontWeight: 400
-        }}>
-          Esy (pronounced &quot;Eh-see&quot;) runs agentic workflows that automate generation, quality-score outputs, and deliver approved artifacts at scale.
+        <p style={{ ...proseStyle, marginBottom: '1.75rem' }}>
+          Esy lets you automate agentic workflow templates instead of engineering prompts. Each template turns well thought-out intent into a simple form, so you describe what you want made, not how to phrase the ask. Esy runs the workflow, and its output can be audited with human-in-the-loop review before anything ships.
         </p>
 
-        <blockquote style={{ ...quoteStyle, margin: '0 0 1.75rem' }}>
-          Templates define the pipeline. Agents execute it. Output is structured, auditable, and publishable.
+        <blockquote style={{ ...quoteStyle, marginBottom: 0 }}>
+          No prompt engineering. You fill in an intent form, Esy runs the template, and you review the result before it ships.
         </blockquote>
+      </section>
+
+      {/* ── Etymology — where the name comes from ── */}
+      <section style={sectionStyle}>
+        <p style={eyebrowStyle}>Etymology</p>
 
         <p style={{ ...proseStyle, marginBottom: 0 }}>
           The name comes from{' '}
           <Link
             href="/essays/etymology/the-word-essay/"
             style={{
-              color: theme.muted,
+              color: theme.accent,
               textDecoration: 'none',
-              borderBottom: `1px solid ${theme.subtle}`,
-              fontStyle: 'italic',
-              transition: 'border-color 0.2s ease'
+              borderBottom: `1px solid ${theme.accent}`,
+              fontStyle: 'italic'
             }}
-            onMouseEnter={(e) => e.currentTarget.style.borderColor = theme.accent}
-            onMouseLeave={(e) => e.currentTarget.style.borderColor = theme.subtle}
           >
-            Essay Synthesis
-          </Link>, &quot;essay&quot; in its original sense, from the French <em>essayer</em>: to attempt, to try. Synthesis is the pipeline that turns the attempt into a verified artifact.
+            Synthesis Essay
+          </Link>, reversed into the acronym ESY and styled Esy, pronounced &quot;Eh-see.&quot;
         </p>
-      </section>
-
-      {/* ── The problem ── */}
-      <section style={sectionStyle}>
-        <p style={eyebrowStyle}>The problem</p>
-
-        <p style={proseStyle}>
-          Language models hallucinate citations. They reference papers that don&apos;t exist, fabricate quotes, and present invented data as fact. Image models produce anatomically wrong generations, mislabeled subjects, and artifacts that fail basic accuracy checks.
-        </p>
-
-        <p style={proseStyle}>
-          Most tools ship these errors directly to the user and call it done. No verification layer. No QA step. No audit trail.
-        </p>
-
-        <blockquote style={quoteStyle}>
-          The missing piece isn&apos;t better generation. It&apos;s a system that audits and catches these errors before anything gets published.
-        </blockquote>
-      </section>
-
-      {/* ── How it works ── */}
-      <section style={sectionStyle}>
-        <p style={eyebrowStyle}>How it works</p>
-
-        <p style={proseStyle}>
-          A template defines the workflow: what agents run, what verification steps execute, and what output format gets produced. Templates are predefined. Users pick one, provide their sources or intent, and run it.
-        </p>
-
-        <p style={proseStyle}>
-          Agents handle the pipeline. Research, source gathering, citation verification, content structuring, and quality assurance all run in sequence. Each step feeds the next. No manual prompt chaining, no copy-paste between tools.
-        </p>
-
-        <blockquote style={quoteStyle}>
-          The output is a structured, publishable artifact with a full audit trail, not a chat transcript.
-        </blockquote>
-      </section>
-
-      {/* ── Principles — enumerated within the same light flow ── */}
-      <section style={sectionStyle}>
-        <p style={eyebrowStyle}>Principles</p>
-
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '2.25rem'
-        }}>
-          {principles.map((item, index) => (
-            <div key={index} style={{
-              display: 'grid',
-              gridTemplateColumns: '40px 1fr',
-              gap: '1.25rem',
-              alignItems: 'start'
-            }}>
-              {/* Teal serif index threads the brand accent through the list */}
-              <div style={{
-                fontSize: '1.125rem',
-                fontWeight: 400,
-                color: theme.accent,
-                paddingTop: '0.15rem',
-                fontFamily: 'var(--font-literata)'
-              }}>
-                {String(index + 1).padStart(2, '0')}
-              </div>
-              <div>
-                <h3 style={{
-                  fontSize: '1.125rem',
-                  fontWeight: 600,
-                  marginBottom: '0.4rem',
-                  letterSpacing: '-0.01em',
-                  color: theme.text
-                }}>
-                  {item.title}
-                </h3>
-                <p style={{
-                  fontSize: '1.0625rem',
-                  lineHeight: 1.8,
-                  color: theme.muted,
-                  margin: 0
-                }}>
-                  {item.desc}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* ── Get in touch — the letter's sign-off ── */}
