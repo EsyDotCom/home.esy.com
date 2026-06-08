@@ -1,11 +1,15 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { clipArtArtifacts } from '@/data/clip-art-artifacts';
 import { publishedInfographics } from '@/data/infographics';
 import { publishedVisualEssays } from '@/data/visualEssays';
+import LibraryHero from '@/components/LibraryHero/LibraryHero';
+import HeroCarousel, {
+  type HeroCarouselItem,
+} from '@/components/LibraryHero/HeroCarousel';
 import PublishedArtifactsShowcase, {
   type ArtifactKindFilter,
 } from './PublishedArtifactsShowcase';
@@ -53,78 +57,12 @@ const KIND_DISPLAY: Record<PublishedArtifactKind, string> = {
   'clip-art': 'Clip Art',
 };
 
-// Auto-advancing spotlight of featured artifacts in the hero. One piece at a
-// time (image + type + title), clickable through to the artifact. Pauses on
-// hover and honors prefers-reduced-motion.
-function HeroCarousel({ items }: { items: PublishedArtifactItem[] }) {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const count = items.length;
-
-  useEffect(() => {
-    if (paused || count <= 1) return;
-    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) return;
-    const id = window.setInterval(() => setIndex((i) => (i + 1) % count), 3800);
-    return () => window.clearInterval(id);
-  }, [paused, count]);
-
-  if (count === 0) return null;
-
-  return (
-    <div
-      className="artifact-hero__carousel"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <div className="artifact-hero__slides">
-        {items.map((item, i) => {
-          const active = i === index;
-          return (
-            <Link
-              key={item.id}
-              href={item.href}
-              className={`artifact-hero__slide ${active ? 'is-active' : ''}`}
-              aria-hidden={!active}
-              tabIndex={active ? 0 : -1}
-            >
-              <div
-                className="artifact-hero__slide-img"
-                style={{ backgroundImage: `url(${item.imageSrc})` }}
-              />
-              <div className="artifact-hero__slide-cap">
-                <span className="artifact-hero__slide-kind">
-                  {KIND_DISPLAY[item.kind]}
-                </span>
-                <span className="artifact-hero__slide-title">{item.title}</span>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-      <div className="artifact-hero__dots" role="tablist" aria-label="Featured artifacts">
-        {items.map((item, i) => (
-          <button
-            key={item.id}
-            type="button"
-            className={`artifact-hero__dot ${i === index ? 'is-active' : ''}`}
-            aria-label={`Show featured artifact ${i + 1}`}
-            aria-selected={i === index}
-            role="tab"
-            onClick={() => setIndex(i)}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export default function ArtifactsIndexClient() {
   const [activeKind, setActiveKind] = useState<ArtifactKindFilter>('all');
 
   // Featured artifacts for the hero spotlight: interleave the rail items so the
   // carousel alternates across forms (essay, infographic, clip art, …).
-  const featured = useMemo(() => {
+  const featured = useMemo<HeroCarouselItem[]>(() => {
     const { essays, infographics, clipArt } = getPublishedArtifactRails();
     const out: PublishedArtifactItem[] = [];
     const max = Math.max(essays.length, infographics.length, clipArt.length);
@@ -133,7 +71,14 @@ export default function ArtifactsIndexClient() {
       if (infographics[i]) out.push(infographics[i]);
       if (clipArt[i]) out.push(clipArt[i]);
     }
-    return out.slice(0, 6);
+    // Map to the shared carousel shape; the kind drives the eyebrow label.
+    return out.slice(0, 6).map((item) => ({
+      id: item.id,
+      href: item.href,
+      imageSrc: item.imageSrc,
+      label: KIND_DISPLAY[item.kind],
+      title: item.title,
+    }));
   }, []);
 
   // Filter chip — sets the active artifact kind and reflects state for a11y.
@@ -153,59 +98,25 @@ export default function ArtifactsIndexClient() {
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.text }}>
-      {/* Hero — one immersive dark "stage" that unifies the headline and the
-          featured-artifact carousel into a single composition. Kept as a
-          contained panel below the (light) nav so nav legibility is unaffected. */}
-      <section
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '5.5rem 2rem 3.5rem',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            marginBottom: '1.5rem',
-            fontSize: '0.875rem',
-            color: theme.subtle,
-          }}
-        >
-          <Link href="/" style={{ color: theme.subtle, textDecoration: 'none' }}>
-            Home
-          </Link>
-          <span>›</span>
-          <span style={{ color: theme.muted }}>Artifacts</span>
-        </div>
-
-        <div className="esy-stage">
-          <div className="esy-stage__copy">
-            <h1 className="esy-stage__title">
-              Artifact <span>Gallery</span>
-            </h1>
-            <p className="esy-stage__subhead">
-              Finished work from Esy workflows. Every piece shows exactly how it
-              was made.
-            </p>
-            <div className="esy-stage__meta">
-              <span>
-                <strong>{TOTAL_ARTIFACTS}</strong> finished pieces
-              </span>
-              <span className="esy-stage__meta-dot" aria-hidden="true">
-                ·
-              </span>
-              <span>full provenance on every run</span>
-            </div>
-          </div>
-
-          {/* Featured-artifact spotlight that rotates through real pieces. */}
-          <div className="esy-stage__feature">
-            <HeroCarousel items={featured} />
-          </div>
-        </div>
-      </section>
+      {/* Hero — shared immersive library "stage" with a rotating spotlight of
+          real, featured artifacts. */}
+      <LibraryHero
+        breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Artifacts' }]}
+        title={<>Artifact <span>Gallery</span></>}
+        subhead="Finished work from Esy workflows. Every piece shows exactly how it was made."
+        meta={
+          <>
+            <span>
+              <strong>{TOTAL_ARTIFACTS}</strong> finished pieces
+            </span>
+            <span className="esy-stage__meta-dot" aria-hidden="true">
+              ·
+            </span>
+            <span>full provenance on every run</span>
+          </>
+        }
+        feature={<HeroCarousel items={featured} ariaLabel="Featured artifacts" />}
+      />
 
       {/* Library band — heading, chips, and rails all inside one elevated
           section so the gallery reads as a single surface (matches /workflows). */}
