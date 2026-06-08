@@ -2319,6 +2319,30 @@ html {
    the workflows featured-template card) layer their own styles on
    top of this base.
    ============================================================ */
+/* Light breadcrumb that sits on the page surface above the dark stage. */
+.esy-stage-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  color: rgba(10, 37, 64, 0.5);
+}
+
+.esy-stage-crumbs a {
+  color: rgba(10, 37, 64, 0.5);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.esy-stage-crumbs a:hover {
+  color: #00a896;
+}
+
+.esy-stage-crumbs__current {
+  color: rgba(10, 37, 64, 0.7);
+}
+
 .esy-stage {
   position: relative;
   overflow: hidden;
@@ -2422,4 +2446,35 @@ html {
   .esy-stage__feature {
     width: 100%;
   }
+}
+
+/* Reset-proofing: the legacy artifact-type pages (/clip-art, /essays,
+   /infographics) wrap their body in a nuclear `.page * { margin:0; padding:0 }`
+   reset. That `(0,0,1,0)` selector silently zeroes the shared hero's padding
+   and spacing — the feature card bleeds to the stage edge and the headline
+   collapses. Re-assert the box-model the hero owns under the `.esy-library-hero`
+   wrapper so these rules win on specificity `(0,0,2,0)` regardless of load order,
+   keeping the hero identical to /artifacts everywhere it appears. */
+.esy-library-hero .esy-stage-crumbs {
+  margin-bottom: 1.5rem;
+}
+
+.esy-library-hero .esy-stage {
+  padding: clamp(2.5rem, 5vw, 4rem);
+}
+
+.esy-library-hero .esy-stage__title {
+  margin: 0 0 1.1rem;
+}
+
+.esy-library-hero .esy-stage__meta {
+  margin-top: 1.6rem;
+}
+
+.esy-library-hero .esy-carousel__cap {
+  padding: 1.75rem 1rem 0.95rem;
+}
+
+.esy-library-hero .esy-carousel__dots {
+  margin-top: 0.85rem;
 }
