@@ -14,7 +14,23 @@ import {
   type EssayCategory,
   type VisualEssay
 } from "@/data/visualEssays";
+import LibraryHero from "@/components/LibraryHero/LibraryHero";
+import HeroCarousel, {
+  type HeroCarouselItem,
+} from "@/components/LibraryHero/HeroCarousel";
 import './visual-essays.css';
+
+// Featured essays for the shared hero carousel (newest with a hero image).
+const ESSAY_HERO_SLIDES: HeroCarouselItem[] = publishedVisualEssays
+  .filter((e) => Boolean(e.heroImage))
+  .slice(0, 6)
+  .map((e) => ({
+    id: e.id,
+    href: e.href,
+    imageSrc: e.heroImage as string,
+    label: e.category,
+    title: e.title,
+  }));
 
 // Manual featured essay override (for hero with clean photographic image)
 // Set to null to use the latest essay automatically
@@ -134,87 +150,6 @@ const buildDeduplicatedSections = () => {
 const { latestEssays: LATEST_ESSAYS, categorySections: CATEGORY_SECTIONS, moreEssays: MORE_ESSAYS } = buildDeduplicatedSections();
 
 // ==================== COMPONENTS ====================
-
-// Editorial Hero - Full-bleed featured essay (always the latest)
-const EditorialHero: React.FC = () => {
-  const featuredImageUrl = featuredEssay ? getEssayImage(featuredEssay) : null;
-  const [imageError, setImageError] = React.useState(false);
-  const showGradient = !featuredImageUrl || imageError;
-
-  if (!featuredEssay) return null;
-
-  return (
-    <section className="editorial-hero-fullbleed">
-      {/* Full-bleed Background Image */}
-      <div
-        className="hero-fullbleed-bg"
-        style={showGradient ? { background: CATEGORY_GRADIENTS[featuredEssay.category] } : undefined}
-      >
-        {featuredImageUrl && !imageError && (
-          <Image
-            src={featuredImageUrl}
-            alt={featuredEssay.title}
-            fill
-            sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: 'center 15%' }}
-            priority
-            unoptimized
-            onError={() => setImageError(true)}
-          />
-        )}
-        <div className="hero-fullbleed-overlay" />
-      </div>
-
-      {/* Content - Bottom Left Safe Zone */}
-      <Link href={featuredEssay.href} className="hero-fullbleed-content">
-        {/* "Featured" label removed - hero treatment already signals prominence */}
-        {/* <span className="hero-fullbleed-label">Featured</span> */}
-
-        <h1 className="hero-fullbleed-title">{featuredEssay.title}</h1>
-        <p className="hero-fullbleed-subtitle">{featuredEssay.subtitle}</p>
-
-        <div className="hero-fullbleed-meta">
-          <span
-            className="hero-fullbleed-category"
-            style={{ color: CATEGORY_COLORS[featuredEssay.category] }}
-          >
-            {featuredEssay.category}
-          </span>
-          <span className="hero-fullbleed-divider">·</span>
-          <Clock size={14} />
-          <span>{featuredEssay.readTime}</span>
-          {isNewEssay(featuredEssay) && <span className="hero-fullbleed-new">New</span>}
-        </div>
-
-        <span className="hero-fullbleed-cta">
-          Read This Essay <ArrowRight size={16} />
-        </span>
-      </Link>
-
-      {/* Stats Bar - Integrated Footer */}
-      <div className="hero-fullbleed-stats">
-        <div className="hero-fullbleed-stat">
-          <span className="hero-fullbleed-stat-value">{publishedVisualEssays.length}</span>
-          <span className="hero-fullbleed-stat-label">Essays</span>
-        </div>
-        <span className="hero-fullbleed-stat-divider">·</span>
-        <div className="hero-fullbleed-stat">
-          <span className="hero-fullbleed-stat-value">{totalReadTime}</span>
-          <span className="hero-fullbleed-stat-label">Minutes</span>
-        </div>
-        <span className="hero-fullbleed-stat-divider">·</span>
-        <div className="hero-fullbleed-stat">
-          <span className="hero-fullbleed-stat-label">All Interactive</span>
-        </div>
-      </div>
-
-      {/* Framing Line - Sets context */}
-      <p className="hero-framing-line">
-        A collection of inspectable research artifacts produced using Esy workflows.
-      </p>
-    </section>
-  );
-};
 
 // Number of cards to show per section before "See All"
 const CARDS_PER_SECTION = 6;
@@ -437,7 +372,34 @@ interface VisualEssaysClientProps {
 const VisualEssaysClient: React.FC<VisualEssaysClientProps> = () => {
   return (
     <div className="visual-essays-index">
-      <EditorialHero />
+      {/* Hero — shared immersive library "stage" with a rotating essay spotlight. */}
+      <LibraryHero
+        breadcrumb={[
+          { label: 'Home', href: '/' },
+          { label: 'Artifacts', href: '/artifacts' },
+          { label: 'Essays' },
+        ]}
+        title={<>Visual <span>Essays</span></>}
+        subhead="Scroll-driven, sourced narratives. Each essay shows the research behind it."
+        meta={
+          <>
+            <span>
+              <strong>{publishedVisualEssays.length}</strong> essays
+            </span>
+            <span className="esy-stage__meta-dot" aria-hidden="true">
+              ·
+            </span>
+            <span>
+              <strong>{totalReadTime}</strong> minutes
+            </span>
+            <span className="esy-stage__meta-dot" aria-hidden="true">
+              ·
+            </span>
+            <span>all interactive</span>
+          </>
+        }
+        feature={<HeroCarousel items={ESSAY_HERO_SLIDES} ariaLabel="Featured essays" />}
+      />
 
       {/* Latest Essays */}
       <LatestSection />

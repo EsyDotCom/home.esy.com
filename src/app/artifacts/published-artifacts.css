@@ -27,6 +27,64 @@
   padding: clamp(4rem, 8vh, 6rem) clamp(1.5rem, 5vw, 3rem);
 }
 
+/* Lead mode: the showcase is embedded inside the page's own elevated library
+   band, so it drops its standalone surface — no background, borders, max-width,
+   or padding — and contributes only the rails. */
+.pa-section--lead {
+  background: none;
+  border-top: none;
+  border-bottom: none;
+}
+
+.pa-section--lead .pa-section__inner {
+  max-width: none;
+  padding: 0;
+}
+
+/* Gallery filter chips. Defined here (not inline) so they get specific,
+   smooth transitions + a real hover state instead of a janky `transition: all`. */
+.artifact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(10, 37, 64, 0.08);
+  background: #ffffff;
+  color: rgba(10, 37, 64, 0.7);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.artifact-chip:hover {
+  border-color: rgba(0, 168, 150, 0.35);
+  color: #0a2540;
+}
+
+.artifact-chip[aria-pressed='true'] {
+  border-color: rgba(0, 168, 150, 0.2);
+  background: rgba(0, 168, 150, 0.08);
+  color: #00a896;
+}
+
+.artifact-chip__count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(10, 37, 64, 0.35);
+  transition: color 0.18s ease;
+}
+
+.artifact-chip[aria-pressed='true'] .artifact-chip__count {
+  color: #00a896;
+}
+
 .pa-section__header {
   margin-bottom: clamp(2rem, 4vh, 3rem);
 }

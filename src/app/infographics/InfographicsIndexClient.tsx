@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import {
   publishedInfographics,
   getUniqueClusters,
@@ -11,6 +10,10 @@ import {
   INFOGRAPHIC_CATEGORY_COLORS,
   type Infographic,
 } from "@/data/infographics";
+import LibraryHero from "@/components/LibraryHero/LibraryHero";
+import HeroCarousel, {
+  type HeroCarouselItem,
+} from "@/components/LibraryHero/HeroCarousel";
 import "./infographics.css";
 
 const ALL_FILTER = "__all__";
@@ -72,185 +75,60 @@ function InfographicCard({ infographic }: { infographic: Infographic }) {
   );
 }
 
-const CARD_FAN_COUNT = 5;
-
-function CoverflowHero() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const items = publishedInfographics.slice(0, CARD_FAN_COUNT);
-
-  useEffect(() => {
-    if (isHovering || items.length <= 1) return;
-    intervalRef.current = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % items.length);
-    }, 4000);
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [isHovering, items.length]);
-
-  const goNext = () => setActiveIndex((prev) => (prev + 1) % items.length);
-  const goPrev = () => setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
-
-  if (items.length === 0) return null;
-
-  const active = items[activeIndex] || items[0];
-  const activeColor =
-    INFOGRAPHIC_CATEGORY_COLORS[
-      active.category as keyof typeof INFOGRAPHIC_CATEGORY_COLORS
-    ] || "#6B7280";
-
-  return (
-    <section className="ig-hero">
-      <div className="ig-hero__heading">
-        <h1 className="ig-hero__page-title">Research Infographics</h1>
-        <p className="ig-hero__page-subtitle">
-          Citation-verified visual knowledge. Every data point traces to a
-          verified source.
-        </p>
-      </div>
-
-      <div
-        className="ig-coverflow"
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-      >
-        {/* Prev / Next arrows */}
-        {items.length > 1 && (
-          <>
-            <button className="ig-coverflow__arrow ig-coverflow__arrow--prev" onClick={goPrev} aria-label="Previous">
-              <ArrowRight size={18} />
-            </button>
-            <button className="ig-coverflow__arrow ig-coverflow__arrow--next" onClick={goNext} aria-label="Next">
-              <ArrowRight size={18} />
-            </button>
-          </>
-        )}
-
-        <div className="ig-coverflow__track">
-          {items.map((item, i) => {
-            let offset = i - activeIndex;
-            // Wrap for seamless look
-            if (offset > Math.floor(items.length / 2)) offset -= items.length;
-            if (offset < -Math.floor(items.length / 2)) offset += items.length;
-
-            const isActive = offset === 0;
-            const absOffset = Math.abs(offset);
-            const clampedOffset = Math.max(-2, Math.min(2, offset));
-
-            const translateX = clampedOffset * 38;
-            const rotateY = clampedOffset * -45;
-            const translateZ = isActive ? 0 : -150 - absOffset * 40;
-            const scale = isActive ? 1 : 0.75;
-            const opacity = absOffset > 2 ? 0 : isActive ? 1 : 0.6;
-            const zIndex = 10 - absOffset;
-
-            return (
-              <Link
-                key={item.id}
-                href={`/infographics/${item.id}`}
-                className={`ig-coverflow__card ${isActive ? "ig-coverflow__card--active" : ""}`}
-                style={{
-                  transform: `translateX(${translateX}%) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`,
-                  zIndex,
-                  opacity,
-                  pointerEvents: absOffset > 2 ? "none" : "auto",
-                }}
-                onClick={(e) => {
-                  if (!isActive) {
-                    e.preventDefault();
-                    setActiveIndex(i);
-                  }
-                }}
-              >
-                <Image
-                  src={item.imageSrc}
-                  alt={item.imageAlt}
-                  width={item.width}
-                  height={item.height}
-                  className="ig-coverflow__image"
-                  priority={i < 3}
-                  sizes="(max-width: 768px) 95vw, (max-width: 1200px) 800px, 880px"
-                />
-              </Link>
-            );
-          })}
-        </div>
-
-        {items.length > 1 && (
-          <div className="ig-coverflow__dots">
-            {items.map((_, i) => (
-              <button
-                key={i}
-                className={`ig-coverflow__dot ${i === activeIndex ? "ig-coverflow__dot--active" : ""}`}
-                onClick={() => setActiveIndex(i)}
-                aria-label={`View infographic ${i + 1}`}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="ig-hero__content">
-        <div className="ig-hero__meta-row">
-          <span
-            className="ig-hero__cluster"
-            style={{ color: activeColor, backgroundColor: `${activeColor}15` }}
-          >
-            {CLUSTER_LABELS[active.cluster] || active.cluster}
-          </span>
-        </div>
-
-        <h2 className="ig-hero__title">
-          <Link href={`/infographics/${active.id}`}>{active.title}</Link>
-        </h2>
-
-        <p className="ig-hero__description">{active.description}</p>
-
-        <Link href={`/infographics/${active.id}`} className="ig-hero__cta">
-          View Infographic <ArrowRight size={14} />
-        </Link>
-      </div>
-
-      <div className="ig-hero__stats-bar">
-        <div className="ig-hero__stat">
-          <span className="ig-hero__stat-value">{publishedInfographics.length}</span>
-          <span className="ig-hero__stat-label">Infographics</span>
-        </div>
-        <span className="ig-hero__stat-divider">&middot;</span>
-        <div className="ig-hero__stat">
-          <span className="ig-hero__stat-label">All Citation-Verified</span>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function InfographicsIndexClient() {
   const [activeCluster, setActiveCluster] = useState(ALL_FILTER);
   const clusters = useMemo(() => getUniqueClusters(), []);
 
-  const heroIds = useMemo(
-    () => new Set(publishedInfographics.slice(0, CARD_FAN_COUNT).map((i) => i.id)),
+  // Spotlight the first handful of infographics in the shared hero carousel.
+  const featured = useMemo<HeroCarouselItem[]>(
+    () =>
+      publishedInfographics.slice(0, 6).map((item) => ({
+        id: item.id,
+        href: `/infographics/${item.id}`,
+        imageSrc: item.thumbnailSrc || item.imageSrc,
+        label: CLUSTER_LABELS[item.cluster] || "Infographic",
+        title: item.title,
+      })),
     []
   );
 
-  const nonFeatured = useMemo(() => {
-    const base =
+  // The grid shows the full (cluster-filtered) set — the carousel is a featured
+  // rotation, not a removed-from-grid slice.
+  const filtered = useMemo(
+    () =>
       activeCluster === ALL_FILTER
         ? publishedInfographics
-        : publishedInfographics.filter((i) => i.cluster === activeCluster);
-    return base.filter((i) => !heroIds.has(i.id));
-  }, [activeCluster, heroIds]);
+        : publishedInfographics.filter((i) => i.cluster === activeCluster),
+    [activeCluster]
+  );
 
   return (
     <div className="infographics-index">
-      {/* Coverflow Hero */}
-      <CoverflowHero />
+      {/* Hero — shared immersive library "stage" with a rotating infographic spotlight. */}
+      <LibraryHero
+        breadcrumb={[
+          { label: "Home", href: "/" },
+          { label: "Artifacts", href: "/artifacts" },
+          { label: "Infographics" },
+        ]}
+        title={<>Research <span>Infographics</span></>}
+        subhead="Citation-verified visual knowledge. Every data point traces to a source."
+        meta={
+          <>
+            <span>
+              <strong>{publishedInfographics.length}</strong> infographics
+            </span>
+            <span className="esy-stage__meta-dot" aria-hidden="true">
+              ·
+            </span>
+            <span>all citation-verified</span>
+          </>
+        }
+        feature={<HeroCarousel items={featured} ariaLabel="Featured infographics" />}
+      />
 
-      {/* Cluster Filters + Grid (only if there are non-featured items) */}
-      {(nonFeatured.length > 0 || clusters.length > 1) && (
+      {/* Cluster Filters + Grid */}
+      {(filtered.length > 0 || clusters.length > 1) && (
         <>
           {clusters.length > 1 && (
             <nav className="infographics-filters">
@@ -272,9 +150,9 @@ export default function InfographicsIndexClient() {
             </nav>
           )}
 
-          {nonFeatured.length > 0 && (
+          {filtered.length > 0 && (
             <div className="infographics-masonry">
-              {nonFeatured.map((infographic) => (
+              {filtered.map((infographic) => (
                 <InfographicCard
                   key={infographic.id}
                   infographic={infographic}

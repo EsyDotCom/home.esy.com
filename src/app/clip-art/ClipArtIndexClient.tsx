@@ -12,6 +12,10 @@ import {
   type ClipArtArtifact,
   type ClipArtStyle,
 } from '@/data/clip-art-artifacts';
+import LibraryHero from '@/components/LibraryHero/LibraryHero';
+import HeroCarousel, {
+  type HeroCarouselItem,
+} from '@/components/LibraryHero/HeroCarousel';
 import './clip-art.css';
 
 const ALL_FILTER = '__all__';
@@ -53,40 +57,54 @@ export default function ClipArtIndexClient() {
     return clipArtArtifacts.filter((a) => a.style === activeStyle);
   }, [activeStyle]);
 
+  // Spotlight the first handful of assets in the shared hero carousel.
+  const featured = useMemo<HeroCarouselItem[]>(
+    () =>
+      clipArtArtifacts
+        .filter((a) => a.imageUrl)
+        .slice(0, 6)
+        .map((a) => ({
+          id: a.id,
+          href: `/clip-art/${a.slug}/`,
+          imageSrc: a.imageUrl,
+          label: CLIP_ART_STYLE_LABELS[a.style] || 'Clip Art',
+          title: a.title,
+        })),
+    [],
+  );
+
   return (
     <div className="ca-page">
-      {/* Hero — typographic only, centered editorial */}
-      <section className="ca-hero">
-        <h1 className="ca-hero__title">Clip Art</h1>
-        <p className="ca-hero__subtitle">
-          Isolated visual assets — generated, reviewed, and stored as durable
-          Esy artifacts. Square, portrait, or landscape; always transparent.
-        </p>
-
-        <div className="ca-stats">
-          <div className="ca-stat">
-            <span className="ca-stat__value">{clipArtArtifacts.length}</span>
-            <span className="ca-stat__label">
-              {clipArtArtifacts.length === 1 ? 'Asset' : 'Assets'}
+      {/* Hero — shared immersive library "stage" with a rotating asset spotlight. */}
+      <LibraryHero
+        breadcrumb={[
+          { label: 'Home', href: '/' },
+          { label: 'Artifacts', href: '/artifacts' },
+          { label: 'Clip Art' },
+        ]}
+        title={<>Clip <span>Art</span></>}
+        subhead="Isolated visual assets, generated and reviewed as Esy artifacts. Always transparent, ready to drop into anything."
+        meta={
+          <>
+            <span>
+              <strong>{clipArtArtifacts.length}</strong>{' '}
+              {clipArtArtifacts.length === 1 ? 'asset' : 'assets'}
             </span>
-          </div>
-          <span className="ca-stat__divider" aria-hidden="true">
-            ·
-          </span>
-          <div className="ca-stat">
-            <span className="ca-stat__value">{styles.length}</span>
-            <span className="ca-stat__label">
-              {styles.length === 1 ? 'Style' : 'Styles'}
+            <span className="esy-stage__meta-dot" aria-hidden="true">
+              ·
             </span>
-          </div>
-          <span className="ca-stat__divider" aria-hidden="true">
-            ·
-          </span>
-          <div className="ca-stat">
-            <span className="ca-stat__label">Transparent · webp</span>
-          </div>
-        </div>
-      </section>
+            <span>
+              <strong>{styles.length}</strong>{' '}
+              {styles.length === 1 ? 'style' : 'styles'}
+            </span>
+            <span className="esy-stage__meta-dot" aria-hidden="true">
+              ·
+            </span>
+            <span>transparent webp</span>
+          </>
+        }
+        feature={<HeroCarousel items={featured} ariaLabel="Featured clip art" />}
+      />
 
       {/* Style filter pills */}
       {styles.length > 1 && (

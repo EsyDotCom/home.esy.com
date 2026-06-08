@@ -1,21 +1,16 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import {
-  PlayCircle, Clock, BookOpen, ChevronRight,
-  Sparkles, Users, Award, ArrowRight, Play, Sun, Moon,
-  CheckCircle2, Mail,
-} from 'lucide-react';
+import { ArrowRight, Play, CheckCircle2 } from 'lucide-react';
 import { courses } from '@/lib/learn/mockData';
-import { getAllLessonsFlat } from '@/lib/learn/mockData';
-import { navyCalmDarkTheme } from '@/lib/theme';
-import { lightTheme } from '@/lib/lightTheme';
 import { useNewsletterSubscribe } from '@/hooks/useNewsletterSubscribe';
+import LibraryHero from '@/components/LibraryHero/LibraryHero';
 
 /* ─────────────────────────────────────────────
-   Courses Index — Premium Landing Page
-   Esy navy/teal brand · signature grid bg
+   Courses Index — light surface, shared library stage
+   Matches /artifacts: a dark .esy-stage hero band sitting
+   below the light nav, then a light course grid below.
    ───────────────────────────────────────────── */
 
 const COURSE_ICONS: Record<string, string> = {
@@ -24,66 +19,42 @@ const COURSE_ICONS: Record<string, string> = {
   'create-educational-infographics-with-nano-banana': '🍌',
 };
 
+// Per-card hero gradient — staggered navy tones so adjacent cards read distinct.
+function cardGradient(idx: number): string {
+  const a = idx === 0 ? '#0A2540' : idx === 1 ? '#0F3460' : '#061527';
+  const b = idx === 0 ? '#0F3460' : idx === 1 ? '#0A2540' : '#0D2B4A';
+  return `linear-gradient(135deg, ${a} 0%, ${b} 100%)`;
+}
+
 export default function CoursesListClient() {
-  const [isDark, setIsDark] = useState(true);
-  const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const [nlEmail, setNlEmail] = useState('');
   const { subscribe, status: nlStatus, errorMessage: nlError, reset: nlReset } = useNewsletterSubscribe();
 
   useEffect(() => {
-    const stored = localStorage.getItem('theme-school');
-    if (stored === 'light') setIsDark(false);
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    if (isDark) {
-      document.body.style.backgroundColor = navyCalmDarkTheme.bg;
-      document.body.className = document.body.className.replace(/\blight\b/g, '').trim();
-      if (!document.body.className.includes('dark')) document.body.className += ' dark';
-      localStorage.setItem('theme-school', 'dark');
-    } else {
-      document.body.style.backgroundColor = lightTheme.bg;
-      document.body.className = document.body.className.replace(/\bdark\b/g, '').trim();
-      if (!document.body.className.includes('light')) document.body.className += ' light';
-      localStorage.setItem('theme-school', 'light');
-    }
-    window.dispatchEvent(new Event('themechange'));
-  }, [isDark, mounted]);
-
-  useEffect(() => {
-    const check = () => {
-      setIsMobile(window.innerWidth <= 768);
-      setIsTablet(window.innerWidth > 768 && window.innerWidth <= 1024);
-    };
+    const check = () => setIsMobile(window.innerWidth <= 768);
     check();
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // ─── Theme tokens ──────────────────────────────
-  const accent = isDark ? '#00D4AA' : '#00A896';
-  const accentLight = isDark ? '#5EEAD4' : '#00D4AA';
-  const text = isDark ? '#FFFFFF' : '#1A1A2E';
-  const textSecondary = isDark ? 'rgba(255,255,255,0.85)' : '#4A4A5A';
-  const muted = isDark ? 'rgba(255,255,255,0.6)' : '#6C757D';
-  const subtle = isDark ? 'rgba(255,255,255,0.35)' : '#ADB5BD';
-  const bg = isDark ? '#0A2540' : '#FFFFFF';
-  const bgAlt = isDark ? '#061527' : '#F8FAFB';
-  const cardBg = isDark ? 'rgba(15, 52, 96, 0.35)' : '#FFFFFF';
-  const cardBorder = isDark ? 'rgba(255,255,255,0.06)' : '#E2E8F0';
-  const hoverBorder = isDark ? 'rgba(0,212,170,0.35)' : 'rgba(0,168,150,0.35)';
-  const surfaceElevated = isDark ? '#0F3460' : '#F1F5F9';
-  const gridLineColor = isDark ? 'rgba(255,255,255,0.025)' : 'rgba(10,37,64,0.035)';
-  const tagBg = isDark ? 'rgba(0,212,170,0.1)' : 'rgba(0,168,150,0.06)';
+  // ─── Light theme tokens (single surface, matches the artifact pages) ───
+  const accent = '#00A896';
+  const accentLight = '#00D4AA';
+  const text = '#1A1A2E';
+  const muted = '#6C757D';
+  const subtle = '#ADB5BD';
+  const bg = '#FFFFFF';
+  const cardBorder = '#E2E8F0';
+  const hoverBorder = 'rgba(0,168,150,0.35)';
+  const tagBg = 'rgba(0,168,150,0.06)';
 
-  // ─── Stats ─────────────────────────────────────
+  // ─── Stats + featured spotlight ─────────────────
   const totalLessons = courses.reduce((a, c) => a + c.totalLessons, 0);
   const totalCourses = courses.length;
+  const featured = courses[0];
+  const featuredEmoji = COURSE_ICONS[featured?.slug] || '📚';
 
   return (
     <div style={{
@@ -91,129 +62,91 @@ export default function CoursesListClient() {
       backgroundColor: bg,
       color: text,
       fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-      transition: 'background-color 0.3s, color 0.3s',
     }}>
-      {/* ═══ Theme Toggle ═══ */}
-      <button
-        onClick={() => setIsDark(d => !d)}
-        style={{
-          position: 'fixed', bottom: '1.5rem', right: '1.5rem',
-          width: '42px', height: '42px', borderRadius: '50%',
-          backgroundColor: isDark ? 'rgba(15, 52, 96, 0.95)' : '#FFFFFF',
-          border: `1px solid ${isDark ? 'rgba(255,255,255,0.1)' : '#E2E8F0'}`,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          cursor: 'pointer', zIndex: 50,
-          boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.4)' : '0 4px 20px rgba(0,0,0,0.08)',
-          transition: 'all 0.2s ease',
-        }}
-        aria-label="Toggle theme"
-      >
-        {isDark ? <Sun size={16} color={accent} /> : <Moon size={16} color="#4A4A5A" />}
-      </button>
-
-      {/* ═══ HERO ═══ */}
-      <section style={{
-        position: 'relative',
-        overflow: 'hidden',
-        paddingTop: isMobile ? '100px' : '120px',
-        paddingBottom: isMobile ? '3rem' : '5rem',
-      }}>
-        {/* Signature grid background */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: `linear-gradient(${gridLineColor} 1px, transparent 1px), linear-gradient(90deg, ${gridLineColor} 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-          maskImage: 'radial-gradient(ellipse 70% 70% at 50% 30%, black 0%, transparent 70%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 70% 70% at 50% 30%, black 0%, transparent 70%)',
-        }} />
-        {/* Gradient glow */}
-        <div style={{
-          position: 'absolute', top: '-20%', left: '50%', transform: 'translateX(-50%)',
-          width: '800px', height: '600px',
-          background: isDark
-            ? 'radial-gradient(ellipse, rgba(0,212,170,0.08) 0%, transparent 70%)'
-            : 'radial-gradient(ellipse, rgba(0,168,150,0.06) 0%, transparent 70%)',
-          filter: 'blur(60px)', pointerEvents: 'none',
-        }} />
-        {/* Secondary glow */}
-          <div style={{
-          position: 'absolute', top: '40%', right: '10%',
-          width: '400px', height: '400px',
-          background: isDark
-            ? 'radial-gradient(circle, rgba(0,168,150,0.06) 0%, transparent 70%)'
-            : 'radial-gradient(circle, rgba(0,168,150,0.04) 0%, transparent 70%)',
-          filter: 'blur(80px)', pointerEvents: 'none',
-        }} />
-
+      {/* ═══ Library stage hero (shared with the artifact catalog pages) ═══ */}
+      <LibraryHero
+        breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Courses' }]}
+        title="Courses"
+        subhead="Learn to build agents and agentic workflows with AI. Every lesson ends with a real artifact you can run, not just notes."
+        meta={
+          <>
+            <span><strong>{totalCourses}</strong> {totalCourses === 1 ? 'course' : 'courses'}</span>
+            <span className="esy-stage__meta-dot">·</span>
+            <span><strong>{totalLessons}</strong> {totalLessons === 1 ? 'lesson' : 'lessons'}</span>
+            <span className="esy-stage__meta-dot">·</span>
+            <span>self-paced, free</span>
+          </>
+        }
+        feature={
+          // Featured-course spotlight — courses have no cover art, so we render the
+          // signature gradient + emoji card to fill the stage's feature column.
+          <Link
+            href={`/courses/${featured.slug}`}
+            aria-label={`Featured course: ${featured.title}`}
+            style={{
+              position: 'relative',
+              display: 'block',
+              width: '100%',
+              aspectRatio: '4 / 3',
+              borderRadius: 16,
+              overflow: 'hidden',
+              textDecoration: 'none',
+              background: cardGradient(0),
+              border: '1px solid rgba(255,255,255,0.1)',
+              boxShadow: '0 24px 60px -18px rgba(0,0,0,0.7)',
+            }}
+          >
+            {/* Faint grid + accent glow, echoing the course-card hero treatment. */}
             <div style={{
-          position: 'relative', zIndex: 1,
-          maxWidth: '1200px', margin: '0 auto',
-          padding: isMobile ? '0 1.5rem' : '0 2.5rem',
+              position: 'absolute', inset: 0,
+              backgroundImage: 'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
+              backgroundSize: '40px 40px',
+            }} />
+            <div style={{
+              position: 'absolute', bottom: '-25%', right: '-10%',
+              width: '60%', height: '60%',
+              background: 'radial-gradient(circle, rgba(0,212,170,0.18) 0%, transparent 70%)',
+              filter: 'blur(40px)',
+            }} />
+
+            {/* Centered emoji + play affordance. */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', flexDirection: 'column',
+              alignItems: 'center', justifyContent: 'center', gap: '0.75rem',
             }}>
-          {/* Breadcrumb */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            marginBottom: '2rem',
-            fontSize: '0.875rem',
-            color: subtle,
-          }}>
-            <Link href="/" style={{ color: subtle, textDecoration: 'none' }}>Home</Link>
-            <span>›</span>
-            <span style={{ color: muted }}>Courses</span>
-          </div>
-
-          {/* Headline */}
-          <h1 style={{
-            fontFamily: 'var(--font-literata)',
-            fontSize: 'clamp(2.75rem, 6vw, 4.5rem)',
-            fontWeight: 300,
-            lineHeight: 1.1,
-            letterSpacing: '-0.02em',
-            margin: '0 0 1.25rem',
-            color: text,
-            maxWidth: '700px',
-          }}>
-            <span style={{ color: accent }}>Courses</span>
-          </h1>
-
-          {/* Subtitle */}
-          <p style={{
-            fontSize: isMobile ? '1rem' : '1.188rem',
-            color: textSecondary,
-            lineHeight: 1.7,
-            maxWidth: '620px',
-            margin: '0 0 2rem',
-          }}>
-            Learn to create with AI: build agents, design agentic workflows, and ship
-            at scale. Each course pairs a video walkthrough with a runnable template
-            &mdash; finish every lesson with a real artifact you can run, not just notes.
-          </p>
-
-          {/* Stats row */}
-          <div style={{
-            display: 'flex', alignItems: 'center',
-            gap: isMobile ? '1.5rem' : '2.5rem',
-            flexWrap: 'wrap',
-          }}>
-            {[
-              { icon: <BookOpen size={16} />, label: `${totalCourses} courses` },
-              { icon: <PlayCircle size={16} />, label: `${totalLessons} lessons` },
-              { icon: <Clock size={16} />, label: 'Self-paced' },
-              { icon: <Award size={16} />, label: 'Free access' },
-            ].map((stat, i) => (
-              <div key={i} style={{
-                display: 'flex', alignItems: 'center', gap: '0.5rem',
-                color: muted, fontSize: '0.875rem',
+              <span style={{ fontSize: '3rem' }}>{featuredEmoji}</span>
+              <span style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                width: 48, height: 48, borderRadius: '50%',
+                backgroundColor: accent,
+                boxShadow: '0 8px 24px rgba(0,212,170,0.35)',
               }}>
-                <span style={{ color: accent, display: 'flex' }}>{stat.icon}</span>
-                {stat.label}
+                <Play size={20} color="#fff" fill="#fff" style={{ marginLeft: 2 }} />
+              </span>
             </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
+            {/* Caption — mirrors the carousel slide caption used on /artifacts. */}
+            <div style={{
+              position: 'absolute', left: 0, right: 0, bottom: 0,
+              padding: '1.75rem 1rem 0.95rem',
+              display: 'flex', flexDirection: 'column', gap: '0.25rem',
+              background: 'linear-gradient(to top, rgba(10,37,64,0.92), rgba(10,37,64,0))',
+              color: '#fff',
+            }}>
+              <span style={{
+                fontSize: '0.6875rem', fontWeight: 600, letterSpacing: '0.1em',
+                textTransform: 'uppercase', color: '#5eead4',
+              }}>
+                Featured course
+              </span>
+              <span style={{ fontSize: '0.9375rem', fontWeight: 600, lineHeight: 1.3 }}>
+                {featured.title}
+              </span>
+            </div>
+          </Link>
+        }
+      />
 
       {/* ═══ COURSES GRID ═══ */}
       <section style={{
@@ -232,10 +165,7 @@ export default function CoursesListClient() {
           }}>
             All Courses
           </span>
-          <div style={{
-            flex: 1, height: '1px',
-            background: isDark ? 'rgba(255,255,255,0.06)' : '#E2E8F0',
-          }} />
+          <div style={{ flex: 1, height: '1px', background: cardBorder }} />
         </div>
 
         <div style={{
@@ -257,17 +187,13 @@ export default function CoursesListClient() {
                   flexDirection: 'column',
                   borderRadius: '16px',
                   overflow: 'hidden',
-                  backgroundColor: cardBg,
+                  backgroundColor: '#FFFFFF',
                   border: `1px solid ${isHovered ? hoverBorder : cardBorder}`,
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
                   boxShadow: isHovered
-                    ? isDark
-                      ? '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,212,170,0.1)'
-                      : '0 20px 60px rgba(10,37,64,0.12), 0 0 0 1px rgba(0,168,150,0.08)'
-                    : isDark
-                      ? '0 2px 8px rgba(0,0,0,0.2)'
-                      : '0 1px 4px rgba(0,0,0,0.04)',
+                    ? '0 20px 60px rgba(10,37,64,0.12), 0 0 0 1px rgba(0,168,150,0.08)'
+                    : '0 1px 4px rgba(0,0,0,0.04)',
                 }}
                 onMouseEnter={() => setHoveredCard(course.slug)}
                 onMouseLeave={() => setHoveredCard(null)}
@@ -276,9 +202,7 @@ export default function CoursesListClient() {
                 <div style={{
                   position: 'relative',
                   height: '200px',
-                  background: isDark
-                    ? `linear-gradient(135deg, #0F3460 0%, ${idx === 0 ? '#0A2540' : idx === 1 ? '#0D2B4A' : '#081E35'} 100%)`
-                    : `linear-gradient(135deg, ${idx === 0 ? '#0A2540' : idx === 1 ? '#0F3460' : '#061527'} 0%, ${idx === 0 ? '#0F3460' : idx === 1 ? '#0A2540' : '#0D2B4A'} 100%)`,
+                  background: cardGradient(idx),
                   overflow: 'hidden',
                 }}>
                   {/* Grid overlay on card */}
@@ -317,22 +241,22 @@ export default function CoursesListClient() {
                     </div>
                     {/* Play button */}
                     <div style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
                       width: '44px', height: '44px', borderRadius: '50%',
                       backgroundColor: isHovered ? accent : 'rgba(255,255,255,0.1)',
                       border: `2px solid ${isHovered ? accent : 'rgba(255,255,255,0.2)'}`,
                       transition: 'all 0.3s',
                       transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-                  }}>
+                    }}>
                       <Play size={18} color="#FFFFFF" fill="#FFFFFF" style={{ marginLeft: '2px' }} />
-                  </div>
+                    </div>
                     {/* Metadata */}
-                  <span style={{
-                    fontSize: '0.688rem', color: 'rgba(255,255,255,0.5)',
+                    <span style={{
+                      fontSize: '0.688rem', color: 'rgba(255,255,255,0.5)',
                       textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 500,
-                  }}>
-                    {course.totalLessons} lessons · {course.totalDurationLabel}
-                  </span>
+                    }}>
+                      {course.totalLessons} lessons · {course.totalDurationLabel}
+                    </span>
                   </div>
                 </div>
 
@@ -379,7 +303,7 @@ export default function CoursesListClient() {
                   <div style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                     paddingTop: '1rem',
-                    borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : '#E2E8F0'}`,
+                    borderTop: `1px solid ${cardBorder}`,
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
                       {course.author.avatar ? (
@@ -392,19 +316,19 @@ export default function CoursesListClient() {
                           }}
                         />
                       ) : (
-                      <div style={{
+                        <div style={{
                           width: '30px', height: '30px', borderRadius: '50%',
                           background: `linear-gradient(135deg, ${accent}, ${accentLight})`,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
                           fontSize: '0.688rem', fontWeight: 700, color: '#0A2540',
-                      }}>
-                        {course.author.name.split(' ').map(n => n[0]).join('')}
-                      </div>
+                        }}>
+                          {course.author.name.split(' ').map(n => n[0]).join('')}
+                        </div>
                       )}
                       <div>
                         <span style={{ fontSize: '0.813rem', color: text, fontWeight: 500, display: 'block', lineHeight: 1.2 }}>
-                        {course.author.name}
-                      </span>
+                          {course.author.name}
+                        </span>
                         <span style={{ fontSize: '0.688rem', color: subtle }}>
                           {course.author.role}
                         </span>
@@ -429,7 +353,7 @@ export default function CoursesListClient() {
         </div>
       </section>
 
-      {/* ═══ BOTTOM CTA — Newsletter ═══ */}
+      {/* ═══ BOTTOM CTA — Newsletter (intentional dark band, like /research) ═══ */}
       <section style={{
         position: 'relative',
         overflow: 'hidden',

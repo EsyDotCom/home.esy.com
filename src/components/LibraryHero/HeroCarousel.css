@@ -1,0 +1,96 @@
+/* HeroCarousel — the featured-item spotlight that fills the right-side feature
+   column of a .esy-stage hero. Styled for the dark stage by default (it is only
+   ever used inside .esy-stage). */
+.esy-carousel {
+  width: 100%;
+}
+
+.esy-carousel__stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0b1f33;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.7);
+}
+
+/* Slides stack and cross-fade; only the active one is interactive. */
+.esy-carousel__slide {
+  position: absolute;
+  inset: 0;
+  display: block;
+  text-decoration: none;
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+
+.esy-carousel__slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.esy-carousel__img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.esy-carousel__cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.75rem 1rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: linear-gradient(to top, rgba(10, 37, 64, 0.92), rgba(10, 37, 64, 0));
+  color: #ffffff;
+}
+
+.esy-carousel__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5eead4;
+}
+
+.esy-carousel__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.esy-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+}
+
+.esy-carousel__dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: background 0.2s ease, width 0.2s ease;
+}
+
+.esy-carousel__dot.is-active {
+  width: 18px;
+  background: #2dd4bf;
+}
