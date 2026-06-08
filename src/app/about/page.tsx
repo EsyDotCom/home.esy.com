@@ -128,7 +128,7 @@ export default function AboutPage() {
           >
             clip.art
           </a>
-          , a platform I built to generate children&apos;s educational material at scale, used daily by my 4-year-old daughter. That became the production pipeline: 250–1,000 clipart, coloring pages, illustrations, worksheets, and infographics a day through provider routing, quality scoring, human-in-the-loop (HITL) review, and R2 delivery.
+          , a platform I built to generate children&apos;s educational material at scale, used daily by my 4-year-old daughter. That became the production pipeline: 250–1,000 clipart, coloring pages, illustrations, and worksheets a day by sending each job to the right AI model, checking the results for mistakes, human review and approval (human-in-the-loop, or HITL), and final delivery.
         </p>
 
         <p style={{ ...proseStyle, marginBottom: 0 }}>
@@ -184,7 +184,7 @@ export default function AboutPage() {
         <p style={eyebrowStyle}>How it works</p>
 
         <p style={{ ...proseStyle, marginBottom: '1.75rem' }}>
-          Esy runs the workflow for you, and you can go further: batch many templates at once, or schedule batches to run on their own. From there, the output can be audited with human-in-the-loop review before anything ships.
+          Esy runs the workflow for you, and you can go further: batch many templates at once, or schedule batches to run on their own. From there, you review and approve every result before it ships (human-in-the-loop).
         </p>
 
         <blockquote style={{ ...quoteStyle, marginBottom: 0 }}>
