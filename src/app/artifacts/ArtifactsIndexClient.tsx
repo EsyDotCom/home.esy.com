@@ -180,20 +180,20 @@ export default function ArtifactsIndexClient() {
           <span style={{ color: theme.muted }}>Artifacts</span>
         </div>
 
-        <div className="artifact-stage">
-          <div className="artifact-stage__copy">
-            <h1 className="artifact-stage__title">
+        <div className="esy-stage">
+          <div className="esy-stage__copy">
+            <h1 className="esy-stage__title">
               Artifact <span>Gallery</span>
             </h1>
-            <p className="artifact-stage__subhead">
+            <p className="esy-stage__subhead">
               Finished work from Esy workflows. Every piece shows exactly how it
               was made.
             </p>
-            <div className="artifact-stage__meta">
+            <div className="esy-stage__meta">
               <span>
                 <strong>{TOTAL_ARTIFACTS}</strong> finished pieces
               </span>
-              <span className="artifact-stage__meta-dot" aria-hidden="true">
+              <span className="esy-stage__meta-dot" aria-hidden="true">
                 ·
               </span>
               <span>full provenance on every run</span>
@@ -201,7 +201,7 @@ export default function ArtifactsIndexClient() {
           </div>
 
           {/* Featured-artifact spotlight that rotates through real pieces. */}
-          <div className="artifact-stage__feature">
+          <div className="esy-stage__feature">
             <HeroCarousel items={featured} />
           </div>
         </div>

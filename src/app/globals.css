@@ -2307,3 +2307,119 @@ html {
     background-color: currentColor !important;
   }
 }
+
+/* ============================================================
+   Esy library hero "stage" — the shared immersive hero band used by
+   the catalog/index pages (/artifacts, /workflows). One dark navy
+   panel (navy gradient + teal glow + faint engineering grid) that
+   unifies a headline column with a right-side feature. It stays a
+   CONTAINED panel below the light nav, so nav legibility is intact
+   and the dark stage -> light band below reads as a deliberate
+   section boundary. Page-specific features (the artifacts carousel,
+   the workflows featured-template card) layer their own styles on
+   top of this base.
+   ============================================================ */
+.esy-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  padding: clamp(2.5rem, 5vw, 4rem);
+  background:
+    radial-gradient(120% 130% at 88% 0%, rgba(0, 168, 150, 0.2), transparent 55%),
+    linear-gradient(135deg, #0c2c4a 0%, #07182b 62%, #050f1d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 30px 80px -34px rgba(5, 15, 29, 0.7);
+}
+
+/* Faint engineering grid, faded out toward the edges. */
+.esy-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 28% 38%, black, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse at 28% 38%, black, transparent 78%);
+  pointer-events: none;
+}
+
+.esy-stage__copy {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 540px;
+}
+
+.esy-stage__title {
+  font-family: var(--font-literata), Georgia, serif;
+  font-size: clamp(2.25rem, 4.6vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+  margin: 0 0 1.1rem;
+}
+
+.esy-stage__title span {
+  color: #2dd4bf;
+}
+
+.esy-stage__subhead {
+  font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  max-width: 480px;
+}
+
+/* Provenance/scale line — keeps the artifact paradigm front-and-center. */
+.esy-stage__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.6rem;
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.esy-stage__meta strong {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.esy-stage__meta-dot {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Right-side feature column (carousel on /artifacts, template card on
+   /workflows). The column owns the width so features just fill it. */
+.esy-stage__feature {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  width: clamp(320px, 36vw, 420px);
+}
+
+/* Stack the stage and let the feature span full width on smaller screens. */
+@media (max-width: 860px) {
+  .esy-stage {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .esy-stage__copy {
+    max-width: none;
+  }
+
+  .esy-stage__feature {
+    width: 100%;
+  }
+}

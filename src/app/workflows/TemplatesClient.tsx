@@ -133,6 +133,7 @@ export default function TemplatesClient() {
   const [searchQuery, setSearchQuery] = useState('');
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+  const [featuredHovered, setFeaturedHovered] = useState(false);
 
   useScrollHeaderSearch(searchBarRef);
 
@@ -178,98 +179,219 @@ export default function TemplatesClient() {
     router.push(href);
   };
 
+  // Featured template surfaced as the hero stage's right-side feature — uses the
+  // first live catalog entry and the same card language as the catalog grid.
+  const featuredEntry = platformWorkflows[0];
+  const featuredStages = featuredEntry ? toPipelineStages(featuredEntry) : [];
+  const featuredHasDetail = featuredEntry ? detailSlugs.has(featuredEntry.id) : false;
+  const featuredHref = featuredEntry
+    ? featuredHasDetail
+      ? `/workflows/${featuredEntry.id}`
+      : `${APP_URL}/workflows/${featuredEntry.id}`
+    : '#';
+
   return (
     <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.text }}>
-      {/* Hero Section */}
+      {/* Hero — shared immersive "stage" (.esy-stage in globals.css): headline +
+          meta on the left, a featured workflow-template card on the right. Search
+          sits just below on the light surface so its results dropdown isn't
+          clipped by the stage's overflow:hidden. */}
       <section
         style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '7rem 2rem 4rem',
-          position: 'relative',
+          padding: '5.5rem 2rem 4rem',
         }}
       >
-        {/* Grid Background Pattern */}
+        {/* Breadcrumb on the light page surface, above the dark stage */}
         <div
           style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: `
-              linear-gradient(rgba(10, 37, 64, 0.03) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(10, 37, 64, 0.03) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-            maskImage: 'radial-gradient(ellipse at center, black 0%, transparent 70%)',
-            WebkitMaskImage: 'radial-gradient(ellipse at center, black 0%, transparent 70%)',
-            pointerEvents: 'none',
-            zIndex: 0,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '1.5rem',
+            fontSize: '0.875rem',
+            color: theme.subtle,
           }}
-        />
-        
-        {/* Content */}
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          {/* Breadcrumb */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              marginBottom: '2rem',
-              fontSize: '0.875rem',
-              color: theme.subtle,
-            }}
-          >
-            <Link href="/" style={{ color: theme.subtle, textDecoration: 'none' }}>
-              Home
-            </Link>
-            <span>›</span>
-            <span style={{ color: theme.muted }}>Agentic Workflows</span>
+        >
+          <Link href="/" style={{ color: theme.subtle, textDecoration: 'none' }}>
+            Home
+          </Link>
+          <span>›</span>
+          <span style={{ color: theme.muted }}>Agentic Workflows</span>
+        </div>
+
+        <div className="esy-stage">
+          <div className="esy-stage__copy">
+            <h1 className="esy-stage__title">
+              Agentic <span>Workflows</span>
+            </h1>
+            <p className="esy-stage__subhead">
+              Move beyond one-off AI prompts. Choose a workflow template and let
+              Esy guide the research, writing, review, and formatting.
+            </p>
+            <div className="esy-stage__meta">
+              <span>
+                <strong>{platformWorkflows.length}</strong> workflow templates
+              </span>
+              <span className="esy-stage__meta-dot" aria-hidden="true">
+                ·
+              </span>
+              <span>idea to publishable artifact</span>
+            </div>
           </div>
 
-          {/* Title */}
-          <h1
-            style={{
-              fontFamily: 'var(--font-literata)',
-              fontSize: 'clamp(2.75rem, 6vw, 4.5rem)',
-              fontWeight: 300,
-              lineHeight: 1.1,
-              marginBottom: '1.25rem',
-              letterSpacing: '-0.02em',
-              color: theme.text,
-            }}
-          >
-            Agentic <span style={{ color: theme.accent }}>Workflows</span>
-          </h1>
+          {/* Featured-template spotlight — same card language as the catalog
+              grid, surfaced as a light card on the dark stage. */}
+          {featuredEntry && (
+            <div className="esy-stage__feature">
+              {(() => {
+                const cardInner = (
+                  <article
+                    onMouseEnter={() => setFeaturedHovered(true)}
+                    onMouseLeave={() => setFeaturedHovered(false)}
+                    style={{
+                      background: theme.bg,
+                      border: `1px solid ${featuredHovered ? theme.accentBorder : theme.border}`,
+                      borderRadius: '16px',
+                      padding: '1.75rem',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease',
+                      boxShadow: featuredHovered
+                        ? '0 28px 64px -18px rgba(0, 0, 0, 0.6)'
+                        : '0 22px 50px -20px rgba(0, 0, 0, 0.5)',
+                      transform: featuredHovered ? 'translateY(-4px)' : 'translateY(0)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    {/* Featured badge */}
+                    <div style={{ marginBottom: '1rem' }}>
+                      <span
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          padding: '0.2rem 0.5rem',
+                          background: theme.accentLight,
+                          color: theme.accent,
+                          borderRadius: '6px',
+                          fontSize: '0.6875rem',
+                          fontWeight: 600,
+                          letterSpacing: '0.03em',
+                        }}
+                      >
+                        <Sparkles size={12} />
+                        Featured template
+                      </span>
+                    </div>
 
-          {/* Subtitle */}
-          <p
-            style={{
-              fontSize: 'clamp(1.0625rem, 2vw, 1.25rem)',
-              lineHeight: 1.6,
-              color: theme.muted,
-              maxWidth: '600px',
-              marginBottom: '2.5rem',
-            }}
-          >
-            Move beyond one-off AI prompts. Choose a workflow template and let Esy
-            guide the research, writing, review, and formatting.
-          </p>
+                    <h3
+                      style={{
+                        fontFamily: 'var(--font-literata)',
+                        fontSize: '1.25rem',
+                        fontWeight: 400,
+                        letterSpacing: '-0.01em',
+                        lineHeight: 1.3,
+                        marginBottom: '0.5rem',
+                        color: theme.text,
+                      }}
+                    >
+                      {featuredEntry.name}
+                    </h3>
 
-          {/* Search */}
-          <div ref={searchBarRef} style={{ maxWidth: '480px' }}>
-            <SearchBar
-              placeholder="Search workflow templates..."
-              value={searchQuery}
-              onChange={(value) => setSearchQuery(value)}
-              context="templates"
-              inputFontSize="0.9375rem"
-              showDropdown={searchQuery.length > 0}
-              searchResults={searchResults}
-              onResultSelect={handleResultSelect}
-              maxResults={8}
-              isLightMode={true}
-            />
-          </div>
+                    <p
+                      style={{
+                        fontSize: '0.9375rem',
+                        color: theme.muted,
+                        lineHeight: 1.6,
+                        marginBottom: '1.25rem',
+                      }}
+                    >
+                      {featuredEntry.shortDescription}
+                    </p>
+
+                    {/* Signature workflow pipeline — lit so the hero feels alive. */}
+                    {featuredStages.length > 0 && (
+                      <div style={{ marginBottom: '1rem' }}>
+                        <WorkflowPipelineStrip
+                          stages={featuredStages}
+                          active={featuredHovered}
+                          showCount
+                        />
+                      </div>
+                    )}
+
+                    {/* Meta row */}
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        paddingTop: '0.75rem',
+                        borderTop: `1px solid ${theme.divider}`,
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8125rem', color: theme.subtle }}>
+                          <Clock size={13} />
+                          {featuredEntry.estimatedRuntime}
+                        </span>
+                        <span style={{ fontSize: '0.8125rem', color: theme.faint }}>
+                          {featuredEntry.outputType}
+                        </span>
+                      </div>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.375rem',
+                          color: theme.accent,
+                          fontSize: '0.8125rem',
+                          fontWeight: 500,
+                        }}
+                      >
+                        View
+                        <ArrowRight
+                          size={14}
+                          style={{
+                            transform: featuredHovered ? 'translateX(3px)' : 'translateX(0)',
+                            transition: 'transform 0.2s ease',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </article>
+                );
+
+                const linkStyle = { textDecoration: 'none' as const, display: 'block' };
+                return featuredHasDetail ? (
+                  <Link href={featuredHref} style={linkStyle}>
+                    {cardInner}
+                  </Link>
+                ) : (
+                  <a href={featuredHref} target="_blank" rel="noopener noreferrer" style={linkStyle}>
+                    {cardInner}
+                  </a>
+                );
+              })()}
+            </div>
+          )}
+        </div>
+
+        {/* Search toolbar on the light surface, just below the stage */}
+        <div ref={searchBarRef} style={{ maxWidth: '520px', marginTop: '2rem' }}>
+          <SearchBar
+            placeholder="Search workflow templates..."
+            value={searchQuery}
+            onChange={(value) => setSearchQuery(value)}
+            context="templates"
+            inputFontSize="0.9375rem"
+            showDropdown={searchQuery.length > 0}
+            searchResults={searchResults}
+            onResultSelect={handleResultSelect}
+            maxResults={8}
+            isLightMode={true}
+          />
         </div>
       </section>
 

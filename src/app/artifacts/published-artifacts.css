@@ -41,113 +41,24 @@
   padding: 0;
 }
 
-/* Immersive hero "stage": one dark navy panel that holds the headline and the
-   featured carousel as a single composition. Navy gradient + teal glow + a faint
-   grid give it depth; the dark surface sets up a strong contrast with the light
-   library band below. */
-.artifact-stage {
-  position: relative;
-  overflow: hidden;
-  border-radius: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: clamp(2rem, 5vw, 4.5rem);
-  padding: clamp(2.5rem, 5vw, 4rem);
-  background:
-    radial-gradient(120% 130% at 88% 0%, rgba(0, 168, 150, 0.2), transparent 55%),
-    linear-gradient(135deg, #0c2c4a 0%, #07182b 62%, #050f1d 100%);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: 0 30px 80px -34px rgba(5, 15, 29, 0.7);
-}
-
-/* Faint engineering grid, faded out toward the edges. */
-.artifact-stage::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse at 28% 38%, black, transparent 78%);
-  -webkit-mask-image: radial-gradient(ellipse at 28% 38%, black, transparent 78%);
-  pointer-events: none;
-}
-
-.artifact-stage__copy {
-  position: relative;
-  z-index: 1;
-  flex: 1 1 auto;
-  min-width: 0;
-  max-width: 540px;
-}
-
-.artifact-stage__title {
-  font-family: var(--font-literata), Georgia, serif;
-  font-size: clamp(2.25rem, 4.6vw, 3.5rem);
-  font-weight: 300;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  color: #f8fafc;
-  margin: 0 0 1.1rem;
-}
-
-.artifact-stage__title span {
-  color: #2dd4bf;
-}
-
-.artifact-stage__subhead {
-  font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.72);
-  margin: 0;
-  max-width: 440px;
-}
-
-/* Provenance/scale line — keeps the artifact paradigm front-and-center. */
-.artifact-stage__meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.55rem;
-  margin-top: 1.6rem;
-  font-size: 0.8125rem;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.artifact-stage__meta strong {
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 600;
-}
-
-.artifact-stage__meta-dot {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.artifact-stage__feature {
-  position: relative;
-  z-index: 1;
-  flex: 0 0 auto;
-}
-
-/* Featured-artifact carousel in the hero. */
+/* The featured-artifact carousel fills the shared .esy-stage feature column
+   (sizing/layout live in globals.css under .esy-stage*). */
 .artifact-hero__carousel {
-  width: clamp(320px, 36vw, 420px);
+  width: 100%;
 }
 
 /* On the dark stage the card frame and dots switch to light-on-dark. */
-.artifact-stage .artifact-hero__slides {
+.esy-stage .artifact-hero__slides {
   background: #0b1f33;
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.7);
 }
 
-.artifact-stage .artifact-hero__dot {
+.esy-stage .artifact-hero__dot {
   background: rgba(255, 255, 255, 0.25);
 }
 
-.artifact-stage .artifact-hero__dot.is-active {
+.esy-stage .artifact-hero__dot.is-active {
   background: #2dd4bf;
 }
 
@@ -241,21 +152,6 @@
   background: #00a896;
 }
 
-/* Stack the stage and let the carousel span full width on smaller screens. */
-@media (max-width: 860px) {
-  .artifact-stage {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .artifact-stage__copy {
-    max-width: none;
-  }
-
-  .artifact-hero__carousel {
-    width: 100%;
-  }
-}
 
 /* Gallery filter chips. Defined here (not inline) so they get specific,
    smooth transitions + a real hover state instead of a janky `transition: all`. */
