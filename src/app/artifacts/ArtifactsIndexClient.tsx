@@ -1,20 +1,19 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import {
-  ArrowRight,
-  FileText,
-  BarChart3,
-  Palette,
-  Archive,
-  ClipboardCheck,
-  Layers,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { clipArtArtifacts } from '@/data/clip-art-artifacts';
 import { publishedInfographics } from '@/data/infographics';
-import PublishedArtifactsShowcase from './PublishedArtifactsShowcase';
+import { publishedVisualEssays } from '@/data/visualEssays';
+import PublishedArtifactsShowcase, {
+  type ArtifactKindFilter,
+} from './PublishedArtifactsShowcase';
+import {
+  getPublishedArtifactRails,
+  type PublishedArtifactItem,
+  type PublishedArtifactKind,
+} from './published-artifacts-data';
 
 // Navy Calm Light Theme — matches /workflows (TemplatesClient)
 const theme = {
@@ -32,308 +31,238 @@ const theme = {
   accentBorder: 'rgba(0, 168, 150, 0.2)',
 };
 
-const galleryPaths = [
-  {
-    id: 'essays',
-    title: 'Essays',
-    tagline: 'Visual research narratives',
-    description: 'Structured reasoning you can revisit — research, narrative, and visuals in one durable artifact.',
-    href: '/essays/',
-    icon: FileText,
-  },
-  {
-    id: 'infographics',
-    title: 'Infographics',
-    tagline: 'Citation-verified visual data',
-    description: 'Complex information distilled into clear summaries — every data point traces to a source.',
-    href: '/infographics/',
-    icon: BarChart3,
-    count: publishedInfographics.length,
-  },
-  {
-    id: 'clip-art',
-    title: 'Clip Art',
-    tagline: 'Isolated visual assets',
-    description: 'Generated, reviewed, and stored with provenance — transparent backgrounds, workflow-ready.',
-    href: '/clip-art/',
-    icon: Palette,
-    count: clipArtArtifacts.length,
-  },
+// Chip counts are the real, browsable totals behind each gallery route — not
+// the (deduped, capped) "recent" set shown in the rails below.
+const KIND_FILTERS: { id: ArtifactKindFilter; label: string; count: number }[] = [
+  { id: 'all', label: 'All', count: 0 },
+  { id: 'essay', label: 'Essays', count: publishedVisualEssays.length },
+  { id: 'infographic', label: 'Infographics', count: publishedInfographics.length },
+  { id: 'clip-art', label: 'Clip Art', count: clipArtArtifacts.length },
 ];
+KIND_FILTERS[0].count =
+  publishedVisualEssays.length +
+  publishedInfographics.length +
+  clipArtArtifacts.length;
 
-const valueProps = [
-  {
-    icon: Archive,
-    title: 'Stable outputs',
-    description: 'Not ephemeral like chat — artifacts persist, structured, and revisitable.',
-  },
-  {
-    icon: ClipboardCheck,
-    title: 'Auditable provenance',
-    description: 'See how conclusions and outputs were reached, not just the final result.',
-  },
-  {
-    icon: Layers,
-    title: 'Built by workflows',
-    description: 'Every artifact comes from a repeatable process you can run again.',
-  },
-];
+const TOTAL_ARTIFACTS = KIND_FILTERS[0].count;
+
+// Caption label per artifact kind for the hero spotlight.
+const KIND_DISPLAY: Record<PublishedArtifactKind, string> = {
+  essay: 'Visual Essay',
+  infographic: 'Infographic',
+  'clip-art': 'Clip Art',
+};
+
+// Auto-advancing spotlight of featured artifacts in the hero. One piece at a
+// time (image + type + title), clickable through to the artifact. Pauses on
+// hover and honors prefers-reduced-motion.
+function HeroCarousel({ items }: { items: PublishedArtifactItem[] }) {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const count = items.length;
+
+  useEffect(() => {
+    if (paused || count <= 1) return;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+    const id = window.setInterval(() => setIndex((i) => (i + 1) % count), 3800);
+    return () => window.clearInterval(id);
+  }, [paused, count]);
+
+  if (count === 0) return null;
+
+  return (
+    <div
+      className="artifact-hero__carousel"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="artifact-hero__slides">
+        {items.map((item, i) => {
+          const active = i === index;
+          return (
+            <Link
+              key={item.id}
+              href={item.href}
+              className={`artifact-hero__slide ${active ? 'is-active' : ''}`}
+              aria-hidden={!active}
+              tabIndex={active ? 0 : -1}
+            >
+              <div
+                className="artifact-hero__slide-img"
+                style={{ backgroundImage: `url(${item.imageSrc})` }}
+              />
+              <div className="artifact-hero__slide-cap">
+                <span className="artifact-hero__slide-kind">
+                  {KIND_DISPLAY[item.kind]}
+                </span>
+                <span className="artifact-hero__slide-title">{item.title}</span>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+      <div className="artifact-hero__dots" role="tablist" aria-label="Featured artifacts">
+        {items.map((item, i) => (
+          <button
+            key={item.id}
+            type="button"
+            className={`artifact-hero__dot ${i === index ? 'is-active' : ''}`}
+            aria-label={`Show featured artifact ${i + 1}`}
+            aria-selected={i === index}
+            role="tab"
+            onClick={() => setIndex(i)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function ArtifactsIndexClient() {
-  const router = useRouter();
-  const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+  const [activeKind, setActiveKind] = useState<ArtifactKindFilter>('all');
 
-  const handlePathClick = (href: string) => {
-    router.push(href);
-  };
+  // Featured artifacts for the hero spotlight: interleave the rail items so the
+  // carousel alternates across forms (essay, infographic, clip art, …).
+  const featured = useMemo(() => {
+    const { essays, infographics, clipArt } = getPublishedArtifactRails();
+    const out: PublishedArtifactItem[] = [];
+    const max = Math.max(essays.length, infographics.length, clipArt.length);
+    for (let i = 0; i < max; i++) {
+      if (essays[i]) out.push(essays[i]);
+      if (infographics[i]) out.push(infographics[i]);
+      if (clipArt[i]) out.push(clipArt[i]);
+    }
+    return out.slice(0, 6);
+  }, []);
+
+  // Filter chip — sets the active artifact kind and reflects state for a11y.
+  // Styling/transitions live in published-artifacts.css (.artifact-chip).
+  const renderChip = (id: ArtifactKindFilter, label: string, count: number) => (
+    <button
+      key={id}
+      type="button"
+      className="artifact-chip"
+      onClick={() => setActiveKind(id)}
+      aria-pressed={activeKind === id}
+    >
+      {label}
+      <span className="artifact-chip__count">{count}</span>
+    </button>
+  );
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.text }}>
-      {/* Hero */}
+      {/* Hero — one immersive dark "stage" that unifies the headline and the
+          featured-artifact carousel into a single composition. Kept as a
+          contained panel below the (light) nav so nav legibility is unaffected. */}
       <section
         style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '7rem 2rem 4rem',
-          position: 'relative',
+          padding: '5.5rem 2rem 3.5rem',
         }}
       >
         <div
           style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: `
-              linear-gradient(rgba(10, 37, 64, 0.03) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(10, 37, 64, 0.03) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-            maskImage: 'radial-gradient(ellipse at center, black 0%, transparent 70%)',
-            WebkitMaskImage: 'radial-gradient(ellipse at center, black 0%, transparent 70%)',
-            pointerEvents: 'none',
-            zIndex: 0,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '1.5rem',
+            fontSize: '0.875rem',
+            color: theme.subtle,
           }}
-        />
+        >
+          <Link href="/" style={{ color: theme.subtle, textDecoration: 'none' }}>
+            Home
+          </Link>
+          <span>›</span>
+          <span style={{ color: theme.muted }}>Artifacts</span>
+        </div>
 
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              marginBottom: '2rem',
-              fontSize: '0.875rem',
-              color: theme.subtle,
-            }}
-          >
-            <Link href="/" style={{ color: theme.subtle, textDecoration: 'none' }}>
-              Home
-            </Link>
-            <span>›</span>
-            <span style={{ color: theme.muted }}>Artifacts</span>
+        <div className="artifact-stage">
+          <div className="artifact-stage__copy">
+            <h1 className="artifact-stage__title">
+              Artifact <span>Gallery</span>
+            </h1>
+            <p className="artifact-stage__subhead">
+              Finished work from Esy workflows. Every piece shows exactly how it
+              was made.
+            </p>
+            <div className="artifact-stage__meta">
+              <span>
+                <strong>{TOTAL_ARTIFACTS}</strong> finished pieces
+              </span>
+              <span className="artifact-stage__meta-dot" aria-hidden="true">
+                ·
+              </span>
+              <span>full provenance on every run</span>
+            </div>
           </div>
 
-          <h1
-            style={{
-              fontFamily: 'var(--font-literata)',
-              fontSize: 'clamp(2.75rem, 6vw, 4.5rem)',
-              fontWeight: 300,
-              lineHeight: 1.1,
-              marginBottom: '1.25rem',
-              letterSpacing: '-0.02em',
-              color: theme.text,
-            }}
-          >
-            Esy <span style={{ color: theme.accent }}>Artifacts</span>
-          </h1>
-
-          <p
-            style={{
-              fontSize: 'clamp(1.0625rem, 2vw, 1.25rem)',
-              lineHeight: 1.6,
-              color: theme.muted,
-              maxWidth: '620px',
-              marginBottom: 0,
-            }}
-          >
-            Durable outputs from Esy workflows — essays, infographics, and clip art.
-            Stable, structured, and auditable.
-          </p>
+          {/* Featured-artifact spotlight that rotates through real pieces. */}
+          <div className="artifact-stage__feature">
+            <HeroCarousel items={featured} />
+          </div>
         </div>
       </section>
 
-      {/* Value props */}
+      {/* Library band — heading, chips, and rails all inside one elevated
+          section so the gallery reads as a single surface (matches /workflows). */}
       <section
         style={{
+          background: theme.elevated,
           borderTop: `1px solid ${theme.divider}`,
           borderBottom: `1px solid ${theme.divider}`,
-          background: theme.elevated,
         }}
       >
         <div
           style={{
             maxWidth: '1200px',
             margin: '0 auto',
-            padding: 'clamp(2rem, 4vh, 3rem) clamp(1.5rem, 5vw, 3rem)',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2rem',
+            padding: 'clamp(2.5rem, 5vh, 3.5rem) clamp(1.5rem, 5vw, 3rem)',
           }}
         >
-          {valueProps.map((prop, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
-              <div
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '10px',
-                  background: theme.bg,
-                  border: `1px solid ${theme.border}`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                }}
-              >
-                <prop.icon size={18} style={{ color: theme.accent }} />
-              </div>
-              <div>
-                <h3
-                  style={{
-                    fontSize: '0.9375rem',
-                    fontWeight: 600,
-                    color: theme.text,
-                    marginBottom: '0.25rem',
-                  }}
-                >
-                  {prop.title}
-                </h3>
-                <p style={{ fontSize: '0.875rem', color: theme.subtle, lineHeight: 1.5, margin: 0 }}>
-                  {prop.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Gallery paths */}
-      <section
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: 'clamp(4rem, 8vh, 6rem) clamp(1.5rem, 5vw, 3rem)',
-        }}
-      >
-        <div style={{ marginBottom: '2.5rem' }}>
           <h2
             style={{
               fontFamily: 'var(--font-literata)',
-              fontSize: 'clamp(1.5rem, 4vw, 2rem)',
-              fontWeight: 300,
-              letterSpacing: '-0.02em',
+              fontSize: '1.5rem',
+              fontWeight: 400,
+              letterSpacing: '-0.01em',
               color: theme.text,
-              marginBottom: '0.5rem',
+              marginBottom: '0.4rem',
             }}
           >
-            What do you want to explore?
+            Published artifacts
           </h2>
-          <p style={{ fontSize: '1rem', color: theme.subtle }}>
-            Browse published artifacts by form — each gallery is a workflow output type
+          <p
+            style={{
+              fontSize: '0.9375rem',
+              color: theme.subtle,
+              marginBottom: '1.5rem',
+            }}
+          >
+            Recent outputs, grouped by form.
           </p>
-        </div>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '1rem',
-          }}
-        >
-          {galleryPaths.map((path) => {
-            const IconComponent = path.icon;
-            const isHovered = hoveredPath === path.id;
-            return (
-              <button
-                key={path.id}
-                type="button"
-                onClick={() => handlePathClick(path.href)}
-                onMouseEnter={() => setHoveredPath(path.id)}
-                onMouseLeave={() => setHoveredPath(null)}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  padding: '1.5rem',
-                  background: isHovered ? theme.bg : theme.elevated,
-                  border: `1px solid ${isHovered ? theme.accentBorder : theme.border}`,
-                  borderRadius: '16px',
-                  cursor: 'pointer',
-                  transition: 'all 0.25s ease',
-                  textAlign: 'left',
-                  boxShadow: isHovered ? '0 8px 24px rgba(10, 37, 64, 0.08)' : 'none',
-                  transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
-                }}
-              >
-                <div
-                  style={{
-                    width: '48px',
-                    height: '48px',
-                    borderRadius: '12px',
-                    background: isHovered ? theme.accentLight : theme.bg,
-                    border: `1px solid ${isHovered ? theme.accentBorder : theme.border}`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: '1rem',
-                    transition: 'all 0.25s ease',
-                  }}
-                >
-                  <IconComponent
-                    size={22}
-                    style={{
-                      color: isHovered ? theme.accent : theme.subtle,
-                      transition: 'color 0.25s ease',
-                    }}
-                  />
-                </div>
-                <h3
-                  style={{
-                    fontSize: '1.125rem',
-                    fontWeight: 500,
-                    color: theme.text,
-                    marginBottom: '0.25rem',
-                  }}
-                >
-                  {path.title}
-                </h3>
-                <span
-                  style={{
-                    fontSize: '0.8125rem',
-                    color: theme.accent,
-                    fontWeight: 500,
-                    marginBottom: '0.5rem',
-                  }}
-                >
-                  {path.tagline}
-                  {'count' in path && path.count != null ? ` · ${path.count} published` : ''}
-                </span>
-                <p
-                  style={{
-                    fontSize: '0.875rem',
-                    color: theme.subtle,
-                    lineHeight: 1.5,
-                    margin: 0,
-                  }}
-                >
-                  {path.description}
-                </p>
-              </button>
-            );
-          })}
+          <div
+            role="group"
+            aria-label="Filter artifacts by kind"
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '0.625rem',
+              marginBottom: '2rem',
+            }}
+          >
+            {KIND_FILTERS.map((f) => renderChip(f.id, f.label, f.count))}
+          </div>
+
+          {/* Lead mode strips the showcase's own bg/border/padding so it blends
+              into this band instead of starting a second colored surface. */}
+          <PublishedArtifactsShowcase activeKind={activeKind} showHeader={false} lead />
         </div>
       </section>
-
-      <PublishedArtifactsShowcase />
 
       {/* CTA */}
       <section style={{ background: theme.text, color: theme.bg }}>

@@ -155,47 +155,77 @@ function Rail({
   );
 }
 
-export default function PublishedArtifactsShowcase() {
+/** Filter selector for which rails are visible. 'all' shows every kind. */
+export type ArtifactKindFilter = PublishedArtifactKind | 'all';
+
+export default function PublishedArtifactsShowcase({
+  activeKind = 'all',
+  showHeader = true,
+  lead = false,
+}: {
+  activeKind?: ArtifactKindFilter;
+  showHeader?: boolean;
+  // When the showcase is the lead content under a slim hero, drop the big
+  // top padding so the rails sit directly under the page's own chips/heading.
+  lead?: boolean;
+} = {}) {
   const { essays, infographics, clipArt } = getPublishedArtifactRails();
 
   if (essays.length === 0 && infographics.length === 0 && clipArt.length === 0) {
     return null;
   }
 
-  return (
-    <section className="pa-section">
-      <div className="pa-section__inner">
-        <header className="pa-section__header">
-          <p className="pa-section__eyebrow">From Esy workflows</p>
-          <h2 className="pa-section__title">Published artifacts</h2>
-          <p className="pa-section__subtitle">
-            Recent outputs across essays, infographics, and clip art — each one
-            stored with provenance from a repeatable workflow run.
-          </p>
-        </header>
+  // A rail shows when no kind is selected, or it matches the selected kind.
+  const shows = (kind: PublishedArtifactKind) =>
+    activeKind === 'all' || activeKind === kind;
 
+  return (
+    <section className={`pa-section${lead ? ' pa-section--lead' : ''}`}>
+      <div className="pa-section__inner">
+        {showHeader && (
+          <header className="pa-section__header">
+            <p className="pa-section__eyebrow">From Esy workflows</p>
+            <h2 className="pa-section__title">Published artifacts</h2>
+            <p className="pa-section__subtitle">
+              Recent outputs across essays, infographics, and clip art, each one
+              stored with provenance from a repeatable workflow run.
+            </p>
+          </header>
+        )}
+
+        {/* Stable keys keep a persisting rail mounted across filter changes so
+            its cards don't replay the staggered entry animation on every chip click. */}
         <div className="pa-rails">
-          <Rail
-            label="Visual essays"
-            count={essays.length}
-            moreHref="/essays/"
-            moreLabel="All visual essays"
-            items={essays}
-          />
-          <Rail
-            label="Infographics"
-            count={infographics.length}
-            moreHref="/infographics/"
-            moreLabel="All infographics"
-            items={infographics}
-          />
-          <Rail
-            label="Clip art"
-            count={clipArt.length}
-            moreHref="/clip-art/"
-            moreLabel="All clip art"
-            items={clipArt}
-          />
+          {shows('essay') && (
+            <Rail
+              key="essay"
+              label="Visual essays"
+              count={essays.length}
+              moreHref="/essays/"
+              moreLabel="All visual essays"
+              items={essays}
+            />
+          )}
+          {shows('infographic') && (
+            <Rail
+              key="infographic"
+              label="Infographics"
+              count={infographics.length}
+              moreHref="/infographics/"
+              moreLabel="All infographics"
+              items={infographics}
+            />
+          )}
+          {shows('clip-art') && (
+            <Rail
+              key="clip-art"
+              label="Clip art"
+              count={clipArt.length}
+              moreHref="/clip-art/"
+              moreLabel="All clip art"
+              items={clipArt}
+            />
+          )}
         </div>
       </div>
     </section>
