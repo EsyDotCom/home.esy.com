@@ -148,11 +148,47 @@ export default function AboutPage() {
         <p style={eyebrowStyle}>What is Esy</p>
 
         <p style={{ ...proseStyle, marginBottom: '1.75rem' }}>
-          Esy lets you automate agentic workflow templates instead of engineering prompts. Each template turns well thought-out intent into a simple form, so you describe what you want made, not how to phrase the ask. Esy runs the workflow, and its output can be audited with human-in-the-loop review before anything ships.
+          Esy lets you automate agentic workflow templates instead of engineering prompts. Each template turns well thought-out intent into a guided form that asks the right questions, so you describe what you want made step by step.
+        </p>
+
+        {/* Concrete example of an intent form so the abstract pitch lands */}
+        <figure style={{
+          margin: '0 0 0',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: `1px solid ${theme.border}`,
+          boxShadow: '0 18px 40px -24px rgba(10, 37, 64, 0.35)'
+        }}>
+          <Image
+            src="/images/generate-argumentative-essay-intake.png"
+            alt="Intake form for the Generate Argumentative Essay template, with fields for the essay topic, the position to defend, audience, and citation style next to the workflow pipeline."
+            width={1024}
+            height={625}
+            sizes="(max-width: 860px) 100vw, 800px"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+          <figcaption style={{
+            fontSize: '0.8125rem',
+            color: theme.muted,
+            padding: '0.75rem 1rem',
+            borderTop: `1px solid ${theme.border}`,
+            backgroundColor: theme.elevated
+          }}>
+            The intake form for the Generate Argumentative Essay template.
+          </figcaption>
+        </figure>
+      </section>
+
+      {/* ── How it works — run, batch, schedule, then audit ── */}
+      <section style={sectionStyle}>
+        <p style={eyebrowStyle}>How it works</p>
+
+        <p style={{ ...proseStyle, marginBottom: '1.75rem' }}>
+          Esy runs the workflow for you, and you can go further: batch many templates at once, or schedule batches to run on their own. From there, the output can be audited with human-in-the-loop review before anything ships.
         </p>
 
         <blockquote style={{ ...quoteStyle, marginBottom: 0 }}>
-          No prompt engineering. You fill in an intent form, Esy runs the template, and you review the result before it ships.
+          No prompt engineering. You fill in an intent form, Esy runs the templates one at a time or in scheduled batches, and you review the results before they ship.
         </blockquote>
       </section>
 
