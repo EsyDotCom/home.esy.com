@@ -4,7 +4,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Clock } from 'lucide-react';
-import ShapeSynthesisCanvas, {
+// Hero now shows the real product shot; the synthesis canvas only supplies the
+// step glyphs reused under "How it works", so import just those named exports.
+import {
   ShapeMessGlyph,
   ShapeTemplateGlyph,
   ShapeArtifactGlyph,
@@ -313,11 +315,55 @@ const IntelligenceCircuitryPage: React.FC = () => {
               </div>
             </div>
 
-            {/* The hero product shot keeps the story simple: example messy
-                pieces → a template running the workflow → example finished work.
-                Pinned to navy-dark to match the above-the-fold treatment. */}
+            {/* App screenshot — browser-chrome mockup of app.esy.com.
+                Replaces the abstract synthesis canvas with a literal product
+                shot so visitors see exactly what they're stepping into. */}
             <div className="ic-hero-visual-band">
-              <ShapeSynthesisCanvas theme="navy-dark" />
+              <div className="ic-app-mockup">
+                {/* Ambient glow behind the frame */}
+                <div className="ic-app-mockup-glow" aria-hidden="true" />
+
+                {/* Browser chrome frame */}
+                <div className="ic-app-mockup-frame">
+                  {/* Chrome bar: traffic lights + URL pill */}
+                  <div className="ic-app-mockup-chrome">
+                    <div className="ic-app-mockup-dots" aria-hidden="true">
+                      <span className="ic-mockup-dot ic-mockup-dot--red" />
+                      <span className="ic-mockup-dot ic-mockup-dot--yellow" />
+                      <span className="ic-mockup-dot ic-mockup-dot--green" />
+                    </div>
+                    <div className="ic-app-mockup-url" aria-hidden="true">
+                      <span className="ic-mockup-url-lock">
+                        {/* Lock icon inline SVG */}
+                        <svg width="10" height="11" viewBox="0 0 10 11" fill="none">
+                          <rect x="2" y="5" width="6" height="5" rx="1" fill="currentColor" opacity="0.6"/>
+                          <path d="M3 5V3.5C3 2.4 3.9 1.5 5 1.5S7 2.4 7 3.5V5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" opacity="0.6"/>
+                        </svg>
+                      </span>
+                      app.esy.com
+                    </div>
+                  </div>
+
+                  {/* The screenshot — fills the frame */}
+                  <div className="ic-app-mockup-screen">
+                    <Image
+                      src="/images/app-dashboard-screenshot.png"
+                      alt="Esy dashboard at app.esy.com — organization overview showing the review queue, active runs, artifacts, and spend across ESY LLC"
+                      width={1024}
+                      height={502}
+                      className="ic-app-mockup-image"
+                      priority
+                      unoptimized
+                    />
+                  </div>
+                </div>
+
+                {/* Caption ties the product shot to the value prop — this is
+                    the dashboard the headline is selling. */}
+                <p className="ic-app-mockup-caption">
+                  The control plane — every run, artifact, and dollar, auditable in one place.
+                </p>
+              </div>
             </div>
           </div>
         </div>

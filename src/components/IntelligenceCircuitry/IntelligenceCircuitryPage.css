@@ -659,9 +659,159 @@
   justify-content: center;
 }
 
+/* ── App Screenshot Mockup ── */
+
+/* Wrapper provides the positioning context for the glow layer. */
+.ic-app-mockup {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* Radial glow behind the frame — reinforces the dark hero palette. */
+.ic-app-mockup-glow {
+  position: absolute;
+  inset: -40px -60px;
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 55%,
+    rgba(0, 212, 170, 0.14) 0%,
+    rgba(0, 168, 150, 0.06) 45%,
+    transparent 75%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Outer chrome frame — looks like a macOS browser window. */
+.ic-app-mockup-frame {
+  position: relative;
+  z-index: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  /* Layered shadows: tight contact shadow + soft diffuse halo */
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    0 16px 48px rgba(0, 0, 0, 0.55),
+    0 40px 80px rgba(0, 0, 0, 0.35);
+  /* Subtle 3-degree perspective tilt so it reads as a real object, not a flat crop. */
+  transform: perspective(1200px) rotateX(2deg);
+  transform-origin: center top;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.ic-app-mockup-frame:hover {
+  transform: perspective(1200px) rotateX(0deg);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    0 24px 64px rgba(0, 0, 0, 0.5),
+    0 48px 96px rgba(0, 0, 0, 0.3);
+}
+
+/* Browser chrome bar */
+.ic-app-mockup-chrome {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #1a1d23;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* macOS-style traffic light buttons */
+.ic-app-mockup-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.ic-mockup-dot {
+  display: block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+.ic-mockup-dot--red    { background: #FF5F57; }
+.ic-mockup-dot--yellow { background: #FEBC2E; }
+.ic-mockup-dot--green  { background: #28C840; }
+
+/* URL pill — centered in the chrome bar */
+.ic-app-mockup-url {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  max-width: 240px;
+  margin: 0 auto;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  font-family: var(--ic-font-mono);
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.01em;
+}
+
+.ic-mockup-url-lock {
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* Screenshot fills the frame flush — no extra padding. */
+.ic-app-mockup-screen {
+  display: block;
+  line-height: 0;
+  background: #0d1117;
+}
+
+.ic-app-mockup-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Caption under the frame — muted so the screenshot stays the focus. */
+.ic-app-mockup-caption {
+  position: relative;
+  z-index: 1;
+  margin: 20px auto 0;
+  max-width: 520px;
+  text-align: center;
+  font-family: var(--ic-font-body), 'Inter', sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+  .ic-app-mockup-frame {
+    transform: perspective(800px) rotateX(1deg);
+    border-radius: 8px;
+  }
+  .ic-app-mockup-chrome {
+    padding: 8px 10px;
+  }
+  .ic-mockup-dot {
+    width: 9px;
+    height: 9px;
+  }
+}
+
 @media (max-width: 640px) {
   .ic-hero-stack { gap: 1.75rem; }
   .syn-caption { font-size: 13px; }
+  .ic-app-mockup-glow { inset: -20px -20px; }
+  .ic-app-mockup-frame {
+    transform: none;
+    border-radius: 8px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
