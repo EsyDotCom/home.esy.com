@@ -7,8 +7,8 @@ export interface ResearchVideo {
   slug: string;
   title: string;
   description: string;
-  category: "ai-tools" | "workflows";
-  categoryLabel: "AI Coding Tools" | "Workflow Research";
+  category: "ai-tools" | "workflows" | "models";
+  categoryLabel: "AI Coding Tools" | "Workflow Research" | "Model Research";
   durationSeconds: number;
   publishedAt: string;
   muxPlaybackId: string;
@@ -22,6 +22,61 @@ export interface ResearchVideo {
 }
 
 export const researchVideos: ResearchVideo[] = [
+  // First entry in the models category — fast take on launch day; the deep-dive
+  // evaluation is a separate, later video.
+  {
+    slug: "claude-fable-5-first-impressions",
+    title:
+      "First Impressions: A Peek into Claude Fable 5 and Claude Mythos Docs",
+    description:
+      "A launch-day read-through of Anthropic's Claude Fable 5 and Mythos 5 announcement — the first generally available Mythos-class model, its classifier safeguards with Opus 4.8 fallback, pricing, and what the release signals for long-horizon agentic work.",
+    category: "models",
+    categoryLabel: "Model Research",
+    durationSeconds: 911,
+    publishedAt: "2026-06-09",
+    muxPlaybackId: "V1CRTb02JJzYgaKpwZnlLDK5M58P6CPa00rl5A2u8dekg",
+    transcript: "",
+    content: `Anthropic shipped Claude Fable 5 and Claude Mythos 5 today, and this video is exactly what it sounds like: a first scroll through the announcement on launch day, reacting to what's actually in it. This is not a deep dive — no benchmarks of my own, no workflow runs yet. It's a read of what Anthropic is claiming, what's structurally new about this release, and what I want to test next.
+
+## What Was Announced
+
+Fable 5 is the first Mythos-class model — Anthropic's new tier above Opus — made generally available. The headline claims: state-of-the-art on nearly every tested benchmark, with the lead growing as tasks get longer and more complex. Mythos 5 is the same underlying model with cyber safeguards lifted, restricted to Project Glasswing partners and, soon, a trusted access program.
+
+The naming footnote is worth a pause: Fable is from the Latin *fabula*, akin to the Greek *mythos*. Same model, two names — the safeguards are the only difference, and that's the most interesting design decision in the whole release.
+
+## The Safeguard Architecture
+
+Instead of refusing flagged requests, Fable 5 falls back: when classifiers detect cybersecurity, biology/chemistry, or distillation-related queries, the response is handled by Claude Opus 4.8 and the user is told it happened. Anthropic says fallback triggers in under 5% of sessions, and that for the other 95%+ Fable 5's performance is effectively Mythos 5's.
+
+Graceful degradation to a still-frontier model is a much better failure mode than a refusal wall — but it makes "which model actually answered me" a real provenance question for anyone building on the API.
+
+## Claims That Stood Out
+
+- **Software engineering:** Stripe reports a codebase-wide migration in a 50-million-line Ruby codebase done in a day versus an estimated two-plus team-months. Cursor calls it state of the art on CursorBench; Cognition says it tops FrontierBench.
+- **Vision:** rebuilding a web app's source from screenshots alone, and beating Pokémon FireRed with a minimal vision-only harness where earlier models needed elaborate scaffolding.
+- **Memory and long-context:** persistent file-based memory improved its Slay the Spire performance three times more than it did for Opus 4.8 — directly relevant to long-running agentic workflows.
+- **Science (Mythos 5):** ~10x acceleration claims in protein design tasks and novel hypotheses preferred ~80% of the time over Opus-class output in blinded comparisons.
+
+## Pricing and Rollout
+
+$10 per million input tokens, $50 per million output — less than half of Mythos Preview. Subscription access is staged: included on paid plans through June 22, then moved to usage credits until capacity allows restoring it. There's also a new 30-day retention requirement on all Mythos-class traffic, which enterprise users will want to read closely.
+
+## What I Want to Test
+
+The claims that matter for Esy are the long-horizon ones: token efficiency at medium effort, memory-assisted multi-step runs, and whether the classifier fallback ever trips on benign workflow-engineering prompts. That's the follow-up deep dive.`,
+    tags: [
+      "claude-fable-5",
+      "anthropic",
+      "first-impressions",
+      "frontier-models",
+      "model-research",
+    ],
+    relatedSlugs: [
+      "chatgpt-images-2-vs-nano-banana-2",
+      "building-multi-agent-workflows-claude-code",
+      "cursor-workflow-patterns-production",
+    ],
+  },
   {
     slug: "generate-clip-art-asset-walkthrough",
     title: "How to Run the Generate Clip Art Asset Workflow in Esy",
@@ -124,9 +179,9 @@ The point of running everything through a template — even for something as sim
       "agentic-workflows",
     ],
     relatedSlugs: [
+      "claude-fable-5-first-impressions",
       "agentic-research-pipeline-design",
       "building-multi-agent-workflows-claude-code",
-      "mux-video-pipeline-nextjs",
     ],
   },
   {

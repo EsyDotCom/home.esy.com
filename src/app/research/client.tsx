@@ -52,6 +52,7 @@ export default function ResearchClient() {
   };
 
   const allVideos = getPublishedResearchVideos();
+  const modelVideos = getResearchVideosByCategory("models");
   const aiToolsVideos = getResearchVideosByCategory("ai-tools");
   const workflowVideos = getResearchVideosByCategory("workflows");
 
@@ -84,7 +85,7 @@ export default function ResearchClient() {
       <LibraryHero
         breadcrumb={[{ label: "Home", href: "/" }, { label: "Research" }]}
         title="Research"
-        subhead="Engineering deep dives on AI coding tools, multi-agent architecture, and the workflows behind Esy, with video breakdowns and full transcripts."
+        subhead="Engineering deep dives on frontier models, AI coding tools, and the workflows behind Esy, with video breakdowns and full transcripts."
         meta={
           <>
             <span>
@@ -101,6 +102,78 @@ export default function ResearchClient() {
           />
         }
       />
+
+      {/* ═══ Model Research ═══ */}
+      {/* First grid section: model coverage is the freshest content stream. */}
+      <section
+        style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+          padding: isMobile
+            ? "0 1rem 3rem"
+            : isTablet
+              ? "0 1.5rem 3.5rem"
+              : "0 2rem 4rem",
+        }}
+      >
+        <div
+          style={{
+            paddingBottom: "1.5rem",
+            marginBottom: isMobile ? "1.25rem" : "2rem",
+            borderBottom: `1px solid ${theme.border}`,
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: "var(--font-literata)",
+              fontSize: "1.125rem",
+              fontWeight: 500,
+              color: theme.text,
+            }}
+          >
+            Model Research
+          </h2>
+          <p
+            style={{
+              fontSize: "0.9375rem",
+              color: theme.textSecondary,
+              lineHeight: 1.6,
+              marginTop: "0.5rem",
+            }}
+          >
+            Frontier model releases — launch-day first impressions and
+            deep-dive evaluations of how each model performs in real
+            workflows.
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: isMobile
+              ? "1fr"
+              : isTablet
+                ? "repeat(2, 1fr)"
+                : "repeat(3, 1fr)",
+            gap: isMobile ? "1.25rem" : "1.5rem",
+          }}
+        >
+          {modelVideos.map((video: ResearchVideo) => (
+            <ResearchVideoCard
+              key={video.slug}
+              title={video.title}
+              slug={video.slug}
+              thumbnailUrl={video.thumbnailUrl}
+              muxPlaybackId={video.muxPlaybackId}
+              durationSeconds={video.durationSeconds}
+              category={video.category}
+              categoryLabel={video.categoryLabel}
+              tags={video.tags}
+              publishedAt={video.publishedAt}
+            />
+          ))}
+        </div>
+      </section>
 
       {/* ═══ AI Coding Tools ═══ */}
       <section
