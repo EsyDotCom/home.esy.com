@@ -23,6 +23,88 @@ export interface ResearchVideo {
 
 export const researchVideos: ResearchVideo[] = [
   {
+    slug: "generate-clip-art-asset-walkthrough",
+    title: "How to Run the Generate Clip Art Asset Workflow in Esy",
+    description:
+      "A 3-minute walkthrough of the Generate Clip Art Asset workflow template — picking a style, writing the prompt, running it, and reviewing the artifact Esy produces from prompt to background-removed, stored asset.",
+    category: "workflows",
+    categoryLabel: "Workflow Research",
+    durationSeconds: 180,
+    publishedAt: "2026-06-08",
+    muxPlaybackId: "rRhztXLYxf8vxtIM7zMF4BUFSqrsS02nMDLAyEkW02QOU",
+    transcript: "",
+    // Pipeline stages mirror the canonical MVP template: prompt-to-image,
+    // background removal, internal storage, then human review. No research step.
+    stages: [
+      { label: "Intake", sublabel: "Subject + style + aspect ratio" },
+      { label: "Generate", sublabel: "OpenAI or Gemini image" },
+      { label: "Clean Up", sublabel: "fal.ai background removal" },
+      { label: "Store", sublabel: "ESY R2 artifact" },
+      { label: "Review", sublabel: "Artifact detail + cost" },
+    ],
+    content: `Generate Clip Art Asset is the first real generation workflow in Esy — and it's the simplest place to see the whole platform loop in action. You give it a subject and a style, it produces a transparent-background clip art asset, and Esy keeps the full record: the prompt you wrote, the prompt it actually sent the provider, the model stack, the storage location, and the cost. This walkthrough shows you how to run it end to end in about three minutes.
+
+## What This Template Does
+
+Generate Clip Art Asset is a direct prompt-to-image workflow. There's no research step, no citations, no sources — it takes your intent, resolves a clean clip-art prompt, generates an image, removes the background, and stores the result as an Esy artifact you can review. If you've used clip.art's prompt builder, the intake will feel familiar; the difference is that Esy owns the artifact, the provenance, and the cost from the moment you hit run.
+
+## Step 1: Start a Run
+
+From the dashboard, pick the Generate Clip Art Asset template and start a new run. The intake form asks for what you want, not how to make it:
+
+- **Subject** — what the asset is (a cat, a teacher, a rocket)
+- **Action** — what it's doing (standing, waving, sleeping)
+- **Style** — the visual treatment (more on this below)
+- **Aspect ratio** — usually 1:1 for clip art
+- **Extras** — any freeform detail you want to add
+
+Esy stores both your original intent and the final resolved prompt it sends the provider. That distinction matters later when you're debugging why an asset came out the way it did.
+
+## Step 2: Pick a Style
+
+The style descriptor is the single biggest lever on the output. The template ships with the clip-art style contract:
+
+- **flat** — flat vector, bold outlines, clean shapes, solid colors
+- **outline** — minimal outline, thin clean lines, monochrome
+- **cartoon** — bold colors, expressive, friendly
+- **sticker** — thick outline, vibrant colors, cute
+- **kawaii** — super cute, pastel colors, rounded shapes
+- **watercolor**, **chibi**, **pixel**, **vintage**, **3d**, **doodle**
+
+Under the hood, Esy assembles the final prompt as \`{your prompt}. Style: {style descriptor}, clip art, isolated object, transparent background, no background\`. You write the idea; the template handles the clip-art contract.
+
+## Step 3: Run It
+
+When you submit, the run executes the runtime policy:
+
+1. **Generate** — the resolved prompt goes to the image provider (OpenAI or Gemini)
+2. **Background removal** — the raw output passes through fal.ai to isolate the subject
+3. **Store** — both the raw and processed images land in Esy's R2 storage
+4. **Artifact** — Esy creates an artifact record linking the run, the images, the resolved prompt, the model stack, and the cost
+
+You don't manage any of those steps. The template's runtime policy decides the provider chain, quality, and background handling — and records every resolved choice on the run.
+
+## Step 4: Review the Artifact
+
+The artifact detail page is where it comes together. You'll see the generated image, the prompt you wrote next to the prompt Esy actually sent, which model produced it, the storage URL, the review state, and the estimated cost broken down by step. Nothing publishes automatically — this MVP keeps every generation internal until it's reviewed. Publishing to clip.art or anywhere else is a separate, later decision.
+
+## Why It's Built This Way
+
+The point of running everything through a template — even for something as simple as a single clip-art image — is provenance and cost. Every run captures what was asked, what was produced, which providers touched it, and what it cost. That's the foundation the rest of Esy's workflows build on, and Generate Clip Art Asset is the smallest complete example of it.`,
+    tags: [
+      "clip-art",
+      "workflow-template",
+      "image-generation",
+      "app-esy-com",
+      "getting-started",
+    ],
+    relatedSlugs: [
+      "chatgpt-images-2-vs-nano-banana-2",
+      "agentic-research-pipeline-design",
+      "mux-video-pipeline-nextjs",
+    ],
+  },
+  {
     slug: "chatgpt-images-2-vs-nano-banana-2",
     title: "ChatGPT Images 2.0: A Monster Upgrade for Educational Artifacts",
     description:
