@@ -61,14 +61,6 @@ const ContactNav: React.FC<ContactNavProps> = ({ scrolled, currentTheme }) => {
               }}>
                 Write
               </Link>
-              <Link href="/prompts" style={{ 
-                color: currentTheme.muted, 
-                textDecoration: 'none',
-                fontSize: '0.938rem',
-                transition: 'color 0.2s'
-              }}>
-                Prompts
-              </Link>
               <Link href="/school/" style={{ 
                 color: currentTheme.muted, 
                 textDecoration: 'none',

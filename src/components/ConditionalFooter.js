@@ -32,14 +32,6 @@ const ConditionalFooter = () => {
     return null;
   }
   
-  // Check if we're on a prompt library page (individual prompt or category page)
-  const isPromptPage = normalizedPath?.startsWith('/prompt-library/') && normalizedPath !== '/prompt-library';
-  
-  // Don't render footer on prompt pages (they handle their own footer)
-  if (isPromptPage) {
-    return null;
-  }
-  
   // Check if we're on docs pages (they handle their own footer via DocsPageNav)
   const isDocsPage = normalizedPath?.startsWith('/docs');
   if (isDocsPage) {

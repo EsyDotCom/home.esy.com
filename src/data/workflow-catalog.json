@@ -1,6 +1,6 @@
 {
-  "_comment": "SYNCED SNAPSHOT \u2014 do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows). Mirrors the platform's published, versioned workflow templates.",
-  "generatedAt": "2026-06-04T23:54:52.204147Z",
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows). Mirrors the platform's published, versioned workflow templates.",
+  "generatedAt": "2026-06-10T07:52:42.325239Z",
   "total": 9,
   "items": [
     {
@@ -45,6 +45,34 @@
         "Evidence is specific",
         "Lens applied consistently"
       ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "subject",
+            "type": "string",
+            "required": true,
+            "description": "The text, work, event, or concept to analyze"
+          },
+          {
+            "name": "lens",
+            "type": "string",
+            "required": false,
+            "description": "Analytical lens or framework (e.g. historical, feminist, formal)"
+          },
+          {
+            "name": "citationStyle",
+            "type": "enum",
+            "required": false,
+            "description": "Citation style for any cited sources",
+            "default": "MLA",
+            "options": [
+              "MLA",
+              "APA",
+              "Chicago"
+            ]
+          }
+        ]
+      },
       "version": "2026.06.04",
       "cadence": "On demand",
       "updatedAt": "2026-06-04T23:03:40.602496Z"
@@ -93,6 +121,40 @@
         "On-topic",
         "Sources cited"
       ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "topic",
+            "type": "string",
+            "required": true,
+            "description": "Essay topic or question"
+          },
+          {
+            "name": "stance",
+            "type": "string",
+            "required": true,
+            "description": "The position the essay should defend"
+          },
+          {
+            "name": "audience",
+            "type": "string",
+            "required": false,
+            "description": "Intended audience"
+          },
+          {
+            "name": "citationStyle",
+            "type": "enum",
+            "required": false,
+            "description": "Citation style for any cited sources",
+            "default": "MLA",
+            "options": [
+              "MLA",
+              "APA",
+              "Chicago"
+            ]
+          }
+        ]
+      },
       "version": "2026.06.04",
       "cadence": "On demand",
       "updatedAt": "2026-06-04T23:03:40.258803Z"
@@ -137,6 +199,55 @@
         "Background/transparency",
         "Commercial-safe review"
       ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "prompt",
+            "type": "string",
+            "required": true,
+            "description": "Subject prompt for the isolated object or character"
+          },
+          {
+            "name": "style",
+            "type": "enum",
+            "required": true,
+            "description": "Clip-art style",
+            "default": "flat",
+            "options": [
+              "flat",
+              "outline",
+              "cartoon",
+              "sticker",
+              "vintage",
+              "watercolor",
+              "chibi",
+              "pixel",
+              "kawaii",
+              "3d",
+              "doodle"
+            ]
+          },
+          {
+            "name": "aspectRatio",
+            "type": "enum",
+            "required": true,
+            "description": "Aspect ratio",
+            "default": "1:1",
+            "options": [
+              "1:1",
+              "3:4",
+              "4:3"
+            ]
+          },
+          {
+            "name": "backgroundRemovalEnabled",
+            "type": "boolean",
+            "required": false,
+            "description": "Remove background with fal.ai",
+            "default": true
+          }
+        ]
+      },
       "version": "2026.05.16",
       "cadence": "On demand",
       "updatedAt": "2026-06-04T23:03:39.995717Z"
@@ -185,6 +296,35 @@
         "Within word limit",
         "Shows not tells"
       ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "prompt",
+            "type": "string",
+            "required": true,
+            "description": "The application essay prompt"
+          },
+          {
+            "name": "background",
+            "type": "string",
+            "required": true,
+            "description": "Applicant's experiences, values, and details to draw from"
+          },
+          {
+            "name": "program",
+            "type": "string",
+            "required": false,
+            "description": "Target school or program"
+          },
+          {
+            "name": "wordLimit",
+            "type": "number",
+            "required": false,
+            "description": "Word limit",
+            "default": 650
+          }
+        ]
+      },
       "version": "2026.06.04",
       "cadence": "On demand",
       "updatedAt": "2026-06-04T23:03:41.537179Z"
@@ -231,6 +371,34 @@
         "Complete coverage",
         "Logical sequence"
       ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "topic",
+            "type": "string",
+            "required": true,
+            "description": "Topic to explain"
+          },
+          {
+            "name": "audience",
+            "type": "string",
+            "required": false,
+            "description": "Intended audience"
+          },
+          {
+            "name": "citationStyle",
+            "type": "enum",
+            "required": false,
+            "description": "Citation style for any cited sources",
+            "default": "MLA",
+            "options": [
+              "MLA",
+              "APA",
+              "Chicago"
+            ]
+          }
+        ]
+      },
       "version": "2026.06.04",
       "cadence": "On demand",
       "updatedAt": "2026-06-04T23:03:40.931989Z"
@@ -276,6 +444,33 @@
         "Vivid detail",
         "Reflective insight"
       ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "prompt",
+            "type": "string",
+            "required": true,
+            "description": "Story prompt, experience, or theme to write about"
+          },
+          {
+            "name": "perspective",
+            "type": "enum",
+            "required": false,
+            "description": "Narrative perspective",
+            "default": "first",
+            "options": [
+              "first",
+              "third"
+            ]
+          },
+          {
+            "name": "tone",
+            "type": "string",
+            "required": false,
+            "description": "Tone (e.g. reflective, humorous, somber)"
+          }
+        ]
+      },
       "version": "2026.06.04",
       "cadence": "On demand",
       "updatedAt": "2026-06-04T23:03:41.182662Z"
@@ -321,6 +516,37 @@
         "Source report linked",
         "On-topic"
       ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "topic",
+            "type": "string",
+            "required": false,
+            "description": "Research topic to visualize (used when no source report is supplied)"
+          },
+          {
+            "name": "audience",
+            "type": "string",
+            "required": false,
+            "description": "Intended audience (passed to the research report)"
+          },
+          {
+            "name": "aspectRatio",
+            "type": "enum",
+            "required": false,
+            "description": "Aspect ratio",
+            "default": "3:4"
+          },
+          {
+            "name": "sourceReport",
+            "type": "artifactReference",
+            "required": false,
+            "description": "An existing research report to visualize (optional — leave empty to generate one)",
+            "artifactClass": "research",
+            "artifactType": "research-report"
+          }
+        ]
+      },
       "version": "2026.06.01",
       "cadence": "On demand",
       "updatedAt": "2026-06-04T23:03:39.410895Z"
@@ -369,6 +595,40 @@
         "Sources cited",
         "On-question"
       ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "topic",
+            "type": "string",
+            "required": true,
+            "description": "Paper topic"
+          },
+          {
+            "name": "researchQuestion",
+            "type": "string",
+            "required": false,
+            "description": "Specific research question or hypothesis"
+          },
+          {
+            "name": "audience",
+            "type": "string",
+            "required": false,
+            "description": "Intended audience"
+          },
+          {
+            "name": "citationStyle",
+            "type": "enum",
+            "required": false,
+            "description": "Citation style for any cited sources",
+            "default": "APA",
+            "options": [
+              "MLA",
+              "APA",
+              "Chicago"
+            ]
+          }
+        ]
+      },
       "version": "2026.06.04",
       "cadence": "On demand",
       "updatedAt": "2026-06-04T23:03:41.800729Z"
@@ -408,6 +668,22 @@
         "Sources cited",
         "On-topic"
       ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "topic",
+            "type": "string",
+            "required": true,
+            "description": "Research topic or question"
+          },
+          {
+            "name": "audience",
+            "type": "string",
+            "required": false,
+            "description": "Intended audience"
+          }
+        ]
+      },
       "version": "2026.05.29",
       "cadence": "On demand",
       "updatedAt": "2026-06-04T23:03:38.702386Z"

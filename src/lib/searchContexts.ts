@@ -6,7 +6,6 @@
  */
 
 export type SearchContext = 
-  | 'prompt-library' 
   | 'templates'
   | 'glossary' 
   | 'school' 
@@ -26,15 +25,6 @@ export interface SearchContextConfig {
 }
 
 export const SEARCH_CONTEXTS: Record<SearchContext, SearchContextConfig> = {
-  'prompt-library': {
-    context: 'prompt-library',
-    placeholder: 'Search prompts...',
-    dataSource: 'prompts',
-    searchUrl: '/prompt-library?search=',
-    resultUrlPattern: '/prompt-library/',
-    shouldAlwaysExpand: true,
-    description: 'Search through AI prompts and templates'
-  },
   'templates': {
     context: 'templates',
     placeholder: 'Search templates...',
@@ -111,7 +101,6 @@ export const getSearchContextConfig = (context: SearchContext): SearchContextCon
  * Determine search context from pathname
  */
 export const getSearchContextFromPath = (pathname: string): SearchContext => {
-  if (pathname?.startsWith('/prompt-library')) return 'prompt-library';
   if (pathname?.startsWith('/workflows')) return 'templates';
   if (pathname?.startsWith('/glossary')) return 'glossary';
   if (pathname?.startsWith('/school')) return 'school';

@@ -23,7 +23,7 @@ interface SearchBarProps {
   onChange?: (query: string) => void;
   className?: string;
   style?: React.CSSProperties;
-  context?: 'prompt-library' | 'school' | 'general' | 'homepage' | 'blog' | 'templates';
+  context?: 'school' | 'general' | 'homepage' | 'blog' | 'templates';
   inputFontSize?: string;
   autoFocus?: boolean;
   isLoading?: boolean;
@@ -63,14 +63,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
   // Context-specific default suggestions
   const getDefaultSuggestions = (context: string) => {
     switch (context) {
-      case 'prompt-library':
-        return [
-          "Character development prompts",
-          "Academic essay writing templates",
-          "Research methodology frameworks",
-          "Creative writing exercises",
-          "Professional communication tools"
-        ];
       case 'school':
         return [
           "How to structure an academic paper",

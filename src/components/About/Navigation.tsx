@@ -63,14 +63,6 @@ const Navigation: React.FC<NavigationProps> = ({ scrolled, currentTheme }) => {
               }}>
                 Essays
               </Link>
-              <Link href="/prompts/" style={{ 
-                color: currentTheme.muted, 
-                textDecoration: 'none',
-                fontSize: '0.938rem',
-                transition: 'color 0.2s'
-              }}>
-                Prompts
-              </Link>
               <Link href="/school/" style={{ 
                 color: currentTheme.muted, 
                 textDecoration: 'none',

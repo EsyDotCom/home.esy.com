@@ -842,9 +842,9 @@ The emergence of ${topic} as a critical area of study can be traced back to seve
                     e.currentTarget.style.transform = 'translateX(0)';
                   }
                 }}
-                onClick={() => window.open('/prompt-library', '_blank')}
+                onClick={() => window.open('/workflows', '_blank')}
               >
-                Browse Prompts
+                Browse Workflows
                 <ChevronRight size={isMobile ? 16 : 14} />
               </button>
             </div>

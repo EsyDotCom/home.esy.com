@@ -7,7 +7,6 @@ import Link from "next/link";
 import { Menu, X, ChevronRight, ArrowRight } from "lucide-react";
 import HeaderSearch from "@/components/HeaderSearch/HeaderSearch";
 import NewsletterModal from "@/components/NewsletterModal/NewsletterModal";
-import { getAllPrompts } from "@/lib/prompts";
 import { getAllTemplates } from "@/lib/templates";
 import { getCTAConfig, getResponsiveCTAText } from "@/lib/ctaMapping";
 import { lightTheme } from "@/lib/lightTheme";
@@ -35,7 +34,7 @@ export const getPageSuffix = (pathname) => {
 
 interface NavigationProps {
   showHeaderSearch?: boolean;
-  searchContext?: 'prompt-library' | 'templates' | 'glossary' | 'school' | 'essays' | 'scrollytelling' | 'blog' | 'general';
+  searchContext?: 'templates' | 'glossary' | 'school' | 'essays' | 'scrollytelling' | 'blog' | 'general';
   pathname?: string;
 }
 
@@ -285,9 +284,7 @@ export default function Navigation({
   // Load search data
     useEffect(() => {
       if (showHeaderSearch) {
-        if (searchContext === 'prompt-library') {
-          getAllPrompts().then(setSearchData).catch(console.error);
-        } else if (searchContext === 'glossary') {
+        if (searchContext === 'glossary') {
           fetch('/glossary-terms.json')
             .then(res => res.json())
           .then(setSearchData)

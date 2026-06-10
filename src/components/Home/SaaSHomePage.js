@@ -10,7 +10,6 @@ import {
   Menu, X, TrendingUp, Shield
 } from 'lucide-react';
 import EssayGeneratorPro from '@/components/EssayGenerator/EssayGeneratorPro';
-import PromptIntelligenceEngine from '@/components/PromptLibrary/PromptIntelligenceEngine';
 import ModernFeaturesBento from '@/components/Features/ModernFeaturesBento';
 
 const NewHomepageElevated = () => {
@@ -293,9 +292,6 @@ const NewHomepageElevated = () => {
 
       {/* Update sections background to use elevated theme */}
       <div style={{ background: elevatedTheme.bg }}>
-        {/* Prompt Intelligence Engine */}
-        <PromptIntelligenceEngine />
-
         {/* Modern Features Bento Grid */}
         <ModernFeaturesBento />
       </div>
