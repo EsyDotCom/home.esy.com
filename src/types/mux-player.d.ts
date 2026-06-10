@@ -1,7 +1,17 @@
 declare module "@mux/mux-player-react" {
-  import { ComponentType } from "react";
+  import { ComponentType, Ref } from "react";
+
+  // Minimal surface of the <mux-player> custom element that we drive
+  // programmatically (transcript click-to-seek, playback sync).
+  interface MuxPlayerElement extends HTMLElement {
+    currentTime: number;
+    paused: boolean;
+    play(): Promise<void>;
+    pause(): void;
+  }
 
   interface MuxPlayerProps {
+    ref?: Ref<MuxPlayerElement>;
     playbackId?: string;
     metadata?: Record<string, string>;
     poster?: string;
@@ -20,4 +30,5 @@ declare module "@mux/mux-player-react" {
 
   const MuxPlayer: ComponentType<MuxPlayerProps>;
   export default MuxPlayer;
+  export type { MuxPlayerElement };
 }

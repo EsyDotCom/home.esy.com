@@ -1,0 +1,943 @@
+1
+00:00:00,040 --> 00:00:03,840
+Hey what's up Zev here from esy.com.
+
+2
+00:00:07,236.66666666666697 --> 00:00:10,830
+So I just got the alert Claude Fable 5 and Claude Mythos 5. It
+
+3
+00:00:11,186.66666666666606 --> 00:00:15,080
+seems Claude Fable is the new segment
+
+4
+00:00:15,080 --> 00:00:18,680
+of Mythos. It's a piece
+
+5
+00:00:18,680 --> 00:00:22,280
+of Mythos. It's not as big and bad but it's going to
+
+6
+00:00:22,280 --> 00:00:26,100
+be some kind of variation of Mythos but it's better than Opus
+
+7
+00:00:26,100 --> 00:00:30,120
+which is crazy. So I just got the update on youtube.
+
+8
+00:00:30,120 --> 00:00:33,700
+I wanted to check it out and do a little review. I'm
+
+9
+00:00:33,700 --> 00:00:37,370
+going to test it later in Claude code as well as
+
+10
+00:00:37,370 --> 00:00:41,040
+cursor because I'm already doing some work on that.
+
+11
+00:00:41,040 --> 00:00:44,630
+So it's going to be interesting to see
+
+12
+00:00:44,630 --> 00:00:48,480
+how this works out because we've been pretty
+
+13
+00:00:48,480 --> 00:00:52,280
+disappointed with 4.7 and 4.8.
+
+14
+00:00:52,280 --> 00:00:55,990
+We see some marginal improvements. Some people have seen some
+
+15
+00:00:55,990 --> 00:01:00,240
+regressions. So you can't really say if the additional
+
+16
+00:01:00,240 --> 00:01:03,840
+models 4.7 and 4.8 are dramatically better
+
+17
+00:01:03,840 --> 00:01:07,430
+than 4.6. So a couple of months ago when 4.6
+
+18
+00:01:07,430 --> 00:01:11,000
+came out it was a massive hit. People were
+
+19
+00:01:11,000 --> 00:01:14,740
+disappointed with 4.7 and then from
+
+20
+00:01:14,740 --> 00:01:18,690
+my read on Twitter and so forth 4.8
+
+21
+00:01:18,690 --> 00:01:22,290
+wasn't that much better in terms of how
+
+22
+00:01:22,290 --> 00:01:25,860
+other people benchmark these models.
+
+23
+00:01:25,860 --> 00:01:29,730
+Which is really hard to do because you can't really trust the companies
+
+24
+00:01:29,730 --> 00:01:33,680
+word for it when they actually list the results
+
+25
+00:01:33,680 --> 00:01:37,280
+that they get and the benchmarks. So the usual
+
+26
+00:01:37,280 --> 00:01:40,830
+best case is that you'll plug these models into your own
+
+27
+00:01:40,830 --> 00:01:44,360
+workflows and then judge for yourself how much better
+
+28
+00:01:44,360 --> 00:01:48,240
+it is at being able to do work compared to the previous models
+
+29
+00:01:48,240 --> 00:01:51,760
+for your special use
+
+30
+00:01:52,346.6666666666715 --> 00:01:55,910
+case. And that's another benefit of what I'm working on
+
+31
+00:01:56,266.6666666666715 --> 00:01:59,840
+at esy.com
+
+32
+00:01:59,840 --> 00:02:04,200
+where we essentially build agentic workflow
+
+33
+00:02:04,200 --> 00:02:08,760
+templates around digital assets like clipart,
+
+34
+00:02:08,790 --> 00:02:12,390
+essays. These are just some of the few that I've needed
+
+35
+00:02:12,390 --> 00:02:16,050
+so far. Infographics, I'll be building more out.
+
+36
+00:02:16,050 --> 00:02:19,960
+But the ability to be able to take something like say
+
+37
+00:02:19,960 --> 00:02:23,470
+a template like this for
+
+38
+00:02:23,470 --> 00:02:27,040
+a generic clipart asset, that's
+
+39
+00:02:27,040 --> 00:02:30,700
+not really very useful for Fable.
+
+40
+00:02:30,700 --> 00:02:34,220
+But to be able to plug and play with the models and then compare them
+
+41
+00:02:34,220 --> 00:02:37,930
+to each other is what I'm trying to say. And to be able to do that with
+
+42
+00:02:37,930 --> 00:02:41,870
+templates is a lot easier. So if you already have a template
+
+43
+00:02:41,870 --> 00:02:45,730
+that is known to produce a certain quality of
+
+44
+00:02:45,730 --> 00:02:49,450
+work for a certain type of asset, being able to plug
+
+45
+00:02:49,450 --> 00:02:53,010
+in a new model and produce a new template and compare it
+
+46
+00:02:53,010 --> 00:02:56,520
+to the old ones is something that could simplify that
+
+47
+00:02:56,520 --> 00:03:00,150
+kind of benchmark. But let's get back into it. So I haven't actually
+
+48
+00:03:00,150 --> 00:03:04,090
+even looked into this yet. So today we're launching Claude Fable 5,
+
+49
+00:03:04,090 --> 00:03:07,880
+a Mythos class model that we've made
+
+50
+00:03:07,880 --> 00:03:11,480
+safe for general use. Okay,
+
+51
+00:03:11,976.666666666657 --> 00:03:15,590
+let's get straight into the benchmarks and see
+
+52
+00:03:15,590 --> 00:03:20,520
+what they're saying. So they're saying that agentic coding, they're
+
+53
+00:03:20,520 --> 00:03:24,340
+giving it 80%, 80.3% for Mythos Fable
+
+54
+00:03:24,340 --> 00:03:28,120
+5. Mythos preview, I've never tested this so
+
+55
+00:03:28,120 --> 00:03:31,680
+I don't know. I don't even know when that was released,
+
+56
+00:03:31,680 --> 00:03:36,040
+if it was released at all. Opus 4.8, 69.2%.
+
+57
+00:03:36,040 --> 00:03:39,560
+Interesting. So for agentic coding,
+
+58
+00:03:39,560 --> 00:03:43,660
+they're saying that Mythos 5 gets 80.3%
+
+59
+00:03:43,660 --> 00:03:48,080
+compared to 69.2% for Opus 4.8.
+
+60
+00:03:48,080 --> 00:03:51,700
+They gave 58.6% for GPT 5.5.
+
+61
+00:03:51,700 --> 00:03:55,310
+I don't know how many codex fans is going to agree
+
+62
+00:03:55,310 --> 00:03:59,470
+with this. That's pretty hilarious though. Gemini
+
+63
+00:03:59,866.666666666657 --> 00:04:03,710
+3.1, yeah, Gemini, I actually have never used Gemini
+
+64
+00:04:03,710 --> 00:04:07,490
+for coding. It's never been a thought of mine. I should
+
+65
+00:04:08,506.66666666665697 --> 00:04:12,120
+see... Man, once you're just getting the
+
+66
+00:04:12,120 --> 00:04:15,700
+flow with these quality models, you don't even want to test your repo
+
+67
+00:04:15,700 --> 00:04:19,230
+on stuff like this. I would never put Grok on my repo,
+
+68
+00:04:19,230 --> 00:04:22,740
+let loose on my repo like that. Of course you could do a
+
+69
+00:04:22,740 --> 00:04:26,320
+git tree and then let it run loose, but... And you
+
+70
+00:04:26,320 --> 00:04:29,890
+should. You should. I'm more interested in the open source
+
+71
+00:04:29,890 --> 00:04:33,560
+solutions that claim to be on par with Opus
+
+72
+00:04:33,560 --> 00:04:37,080
+and GPT than to come down to
+
+73
+00:04:37,080 --> 00:04:40,600
+Gemini and Grok. Grok is
+
+74
+00:04:40,600 --> 00:04:44,200
+never in the conversation,
+
+75
+00:04:45,176.66666666668607 --> 00:04:48,970
+but... So agentic coding, software engineering,
+
+76
+00:04:48,970 --> 00:04:53,080
+bench pro, frontier code. I wonder, do people
+
+77
+00:04:53,080 --> 00:04:57,020
+really understand this stuff or are they
+
+78
+00:04:57,020 --> 00:05:00,780
+just all faking it? Because I get that
+
+79
+00:05:00,780 --> 00:05:04,600
+the frontier models putting these charts
+
+80
+00:05:04,600 --> 00:05:08,290
+up. I get that. But people reading it,
+
+81
+00:05:08,290 --> 00:05:12,100
+like a lot of these news guys reading it and claiming, I don't
+
+82
+00:05:12,100 --> 00:05:15,650
+think these people know what they're talking about, to be honest with
+
+83
+00:05:15,650 --> 00:05:19,310
+you. Frontier code, agentic coding, I don't even know what that means. I got
+
+84
+00:05:19,310 --> 00:05:23,030
+to look in... Because to actually study if these
+
+85
+00:05:23,030 --> 00:05:26,540
+benchmarks are accurate, you have to go in. You have to go in
+
+86
+00:05:26,540 --> 00:05:30,400
+on it. You can't just be reading these charts. You have to... Frontier
+
+87
+00:05:30,400 --> 00:05:34,610
+code, you got to look into frontier code. When I look at the news guys, they
+
+88
+00:05:34,610 --> 00:05:38,620
+never really go into that stuff. GDPval
+
+89
+00:05:38,620 --> 00:05:42,280
+for knowledge work, what does that
+
+90
+00:05:42,280 --> 00:05:45,800
+even mean? So we would have to go to this
+
+91
+00:05:45,800 --> 00:05:50,040
+source here and we have to go look at what they're saying constitutes
+
+92
+00:05:50,040 --> 00:05:53,620
+knowledge work and how they're measuring that. This
+
+93
+00:05:53,620 --> 00:05:57,320
+got 1932. This means nothing to anybody.
+
+94
+00:05:57,320 --> 00:06:01,980
+Of course, Gemini 3.1,
+
+95
+00:06:02,706.6666666666861 --> 00:06:06,950
+man. You can't catch a break.
+
+96
+00:06:06,950 --> 00:06:10,610
+I do like Gemini. I like talking to Gemini
+
+97
+00:06:10,610 --> 00:06:14,370
+to be honest, but knowledge work vision,
+
+98
+00:06:14,370 --> 00:06:18,420
+29 of course. Of course, Claude Mythos
+
+99
+00:06:18,420 --> 00:06:22,640
+is going to be the best. We'll see.
+
+100
+00:06:22,986.6666666666861 --> 00:06:26,580
+Maybe it is. Okay. At least they
+
+101
+00:06:26,580 --> 00:06:30,630
+gave this win to GPT. Spatial reasoning
+
+102
+00:06:30,630 --> 00:06:34,640
+blueprint. Spatial reasoning. 38.6.
+
+103
+00:06:34,640 --> 00:06:38,300
+These are some serious claims, but they admit that
+
+104
+00:06:38,300 --> 00:06:42,050
+Opus 4.8 only had 14.5%.
+
+105
+00:06:42,050 --> 00:06:45,880
+And then GPT-5 got 36.2 here.
+
+106
+00:06:45,880 --> 00:06:49,700
+So they're keeping you honest. Some people
+
+107
+00:06:49,700 --> 00:06:53,220
+like to keep it honest just so they can lie a little better
+
+108
+00:06:53,220 --> 00:06:56,830
+on some other metrics. But the people will decide.
+
+109
+00:06:56,830 --> 00:07:00,460
+You can put all these benchmarks up as much as you want, but
+
+110
+00:07:00,460 --> 00:07:04,120
+when the people get a hold of the model, they're going to test it in
+
+111
+00:07:04,120 --> 00:07:08,050
+the wild and it'll be that.
+
+112
+00:07:08,956.6666666666861 --> 00:07:12,460
+That'll be that. Tool use.
+
+113
+00:07:12,460 --> 00:07:16,010
+Okay. Man, it's just
+
+114
+00:07:16,010 --> 00:07:19,570
+kind of wondering what does Gemini's goal
+
+115
+00:07:19,570 --> 00:07:23,680
+at this point, if this is true.
+
+116
+00:07:23,680 --> 00:07:27,490
+Legal and Grok. For all of the claims on X about Grok,
+
+117
+00:07:27,490 --> 00:07:31,280
+I like talking with Grok. Grok is funny, but Grok is kind of like shits
+
+118
+00:07:31,280 --> 00:07:34,960
+and giggles. You know what I mean? It's like Grok is who you go to for
+
+119
+00:07:34,960 --> 00:07:38,570
+shits and giggles. When you're trying to do serious work, you
+
+120
+00:07:38,570 --> 00:07:42,310
+got to pull out Opus. You got to pull out GPT. You're not
+
+121
+00:07:42,310 --> 00:07:46,090
+using Grok for serious work. And in Gemini,
+
+122
+00:07:46,090 --> 00:07:50,000
+if you happen to be on Google and you need a quick
+
+123
+00:07:50,000 --> 00:07:53,680
+AI overview or if you want to dive deep into the AI
+
+124
+00:07:53,680 --> 00:07:57,390
+overview, you're comfortable using
+
+125
+00:07:57,390 --> 00:08:00,980
+Gemini. It's Google at the end
+
+126
+00:08:00,980 --> 00:08:05,020
+of the day. But Grok is never in the conversation for anything
+
+127
+00:08:05,020 --> 00:08:09,120
+but shits and giggles, essentially. Okay.
+
+128
+00:08:09,120 --> 00:08:12,730
+So this is interesting. And then there's a lot of talk about
+
+129
+00:08:12,730 --> 00:08:16,340
+this whole computer use thing. I haven't tested computer use yet. So
+
+130
+00:08:16,340 --> 00:08:20,160
+I don't know. Have any of you guys tested computer use yet?
+
+131
+00:08:20,160 --> 00:08:23,670
+Perplexity changed their whole... Perplexity
+
+132
+00:08:23,670 --> 00:08:27,370
+actually changed their whole thing. I just checked out
+
+133
+00:08:27,370 --> 00:08:31,100
+Perplexity today. They used to have a nice UI over
+
+134
+00:08:31,100 --> 00:08:34,680
+here where they used to show news. I would love
+
+135
+00:08:34,680 --> 00:08:38,740
+to go into Perplexity to just like, you know, go in on whatever
+
+136
+00:08:38,740 --> 00:08:42,490
+the latest news was. Now they just like a ChatGPT
+
+137
+00:08:42,936.6666666666861 --> 00:08:46,460
+clone. So why would I even use that and just go to
+
+138
+00:08:46,460 --> 00:08:50,120
+ChatGPT? You don't see anything anymore.
+
+139
+00:08:50,120 --> 00:08:53,900
+You don't see the news that they used to have.
+
+140
+00:08:53,900 --> 00:08:57,700
+You used to be able to chat with it regularly. And now they
+
+141
+00:08:57,700 --> 00:09:01,350
+have this whole computer. Everyone's going the whole computer
+
+142
+00:09:01,350 --> 00:09:05,060
+route. Perplexity computer. Or if you even check out Higgs
+
+143
+00:09:05,060 --> 00:09:08,890
+Field. I like to use Higgsfield in order to generate
+
+144
+00:09:08,890 --> 00:09:12,400
+some images and produce videos. And they're
+
+145
+00:09:12,400 --> 00:09:16,420
+going hard on this whole supercomputer
+
+146
+00:09:16,420 --> 00:09:20,080
+buzzword now. Which turn a simple chat into
+
+147
+00:09:20,080 --> 00:09:23,910
+production ready content at scale.
+
+148
+00:09:23,910 --> 00:09:28,330
+Production ready content at scale.
+
+149
+00:09:28,330 --> 00:09:33,070
+I mean I like Higgsfield. I don't understand
+
+150
+00:09:33,070 --> 00:09:36,840
+the whole computer thing. I have
+
+151
+00:09:36,840 --> 00:09:40,720
+to look into that. I have to look into
+
+152
+00:09:41,146.66666666662786 --> 00:09:44,770
+it. So Frontier code. Okay, so we got some
+
+153
+00:09:44,770 --> 00:09:48,280
+charts here. Agented coding. They got
+
+154
+00:09:48,280 --> 00:09:51,960
+a video here. Let's see what
+
+155
+00:09:51,960 --> 00:09:55,610
+this video is about. What
+
+156
+00:09:55,610 --> 00:10:00,040
+the hell? Okay, is that Pokemon?
+
+157
+00:10:00,376.66666666662786 --> 00:10:04,850
+It's just, what is this even doing? Claude Fable 5
+
+158
+00:10:04,850 --> 00:10:08,470
+beats Pokemon FireRed. Oh, what was the
+
+159
+00:10:08,470 --> 00:10:12,220
+point of that? A time lapse of Claude playing Pokemon.
+
+160
+00:10:12,220 --> 00:10:16,250
+Oh, FireRed from start to finish using only raw game screenshots
+
+161
+00:10:16,250 --> 00:10:19,930
+with no maps, navigation aids, or extra game
+
+162
+00:10:19,930 --> 00:10:23,940
+state information. Earlier Claude models needed a complex
+
+163
+00:10:23,940 --> 00:10:27,800
+helper harness to play Pokemon. Claude Fable 5 completed
+
+164
+00:10:27,800 --> 00:10:31,530
+the game with Vision Along. Oh, that's
+
+165
+00:10:31,530 --> 00:10:35,200
+pretty sick. That's sick. If that's true, that's
+
+166
+00:10:35,866.6666666666279 --> 00:10:39,910
+sick. Memory in long context, Fable 5 stays focused across millions
+
+167
+00:10:39,910 --> 00:10:43,520
+of tokens in long running tasks and improves its
+
+168
+00:10:43,520 --> 00:10:47,040
+outputs using its own notes. When we had the
+
+169
+00:10:47,040 --> 00:10:50,620
+model play the deck building game Slay the
+
+170
+00:10:51,56.66666666662786 --> 00:10:54,690
+Spire, giving it access to persistent file
+
+171
+00:10:54,690 --> 00:10:58,390
+based memory, improved its performance three times
+
+172
+00:10:58,390 --> 00:11:02,210
+more than for Opus 4.8. Fable also reached the game's
+
+173
+00:11:02,210 --> 00:11:06,680
+final act three times more often.
+
+174
+00:11:06,680 --> 00:11:10,400
+So this is a simulation, simulates the solar system
+
+175
+00:11:10,400 --> 00:11:14,410
+and predicts a solar eclipse. Okay,
+
+176
+00:11:14,410 --> 00:11:18,060
+this is all cool marketing stuff.
+
+177
+00:11:18,506.66666666662786 --> 00:11:22,270
+What's this? Protein complex. Okay, it's
+
+178
+00:11:22,270 --> 00:11:26,030
+kind of deep. Misaligned behavior.
+
+179
+00:11:26,030 --> 00:11:29,950
+Early feedback for Claude Fable 5. Okay,
+
+180
+00:11:29,950 --> 00:11:33,810
+so let's see what Cursor is saying. Well, Cursor
+
+181
+00:11:33,810 --> 00:11:37,350
+kind of, there's no reason why Cursor would
+
+182
+00:11:37,350 --> 00:11:41,230
+not pump it up. You know what I mean? Cursor
+
+183
+00:11:41,230 --> 00:11:44,890
+pumps up every model. Claude Fable 5 is the state of the art
+
+184
+00:11:44,890 --> 00:11:48,540
+model. I mean, they said that about many other things.
+
+185
+00:11:48,540 --> 00:11:52,320
+It's opened up, I mean, they said that when GPT 5.5, well,
+
+186
+00:11:52,320 --> 00:11:55,940
+GPT 5.5 is a great model though, but I feel like they say that
+
+187
+00:11:55,940 --> 00:11:59,800
+every single time there's a new model. And of course they have the incentive
+
+188
+00:11:59,800 --> 00:12:03,560
+to say that. It's opened up a class of long horizon problems that were out of reach
+
+189
+00:12:03,560 --> 00:12:07,800
+for early models. That says absolutely nothing.
+
+190
+00:12:07,800 --> 00:12:12,210
+Okay, Claude Fable 5 is the state of the art model on Cursor Bench.
+
+191
+00:12:12,210 --> 00:12:15,900
+Okay, that's meaningful, but it's opened up a class of long
+
+192
+00:12:15,900 --> 00:12:19,710
+horizon problems that were out of reach for early
+
+193
+00:12:19,710 --> 00:12:24,600
+models. Okay, let's see what we get. Claude Fable 5
+
+194
+00:12:24,600 --> 00:12:28,980
+is a real step forward for the developers GitHub service.
+
+195
+00:12:28,980 --> 00:12:33,020
+In our early testing, it took on complex long horizon
+
+196
+00:12:33,020 --> 00:12:36,920
+coding tasks with a level of autonomy and reliability
+
+197
+00:12:36,920 --> 00:12:40,990
+that exceeded previous benchmarks. But what excites
+
+198
+00:12:40,990 --> 00:12:44,680
+us most is the direction it points. A future where
+
+199
+00:12:44,680 --> 00:12:48,560
+developers can hand increasingly ambitious work to agents
+
+200
+00:12:48,560 --> 00:12:52,660
+and trust the results across the software
+
+201
+00:12:53,706.6666666666279 --> 00:12:57,580
+side. Okay, safeguards,
+
+202
+00:12:58,856.6666666666279 --> 00:13:04,600
+cool. Offensive cyber evaluations.
+
+203
+00:13:04,600 --> 00:13:08,120
+Okay. All right,
+
+204
+00:13:08,120 --> 00:13:12,260
+it's available everywhere today. Pricing for both models,
+
+205
+00:13:12,260 --> 00:13:15,940
+there we go. Let's get into the pricing. Let's get into it. For
+
+206
+00:13:15,940 --> 00:13:19,780
+both models is 10 per million input tokens and $50,
+
+207
+00:13:19,780 --> 00:13:23,470
+I'm sorry, $10 per million input tokens
+
+208
+00:13:23,470 --> 00:13:27,190
+and $50 per million output. Oh, that's
+
+209
+00:13:27,190 --> 00:13:32,890
+expensive. That's expensive.
+
+210
+00:13:32,890 --> 00:13:36,660
+Much more expensive than Opus 4.8. We expect demand for Fable 5
+
+211
+00:13:36,660 --> 00:13:40,530
+to be very high and difficult to predict. I mean, let's see if it really
+
+212
+00:13:40,530 --> 00:13:44,780
+delivers because Mythos was really like, you know,
+
+213
+00:13:44,780 --> 00:13:48,420
+this kind of like big bad, big
+
+214
+00:13:48,420 --> 00:13:52,870
+and bad, what's that? Terminator
+
+215
+00:13:53,266.66666666662786 --> 00:13:57,320
+like threat to cybersecurity, had to shut it down.
+
+216
+00:13:57,320 --> 00:14:01,110
+Could only give it to the US government in order
+
+217
+00:14:01,110 --> 00:14:04,860
+to use for mission critical exercises
+
+218
+00:14:04,860 --> 00:14:08,490
+and stuff like that. So let's see if this is
+
+219
+00:14:08,490 --> 00:14:12,220
+really it because there was a lot of hype around it.
+
+220
+00:14:12,220 --> 00:14:15,780
+If it's not, it's going to be pretty disappointing. So,
+
+221
+00:14:15,780 --> 00:14:19,530
+but I think, I think I actually don't know what to think. So I'm going
+
+222
+00:14:19,530 --> 00:14:23,220
+to try this out later today. I just wanted to kind of look into
+
+223
+00:14:23,220 --> 00:14:27,200
+this and to do this improv and but I'm
+
+224
+00:14:27,636.6666666666279 --> 00:14:31,150
+going to test this out in Claude
+
+225
+00:14:31,150 --> 00:14:35,200
+code and do a video on that and
+
+226
+00:14:35,200 --> 00:14:39,430
+then we can see how it works. But we got to come up with the right benchmarks
+
+227
+00:14:40,333.33333333337214 --> 00:14:43,980
+because I don't want to just do like what a lot of I see a lot of other and then
+
+228
+00:14:43,980 --> 00:14:47,690
+there's nothing wrong with it. I just don't want to kind of like make some
+
+229
+00:14:47,690 --> 00:14:51,220
+kind of like silly little animation or anything like that. I want to
+
+230
+00:14:51,220 --> 00:14:55,030
+actually see like, does it really work? So it takes time to kind
+
+231
+00:14:55,030 --> 00:14:58,610
+of come up with a good benchmark. I think though, if I come
+
+232
+00:14:58,610 --> 00:15:02,350
+up with a couple of them, then at least when these new models come out, I have
+
+233
+00:15:02,350 --> 00:15:05,860
+a good idea and I can actually compare them properly.
+
+234
+00:15:05,860 --> 00:15:09,430
+So it will be in the form of a workflow template and
+
+235
+00:15:09,430 --> 00:15:13,070
+I'll share it. Okay. So I'll see you guys in the
+
+236
+00:15:13,070 --> 00:15:25,000
+next one. Take care.

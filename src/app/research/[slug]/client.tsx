@@ -1,17 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, Clock, ArrowRight, Mail } from "lucide-react";
+import type { MuxPlayerElement } from "@mux/mux-player-react";
 import { EsyLoader } from "@/components/EsyLoader";
 import {
   type ResearchVideo,
   type WorkflowStage,
   formatDuration,
 } from "@/data/research-videos";
+import type { TranscriptSegment } from "@/lib/transcripts";
 import { VideoPlayer } from "@/components/School/VideoPlayer";
 import { TranscriptToggle } from "@/components/School/TranscriptToggle";
+import { VideoTranscript } from "@/components/Research/VideoTranscript";
 import { ResearchNewsletterBar } from "@/components/Research/ResearchNewsletterBar";
 import { ResearchRelatedVideos } from "@/components/Research/ResearchRelatedVideos";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -21,6 +24,8 @@ import { navyCalmLightTheme as theme } from "@/lib/theme";
 interface ResearchVideoPageClientProps {
   video: ResearchVideo;
   related: ResearchVideo[];
+  /** Build-time parsed SRT segments; null when no transcript file exists. */
+  transcriptSegments?: TranscriptSegment[] | null;
 }
 
 type Breakpoint = "mobile" | "tablet" | "desktop";
@@ -313,11 +318,15 @@ function WorkflowPipeline({
 export default function ResearchVideoPageClient({
   video,
   related,
+  transcriptSegments,
 }: ResearchVideoPageClientProps) {
   const bp = useBreakpoint();
   const isMobile = bp === "mobile";
   const isTablet = bp === "tablet";
   const isCompact = isMobile || isTablet;
+
+  // Shared handle to the Mux player so the transcript can seek and follow it.
+  const playerRef = useRef<MuxPlayerElement | null>(null);
 
   const pagePadding = isMobile
     ? "0 1rem"
@@ -374,12 +383,14 @@ export default function ResearchVideoPageClient({
             title={video.title}
             thumbnailUrl={video.thumbnailUrl}
             durationSeconds={video.durationSeconds}
+            playerRef={playerRef}
           />
         </div>
       </div>
 
-      {/* Transcript toggle */}
-      {video.transcript && (
+      {/* Transcript — timestamped + click-to-seek when an SRT exists,
+          legacy plain-text toggle otherwise. */}
+      {transcriptSegments && transcriptSegments.length > 0 ? (
         <div
           style={{
             maxWidth: 1200,
@@ -387,8 +398,23 @@ export default function ResearchVideoPageClient({
             padding: pagePadding,
           }}
         >
-          <TranscriptToggle transcript={video.transcript} />
+          <VideoTranscript
+            segments={transcriptSegments}
+            playerRef={playerRef}
+          />
         </div>
+      ) : (
+        video.transcript && (
+          <div
+            style={{
+              maxWidth: 1200,
+              margin: "0 auto",
+              padding: pagePadding,
+            }}
+          >
+            <TranscriptToggle transcript={video.transcript} />
+          </div>
+        )
       )}
 
       {/* Newsletter bar */}
