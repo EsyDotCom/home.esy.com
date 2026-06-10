@@ -516,10 +516,13 @@ export default function ResearchVideoPageClient({
                 }}
               >
                 <Calendar size={14} />
+                {/* Date-only string — format in UTC to avoid off-by-one in
+                    timezones behind UTC. */}
                 {new Date(video.publishedAt).toLocaleDateString("en-US", {
                   month: "long",
                   day: "numeric",
                   year: "numeric",
+                  timeZone: "UTC",
                 })}
               </span>
               <span
