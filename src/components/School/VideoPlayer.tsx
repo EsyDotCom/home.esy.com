@@ -1,6 +1,9 @@
 "use client";
 
-import MuxPlayerElement from "@mux/mux-player-react";
+import MuxPlayerElement, {
+  type MuxPlayerElement as MuxPlayerRef,
+} from "@mux/mux-player-react";
+import type { Ref } from "react";
 import { Play, SkipBack, SkipForward, Maximize } from "lucide-react";
 
 export interface VideoPlayerProps {
@@ -8,6 +11,9 @@ export interface VideoPlayerProps {
   title: string;
   thumbnailUrl?: string;
   durationSeconds?: number;
+  /** Optional handle to the underlying <mux-player> element so siblings
+      (e.g. the transcript) can seek and observe playback. */
+  playerRef?: Ref<MuxPlayerRef>;
 }
 
 function formatDuration(seconds: number): string {
@@ -123,6 +129,7 @@ export function VideoPlayer({
   title,
   thumbnailUrl,
   durationSeconds,
+  playerRef,
 }: VideoPlayerProps) {
   if (!playbackId) {
     return (
@@ -136,6 +143,7 @@ export function VideoPlayer({
   return (
     <div className="video-player-wrapper" style={{ background: "#000" }}>
       <MuxPlayerElement
+        ref={playerRef}
         playbackId={playbackId}
         metadata={{ video_title: title }}
         poster={poster}
