@@ -33,6 +33,92 @@ function useBreakpoint(): Breakpoint {
   return bp;
 }
 
+// Shared shelf layout (header + responsive card grid) so the index sections
+// don't quadruplicate the same markup.
+function VideoGridSection({
+  title,
+  description,
+  videos,
+  isMobile,
+  isTablet,
+}: {
+  title: string;
+  description: string;
+  videos: ResearchVideo[];
+  isMobile: boolean;
+  isTablet: boolean;
+}) {
+  return (
+    <section
+      style={{
+        maxWidth: 1200,
+        margin: "0 auto",
+        padding: isMobile
+          ? "0 1rem 3rem"
+          : isTablet
+            ? "0 1.5rem 3.5rem"
+            : "0 2rem 4rem",
+      }}
+    >
+      <div
+        style={{
+          paddingBottom: "1.5rem",
+          marginBottom: isMobile ? "1.25rem" : "2rem",
+          borderBottom: `1px solid ${theme.border}`,
+        }}
+      >
+        <h2
+          style={{
+            fontFamily: "var(--font-literata)",
+            fontSize: "1.125rem",
+            fontWeight: 500,
+            color: theme.text,
+          }}
+        >
+          {title}
+        </h2>
+        <p
+          style={{
+            fontSize: "0.9375rem",
+            color: theme.textSecondary,
+            lineHeight: 1.6,
+            marginTop: "0.5rem",
+          }}
+        >
+          {description}
+        </p>
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: isMobile
+            ? "1fr"
+            : isTablet
+              ? "repeat(2, 1fr)"
+              : "repeat(3, 1fr)",
+          gap: isMobile ? "1.25rem" : "1.5rem",
+        }}
+      >
+        {videos.map((video: ResearchVideo) => (
+          <ResearchVideoCard
+            key={video.slug}
+            title={video.title}
+            slug={video.slug}
+            thumbnailUrl={video.thumbnailUrl}
+            muxPlaybackId={video.muxPlaybackId}
+            durationSeconds={video.durationSeconds}
+            category={video.category}
+            categoryLabel={video.categoryLabel}
+            tags={video.tags}
+            publishedAt={video.publishedAt}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function ResearchClient() {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const bp = useBreakpoint();
@@ -52,6 +138,9 @@ export default function ResearchClient() {
   };
 
   const allVideos = getPublishedResearchVideos();
+  // Latest leads the page (one desktop row); category shelves follow and may
+  // repeat those videos — the shelf is the browse surface, Latest is the pulse.
+  const latestVideos = allVideos.slice(0, 3);
   const modelVideos = getResearchVideosByCategory("models");
   const aiToolsVideos = getResearchVideosByCategory("ai-tools");
   const workflowVideos = getResearchVideosByCategory("workflows");
@@ -103,217 +192,45 @@ export default function ResearchClient() {
         }
       />
 
-      {/* ═══ Model Research ═══ */}
-      {/* First grid section: model coverage is the freshest content stream. */}
-      <section
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: isMobile
-            ? "0 1rem 3rem"
-            : isTablet
-              ? "0 1.5rem 3.5rem"
-              : "0 2rem 4rem",
-        }}
-      >
-        <div
-          style={{
-            paddingBottom: "1.5rem",
-            marginBottom: isMobile ? "1.25rem" : "2rem",
-            borderBottom: `1px solid ${theme.border}`,
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "var(--font-literata)",
-              fontSize: "1.125rem",
-              fontWeight: 500,
-              color: theme.text,
-            }}
-          >
-            Model Research
-          </h2>
-          <p
-            style={{
-              fontSize: "0.9375rem",
-              color: theme.textSecondary,
-              lineHeight: 1.6,
-              marginTop: "0.5rem",
-            }}
-          >
-            Frontier model releases — launch-day first impressions and
-            deep-dive evaluations of how each model performs in real
-            workflows.
-          </p>
-        </div>
+      {/* Section order: Latest leads with the newest drops across all
+          categories, Workflow Research is the flagship shelf, then the
+          remaining category shelves. */}
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile
-              ? "1fr"
-              : isTablet
-                ? "repeat(2, 1fr)"
-                : "repeat(3, 1fr)",
-            gap: isMobile ? "1.25rem" : "1.5rem",
-          }}
-        >
-          {modelVideos.map((video: ResearchVideo) => (
-            <ResearchVideoCard
-              key={video.slug}
-              title={video.title}
-              slug={video.slug}
-              thumbnailUrl={video.thumbnailUrl}
-              muxPlaybackId={video.muxPlaybackId}
-              durationSeconds={video.durationSeconds}
-              category={video.category}
-              categoryLabel={video.categoryLabel}
-              tags={video.tags}
-              publishedAt={video.publishedAt}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* ═══ AI Coding Tools ═══ */}
-      <section
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: isMobile
-            ? "0 1rem 3rem"
-            : isTablet
-              ? "0 1.5rem 3.5rem"
-              : "0 2rem 4rem",
-        }}
-      >
-        <div
-          style={{
-            paddingBottom: "1.5rem",
-            marginBottom: isMobile ? "1.25rem" : "2rem",
-            borderBottom: `1px solid ${theme.border}`,
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "var(--font-literata)",
-              fontSize: "1.125rem",
-              fontWeight: 500,
-              color: theme.text,
-            }}
-          >
-            AI Coding Tools
-          </h2>
-          <p
-            style={{
-              fontSize: "0.9375rem",
-              color: theme.textSecondary,
-              lineHeight: 1.6,
-              marginTop: "0.5rem",
-            }}
-          >
-            Hands-on breakdowns of Claude Code, Cursor, and the AI tools used
-            to build Esy.
-          </p>
-        </div>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile
-              ? "1fr"
-              : isTablet
-                ? "repeat(2, 1fr)"
-                : "repeat(3, 1fr)",
-            gap: isMobile ? "1.25rem" : "1.5rem",
-          }}
-        >
-          {aiToolsVideos.map((video: ResearchVideo) => (
-            <ResearchVideoCard
-              key={video.slug}
-              title={video.title}
-              slug={video.slug}
-              thumbnailUrl={video.thumbnailUrl}
-              muxPlaybackId={video.muxPlaybackId}
-              durationSeconds={video.durationSeconds}
-              category={video.category}
-              categoryLabel={video.categoryLabel}
-              tags={video.tags}
-              publishedAt={video.publishedAt}
-            />
-          ))}
-        </div>
-      </section>
+      {/* ═══ Latest ═══ */}
+      <VideoGridSection
+        title="Latest"
+        description="The newest research drops — frontier model releases, tool breakdowns, and workflow engineering."
+        videos={latestVideos}
+        isMobile={isMobile}
+        isTablet={isTablet}
+      />
 
       {/* ═══ Workflow Research ═══ */}
-      <section
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: isMobile
-            ? "0 1rem 3rem"
-            : isTablet
-              ? "0 1.5rem 3.5rem"
-              : "0 2rem 4rem",
-        }}
-      >
-        <div
-          style={{
-            paddingBottom: "1.5rem",
-            marginBottom: isMobile ? "1.25rem" : "2rem",
-            borderBottom: `1px solid ${theme.border}`,
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "var(--font-literata)",
-              fontSize: "1.125rem",
-              fontWeight: 500,
-              color: theme.text,
-            }}
-          >
-            Workflow Research
-          </h2>
-          <p
-            style={{
-              fontSize: "0.9375rem",
-              color: theme.textSecondary,
-              lineHeight: 1.6,
-              marginTop: "0.5rem",
-            }}
-          >
-            Architecture decisions, pipeline design, and the engineering behind
-            Esy&apos;s agentic workflow engine.
-          </p>
-        </div>
+      <VideoGridSection
+        title="Workflow Research"
+        description="Architecture decisions, pipeline design, and the engineering behind Esy's agentic workflow engine."
+        videos={workflowVideos}
+        isMobile={isMobile}
+        isTablet={isTablet}
+      />
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile
-              ? "1fr"
-              : isTablet
-                ? "repeat(2, 1fr)"
-                : "repeat(3, 1fr)",
-            gap: isMobile ? "1.25rem" : "1.5rem",
-          }}
-        >
-          {workflowVideos.map((video: ResearchVideo) => (
-            <ResearchVideoCard
-              key={video.slug}
-              title={video.title}
-              slug={video.slug}
-              thumbnailUrl={video.thumbnailUrl}
-              muxPlaybackId={video.muxPlaybackId}
-              durationSeconds={video.durationSeconds}
-              category={video.category}
-              categoryLabel={video.categoryLabel}
-              tags={video.tags}
-              publishedAt={video.publishedAt}
-            />
-          ))}
-        </div>
-      </section>
+      {/* ═══ Model Research ═══ */}
+      <VideoGridSection
+        title="Model Research"
+        description="Frontier model releases — launch-day first impressions and deep-dive evaluations of how each model performs in real workflows."
+        videos={modelVideos}
+        isMobile={isMobile}
+        isTablet={isTablet}
+      />
+
+      {/* ═══ AI Coding Tools ═══ */}
+      <VideoGridSection
+        title="AI Coding Tools"
+        description="Hands-on breakdowns of Claude Code, Cursor, and the AI tools used to build Esy."
+        videos={aiToolsVideos}
+        isMobile={isMobile}
+        isTablet={isTablet}
+      />
 
       {/* ═══ CTA Banner ═══ */}
       <section

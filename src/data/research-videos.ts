@@ -164,8 +164,8 @@ The point of running everything through a template — even for something as sim
     title: "ChatGPT Images 2.0: A Monster Upgrade for Educational Artifacts",
     description:
       "A side-by-side look at ChatGPT Images 2.0 and Nano Banana 2 (Gemini 3.1 Flash Image) across clipart with text, illustrations, infographics, and character reference sheets — and where each fits inside an automated educational artifact pipeline.",
-    category: "workflows",
-    categoryLabel: "Workflow Research",
+    category: "models",
+    categoryLabel: "Model Research",
     durationSeconds: 302,
     publishedAt: "2026-05-09",
     muxPlaybackId: "eP00jTf5EJA01KwF01lVNn3LpzepxPmJ9V00dXY5sGGCIMg",

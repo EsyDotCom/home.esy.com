@@ -31,11 +31,14 @@ export function ResearchVideoCard({
       ? `https://image.mux.com/${muxPlaybackId}/thumbnail.jpg?time=0`
       : null);
 
+  // publishedAt is a date-only string; format in UTC so it doesn't render
+  // a day early in timezones behind UTC.
   const formattedDate = publishedAt
     ? new Date(publishedAt).toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
+        timeZone: "UTC",
       })
     : null;
 
