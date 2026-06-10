@@ -36,6 +36,27 @@ const nextConfig = {
   // Redirect legacy paths to /essays/
   async redirects() {
     return [
+      // Prompt library retired (Jun 2026) — send old traffic to workflows
+      {
+        source: '/prompt-library',
+        destination: '/workflows',
+        permanent: true,
+      },
+      {
+        source: '/prompt-library/:path*',
+        destination: '/workflows',
+        permanent: true,
+      },
+      {
+        source: '/prompts',
+        destination: '/workflows',
+        permanent: true,
+      },
+      {
+        source: '/prompts/:path*',
+        destination: '/workflows',
+        permanent: true,
+      },
       // Templates renamed to Workflows (May 2026)
       {
         source: '/templates',

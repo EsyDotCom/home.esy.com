@@ -10,7 +10,6 @@ import {
   Menu, X, TrendingUp, Shield
 } from 'lucide-react';
 import EssayGeneratorPro from '@/components/EssayGenerator/EssayGeneratorPro';
-import PromptIntelligenceEngine from '@/components/PromptLibrary/PromptIntelligenceEngine';
 import ModernFeaturesBento from '@/components/Features/ModernFeaturesBento';
 
 const NewHomepage = () => {
@@ -289,9 +288,6 @@ const NewHomepage = () => {
           </div>
         </div>
       </section>
-
-      {/* Prompt Intelligence Engine - Revolutionary Feature Section */}
-      <PromptIntelligenceEngine />
 
       {/* Modern Features Bento Grid - World-Class Design */}
       <ModernFeaturesBento />

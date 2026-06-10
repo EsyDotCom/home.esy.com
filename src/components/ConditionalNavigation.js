@@ -24,10 +24,6 @@ const ConditionalNavigation = () => {
   const isPhotoEssaysPage = normalizedPath === '/photo-essays';
   
   
-  // Check if we're on prompt-library pages
-  const isPromptLibraryPage = normalizedPath?.startsWith('/prompt-library');
-  const isPromptLibraryIndex = normalizedPath === '/prompt-library';
-  
   // Check if we're on glossary pages
   const isGlossaryPage = normalizedPath?.startsWith('/glossary');
   const isGlossaryIndex = normalizedPath === '/glossary';
@@ -89,8 +85,6 @@ const ConditionalNavigation = () => {
 
   // Render the common navigation on all other pages
   // Show header search:
-  // - Always on individual prompt pages (/prompt-library/*)
-  // - On prompt library index only after scrolling past main search
   // - Always on glossary view pages (/glossary/*)
   // - On glossary index only after scrolling past main search
   // - On school index only after scrolling past main search (NO search on school article pages)
@@ -99,7 +93,6 @@ const ConditionalNavigation = () => {
   // - On scrollytelling index only after scrolling past discovery bar
   // - NO search on about, privacy, terms, agentic-workflows (informational pages)
   const shouldShowHeaderSearch =
-    (isPromptLibraryPage && (isPromptLibraryIndex ? showHeaderSearch : true)) ||
     (isGlossaryPage && (isGlossaryIndex ? showHeaderSearch : true)) ||
     (isSchoolPage && !isCourseLessonPage && isSchoolIndex && showHeaderSearch) ||
     (isTemplatesPage && (isTemplatesIndex ? showHeaderSearch : true)) ||

@@ -51,13 +51,6 @@ export const ctaMapping: CTAMapping = {
     isProduct: true
   },
   
-  // Prompt library pages
-  '/prompt-library': {
-    ctaText: 'Use in Esy',
-    ctaHref: 'https://app.esy.com/signup',
-    isProduct: true
-  },
-  
   // Individual essay pages (bonus feature)
   '/essays/': {
     ctaText: 'Learn How We Wrote This',

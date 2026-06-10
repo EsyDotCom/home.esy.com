@@ -119,10 +119,9 @@ const HeaderSearch: React.FC<HeaderSearchProps> = ({
     return () => document.removeEventListener('keydown', handleEscape);
   }, [showMobileModal]);
 
-  // Use the appropriate search hook based on context
-  // Templates use the same search structure as prompts
+  // usePromptSearch is also used for the templates context (same data shape)
   const promptSearchHook = usePromptSearch({
-    prompts: (searchContext === 'prompt-library' || searchContext === 'templates') ? (prompts || []) : [],
+    prompts: searchContext === 'templates' ? (prompts || []) : [],
     debounceMs: 200,
     maxResults: 6
   });
@@ -169,7 +168,7 @@ const HeaderSearch: React.FC<HeaderSearchProps> = ({
     searchHook = essaySearchHook;
   } else if (searchContext === 'blog') {
     searchHook = blogSearchHook;
-  } else if (searchContext === 'templates' || searchContext === 'prompt-library') {
+  } else if (searchContext === 'templates') {
     searchHook = promptSearchHook;
   } else {
     searchHook = promptSearchHook;
