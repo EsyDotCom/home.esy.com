@@ -1,6 +1,16 @@
 import { MetadataRoute } from 'next'
 import fs from 'fs'
 import path from 'path'
+import { getPublishedResearchVideos } from '@/data/research-videos'
+import { getPublishedVideos as getPublishedSchoolVideos } from '@/data/school-videos'
+import { getClipArtSlugs } from '@/data/clip-art-artifacts'
+import { getAllTemplates } from '@/lib/templates'
+import { courses } from '@/lib/learn/mockData'
+import {
+  getAllPatternSlugs,
+  getAllTermSlugs,
+  getAllWorkflowSlugs,
+} from '@/content/agents/content'
 
 // Force static generation for static export
 export const dynamic = 'force-static'
@@ -76,7 +86,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Get dynamic routes from content directories
   const essaysDir = path.join(process.cwd(), 'src/content/essays')
   const glossaryDir = path.join(process.cwd(), 'src/content/glossary')
-  const schoolArticlesDir = path.join(process.cwd(), 'src/content/school-articles')
 
   // Helper function to get markdown files from directory
   const getMarkdownFiles = (dir: string): string[] => {
@@ -91,10 +100,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  // Get dynamic content
+  // Get dynamic content. School articles are intentionally absent: the
+  // /school/articles/[slug] route is retired (only .old/.backup files remain),
+  // so emitting them produced 404s in the sitemap.
   const essays = getMarkdownFiles(essaysDir)
   const glossaryTerms = getMarkdownFiles(glossaryDir)
-  const schoolArticles = getMarkdownFiles(schoolArticlesDir)
 
   // Build sitemap entries
   const sitemap: MetadataRoute.Sitemap = []
@@ -134,16 +144,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   })
 
-  // Add school article routes (all with trailing slashes)
-  schoolArticles.forEach(article => {
-    sitemap.push({
-      url: `${baseUrl}/school/articles/${article}/`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    })
-  })
-
   // Add infographic routes (all with trailing slashes)
   infographicSlugs.forEach(slug => {
     sitemap.push({
@@ -154,13 +154,118 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   })
 
+  // ── Registry-backed dynamic routes ──────────────────────────────────────
+  // The auto-discovery above skips [slug] routes, and these sections keep
+  // their content in TS data registries (not content directories), so each
+  // must be enumerated explicitly. prompt-library is intentionally excluded.
+
+  // Research video pages (lastModified from real publish dates)
+  const researchVideos = getPublishedResearchVideos()
+  researchVideos.forEach(video => {
+    sitemap.push({
+      url: `${baseUrl}/research/${video.slug}/`,
+      lastModified: new Date(video.publishedAt),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })
+  })
+
+  // School video pages (articles are covered via the content dir above)
+  const schoolVideos = getPublishedSchoolVideos()
+  schoolVideos.forEach(video => {
+    sitemap.push({
+      url: `${baseUrl}/school/${video.slug}/`,
+      lastModified: new Date(video.publishedAt),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })
+  })
+
+  // Workflow template detail pages — core product surface, so higher priority
+  const workflowTemplates = getAllTemplates()
+  workflowTemplates.forEach(template => {
+    sitemap.push({
+      url: `${baseUrl}/workflows/${template.slug}/`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    })
+  })
+
+  // Clip art artifact pages
+  const clipArtSlugs = getClipArtSlugs()
+  clipArtSlugs.forEach(slug => {
+    sitemap.push({
+      url: `${baseUrl}/clip-art/${slug}/`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })
+  })
+
+  // Course detail + lesson pages
+  let courseRouteCount = 0
+  courses.forEach(course => {
+    sitemap.push({
+      url: `${baseUrl}/courses/${course.slug}/`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })
+    courseRouteCount++
+    course.chapters.forEach(chapter => {
+      chapter.lessons.forEach(lesson => {
+        sitemap.push({
+          url: `${baseUrl}/courses/${course.slug}/${lesson.slug}/`,
+          lastModified: new Date(),
+          changeFrequency: 'monthly',
+          priority: 0.6,
+        })
+        courseRouteCount++
+      })
+    })
+  })
+
+  // Agents reference pages (patterns, terms, workflows)
+  const agentRoutes = [
+    ...getAllPatternSlugs().map(slug => `/agents/patterns/${slug}`),
+    ...getAllTermSlugs().map(slug => `/agents/terms/${slug}`),
+    ...getAllWorkflowSlugs().map(slug => `/agents/workflows/${slug}`),
+  ]
+  agentRoutes.forEach(route => {
+    sitemap.push({
+      url: `${baseUrl}${route}/`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    })
+  })
+
+  // Model pages — mirrors the hardcoded list in models/[...slug]/page.tsx;
+  // keep in sync until those pages get a data registry.
+  const modelSlugs = ['claude-opus', 'gpt', 'gpt/5-2']
+  modelSlugs.forEach(slug => {
+    sitemap.push({
+      url: `${baseUrl}/models/${slug}/`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    })
+  })
+
   // Log discovered routes for debugging
   console.log(`Sitemap generated with ${sitemap.length} total routes:`)
   console.log(`- ${discoveredRoutes.length} static routes (auto-discovered)`)
   console.log(`- ${essays.length} essay routes`)
   console.log(`- ${glossaryTerms.length} glossary routes`)
-  console.log(`- ${schoolArticles.length} school article routes`)
   console.log(`- ${infographicSlugs.length} infographic routes`)
+  console.log(`- ${researchVideos.length} research video routes`)
+  console.log(`- ${schoolVideos.length} school video routes`)
+  console.log(`- ${workflowTemplates.length} workflow template routes`)
+  console.log(`- ${clipArtSlugs.length} clip art routes`)
+  console.log(`- ${courseRouteCount} course routes`)
+  console.log(`- ${agentRoutes.length} agents reference routes`)
+  console.log(`- ${modelSlugs.length} model routes`)
 
   return sitemap
 }
