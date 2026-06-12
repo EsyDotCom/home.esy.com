@@ -9,7 +9,6 @@ import {
   PenTool, Target, Layers, Award,
   Menu, X, TrendingUp, Shield
 } from 'lucide-react';
-import EssayGeneratorPro from '@/components/EssayGenerator/EssayGeneratorPro';
 import ModernFeaturesBento from '@/components/Features/ModernFeaturesBento';
 
 const NewHomepage = () => {
@@ -221,25 +220,7 @@ const NewHomepage = () => {
             </div>
           </div>
 
-          {/* Essay Generator Interface - Responsive Container */}
-          <div style={{
-            // Fluid max width
-            maxWidth: `min(100%, ${isDesktop ? '840px' : isTablet ? '720px' : '100%'})`,
-            margin: '0 auto',
-            // More generous top spacing from subtitle
-            marginTop: `clamp(${isMobile ? '2.5rem' : '3rem'}, 5vh, 4rem)`,
-            // Dynamic margin bottom
-            marginBottom: `clamp(1.5rem, 4vh, 3.5rem)`,
-            // Safe area padding
-            paddingLeft: isMobile ? `max(0.5rem, env(safe-area-inset-left))` : 0,
-            paddingRight: isMobile ? `max(0.5rem, env(safe-area-inset-right))` : 0
-          }}>
-            <EssayGeneratorPro
-              onGenerate={handleEssayGeneration}
-              isGenerating={isSearching}
-              style={{ margin: '0' }}
-            />
-          </div>
+          {/* Legacy AI essay generator removed — the editor product now lives in compose.esy.com. */}
 
           {/* Trust Indicators - Responsive Grid System */}
           <div style={{
