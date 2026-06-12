@@ -8,11 +8,7 @@ import { VideoCard } from "@/components/School/VideoCard";
 import SchoolNewsletter from "@/components/School/SchoolNewsletter";
 import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 import { navyCalmLightTheme as theme } from "@/lib/theme";
-import {
-  getPublishedVideos,
-  formatDuration,
-  type SchoolVideo,
-} from "@/data/school-videos";
+import { formatDuration, type SchoolVideo } from "@/data/school-videos";
 import { courses } from "@/lib/learn/mockData";
 
 type Breakpoint = "mobile" | "tablet" | "desktop";
@@ -40,7 +36,9 @@ const COURSE_ICONS: Record<string, string> = {
   "create-educational-infographics-with-nano-banana": "\uD83C\uDF4C",
 };
 
-export default function SchoolVideosClient() {
+// Videos arrive from the server component: static registry merged with
+// articles published live from Compose (api.esy.com).
+export default function SchoolVideosClient({ videos: allVideos }: { videos: SchoolVideo[] }) {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const bp = useBreakpoint();
   const isMobile = bp === "mobile";
@@ -59,7 +57,7 @@ export default function SchoolVideosClient() {
     subscribe(emailInputRef.current?.value || "");
   };
 
-  const videos = getPublishedVideos();
+  const videos = allVideos;
   const featured = videos[0];
   const rest = videos.slice(1);
 

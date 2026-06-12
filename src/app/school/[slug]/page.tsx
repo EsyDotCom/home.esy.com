@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
+import { getPublishedVideos } from "@/data/school-videos";
 import {
-  getVideoBySlug,
-  getRelatedVideos,
-  getPublishedVideos,
-} from "@/data/school-videos";
+  findSchoolArticle,
+  getAllSchoolArticles,
+  relatedFrom,
+} from "@/lib/published-articles";
 import VideoPageClient from "./client";
 import type { Metadata } from "next";
 
@@ -11,13 +12,17 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+// Registry slugs prerender at build; Compose-published slugs render on
+// demand (dynamicParams) and cache via ISR.
+export const revalidate = 300;
+
 export async function generateStaticParams() {
   return getPublishedVideos().map((v) => ({ slug: v.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const video = getVideoBySlug(slug);
+  const video = await findSchoolArticle(slug);
 
   if (!video) return {};
 
@@ -39,11 +44,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function SchoolVideoPage({ params }: Props) {
   const { slug } = await params;
-  const video = getVideoBySlug(slug);
+  const video = await findSchoolArticle(slug);
 
   if (!video) notFound();
 
-  const related = getRelatedVideos(video.slug, video.relatedSlugs);
+  // Related resolves against the merged list so API and registry articles
+  // can cross-reference each other.
+  const related = relatedFrom(await getAllSchoolArticles(), video.slug, video.relatedSlugs);
 
   return <VideoPageClient video={video} related={related} />;
 }

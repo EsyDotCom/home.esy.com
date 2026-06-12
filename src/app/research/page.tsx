@@ -1,4 +1,5 @@
 import ResearchClient from "./client";
+import { getAllResearchArticles } from "@/lib/published-articles";
 
 export const metadata = {
   title: "Esy Research — Frontier Models, AI Coding Tools & Workflows",
@@ -14,6 +15,11 @@ export const metadata = {
   },
 };
 
-export default function Page() {
-  return <ResearchClient />;
+// ISR: re-fetch the published-article merge every 5 minutes so a Compose
+// publish appears without a redeploy.
+export const revalidate = 300;
+
+export default async function Page() {
+  const videos = await getAllResearchArticles();
+  return <ResearchClient videos={videos} />;
 }
