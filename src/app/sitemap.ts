@@ -58,7 +58,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   
   // Routes to exclude from sitemap (disabled pages)
   const excludedRoutes = [
-    '/ai-writing-tools',
     '/essays/visual',
     '/blog',
   ]

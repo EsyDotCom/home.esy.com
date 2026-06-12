@@ -597,33 +597,6 @@ Each paragraph transitions smoothly, using sensory details to ground readers in 
           to inspire your writing journey. Free prompts for stories, essays, blogs, and more.
         </p>
 
-        {/* Writing Prompt Generator Link */}
-        <div style={{
-          marginBottom: '3rem'
-        }}>
-          <Link
-            href="/writing-prompt-generator"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.75rem 1.5rem',
-              backgroundColor: 'rgba(139, 92, 246, 0.1)',
-              border: '1px solid rgba(139, 92, 246, 0.3)',
-              borderRadius: '8px',
-              color: '#8b5cf6',
-              fontSize: '0.938rem',
-              fontWeight: 500,
-              textDecoration: 'none',
-              transition: 'all 0.2s'
-            }}
-          >
-            <Sparkles size={16} />
-            Create Custom Prompts
-            <ArrowRight size={16} />
-          </Link>
-        </div>
-
         {/* Quick Stats */}
         <div style={{
           display: 'grid',

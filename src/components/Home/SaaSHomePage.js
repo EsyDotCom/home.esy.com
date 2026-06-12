@@ -9,7 +9,6 @@ import {
   PenTool, Target, Layers, Award,
   Menu, X, TrendingUp, Shield
 } from 'lucide-react';
-import EssayGeneratorPro from '@/components/EssayGenerator/EssayGeneratorPro';
 import ModernFeaturesBento from '@/components/Features/ModernFeaturesBento';
 
 const NewHomepageElevated = () => {
@@ -225,27 +224,7 @@ const NewHomepageElevated = () => {
             </div>
           </div>
 
-          {/* Essay Generator Interface - Elevated Card Style */}
-          <div style={{
-            maxWidth: `min(100%, ${isDesktop ? '840px' : isTablet ? '720px' : '100%'})`,
-            margin: '0 auto',
-            marginTop: `clamp(${isMobile ? '2.5rem' : '3rem'}, 5vh, 4rem)`,
-            marginBottom: `clamp(1.5rem, 4vh, 3.5rem)`,
-            paddingLeft: isMobile ? `max(0.5rem, env(safe-area-inset-left))` : 0,
-            paddingRight: isMobile ? `max(0.5rem, env(safe-area-inset-right))` : 0,
-            // Card elevation effect
-            background: elevatedTheme.surface,
-            borderRadius: '16px',
-            border: `1px solid ${elevatedTheme.borderSubtle}`,
-            padding: '1.5rem',
-            boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.03) inset, 0 10px 40px -10px rgba(0, 0, 0, 0.5)'
-          }}>
-            <EssayGeneratorPro
-              onGenerate={handleEssayGeneration}
-              isGenerating={isSearching}
-              style={{ margin: '0' }}
-            />
-          </div>
+          {/* Legacy AI essay generator removed — the editor product now lives in compose.esy.com. */}
 
           {/* Trust Indicators - Better contrast */}
           <div style={{
