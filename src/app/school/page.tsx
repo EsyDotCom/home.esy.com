@@ -1,4 +1,5 @@
 import SchoolVideosClient from "./client";
+import { getAllSchoolArticles } from "@/lib/published-articles";
 
 export const metadata = {
   title: "Esy School — Learn Research Workflows & AI Tools",
@@ -14,6 +15,11 @@ export const metadata = {
   },
 };
 
-export default function Page() {
-  return <SchoolVideosClient />;
+// ISR: re-fetch the published-article merge every 5 minutes so a Compose
+// publish appears without a redeploy.
+export const revalidate = 300;
+
+export default async function Page() {
+  const videos = await getAllSchoolArticles();
+  return <SchoolVideosClient videos={videos} />;
 }

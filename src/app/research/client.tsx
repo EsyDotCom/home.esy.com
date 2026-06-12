@@ -9,11 +9,7 @@ import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 import { navyCalmLightTheme as theme } from "@/lib/theme";
 import LibraryHero from "@/components/LibraryHero/LibraryHero";
 import HeroCarousel, { type HeroCarouselItem } from "@/components/LibraryHero/HeroCarousel";
-import {
-  getPublishedResearchVideos,
-  getResearchVideosByCategory,
-  type ResearchVideo,
-} from "@/data/research-videos";
+import { type ResearchVideo } from "@/data/research-videos";
 
 type Breakpoint = "mobile" | "tablet" | "desktop";
 
@@ -119,7 +115,9 @@ function VideoGridSection({
   );
 }
 
-export default function ResearchClient() {
+// Videos arrive from the server component: static registry merged with
+// articles published live from Compose (api.esy.com).
+export default function ResearchClient({ videos }: { videos: ResearchVideo[] }) {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const bp = useBreakpoint();
   const isMobile = bp === "mobile";
@@ -137,13 +135,13 @@ export default function ResearchClient() {
     subscribe(emailInputRef.current?.value || "");
   };
 
-  const allVideos = getPublishedResearchVideos();
+  const allVideos = videos;
   // Latest leads the page (one desktop row); category shelves follow and may
   // repeat those videos — the shelf is the browse surface, Latest is the pulse.
   const latestVideos = allVideos.slice(0, 3);
-  const modelVideos = getResearchVideosByCategory("models");
-  const aiToolsVideos = getResearchVideosByCategory("ai-tools");
-  const workflowVideos = getResearchVideosByCategory("workflows");
+  const modelVideos = allVideos.filter((v) => v.category === "models");
+  const aiToolsVideos = allVideos.filter((v) => v.category === "ai-tools");
+  const workflowVideos = allVideos.filter((v) => v.category === "workflows");
 
   // Spotlight recent videos in the stage carousel (mux thumbnail as fallback).
   const featuredCarousel: HeroCarouselItem[] = allVideos.slice(0, 6).map((v) => ({
