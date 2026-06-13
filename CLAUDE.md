@@ -27,6 +27,6 @@ When in doubt, open the PR — agent overhead is cheap, broken `main` isn't.
 
 ## Key Documentation (In This Repo)
 
-- `docs/brand/ESY_DEFINITION.md` — Canonical brand definition and product philosophy
+- `../../../org-docs/brand/ESY_DEFINITION.md` (org.esy) — Canonical brand definition and product philosophy (moved out of this repo; `docs/brand/ESY_DEFINITION.md` is now a pointer stub)
 - `docs/strategy/sessions/2026-04-12-engineer-first-rebrand-and-homepage-redesign.md` — Current positioning: engineer-first
 - `docs/strategy/GROWTH_STRATEGY.md` — Growth and distribution strategy
