@@ -21,7 +21,10 @@ type ApiArticle = ResearchVideo; // the public API response mirrors this shape
 async function fetchPublished(kind: "research" | "school"): Promise<ApiArticle[]> {
   try {
     const res = await fetch(`${API_URL}/v1/publications/public?kind=${kind}`, {
-      next: { revalidate: REVALIDATE_SECONDS },
+      next: {
+        revalidate: REVALIDATE_SECONDS,
+        tags: ["published-articles", `published-articles:${kind}`],
+      },
     });
     if (!res.ok) return [];
     const body = await res.json();

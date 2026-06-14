@@ -15,6 +15,7 @@ type Props = {
 // Registry slugs prerender at build; Compose-published slugs render on
 // demand (dynamicParams) and cache via ISR.
 export const revalidate = 300;
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   return getPublishedVideos().map((v) => ({ slug: v.slug }));
