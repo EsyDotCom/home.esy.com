@@ -6,32 +6,51 @@ import { schoolVideos, type SchoolVideo } from "@/data/school-videos";
 
 // Published articles = static registry (checked into git) + live entries
 // published from Compose via api.esy.com. The API serves the exact registry
-// shape, so the two sources interleave with no adaptation. ISR (5 min) keeps
-// a Compose publish appearing without a redeploy; an unreachable API at
-// build/request time degrades gracefully to registry-only.
+// shape, so the two sources interleave with no adaptation.
+//
+// Cache model is event-driven (Substack-style): the publish/unpublish webhook
+// purges the `published-articles` tags via api.esy.com, so a change is reflected
+// within ~1s. The 1-hour revalidate is only a backstop if a webhook is ever
+// missed — not the primary freshness mechanism. Critically, a transient API
+// error is NEVER cached as an article-less page (see fetchPublished vs the
+// build-only fallback in fetchPublishedSafe).
 
 const API_URL =
   process.env.ESY_API_URL ??
   (process.env.NODE_ENV === "development" ? "http://localhost:8000" : "https://api.esy.com");
 
-const REVALIDATE_SECONDS = 300;
+// Backstop only; on-demand tag revalidation is the real trigger.
+const REVALIDATE_SECONDS = 3600;
 
 type ApiArticle = ResearchVideo; // the public API response mirrors this shape
 
 async function fetchPublished(kind: "research" | "school"): Promise<ApiArticle[]> {
+  const res = await fetch(`${API_URL}/v1/publications/public?kind=${kind}`, {
+    next: {
+      revalidate: REVALIDATE_SECONDS,
+      tags: ["published-articles", `published-articles:${kind}`],
+    },
+  });
+  // Throw — do NOT return [] — on a bad response. Returning an empty list here
+  // would let Next cache an article-less render on a transient API blip (e.g. an
+  // api.esy.com redeploy), silently dropping every published article until the
+  // cache expired. By throwing, an in-flight ISR regeneration is discarded and
+  // Next keeps serving the last-good render; only a cold cache + dead API errors.
+  if (!res.ok) throw new Error(`published-articles ${kind}: HTTP ${res.status}`);
+  const body = await res.json();
+  return (body.items ?? []) as ApiArticle[];
+}
+
+// Build-time only graceful degradation: api.esy.com has flaked with 502s, and a
+// static build shouldn't fail just because the API is briefly unreachable —
+// fall back to the registry. At request/ISR time we deliberately let the error
+// propagate so Next serves the last-good cache instead of caching an empty list.
+async function fetchPublishedSafe(kind: "research" | "school"): Promise<ApiArticle[]> {
   try {
-    const res = await fetch(`${API_URL}/v1/publications/public?kind=${kind}`, {
-      next: {
-        revalidate: REVALIDATE_SECONDS,
-        tags: ["published-articles", `published-articles:${kind}`],
-      },
-    });
-    if (!res.ok) return [];
-    const body = await res.json();
-    return (body.items ?? []) as ApiArticle[];
-  } catch {
-    // API down or unreachable (e.g. during a static build) — registry only.
-    return [];
+    return await fetchPublished(kind);
+  } catch (err) {
+    if (process.env.NEXT_PHASE === "phase-production-build") return [];
+    throw err;
   }
 }
 
@@ -49,12 +68,12 @@ function mergeBySlug<T extends { slug: string; publishedAt: string }>(
 }
 
 export async function getAllResearchArticles(): Promise<ResearchVideo[]> {
-  const api = await fetchPublished("research");
+  const api = await fetchPublishedSafe("research");
   return mergeBySlug(researchVideos, api as ResearchVideo[]);
 }
 
 export async function getAllSchoolArticles(): Promise<SchoolVideo[]> {
-  const api = await fetchPublished("school");
+  const api = await fetchPublishedSafe("school");
   return mergeBySlug(schoolVideos, api as SchoolVideo[]);
 }
 

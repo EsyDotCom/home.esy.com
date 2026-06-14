@@ -12,9 +12,10 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
-// Registry slugs prerender at build; Compose-published slugs render on
-// demand (dynamicParams) and cache via ISR.
-export const revalidate = 300;
+// Registry slugs prerender at build; Compose-published slugs render on demand
+// (dynamicParams). Freshness is driven by the publish/unpublish webhook (tag +
+// path revalidation); this 1-hour revalidate is only a backstop.
+export const revalidate = 3600;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
