@@ -3,8 +3,8 @@
 /**
  * Sync the public workflow catalog from api.esy.com into a committed snapshot.
  *
- * esy.com is a fully static export (no runtime/ISR fetching), so the catalog
- * page renders from a committed JSON file. This script pulls the platform's
+ * The workflows page reads a committed JSON snapshot at build time. This script
+ * pulls the platform's
  * published templates from `GET /v1/catalog/workflows` (no auth) and writes that snapshot
  * to src/data/workflow-catalog.json. Run it (and commit the result) whenever
  * the platform's published templates change.
