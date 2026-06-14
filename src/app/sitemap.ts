@@ -1,19 +1,22 @@
 import { MetadataRoute } from 'next'
 import fs from 'fs'
 import path from 'path'
-import { getPublishedResearchVideos } from '@/data/research-videos'
-import { getPublishedVideos as getPublishedSchoolVideos } from '@/data/school-videos'
 import { getClipArtSlugs } from '@/data/clip-art-artifacts'
 import { getAllTemplates } from '@/lib/templates'
 import { courses } from '@/lib/learn/mockData'
+import {
+  getAllResearchArticles,
+  getAllSchoolArticles,
+} from '@/lib/published-articles'
 import {
   getAllPatternSlugs,
   getAllTermSlugs,
   getAllWorkflowSlugs,
 } from '@/content/agents/content'
 
-// Force static generation for static export
-export const dynamic = 'force-static'
+// Sitemap stays CDN-fast but can be refreshed when Compose publishes or
+// unpublishes a research/school article.
+export const revalidate = 300
 
 // Recursively find all page files in a directory
 function findPageFiles(dir: string, baseDir: string = dir): string[] {
@@ -53,7 +56,7 @@ function findPageFiles(dir: string, baseDir: string = dir): string[] {
   return results
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://esy.com'
   
   // Routes to exclude from sitemap (disabled pages)
@@ -159,7 +162,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // must be enumerated explicitly. prompt-library is intentionally excluded.
 
   // Research video pages (lastModified from real publish dates)
-  const researchVideos = getPublishedResearchVideos()
+  const researchVideos = await getAllResearchArticles()
   researchVideos.forEach(video => {
     sitemap.push({
       url: `${baseUrl}/research/${video.slug}/`,
@@ -170,7 +173,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   })
 
   // School video pages (articles are covered via the content dir above)
-  const schoolVideos = getPublishedSchoolVideos()
+  const schoolVideos = await getAllSchoolArticles()
   schoolVideos.forEach(video => {
     sitemap.push({
       url: `${baseUrl}/school/${video.slug}/`,

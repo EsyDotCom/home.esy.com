@@ -3,15 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=22.0.0"
+    "node": "22.x"
   },
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/sync-workflow-catalog.mjs || echo '⚠ catalog sync failed — building with the committed snapshot'",
+    "prebuild": "node scripts/sync-workflow-catalog.mjs || (node scripts/sync-workflow-catalog.mjs --check && echo 'Catalog sync skipped (API unreachable); using committed snapshot.')",
     "build": "next build",
-    "build:static": "NODE_ENV=production next build",
     "start": "next start",
-    "start:static": "npx serve@latest out",
     "lint": "next lint",
     "test": "node --test orchestration/runner/__tests__/validator.test.js orchestration/runner/__tests__/contracts.test.js orchestration/runner/__tests__/regression.test.js",
     "test:validator": "node --test orchestration/runner/__tests__/validator.test.js",
@@ -43,7 +41,7 @@
     "lucide-react": "^0.525.0",
     "mime-types": "^3.0.2",
     "next": "15.2.8",
-    "next-mdx-remote": "^5.0.0",
+    "next-mdx-remote": "^6.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",
@@ -66,7 +64,7 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.1",
     "eslint": "^9",
-    "eslint-config-next": "15.2.4",
+    "eslint-config-next": "^15.2.8",
     "eslint-plugin-storybook": "^9.1.8",
     "tailwindcss": "^4",
     "typescript": "^5.8.3"

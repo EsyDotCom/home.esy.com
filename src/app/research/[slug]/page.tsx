@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
+import { getPublishedResearchVideos } from "@/data/research-videos";
 import {
-  getResearchVideoBySlug,
-  getRelatedResearchVideos,
-  getPublishedResearchVideos,
-} from "@/data/research-videos";
+  findResearchArticle,
+  getAllResearchArticles,
+  relatedFrom,
+} from "@/lib/published-articles";
 import { loadTranscriptSegments } from "@/lib/transcript-loader";
 import { transcriptToPlainText, toIsoDuration } from "@/lib/transcripts";
 import ResearchVideoPageClient from "./client";
@@ -15,13 +16,18 @@ type Props = {
 
 const BASE_URL = "https://esy.com";
 
+// Registry slugs prerender at build; Compose-published slugs render on
+// demand (dynamicParams) and cache via ISR.
+export const revalidate = 300;
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   return getPublishedResearchVideos().map((v) => ({ slug: v.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const video = getResearchVideoBySlug(slug);
+  const video = await findResearchArticle(slug);
 
   if (!video) return {};
 
@@ -53,11 +59,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ResearchVideoPage({ params }: Props) {
   const { slug } = await params;
-  const video = getResearchVideoBySlug(slug);
+  const video = await findResearchArticle(slug);
 
   if (!video) notFound();
 
-  const related = getRelatedResearchVideos(video.slug, video.relatedSlugs);
+  // Related resolves against the merged list so API and registry articles
+  // can cross-reference each other.
+  const related = relatedFrom(await getAllResearchArticles(), video.slug, video.relatedSlugs);
   // Build-time SRT load — segments ship in the static HTML for SEO and power
   // the click-to-seek transcript UI. Null when no SRT exists for the slug.
   const transcriptSegments = loadTranscriptSegments(video.slug);
