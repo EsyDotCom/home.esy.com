@@ -1,12 +1,12 @@
 [build]
-  command = "npm run build:static"
-  publish = "out"
+  command = "npm run build"
+  publish = ".next"
 
 [functions]
   directory = "netlify/functions"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "22"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

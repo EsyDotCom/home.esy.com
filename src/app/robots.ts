@@ -1,14 +1,14 @@
 import { MetadataRoute } from 'next';
 
 /**
- * Static robots.txt generation
+ * Static robots.txt generation.
  * 
- * For static export (output: export), we check the env var at build time.
+ * Vercel evaluates the QA flag at build time for each environment.
  * - QA builds (NEXT_PUBLIC_IS_QA=true): Block all crawlers
  * - Production builds: Allow crawlers, block AI training bots
  */
 
-// Required for static export
+// Robots policy only depends on deployment env, so keep it cacheable.
 export const dynamic = 'force-static';
 
 // Check QA environment at build time

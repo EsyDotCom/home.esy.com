@@ -1,4 +1,37 @@
 import withMDX from '@next/mdx';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+function netlifyRedirectsFromFile() {
+  const redirectsPath = path.join(__dirname, 'public/_redirects');
+  if (!fs.existsSync(redirectsPath)) return [];
+
+  return fs
+    .readFileSync(redirectsPath, 'utf8')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith('#'))
+    .map((line) => {
+      const [source, destination, status = '301'] = line.split(/\s+/);
+      return {
+        source,
+        destination,
+        permanent: status === '301',
+      };
+    });
+}
+
+function dedupeRedirects(redirects) {
+  const seen = new Set();
+  return redirects.filter((redirect) => {
+    if (seen.has(redirect.source)) return false;
+    seen.add(redirect.source);
+    return true;
+  });
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -7,35 +40,37 @@ const nextConfig = {
     // These don't affect runtime and will be cleaned up separately.
     ignoreDuringBuilds: true,
   },
-  ...(process.env.NODE_ENV === 'production' && {
-    output: 'export',
-    trailingSlash: true,
-    images: {
-      unoptimized: true
-    }
-  }),
+  trailingSlash: true,
   images: {
     domains: ['images.unsplash.com', 'upload.wikimedia.org', 'images.metmuseum.org', 'images.esy.com', 'images.clip.art'],
-    ...(process.env.NODE_ENV === 'production' && {
-      unoptimized: true
-    })
   },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   experimental: {
     mdxRs: true,
   },
-  // Proxy CDN assets through dev server to avoid CORS issues with varying localhost ports
+  // Keep the independently deployed guide mounted under esy.com. Netlify used
+  // a forced 200 proxy here; beforeFiles gives Vercel the same precedence.
   async rewrites() {
-    return [
-      {
+    return {
+      beforeFiles: [
+        {
+          source: '/guide',
+          destination: 'https://esy-guide.netlify.app',
+        },
+        {
+          source: '/guide/:path*',
+          destination: 'https://esy-guide.netlify.app/:path*',
+        },
+      ],
+      afterFiles: [{
         source: '/cdn-proxy/:path*',
         destination: 'https://images.esy.com/:path*',
-      },
-    ];
+      }],
+    };
   },
   // Redirect legacy paths to /essays/
   async redirects() {
-    return [
+    return dedupeRedirects([
       // Prompt library retired (Jun 2026) — send old traffic to workflows
       {
         source: '/prompt-library',
@@ -66,6 +101,13 @@ const nextConfig = {
       {
         source: '/templates/:path*',
         destination: '/workflows/:path*',
+        permanent: true,
+      },
+      // Redirect spam traffic from /cities/* to root. This was a Netlify-only
+      // production redirect, so keep it explicit for the Vercel cutover.
+      {
+        source: '/cities/:path*',
+        destination: '/',
         permanent: true,
       },
       // Retired legacy SEO subtree /workflows/essay/* (captured "essay template"
@@ -405,7 +447,8 @@ const nextConfig = {
         destination: '/glossary',
         permanent: true,
       },
-    ];
+      ...netlifyRedirectsFromFile(),
+    ]);
   },
 };
 
