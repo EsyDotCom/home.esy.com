@@ -15,9 +15,10 @@ export const metadata = {
   },
 };
 
-// ISR: re-fetch the published-article merge every 5 minutes so a Compose
-// publish appears without a redeploy.
-export const revalidate = 300;
+// Event-driven: the publish/unpublish webhook purges the published-articles tags
+// for instant updates. This 1-hour revalidate is just a backstop if a webhook is
+// ever missed.
+export const revalidate = 3600;
 
 export default async function Page() {
   const videos = await getAllResearchArticles();
