@@ -25,7 +25,7 @@ const REVALIDATE_SECONDS = 3600;
 type ApiArticle = ResearchVideo; // the public API response mirrors this shape
 
 async function fetchPublished(kind: "research" | "school"): Promise<ApiArticle[]> {
-  const res = await fetch(`${API_URL}/v1/publications/public?kind=${kind}`, {
+  const res = await fetch(`${API_URL}/v1/documents/public?kind=${kind}`, {
     next: {
       revalidate: REVALIDATE_SECONDS,
       tags: ["published-articles", `published-articles:${kind}`],
