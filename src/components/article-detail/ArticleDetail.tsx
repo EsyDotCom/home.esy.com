@@ -23,7 +23,8 @@ import type { ArticleDetailData, ArticleDetailStage, ArticleSection } from "./ty
 interface ArticleDetailProps {
   article: ArticleDetailData;
   section: ArticleSection;
-  /** Build-time parsed SRT segments → click-to-seek transcript (research). */
+  /** Build-time parsed SRT segments → click-to-seek transcript (any section).
+      Null/absent falls back to the plain transcript toggle. */
   transcriptSegments?: TranscriptSegment[] | null;
   /** Full-width bar rendered under the transcript. */
   newsletterBar?: React.ReactNode;

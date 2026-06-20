@@ -5,20 +5,28 @@ import { SidebarNewsletter } from "@/components/article-detail/SidebarNewsletter
 import { SchoolNewsletterBar } from "@/components/School/SchoolNewsletterBar";
 import { RelatedVideos } from "@/components/School/RelatedVideos";
 import type { SchoolVideo } from "@/data/school-videos";
+import type { TranscriptSegment } from "@/lib/transcripts";
 
 interface VideoPageClientProps {
   video: SchoolVideo;
   related: SchoolVideo[];
+  /** Click-to-seek transcript segments (build-time SRT); null when none. */
+  transcriptSegments?: TranscriptSegment[] | null;
 }
 
 // School detail page = the shared ArticleDetail template with school's section
-// identity, newsletter bar, and sidebar (related + newsletter). Research will
-// adopt the same template (passing its transcript segments + research slots).
-export default function VideoPageClient({ video, related }: VideoPageClientProps) {
+// identity, transcript, newsletter bar, and sidebar (related + newsletter).
+// Research renders the same template the same way.
+export default function VideoPageClient({
+  video,
+  related,
+  transcriptSegments,
+}: VideoPageClientProps) {
   return (
     <ArticleDetail
       article={video}
       section={{ label: "School", basePath: "/school" }}
+      transcriptSegments={transcriptSegments}
       newsletterBar={<SchoolNewsletterBar />}
       sidebar={
         <>
