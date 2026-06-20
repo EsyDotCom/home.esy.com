@@ -5,6 +5,7 @@ import {
   getAllSchoolArticles,
   relatedFrom,
 } from "@/lib/published-articles";
+import { loadTranscriptSegments } from "@/lib/transcript-loader";
 import VideoPageClient from "./client";
 import type { Metadata } from "next";
 
@@ -53,6 +54,16 @@ export default async function SchoolVideoPage({ params }: Props) {
   // Related resolves against the merged list so API and registry articles
   // can cross-reference each other.
   const related = relatedFrom(await getAllSchoolArticles(), video.slug, video.relatedSlugs);
+  // Build-time SRT load powers the click-to-seek transcript — the same default
+  // the template gives research. Null when no SRT exists (falls back to the
+  // plain transcript toggle).
+  const transcriptSegments = loadTranscriptSegments(video.slug);
 
-  return <VideoPageClient video={video} related={related} />;
+  return (
+    <VideoPageClient
+      video={video}
+      related={related}
+      transcriptSegments={transcriptSegments}
+    />
+  );
 }
