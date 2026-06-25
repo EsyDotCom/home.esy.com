@@ -1,5 +1,11 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
+import {
+  hasSignature,
+  readWebhookHeaders,
+  secretsForPublication,
+  verifyHmac,
+} from "@/lib/verify-webhook";
 
 type ArticleKind = "research" | "school";
 
@@ -21,13 +27,19 @@ const PUBLICATION_TO_KIND: Record<string, ArticleKind> = {
   "esy-school": "school",
 };
 
-function hasValidSecret(request: NextRequest): boolean {
+/**
+ * Legacy Bearer / x-revalidate-secret check. Kept as a fallback during the HMAC
+ * rollout (Phase A: accept both) so in-flight Bearer deliveries never break.
+ */
+function hasValidBearer(request: NextRequest): boolean {
   const secret = process.env.ESY_REVALIDATE_SECRET;
   if (!secret) return false;
 
   const bearer = request.headers.get("authorization")?.replace(/^Bearer\s+/i, "");
   const headerSecret = request.headers.get("x-revalidate-secret");
-  return bearer === secret || headerSecret === secret;
+  // Support a comma-separated list so one endpoint can serve multiple publications.
+  const accepted = new Set(secret.split(",").map((s) => s.trim()).filter(Boolean));
+  return (bearer != null && accepted.has(bearer)) || (headerSecret != null && accepted.has(headerSecret));
 }
 
 /** Resolve section from legacy `kind` or headless `publication` slug. */
@@ -43,22 +55,40 @@ function resolveKind(body: RevalidateBody): ArticleKind | null {
 }
 
 export async function POST(request: NextRequest) {
-  if (!process.env.ESY_REVALIDATE_SECRET) {
-    return NextResponse.json(
-      { error: "ESY_REVALIDATE_SECRET is not configured." },
-      { status: 500 },
-    );
-  }
-
-  if (!hasValidSecret(request)) {
-    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  // Read the raw body ONCE: HMAC must hash the exact bytes Esy signed, so we
+  // parse JSON from this string rather than calling request.json().
+  let rawBody: string;
+  try {
+    rawBody = await request.text();
+  } catch {
+    return NextResponse.json({ error: "Could not read body." }, { status: 400 });
   }
 
   let body: RevalidateBody;
   try {
-    body = await request.json();
+    body = JSON.parse(rawBody) as RevalidateBody;
   } catch {
     return NextResponse.json({ error: "Expected JSON body." }, { status: 400 });
+  }
+
+  // Phase A — accept BOTH auth schemes:
+  //   • signature headers present → verify HMAC against the publication's secret
+  //   • otherwise → fall back to the legacy Bearer/x-revalidate-secret check
+  const headers = readWebhookHeaders((name) => request.headers.get(name));
+  if (hasSignature(headers)) {
+    const secrets = secretsForPublication(body.publication);
+    const result = verifyHmac(rawBody, headers, secrets);
+    if (!result.ok) {
+      return NextResponse.json({ error: `Unauthorized: ${result.reason}` }, { status: 401 });
+    }
+  } else if (!hasValidBearer(request)) {
+    if (!process.env.ESY_REVALIDATE_SECRET) {
+      return NextResponse.json(
+        { error: "No webhook secret configured (set ESY_REVALIDATE_SECRET or a per-publication secret)." },
+        { status: 500 },
+      );
+    }
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 
   const kind = resolveKind(body);
