@@ -7,11 +7,7 @@ import {
   verifyHmac,
 } from "@/lib/verify-webhook";
 
-type ArticleKind = "research" | "school";
-
 type RevalidateBody = {
-  /** Legacy webhook (global esy.com revalidation). */
-  kind?: string;
   /** Headless webhook (per-publication Connect). */
   publication?: string;
   slug?: string;
@@ -19,23 +15,17 @@ type RevalidateBody = {
   categories?: string[];
 };
 
-const VALID_KINDS = new Set<ArticleKind>(["research", "school"]);
-
-// API article kinds map to public URL prefixes (school → /learn since Jun 2026).
-const KIND_PATH_PREFIX: Record<ArticleKind, string> = {
-  research: "research",
-  school: "learn",
-};
-
-// Headless publication slugs → esy.com section paths (Phase 1 API sends `publication`).
-const PUBLICATION_TO_KIND: Record<string, ArticleKind> = {
+// Publication slug -> esy.com URL prefix. The Publication is the destination;
+// there is no `kind` axis anymore (school collapsed into the esy-learn publication
+// served at /learn since Jun 2026).
+const PUBLICATION_TO_PATH: Record<string, string> = {
   "esy-research": "research",
-  "esy-school": "school",
+  "esy-learn": "learn",
 };
 
 /**
  * Legacy Bearer / x-revalidate-secret check. Kept as a fallback during the HMAC
- * rollout (Phase A: accept both) so in-flight Bearer deliveries never break.
+ * rollout so in-flight Bearer deliveries never break.
  */
 function hasValidBearer(request: NextRequest): boolean {
   const secret = process.env.ESY_REVALIDATE_SECRET;
@@ -46,18 +36,6 @@ function hasValidBearer(request: NextRequest): boolean {
   // Support a comma-separated list so one endpoint can serve multiple publications.
   const accepted = new Set(secret.split(",").map((s) => s.trim()).filter(Boolean));
   return (bearer != null && accepted.has(bearer)) || (headerSecret != null && accepted.has(headerSecret));
-}
-
-/** Resolve section from legacy `kind` or headless `publication` slug. */
-function resolveKind(body: RevalidateBody): ArticleKind | null {
-  if (body.kind && VALID_KINDS.has(body.kind as ArticleKind)) {
-    return body.kind as ArticleKind;
-  }
-  const pub = body.publication?.trim();
-  if (pub && PUBLICATION_TO_KIND[pub]) {
-    return PUBLICATION_TO_KIND[pub];
-  }
-  return null;
 }
 
 export async function POST(request: NextRequest) {
@@ -77,7 +55,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Expected JSON body." }, { status: 400 });
   }
 
-  // Phase A — accept BOTH auth schemes:
+  // Accept BOTH auth schemes during the HMAC rollout:
   //   • signature headers present → verify HMAC against the publication's secret
   //   • otherwise → fall back to the legacy Bearer/x-revalidate-secret check
   const headers = readWebhookHeaders((name) => request.headers.get(name));
@@ -97,32 +75,31 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 
-  const kind = resolveKind(body);
+  const publication = body.publication?.trim();
   const slug = body.slug?.trim();
-  if (!kind || !slug) {
+  const pathPrefix = publication ? PUBLICATION_TO_PATH[publication] : undefined;
+  if (!pathPrefix || !slug) {
     return NextResponse.json(
       {
         error:
-          'Expected body with slug and either kind "research"|"school" or publication "esy-research"|"esy-school".',
+          'Expected body with slug and a known publication ("esy-research" | "esy-learn").',
       },
       { status: 400 },
     );
   }
 
-  // Refresh both the tagged API fetch and the concrete routes that can hold
-  // rendered HTML/metadata for this article.
+  // Refresh both the tagged API fetch (keyed by publication slug) and the concrete
+  // routes that can hold rendered HTML/metadata for this article.
   revalidateTag("published-articles");
-  revalidateTag(`published-articles:${kind}`);
+  revalidateTag(`published-articles:${publication}`);
 
-  const pathPrefix = KIND_PATH_PREFIX[kind];
   const paths = [`/${pathPrefix}`, `/${pathPrefix}/${slug}`, "/sitemap.xml"];
   paths.forEach((path) => revalidatePath(path));
 
   return NextResponse.json({
     revalidated: true,
     action: body.action ?? "publish",
-    kind,
-    publication: body.publication ?? null,
+    publication,
     slug,
     categories: body.categories ?? [],
     paths,
