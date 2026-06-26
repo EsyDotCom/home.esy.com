@@ -17,7 +17,7 @@ const publicArticleExample = `{
     { "slug": "policy", "label": "Policy" },
     { "slug": "energy", "label": "Energy" }
   ],
-  "kind": "research",
+  "kind": "article",
   "content": "<article>…</article>",
   "publishedAt": "2026-06-20T14:02:11.004Z",
   "tags": ["water", "energy"],
