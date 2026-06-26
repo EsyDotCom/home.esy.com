@@ -60,10 +60,10 @@ const pathways = [
     id: 'school',
     icon: GraduationCap,
     label: 'Start Learning',
-    title: 'Esy School',
+    title: 'Esy Learn',
     description: 'Learn how to use AI research tools effectively. Guides, workflows, and best practices for researchers at every level.',
-    cta: 'Explore School',
-    href: '/school',
+    cta: 'Explore Learn',
+    href: '/learn',
   },
 ];
 

@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import { usePathname } from 'next/navigation';
 import Logo from "@/components/Logo";
 import Link from "next/link";
-import { Menu, X, ChevronRight, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import HeaderSearch from "@/components/HeaderSearch/HeaderSearch";
 import NewsletterModal from "@/components/NewsletterModal/NewsletterModal";
 import { getAllTemplates } from "@/lib/templates";
@@ -25,7 +25,7 @@ import { lightTheme } from "@/lib/lightTheme";
 // Shared suffix logic
 export const getPageSuffix = (pathname) => {
   if (pathname?.startsWith('/essays')) return 'Essays';
-  if (pathname?.startsWith('/school')) return 'School';
+  if (pathname?.startsWith('/learn')) return 'Learn';
   if (pathname?.startsWith('/glossary')) return 'Glossary';
   if (pathname?.startsWith('/blog')) return 'Blog';
   if (pathname?.startsWith('/research')) return 'Research';
@@ -56,11 +56,8 @@ export default function Navigation({
     // links/logo light over the dark hero even though the page body is light.
     const [overHero, setOverHero] = useState(false);
   const [isArtifactsOpen, setIsArtifactsOpen] = useState(false);
-  const [isLearnOpen, setIsLearnOpen] = useState(false);
   const [mobileArtifactsExpanded, setMobileArtifactsExpanded] = useState(false);
-  const [mobileLearnExpanded, setMobileLearnExpanded] = useState(false);
   const artifactsDropdownRef = useRef<HTMLDivElement>(null);
-  const learnDropdownRef = useRef<HTMLDivElement>(null);
     
   // Normalize pathname
     const normalizedPathForNav = pathname?.endsWith('/') && pathname.length > 1
@@ -125,8 +122,8 @@ export default function Navigation({
         const isHomepage = normalizedPath === '/' || normalizedPath === '';
         const isEssaysPage = normalizedPath === '/essays' || normalizedPath.startsWith('/essays/');
         const isAboutPage = normalizedPath === '/about';
-        const isSchoolPage = normalizedPath === '/school' || normalizedPath.startsWith('/school/');
-        const isSchoolArticle = normalizedPath.includes('/school/articles/');
+        const isLearnPage = normalizedPath === '/learn' || normalizedPath.startsWith('/learn/');
+        const isLearnArticle = normalizedPath.includes('/learn/articles/');
         const isCoursesPage = normalizedPath === '/courses' || normalizedPath.startsWith('/courses/');
         const isBlogArticle = normalizedPath.includes('/blog/') && normalizedPath !== '/blog';
         const isTemplatesPage = normalizedPath === '/workflows' || normalizedPath.startsWith('/workflows/');
@@ -151,11 +148,11 @@ export default function Navigation({
                                normalizedPath === '/404' || 
                                normalizedPath === '/not-found' ||
                                hasNotFoundBodyClass;
-        const hasThemeToggle = isSchoolArticle || isBlogArticle || isCoursesPage;
-        const isSchoolOrCoursesSection = isSchoolArticle || isCoursesPage;
+        const hasThemeToggle = isLearnArticle || isBlogArticle || isCoursesPage;
+        const isLearnOrCoursesSection = isLearnArticle || isCoursesPage;
         
         // Pages that always use light theme (Navy Calm)
-        const isAlwaysLightPage = isEssaysPage || isAboutPage || isSchoolPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isResearchPage || isInfographicsPage || isClipArtPage || isArtifactsPage;
+        const isAlwaysLightPage = isEssaysPage || isAboutPage || isLearnPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isResearchPage || isInfographicsPage || isClipArtPage || isArtifactsPage;
         
         // Check for homepage themes
         if (isHomepage) {
@@ -220,7 +217,7 @@ export default function Navigation({
           // Essays and About pages always use light theme
           isLight = true;
         } else if (hasThemeToggle) {
-          const sectionKey = isSchoolOrCoursesSection ? 'school' : 'blog';
+          const sectionKey = isLearnOrCoursesSection ? 'school' : 'blog';
         const storedTheme = localStorage.getItem(`theme-${sectionKey}`);
           
           if (storedTheme === 'light') {
@@ -228,7 +225,7 @@ export default function Navigation({
             isNavyDarkMode = false;
           } else if (storedTheme === 'dark') {
             isLight = false;
-            isNavyDarkMode = isSchoolOrCoursesSection; // Use Navy Dark for school pages
+            isNavyDarkMode = isLearnOrCoursesSection; // Use Navy Dark for learn article pages
           } else {
           // Default: dark for courses, light for articles
           isLight = isCoursesPage ? false : true;
@@ -243,7 +240,7 @@ export default function Navigation({
             isNavyDarkMode = false;
           } else if (bodyClasses?.includes('dark') || htmlClasses?.includes('dark')) {
           isLight = false;
-          isNavyDarkMode = isSchoolOrCoursesSection; // Use Navy Dark for school pages
+          isNavyDarkMode = isLearnOrCoursesSection; // Use Navy Dark for learn article pages
         }
           } else {
         isLight = false;
@@ -425,27 +422,16 @@ export default function Navigation({
     return () => window.removeEventListener('scroll', handleScroll);
     }, [pathname, isLightMode, isNavyDark]);
 
-  // Toggle dropdown and close the other (Learn dropdown only — Artifacts opens on hover via mouseEnter)
-  const toggleLearn = useCallback(() => {
-    setIsLearnOpen(prev => !prev);
-    setIsArtifactsOpen(false);
-  }, []);
-
-  // Close dropdowns on click outside
+  // Close Artifacts dropdown on click outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
-        artifactsDropdownRef.current && !artifactsDropdownRef.current.contains(e.target as Node) &&
-        learnDropdownRef.current && !learnDropdownRef.current.contains(e.target as Node)
+        artifactsDropdownRef.current &&
+        !artifactsDropdownRef.current.contains(e.target as Node)
       ) {
         setIsArtifactsOpen(false);
-        setIsLearnOpen(false);
-      } else if (artifactsDropdownRef.current && !artifactsDropdownRef.current.contains(e.target as Node)) {
-      setIsArtifactsOpen(false);
-      } else if (learnDropdownRef.current && !learnDropdownRef.current.contains(e.target as Node)) {
-        setIsLearnOpen(false);
       }
-  };
+    };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -490,7 +476,6 @@ export default function Navigation({
               ref={artifactsDropdownRef}
               onMouseEnter={() => {
                 setIsArtifactsOpen(true);
-                setIsLearnOpen(false);
               }}
               onMouseLeave={() => setIsArtifactsOpen(false)}
               >
@@ -571,21 +556,19 @@ export default function Navigation({
               </Link>
             )}
 
-            {/* Research (hidden on mobile, available in hamburger menu) */}
+            {/* Learn — /learn hub (Research lives in the footer) */}
             {!isMobile && (
               <Link
-                href="/research/"
-                className={`nav-link nav-link-research ${pathname?.startsWith('/research') ? 'active' : ''}`}
+                href="/learn/"
+                className={`nav-link nav-link-learn ${pathname?.startsWith('/learn') ? 'active' : ''}`}
                 style={{
                   color: !navOnDark ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
                   textShadow: 'none',
                 }}
               >
-                Research
+                Learn
               </Link>
             )}
-
-            {/* Learn Dropdown removed — was here, restore from git if needed */}
 
             {/* App CTA (hidden on mobile, available in hamburger menu) */}
             {!isMobile && (
@@ -714,14 +697,14 @@ export default function Navigation({
               <span className="mnav-item__desc">Production-ready research formats</span>
             </Link>
 
-            <Link 
-              href="/research/" 
-              className={`mnav-item ${normalizedPathForNav.startsWith('/research') ? 'mnav-item--active' : ''}`}
+            <Link
+              href="/learn/"
+              className={`mnav-item ${normalizedPathForNav.startsWith('/learn') ? 'mnav-item--active' : ''}`}
               onClick={() => setIsMobileMenuOpen(false)}
               style={{ animationDelay: '0.16s' }}
             >
-              <span className="mnav-item__label">Research</span>
-              <span className="mnav-item__desc">Building workflows & AI tools</span>
+              <span className="mnav-item__label">Learn</span>
+              <span className="mnav-item__desc">Tutorials on research workflows &amp; AI tools</span>
             </Link>
           </nav>
 

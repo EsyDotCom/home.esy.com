@@ -447,6 +447,17 @@ const nextConfig = {
         destination: '/glossary',
         permanent: true,
       },
+      // School renamed to Learn (June 2026)
+      {
+        source: '/school',
+        destination: '/learn',
+        permanent: true,
+      },
+      {
+        source: '/school/:path*',
+        destination: '/learn/:path*',
+        permanent: true,
+      },
       ...netlifyRedirectsFromFile(),
     ]);
   },

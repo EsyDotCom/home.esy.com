@@ -109,7 +109,7 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
             <Breadcrumbs
               items={[
                 { label: "Home", href: "/" },
-                { label: "School", isCurrent: true },
+                { label: "Learn", isCurrent: true },
               ]}
             />
           </div>
@@ -124,7 +124,7 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
               letterSpacing: "-0.02em",
             }}
           >
-            <span style={{ color: theme.accent }}>School</span>
+            <span style={{ color: theme.accent }}>Learn</span>
           </h1>
 
           <p
@@ -145,7 +145,7 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
       {featured && (
         <section style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "0 1rem 2rem" : isTablet ? "0 1.5rem 2.5rem" : "0 2rem 3rem" }}>
           <Link
-            href={`/school/${featured.slug}`}
+            href={`/learn/${featured.slug}`}
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <div

@@ -166,8 +166,8 @@ const ArticleLayout = ({ children, meta, theme, isDarkMode = true }) => {
         }} className="school-article-breadcrumbs">
           <Breadcrumbs 
             items={[
-              { label: 'School', href: '/school' },
-              { label: 'Articles', href: '/school/articles' },
+              { label: 'Learn', href: '/learn' },
+              { label: 'Articles', href: '/learn/articles' },
               { label: meta?.category || 'Article', isCurrent: true }
             ]}
             isLight={!isDarkMode}

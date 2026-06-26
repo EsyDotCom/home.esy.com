@@ -48,8 +48,8 @@ export default function Footer () {
         const isHomepage = normalizedPath === '/' || normalizedPath === '';
         const isEssaysPage = normalizedPath === '/essays' || normalizedPath.startsWith('/essays/');
         const isAboutPage = normalizedPath === '/about';
-        const isSchoolPage = normalizedPath === '/school' || normalizedPath.startsWith('/school/');
-        const isSchoolArticle = normalizedPath.includes('/school/articles/');
+        const isLearnPage = normalizedPath === '/learn' || normalizedPath.startsWith('/learn/');
+        const isLearnArticle = normalizedPath.includes('/learn/articles/');
         const isCoursesPage = normalizedPath === '/courses' || normalizedPath.startsWith('/courses/');
         const isTemplatesPage = normalizedPath === '/workflows' || normalizedPath.startsWith('/workflows/');
         const isDocsPage = normalizedPath === '/docs' || normalizedPath.startsWith('/docs/');
@@ -78,7 +78,7 @@ export default function Footer () {
         // NOTE: the homepage intentionally falls through to the default Navy Dark
         // footer even when the IC page itself is in light/navy-calm mode — the
         // user wants a single, consistent footer treatment across the site.
-        void (isHomepage || isEssaysPage || isAboutPage || isSchoolPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isResearchPage || isInfographicsPage);
+        void (isHomepage || isEssaysPage || isAboutPage || isLearnPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isResearchPage || isInfographicsPage);
 
         if (isModelsPage) {
           // Check localStorage for models page theme
@@ -128,8 +128,8 @@ export default function Footer () {
             setIsLightMode(false);
             setIsNavyDark(true);
           }
-        } else if (isSchoolArticle || isCoursesPage) {
-          // Check localStorage for school page theme (articles + courses)
+        } else if (isLearnArticle || isCoursesPage) {
+          // Check localStorage for learn article page theme (articles + courses)
           const storedTheme = localStorage.getItem('theme-school');
           if (storedTheme === 'light') {
             setIsLightMode(true);
@@ -270,7 +270,7 @@ export default function Footer () {
             title="Explore"
             links={[
               { href: "/workflows/", text: "Workflows" },
-              { href: "/agents/", text: "Agents" },
+              // { href: "/agents/", text: "Agents" },
               { href: "/glossary/", text: "Glossary" },
             ]}
           />
@@ -279,8 +279,9 @@ export default function Footer () {
             title="Resources"
             links={[
               { href: "/docs", text: "Docs" },
+              { href: "/learn/", text: "Learn" },
+              // { href: "/courses/", text: "Courses" },
               { href: "/research/", text: "Research" },
-              { href: "/courses/", text: "Courses" },
             ]}
           />
           
@@ -288,9 +289,9 @@ export default function Footer () {
             title="Company"
             links={[
               { href: "/about/", text: "About" },
-              { href: "/roadmap/", text: "Roadmap" },
               { href: "/privacy/", text: "Privacy" },
-              { href: "/terms/", text: "Terms" }
+              { href: "/terms/", text: "Terms" },
+              { href: "/roadmap/", text: "Roadmap" },
             ]}
           />
         </div>

@@ -22,7 +22,7 @@ export interface SchoolVideo {
 }
 
 // School content now lives in the publications/documents DB and is served via
-// api.esy.com (esy.com/school renders published school documents). This static
+// api.esy.com (esy.com/learn renders published school documents). This static
 // registry is intentionally empty — the interfaces + helpers below are kept so
 // existing imports keep working while the page is rebuilt on the shared,
 // publication-backed detail template.

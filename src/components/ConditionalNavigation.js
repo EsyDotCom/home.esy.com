@@ -29,10 +29,10 @@ const ConditionalNavigation = () => {
   const isGlossaryIndex = normalizedPath === '/glossary';
   const isGlossaryViewPage = isGlossaryPage && !isGlossaryIndex;
   
-  // Check if we're on school pages
-  const isSchoolPage = normalizedPath?.startsWith('/school');
-  const isSchoolIndex = normalizedPath === '/school';
-  const isSchoolArticlePage = normalizedPath?.startsWith('/school/articles/');
+  // Learn pages (formerly /school)
+  const isLearnPage = normalizedPath?.startsWith('/learn');
+  const isLearnIndex = normalizedPath === '/learn';
+  const isLearnArticlePage = normalizedPath?.startsWith('/learn/articles/');
   
   // Check if we're on course lesson pages (focused learning experience)
   const isCourseLessonPage = normalizedPath?.match(/^\/courses\/[^/]+\/[^/]+$/);
@@ -87,14 +87,14 @@ const ConditionalNavigation = () => {
   // Show header search:
   // - Always on glossary view pages (/glossary/*)
   // - On glossary index only after scrolling past main search
-  // - On school index only after scrolling past main search (NO search on school article pages)
+  // - On learn index only after scrolling past main search (NO search on learn article pages)
   // - Always on essays index (visible on page load)
   // - On templates index only after scrolling past main search
   // - On scrollytelling index only after scrolling past discovery bar
   // - NO search on about, privacy, terms, agentic-workflows (informational pages)
   const shouldShowHeaderSearch =
     (isGlossaryPage && (isGlossaryIndex ? showHeaderSearch : true)) ||
-    (isSchoolPage && !isCourseLessonPage && isSchoolIndex && showHeaderSearch) ||
+    (isLearnPage && !isCourseLessonPage && isLearnIndex && showHeaderSearch) ||
     (isTemplatesPage && (isTemplatesIndex ? showHeaderSearch : true)) ||
     isEssaysPage ||  // Essays: always show search (icon-only on mobile)
     (isHomepage && showHeaderSearch);

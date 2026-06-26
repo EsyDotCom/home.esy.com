@@ -28,5 +28,5 @@ export interface ArticleDetailData {
 // Section identity (research / school) — drives the breadcrumb + links.
 export interface ArticleSection {
   label: string;
-  basePath: string; // e.g. "/research" or "/school"
+  basePath: string; // e.g. "/research" or "/learn"
 }

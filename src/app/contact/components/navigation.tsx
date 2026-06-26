@@ -61,7 +61,7 @@ const ContactNav: React.FC<ContactNavProps> = ({ scrolled, currentTheme }) => {
               }}>
                 Write
               </Link>
-              <Link href="/school/" style={{ 
+              <Link href="/learn/" style={{ 
                 color: currentTheme.muted, 
                 textDecoration: 'none',
                 fontSize: '0.938rem',

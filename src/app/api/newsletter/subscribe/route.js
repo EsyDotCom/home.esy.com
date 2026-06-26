@@ -34,7 +34,7 @@ export async function POST(request) {
           email,
           reactivate_existing: true,
           send_welcome_email: true,
-          referring_site: 'https://esy.com/school',
+          referring_site: 'https://esy.com/learn',
           utm_source: 'esy_website',
           utm_medium: 'organic',
         }),
