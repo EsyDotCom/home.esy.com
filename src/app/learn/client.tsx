@@ -135,8 +135,7 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
               maxWidth: 600,
             }}
           >
-            Learn to research anything — with workflow templates and the latest
-            AI tools. Step-by-step tutorials and courses, no prompt engineering required.
+            Learn to implement agentic workflows with Esy's templates and the latest AI tools. Step-by-step tutorials.
           </p>
         </div>
       </section>

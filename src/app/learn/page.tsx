@@ -2,15 +2,15 @@ import SchoolVideosClient from "./client";
 import { getAllSchoolArticles } from "@/lib/published-articles";
 
 export const metadata = {
-  title: "Esy Learn — Research Workflows & AI Tools",
+  title: "Esy Learn — Agentic Workflow Tutorials",
   description:
-    "Step-by-step tutorials and courses on using Esy's workflow templates and the latest AI tools. Learn to research anything without prompt engineering.",
+    "Step-by-step tutorials on implementing agentic workflows with Esy's workflow templates and the latest AI tools.",
   keywords:
-    "Esy Learn, workflow tutorials, AI tools, research workflows, Claude, ChatGPT, infographics, academic writing, essay writing",
+    "Esy Learn, agentic workflows, workflow tutorials, AI tools, Claude, ChatGPT, workflow templates, artifact pipelines",
   openGraph: {
-    title: "Esy Learn — Research Workflows & AI Tools",
+    title: "Esy Learn — Agentic Workflow Tutorials",
     description:
-      "Tutorials and courses on using Esy's workflow templates and the latest AI tools.",
+      "Step-by-step tutorials on implementing agentic workflows with Esy's templates and the latest AI tools.",
     type: "website",
   },
 };
