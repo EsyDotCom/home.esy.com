@@ -113,6 +113,13 @@ export const navigation: NavSection[] = [
         icon: 'wallet',
         isNew: true,
       },
+      {
+        title: 'Publications',
+        href: '/docs/concepts/publications',
+        description: 'Headless destinations that own published documents, categories, and a revalidation webhook.',
+        icon: 'globe',
+        isNew: true,
+      },
     ],
   },
   {
@@ -123,6 +130,13 @@ export const navigation: NavSection[] = [
         href: '/docs/api',
         description: 'Endpoints, request shapes, and response schemas.',
         icon: 'plug',
+      },
+      {
+        title: 'Publications API',
+        href: '/docs/api/publications',
+        description: 'Public reads plus authoring endpoints for publications and categories.',
+        icon: 'globe',
+        isNew: true,
       },
       {
         title: 'Changelog',
@@ -152,6 +166,13 @@ export const navigation: NavSection[] = [
         href: '/docs/guides/compose-with-artifact-inputs',
         description: 'Let a workflow accept an existing artifact as input — supply one or generate it.',
         icon: 'workflow',
+        isNew: true,
+      },
+      {
+        title: 'Connect a consumer site',
+        href: '/docs/guides/connect-a-consumer-site',
+        description: 'Render a public publication and verify Esy’s revalidation webhooks with HMAC.',
+        icon: 'plug',
         isNew: true,
       },
     ],

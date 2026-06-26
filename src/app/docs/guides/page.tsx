@@ -21,6 +21,12 @@ const guides = [
     title: 'Compose with artifact inputs',
     desc: 'Let a workflow accept an existing artifact as input — supply a report you already have, or let the workflow generate one.',
   },
+  {
+    href: '/docs/guides/connect-a-consumer-site',
+    label: 'publishing',
+    title: 'Connect a consumer site',
+    desc: 'Render a public publication on your own site and verify Esy’s revalidation webhooks with an HMAC signature.',
+  },
 ];
 
 function Arrow() {
