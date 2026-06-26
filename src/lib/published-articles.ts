@@ -24,11 +24,15 @@ const REVALIDATE_SECONDS = 3600;
 
 type ApiArticle = ResearchVideo; // the public API response mirrors this shape
 
-async function fetchPublished(kind: "research" | "school"): Promise<ApiArticle[]> {
-  const res = await fetch(`${API_URL}/v1/documents/public?kind=${kind}`, {
+// Headless reads: each esy.com section is a Publication. We read its published
+// documents from the publication-scoped public endpoint (no `kind` axis — the
+// Publication is the destination). The cache tag is keyed by publication slug so
+// the publish/unpublish webhook can purge exactly this section.
+async function fetchPublished(publicationSlug: string): Promise<ApiArticle[]> {
+  const res = await fetch(`${API_URL}/v1/publications/public/${publicationSlug}/articles`, {
     next: {
       revalidate: REVALIDATE_SECONDS,
-      tags: ["published-articles", `published-articles:${kind}`],
+      tags: ["published-articles", `published-articles:${publicationSlug}`],
     },
   });
   // Throw — do NOT return [] — on a bad response. Returning an empty list here
@@ -36,7 +40,9 @@ async function fetchPublished(kind: "research" | "school"): Promise<ApiArticle[]
   // api.esy.com redeploy), silently dropping every published article until the
   // cache expired. By throwing, an in-flight ISR regeneration is discarded and
   // Next keeps serving the last-good render; only a cold cache + dead API errors.
-  if (!res.ok) throw new Error(`published-articles ${kind}: HTTP ${res.status}`);
+  // A 404 here means the publication is missing/not public — also an error, not
+  // "no articles" (a populated publication returns 200 with an items array).
+  if (!res.ok) throw new Error(`published-articles ${publicationSlug}: HTTP ${res.status}`);
   const body = await res.json();
   return (body.items ?? []) as ApiArticle[];
 }
@@ -45,9 +51,9 @@ async function fetchPublished(kind: "research" | "school"): Promise<ApiArticle[]
 // static build shouldn't fail just because the API is briefly unreachable —
 // fall back to the registry. At request/ISR time we deliberately let the error
 // propagate so Next serves the last-good cache instead of caching an empty list.
-async function fetchPublishedSafe(kind: "research" | "school"): Promise<ApiArticle[]> {
+async function fetchPublishedSafe(publicationSlug: string): Promise<ApiArticle[]> {
   try {
-    return await fetchPublished(kind);
+    return await fetchPublished(publicationSlug);
   } catch (err) {
     if (process.env.NEXT_PHASE === "phase-production-build") return [];
     throw err;
@@ -67,13 +73,17 @@ function mergeBySlug<T extends { slug: string; publishedAt: string }>(
   );
 }
 
+// esy.com sections map to Publications: /research -> esy-research, /learn -> esy-learn.
+const RESEARCH_PUBLICATION = "esy-research";
+const LEARN_PUBLICATION = "esy-learn";
+
 export async function getAllResearchArticles(): Promise<ResearchVideo[]> {
-  const api = await fetchPublishedSafe("research");
+  const api = await fetchPublishedSafe(RESEARCH_PUBLICATION);
   return mergeBySlug(researchVideos, api as ResearchVideo[]);
 }
 
 export async function getAllSchoolArticles(): Promise<SchoolVideo[]> {
-  const api = await fetchPublishedSafe("school");
+  const api = await fetchPublishedSafe(LEARN_PUBLICATION);
   return mergeBySlug(schoolVideos, api as SchoolVideo[]);
 }
 
