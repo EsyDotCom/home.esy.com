@@ -261,6 +261,8 @@ const IntelligenceCircuitryPage: React.FC = () => {
             <div className="ic-hero-copy text-white">
               {/* Keep the hero friendly: messy material goes into an easy
                   template intake and comes back as finished work. */}
+              {/* Alt headline — may return for A/B or seasonal rotation:
+                  "Automate the workflow." / "Audit the output." (teal on line 2) */}
               <h1 style={{ 
                 fontFamily: 'Cormorant Garamond, Georgia, serif', 
                 fontSize: 'clamp(2.5rem, 6vw, 4rem)', 
@@ -272,13 +274,13 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 maxWidth: '100%',
                 overflow: 'hidden'
               }}>
-                <span style={{ display: 'block' }}>Automate the workflow.</span>
+                <span style={{ display: 'block' }}>Simple workflows for the</span>
                 <span style={{ 
                   display: 'block', 
                   background: 'linear-gradient(135deg, #00D4AA 0%, #5EEAD4 100%)', 
                   WebkitBackgroundClip: 'text', 
                   WebkitTextFillColor: 'transparent' 
-                }}>Audit the output.</span>
+                }}>AI Solopreneur</span>
               </h1>
 
               {/* Subheadline — plain language for non-dev visitors: templates
