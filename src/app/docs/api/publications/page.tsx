@@ -16,7 +16,7 @@ const listArticlesExample = `{
       "category": "policy",
       "categoryLabel": "Policy",
       "categories": [{ "slug": "policy", "label": "Policy" }],
-      "kind": "research",
+      "kind": "article",
       "publishedAt": "2026-06-20T14:02:11.004Z",
       "tags": ["water", "energy"],
       "relatedSlugs": []

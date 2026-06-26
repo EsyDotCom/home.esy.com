@@ -178,7 +178,7 @@ export default function ConnectConsumerGuidePage() {
       </p>
       <CodeBlock title="environment" language="bash">
         {`ESY_REVALIDATE_SECRET_ESY_RESEARCH=…
-ESY_REVALIDATE_SECRET_ESY_SCHOOL=…`}
+ESY_REVALIDATE_SECRET_ESY_LEARN=…`}
       </CodeBlock>
 
       <h2>Confirm it works</h2>
