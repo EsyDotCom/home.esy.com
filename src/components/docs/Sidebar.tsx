@@ -29,7 +29,7 @@ import {
   X,
 } from 'lucide-react';
 
-import { navigation, type NavIcon, type NavItem, type NavSection } from '@/lib/docs-navigation';
+import { isItemNew, navigation, type NavIcon, type NavItem, type NavSection } from '@/lib/docs-navigation';
 
 const iconMap: Record<NavIcon, React.ReactNode> = {
   home: <Home size={14} />,
@@ -184,7 +184,7 @@ function NavItemRow({ item, isActive }: { item: NavItem; isActive: boolean }) {
         />
       )}
 
-      {item.isNew && (
+      {isItemNew(item) && (
         <span
           style={{
             padding: '2px 5px',

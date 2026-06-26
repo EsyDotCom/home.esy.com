@@ -2,8 +2,8 @@
  * Sidebar information architecture for docs.esy.com.
  * Sections render top-down in the order listed here. Items support
  * an optional `icon` (from the lucide icon map in Sidebar.tsx),
- * an `isNew` flag, an `external` flag, and a `description` for
- * search / hub rendering.
+ * a `since` date (drives an auto-expiring "New" badge), an `external`
+ * flag, and a `description` for search / hub rendering.
  */
 
 export type NavIcon =
@@ -30,7 +30,11 @@ export interface NavItem {
   href: string;
   description?: string;
   icon?: NavIcon;
-  isNew?: boolean;
+  /**
+   * ISO date (YYYY-MM-DD) the item was added. Drives the "New" badge, which
+   * auto-expires after NEW_BADGE_DAYS — so badges don't linger for weeks.
+   */
+  since?: string;
   external?: boolean;
 }
 
@@ -59,7 +63,7 @@ export const navigation: NavSection[] = [
         href: '/docs/concepts/workflow-schemas',
         description: 'The platform contract every Workflow Template must satisfy.',
         icon: 'layers',
-        isNew: true,
+        since: '2026-06-05',
       },
       {
         title: 'Workflow templates',
@@ -72,14 +76,14 @@ export const navigation: NavSection[] = [
         href: '/docs/concepts/workflow-specifications',
         description: 'Per-run populated instances of a Template. The deterministic blueprint production reads.',
         icon: 'file-text',
-        isNew: true,
+        since: '2026-06-05',
       },
       {
         title: 'Workflow versioning',
         href: '/docs/concepts/workflow-versioning',
         description: 'Templates are immutable and versioned; runs pin the exact version they executed for reproducibility.',
         icon: 'history',
-        isNew: true,
+        since: '2026-06-05',
       },
       {
         title: 'Runs',
@@ -98,7 +102,7 @@ export const navigation: NavSection[] = [
         href: '/docs/concepts/sub-workflows',
         description: 'How a workflow composes another workflow as a child run, with linked artifacts and rolled-up cost.',
         icon: 'workflow',
-        isNew: true,
+        since: '2026-06-05',
       },
       {
         title: 'Costs',
@@ -111,7 +115,14 @@ export const navigation: NavSection[] = [
         href: '/docs/concepts/budgets',
         description: 'Spend limits at organization, project, or workflow scope, enforced before a run executes.',
         icon: 'wallet',
-        isNew: true,
+        since: '2026-06-05',
+      },
+      {
+        title: 'Publications',
+        href: '/docs/concepts/publications',
+        description: 'Headless destinations that own published documents, categories, and a revalidation webhook.',
+        icon: 'globe',
+        since: '2026-06-26',
       },
     ],
   },
@@ -123,6 +134,13 @@ export const navigation: NavSection[] = [
         href: '/docs/api',
         description: 'Endpoints, request shapes, and response schemas.',
         icon: 'plug',
+      },
+      {
+        title: 'Publications API',
+        href: '/docs/api/publications',
+        description: 'Public reads plus authoring endpoints for publications and categories.',
+        icon: 'globe',
+        since: '2026-06-26',
       },
       {
         title: 'Changelog',
@@ -152,7 +170,14 @@ export const navigation: NavSection[] = [
         href: '/docs/guides/compose-with-artifact-inputs',
         description: 'Let a workflow accept an existing artifact as input — supply one or generate it.',
         icon: 'workflow',
-        isNew: true,
+        since: '2026-06-05',
+      },
+      {
+        title: 'Connect a consumer site',
+        href: '/docs/guides/connect-a-consumer-site',
+        description: 'Render a public publication and verify Esy’s revalidation webhooks with HMAC.',
+        icon: 'plug',
+        since: '2026-06-26',
       },
     ],
   },
@@ -176,6 +201,22 @@ export const navigation: NavSection[] = [
     ],
   },
 ];
+
+/** How long a `since` item keeps its "New" badge before it auto-expires. */
+export const NEW_BADGE_DAYS = 21;
+
+/**
+ * Whether an item should show the "New" badge: it has a `since` date that is in
+ * the past and within the freshness window. Time-based so badges retire on their
+ * own instead of lingering until someone remembers to delete the flag.
+ */
+export function isItemNew(item: NavItem, now: Date = new Date()): boolean {
+  if (!item.since) return false;
+  const since = new Date(item.since);
+  if (Number.isNaN(since.getTime())) return false;
+  const ageMs = now.getTime() - since.getTime();
+  return ageMs >= 0 && ageMs < NEW_BADGE_DAYS * 24 * 60 * 60 * 1000;
+}
 
 /** Flat list of every nav item across all sections. */
 export const allNavItems: NavItem[] = navigation.flatMap((s) => s.items);
