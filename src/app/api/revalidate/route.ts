@@ -21,6 +21,12 @@ type RevalidateBody = {
 
 const VALID_KINDS = new Set<ArticleKind>(["research", "school"]);
 
+// API article kinds map to public URL prefixes (school → /learn since Jun 2026).
+const KIND_PATH_PREFIX: Record<ArticleKind, string> = {
+  research: "research",
+  school: "learn",
+};
+
 // Headless publication slugs → esy.com section paths (Phase 1 API sends `publication`).
 const PUBLICATION_TO_KIND: Record<string, ArticleKind> = {
   "esy-research": "research",
@@ -108,7 +114,8 @@ export async function POST(request: NextRequest) {
   revalidateTag("published-articles");
   revalidateTag(`published-articles:${kind}`);
 
-  const paths = [`/${kind}`, `/${kind}/${slug}`, "/sitemap.xml"];
+  const pathPrefix = KIND_PATH_PREFIX[kind];
+  const paths = [`/${pathPrefix}`, `/${pathPrefix}/${slug}`, "/sitemap.xml"];
   paths.forEach((path) => revalidatePath(path));
 
   return NextResponse.json({

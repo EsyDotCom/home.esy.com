@@ -37,8 +37,8 @@ export const ctaMapping: CTAMapping = {
     isNewsletter: true
   },
   
-  // School pages
-  '/school': {
+  // Learn pages (formerly /school)
+  '/learn': {
     ctaText: 'App',
     ctaHref: 'https://app.esy.com',
     isProduct: true
@@ -54,7 +54,7 @@ export const ctaMapping: CTAMapping = {
   // Individual essay pages (bonus feature)
   '/essays/': {
     ctaText: 'Learn How We Wrote This',
-    ctaHref: '/school', // Link to related tutorial
+    ctaHref: '/learn', // Link to related tutorial
     isNewsletter: false
   }
 };

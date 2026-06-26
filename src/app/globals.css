@@ -951,6 +951,52 @@ html {
   color: rgba(0, 168, 150, 0.6);
 }
 
+/* Learn expandable group — mirrors desktop Learn dropdown on mobile */
+.mnav-item--expand {
+  width: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+.mnav-item__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.mnav-item__chevron {
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.35);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.mnav-overlay--light .mnav-item__chevron {
+  color: rgba(10, 37, 64, 0.35);
+}
+
+.mnav-item--expand-open .mnav-item__chevron {
+  transform: rotate(90deg);
+  color: #00D4AA;
+}
+
+.mnav-overlay--light .mnav-item--expand-open .mnav-item__chevron {
+  color: #00A896;
+}
+
+.mnav-item--sub {
+  margin-left: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.mnav-item--sub .mnav-item__label {
+  font-size: 1.25rem;
+}
+
 /* ── Footer: CTA ────────────────────────────────────────── */
 .mnav-footer {
   padding: 1.5rem 2rem 2.5rem;

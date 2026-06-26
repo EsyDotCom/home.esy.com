@@ -40,7 +40,7 @@ export function VideoCard({
     : null;
 
   return (
-    <Link href={`/school/${slug}`} style={{ textDecoration: "none", color: "inherit", minWidth: 0 }}>
+    <Link href={`/learn/${slug}`} style={{ textDecoration: "none", color: "inherit", minWidth: 0 }}>
       <div
         style={{
           borderRadius: "16px",

@@ -18,7 +18,7 @@ const AuthorBox = ({ author, theme, isDarkMode = true }) => {
   }, []);
 
   // Use author's bio if provided, otherwise use default positioning
-  const displayBio = author.bio || "I design citation-first research workflows for essays and learning artifacts. Esy School documents how these workflows are built and used in practice.";
+  const displayBio = author.bio || "I design citation-first research workflows for essays and learning artifacts. Esy Learn documents how these workflows are built and used in practice.";
 
   // Default theme if not provided - Navy Calm
   const currentTheme = theme || {
@@ -202,7 +202,7 @@ const AuthorBox = ({ author, theme, isDarkMode = true }) => {
             alignItems: 'center'
           }}>
             <Link 
-              href="/school/"
+              href="/learn/"
               style={{
                 padding: '0.75rem 2rem',
                 background: `linear-gradient(135deg, ${currentTheme.accent} 0%, ${currentTheme.accentLight} 100%)`,
@@ -225,7 +225,7 @@ const AuthorBox = ({ author, theme, isDarkMode = true }) => {
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              Explore Esy School →
+              Explore Esy Learn →
             </Link>
             
             <Link 

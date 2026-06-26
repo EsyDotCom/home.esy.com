@@ -135,10 +135,10 @@ const HeaderSearch: React.FC<HeaderSearchProps> = ({
   const schoolSearchHook = useSchoolSearch({
     articles: searchContext === 'school' ? 
       [
-        { type: 'Article', category: 'AI Research', title: '5 Ways AI is Revolutionizing Academic Research', excerpt: 'Discover how artificial intelligence is transforming the landscape of academic research.', author: 'Zev Uhuru', readTime: '6 min', link: '/school/articles/ai-research-revolution' },
-        { type: 'Guide', category: 'Prompt Engineering', title: 'What is Prompt Engineering? A Comprehensive Guide', excerpt: 'Master the art and science of crafting effective prompts for AI systems.', author: 'Zev Uhuru', readTime: '8 min', link: '/school/articles/prompt-engineering-guide' },
-        { type: 'Tutorial', category: 'LLM Basics', title: 'Understanding Large Language Models: From Theory to Practice', excerpt: 'Demystify the technology behind ChatGPT, Claude, and other LLMs.', author: 'Zev Uhuru', readTime: '12 min', link: '/school/articles/understanding-llms' },
-        { type: 'Literature', category: 'Classic Literature', title: 'To Kill a Mockingbird: A Timeless Exploration of Justice', excerpt: 'Explore Harper Lee\'s masterpiece through the lens of moral courage.', author: 'Zev Uhuru', readTime: '15 min', link: '/school/articles/to-kill-a-mockingbird' }
+        { type: 'Article', category: 'AI Research', title: '5 Ways AI is Revolutionizing Academic Research', excerpt: 'Discover how artificial intelligence is transforming the landscape of academic research.', author: 'Zev Uhuru', readTime: '6 min', link: '/learn/articles/ai-research-revolution' },
+        { type: 'Guide', category: 'Prompt Engineering', title: 'What is Prompt Engineering? A Comprehensive Guide', excerpt: 'Master the art and science of crafting effective prompts for AI systems.', author: 'Zev Uhuru', readTime: '8 min', link: '/learn/articles/prompt-engineering-guide' },
+        { type: 'Tutorial', category: 'LLM Basics', title: 'Understanding Large Language Models: From Theory to Practice', excerpt: 'Demystify the technology behind ChatGPT, Claude, and other LLMs.', author: 'Zev Uhuru', readTime: '12 min', link: '/learn/articles/understanding-llms' },
+        { type: 'Literature', category: 'Classic Literature', title: 'To Kill a Mockingbird: A Timeless Exploration of Justice', excerpt: 'Explore Harper Lee\'s masterpiece through the lens of moral courage.', author: 'Zev Uhuru', readTime: '15 min', link: '/learn/articles/to-kill-a-mockingbird' }
       ] : [],
     resources: [],
     courses: [],

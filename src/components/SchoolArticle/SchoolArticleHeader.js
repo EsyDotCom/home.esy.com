@@ -30,7 +30,7 @@ export default function SchoolArticleHeader({ article }) {
         <div className={styles.heroContent}>
           {/* Back to School Link */}
           <div className={styles.backLink}>
-            <a href="/school/">
+            <a href="/learn/">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="15 18 9 12 15 6"></polyline>
               </svg>

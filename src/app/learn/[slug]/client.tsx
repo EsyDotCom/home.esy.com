@@ -25,7 +25,7 @@ export default function VideoPageClient({
   return (
     <ArticleDetail
       article={video}
-      section={{ label: "School", basePath: "/school" }}
+      section={{ label: "Learn", basePath: "/learn" }}
       transcriptSegments={transcriptSegments}
       newsletterBar={<SchoolNewsletterBar />}
       sidebar={

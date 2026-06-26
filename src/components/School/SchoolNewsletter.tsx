@@ -224,7 +224,7 @@ export default function SchoolNewsletter({
                   fontFamily: 'Literata, Georgia, serif',
                   color: isDarkMode ? '#ffffff' : '#0f172a'
                 }}>
-                  {isSuccess ? "You\u2019re in!" : 'Esy School'}
+                  {isSuccess ? "You\u2019re in!" : 'Esy Learn'}
                 </h3>
 
                 {/* Subtitle */}
@@ -383,7 +383,7 @@ export default function SchoolNewsletter({
                         target.style.transform = 'translateY(0)';
                         target.style.boxShadow = isDarkMode ? '0 6px 20px rgba(0, 168, 150, 0.25)' : 'none';
                       }}>
-                      {isLoading ? 'Subscribing...' : 'Subscribe to Esy School'}
+                      {isLoading ? 'Subscribing...' : 'Subscribe to Esy Learn'}
                     </button>
                   </div>
 

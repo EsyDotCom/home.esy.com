@@ -32,7 +32,7 @@ export function RelatedVideos({ videos }: RelatedVideosProps) {
           More videos
         </span>
         <Link
-          href="/school"
+          href="/learn"
           style={{
             display: "flex",
             alignItems: "center",
@@ -56,7 +56,7 @@ export function RelatedVideos({ videos }: RelatedVideosProps) {
           return (
             <Link
               key={video.slug}
-              href={`/school/${video.slug}`}
+              href={`/learn/${video.slug}`}
               style={{
                 display: "flex",
                 gap: 12,

@@ -138,7 +138,7 @@ export default function ArticlesIndexPage() {
     <div style={styles.container}>
       <Breadcrumbs 
         items={[
-          { label: 'School', href: '/school' },
+          { label: 'Learn', href: '/learn' },
           { label: 'Articles', isCurrent: true }
         ]}
       />
@@ -155,7 +155,7 @@ export default function ArticlesIndexPage() {
           {articles.map((article, index) => (
             <Link
               key={index}
-              href={`/school/articles/${article.slug}`}
+              href={`/learn/articles/${article.slug}`}
               style={styles.articleCard}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = navyCalmDarkTheme.surface;

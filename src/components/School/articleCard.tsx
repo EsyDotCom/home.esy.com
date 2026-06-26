@@ -3,7 +3,7 @@ import styles from './articleCard.module.css';
 
 export default function ArticleCard({ category, title, excerpt, author, date, readTime, slug }) {
   return (
-    <Link href={`/school/articles/${slug}/`} style={{ textDecoration: 'none', color: 'inherit' }}>
+    <Link href={`/learn/articles/${slug}/`} style={{ textDecoration: 'none', color: 'inherit' }}>
       <article className={styles.articleCard}>
         <div className={styles.articleImage}>
           <span className={styles.articleCategory}>{category}</span>

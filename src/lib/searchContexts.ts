@@ -47,7 +47,7 @@ export const SEARCH_CONTEXTS: Record<SearchContext, SearchContextConfig> = {
     context: 'school',
     placeholder: 'Search articles & guides...',
     dataSource: 'school',
-    searchUrl: '/school?search=',
+    searchUrl: '/learn?search=',
     resultUrlPattern: '',
     shouldAlwaysExpand: true,
     description: 'Search through educational articles and guides'
@@ -103,7 +103,7 @@ export const getSearchContextConfig = (context: SearchContext): SearchContextCon
 export const getSearchContextFromPath = (pathname: string): SearchContext => {
   if (pathname?.startsWith('/workflows')) return 'templates';
   if (pathname?.startsWith('/glossary')) return 'glossary';
-  if (pathname?.startsWith('/school')) return 'school';
+  if (pathname?.startsWith('/learn')) return 'school';
   if (pathname?.startsWith('/scrollytelling')) return 'scrollytelling';
   if (pathname?.startsWith('/essays')) return 'essays';
   if (pathname?.startsWith('/blog')) return 'blog';

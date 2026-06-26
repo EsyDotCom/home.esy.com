@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : undefined;
 
   return {
-    title: `${video.title} — Esy School`,
+    title: `${video.title} — Esy Learn`,
     description: video.description.slice(0, 160),
     openGraph: {
       title: video.title,

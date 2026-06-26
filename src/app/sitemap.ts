@@ -103,7 +103,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Get dynamic content. School articles are intentionally absent: the
-  // /school/articles/[slug] route is retired (only .old/.backup files remain),
+  // /learn/articles/[slug] route is retired (only .old/.backup files remain),
   // so emitting them produced 404s in the sitemap.
   const essays = getMarkdownFiles(essaysDir)
   const glossaryTerms = getMarkdownFiles(glossaryDir)
@@ -176,7 +176,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const schoolVideos = await getAllSchoolArticles()
   schoolVideos.forEach(video => {
     sitemap.push({
-      url: `${baseUrl}/school/${video.slug}/`,
+      url: `${baseUrl}/learn/${video.slug}/`,
       lastModified: new Date(video.publishedAt),
       changeFrequency: 'monthly',
       priority: 0.7,
@@ -262,7 +262,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   console.log(`- ${glossaryTerms.length} glossary routes`)
   console.log(`- ${infographicSlugs.length} infographic routes`)
   console.log(`- ${researchVideos.length} research video routes`)
-  console.log(`- ${schoolVideos.length} school video routes`)
+  console.log(`- ${schoolVideos.length} learn video routes`)
   console.log(`- ${workflowTemplates.length} workflow template routes`)
   console.log(`- ${clipArtSlugs.length} clip art routes`)
   console.log(`- ${courseRouteCount} course routes`)
