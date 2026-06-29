@@ -757,7 +757,7 @@ const author = {
 export const courses: Course[] = [
   {
     slug: 'how-to-use-claude-code',
-    title: 'How to Use Claude Code',
+    title: 'How to Use Claude Code for the AI Solopreneur',
     description: 'Master the AI coding assistant that lives in your terminal. Learn setup, advanced patterns, team workflows, and CI/CD integration to ship features 3-5x faster.',
     author,
     chapters: [
