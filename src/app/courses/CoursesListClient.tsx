@@ -67,7 +67,7 @@ export default function CoursesListClient() {
       <LibraryHero
         breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Courses' }]}
         title="Courses"
-        subhead="Learn to build agents and agentic workflows with AI. Every lesson ends with a real artifact you can run, not just notes."
+        subhead="Practical courses for the AI solopreneur — learn to build agents, design agentic workflows, and use AI Coding Tools to run and grow your business."
         meta={
           <>
             <span><strong>{totalCourses}</strong> {totalCourses === 1 ? 'course' : 'courses'}</span>
