@@ -2,15 +2,15 @@ import SchoolVideosClient from "./client";
 import { getAllSchoolArticles } from "@/lib/published-articles";
 
 export const metadata = {
-  title: "Esy Learn — Agentic Workflow Tutorials",
+  title: "Learn | Esy",
   description:
-    "Step-by-step tutorials on implementing agentic workflows with Esy's workflow templates and the latest AI tools.",
+    "Practical tutorials for the AI solopreneur — run Esy's agentic workflow templates for research, marketing, and deliverables.",
   keywords:
-    "Esy Learn, agentic workflows, workflow tutorials, AI tools, Claude, ChatGPT, workflow templates, artifact pipelines",
+    "Esy Learn, agentic workflow templates, AI solopreneur, workflow tutorials, Esy templates, artifact pipelines, Claude Code, ChatGPT",
   openGraph: {
-    title: "Esy Learn — Agentic Workflow Tutorials",
+    title: "Learn | Esy",
     description:
-      "Step-by-step tutorials on implementing agentic workflows with Esy's templates and the latest AI tools.",
+      "Practical tutorials for the AI solopreneur — run Esy's agentic workflow templates for research, marketing, and deliverables.",
     type: "website",
   },
 };

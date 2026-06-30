@@ -2,14 +2,15 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Play, BookOpen, Clock } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import { ArrowRight, Play } from "lucide-react";
 import { VideoCard } from "@/components/School/VideoCard";
 import SchoolNewsletter from "@/components/School/SchoolNewsletter";
 import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 import { navyCalmLightTheme as theme } from "@/lib/theme";
-import { formatDuration, type SchoolVideo } from "@/data/school-videos";
+import { type SchoolVideo } from "@/data/school-videos";
 import { courses } from "@/lib/learn/mockData";
+import LibraryHero from "@/components/LibraryHero/LibraryHero";
+import HeroCarousel, { type HeroCarouselItem } from "@/components/LibraryHero/HeroCarousel";
 
 type Breakpoint = "mobile" | "tablet" | "desktop";
 
@@ -43,7 +44,6 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
   const bp = useBreakpoint();
   const isMobile = bp === "mobile";
   const isTablet = bp === "tablet";
-  const isCompact = isMobile || isTablet;
 
   const {
     subscribe,
@@ -58,15 +58,20 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
   };
 
   const videos = allVideos;
-  const featured = videos[0];
-  const rest = videos.slice(1);
-
-  const featuredThumb = featured?.thumbnailUrl
-    || (featured?.muxPlaybackId
-      ? `https://image.mux.com/${featured.muxPlaybackId}/thumbnail.jpg?time=0`
-      : null);
-
   const [hoveredCourse, setHoveredCourse] = useState<string | null>(null);
+
+  // Spotlight recent tutorials in the stage carousel (mux thumbnail as fallback).
+  const featuredCarousel: HeroCarouselItem[] = videos.slice(0, 6).map((v) => ({
+    id: v.slug,
+    href: `/learn/${v.slug}`,
+    imageSrc:
+      v.thumbnailUrl ||
+      (v.muxPlaybackId
+        ? `https://image.mux.com/${v.muxPlaybackId}/thumbnail.jpg?time=0`
+        : ""),
+    label: v.categoryLabel,
+    title: v.title,
+  }));
 
   return (
     <div
@@ -75,248 +80,54 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
         backgroundColor: theme.bg,
         color: theme.text,
         fontFamily: "var(--font-inter)",
-        paddingTop: isMobile ? 72 : 96,
+        paddingTop: 0,
         overflowX: "hidden",
         width: "100%",
       }}
     >
-      {/* ═══ Hero ═══ */}
-      <section
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: isMobile ? "2rem 1rem 2rem" : isTablet ? "3rem 1.5rem 2.5rem" : "4rem 2rem 3rem",
-          position: "relative",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage: `
-              linear-gradient(rgba(10, 37, 64, 0.03) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(10, 37, 64, 0.03) 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
-            maskImage: "radial-gradient(ellipse at center, black 0%, transparent 70%)",
-            WebkitMaskImage: "radial-gradient(ellipse at center, black 0%, transparent 70%)",
-            pointerEvents: "none",
-          }}
-        />
-
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div style={{ marginBottom: isMobile ? "1.25rem" : "2rem" }}>
-            <Breadcrumbs
-              items={[
-                { label: "Home", href: "/" },
-                { label: "Learn", isCurrent: true },
-              ]}
+      {/* ═══ Library stage hero (shared with /courses and /research) ═══ */}
+      <LibraryHero
+        breadcrumb={[{ label: "Home", href: "/" }, { label: "Learn" }]}
+        title="Learn"
+        subhead="Practical tutorials for the AI solopreneur — run Esy's agentic workflow templates for research, marketing, and deliverables."
+        meta={
+          <>
+            <span>
+              <strong>{videos.length}</strong>{" "}
+              {videos.length === 1 ? "tutorial" : "tutorials"}
+            </span>
+            <span className="esy-stage__meta-dot">·</span>
+            <span>video walkthroughs</span>
+            <span className="esy-stage__meta-dot">·</span>
+            <span>free</span>
+          </>
+        }
+        feature={
+          featuredCarousel.length > 0 ? (
+            <HeroCarousel
+              items={featuredCarousel}
+              ariaLabel="Featured learn tutorials"
             />
-          </div>
-
-          <h1
-            style={{
-              fontFamily: "var(--font-literata)",
-              fontSize: isMobile ? "2rem" : "clamp(2.5rem, 5vw, 4rem)",
-              fontWeight: 300,
-              lineHeight: 1.1,
-              marginBottom: "1.25rem",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            <span style={{ color: theme.accent }}>Learn</span>
-          </h1>
-
-          <p
-            style={{
-              fontSize: isMobile ? "0.9375rem" : "clamp(1rem, 2vw, 1.25rem)",
-              lineHeight: 1.6,
-              color: theme.textSecondary,
-              maxWidth: 600,
-            }}
-          >
-            Learn to implement agentic workflows with Esy's templates and the latest AI tools. Step-by-step tutorials.
-          </p>
-        </div>
-      </section>
-
-      {/* ═══ Featured Tutorial ═══ */}
-      {featured && (
-        <section style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "0 1rem 2rem" : isTablet ? "0 1.5rem 2.5rem" : "0 2rem 3rem" }}>
-          <Link
-            href={`/learn/${featured.slug}`}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
+          ) : (
+            // Empty shelf — keep the stage layout when no tutorials are published yet.
             <div
               style={{
-                display: isCompact ? "flex" : "grid",
-                flexDirection: isCompact ? "column" : undefined,
-                gridTemplateColumns: isCompact ? undefined : "1.4fr 1fr",
-                borderRadius: isMobile ? 16 : 20,
-                overflow: "hidden",
-                border: `1px solid ${theme.border}`,
-                transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = theme.accentBorder;
-                e.currentTarget.style.transform = "translateY(-4px)";
-                e.currentTarget.style.boxShadow = theme.shadows.lg;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = theme.border;
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
+                width: "100%",
+                aspectRatio: "4 / 3",
+                borderRadius: 16,
+                border: "1px dashed rgba(255,255,255,0.2)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "rgba(255,255,255,0.5)",
+                fontSize: "0.875rem",
               }}
             >
-              <div
-                style={{
-                  position: "relative",
-                  minHeight: isMobile ? 180 : isTablet ? 260 : 340,
-                  overflow: "hidden",
-                  width: "100%",
-                }}
-              >
-                {featuredThumb ? (
-                  <img
-                    src={featuredThumb}
-                    alt={featured.title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                ) : (
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.primaryLight} 100%)`,
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: isMobile ? 56 : 80,
-                        height: isMobile ? 56 : 80,
-                        borderRadius: "50%",
-                        backgroundColor: `${theme.accent}dd`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        boxShadow: theme.shadows.cta,
-                      }}
-                    >
-                      <Play size={isMobile ? 24 : 32} color="#fff" fill="#fff" style={{ marginLeft: 3 }} />
-                    </div>
-                  </div>
-                )}
-
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 12,
-                    right: 12,
-                    borderRadius: 8,
-                    padding: "4px 10px",
-                    backgroundColor: "rgba(0,0,0,0.75)",
-                    color: "#fff",
-                    fontSize: "0.8125rem",
-                    fontFamily: "var(--font-geist-mono)",
-                  }}
-                >
-                  {formatDuration(featured.durationSeconds)}
-                </div>
-
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 12,
-                    left: 12,
-                    borderRadius: 20,
-                    padding: "4px 14px",
-                    backgroundColor: "rgba(255,255,255,0.92)",
-                    fontSize: "0.6875rem",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.1em",
-                    color: theme.accent,
-                  }}
-                >
-                  Featured
-                </div>
-              </div>
-
-              <div
-                style={{
-                  backgroundColor: theme.surface,
-                  padding: isMobile ? "1.5rem" : isTablet ? "2rem" : "2.5rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "0.6875rem",
-                    fontWeight: 600,
-                    color: theme.accent,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.08em",
-                    marginBottom: "0.75rem",
-                  }}
-                >
-                  {featured.categoryLabel}
-                </span>
-
-                <h2
-                  style={{
-                    fontFamily: "var(--font-literata)",
-                    fontSize: isMobile ? "1.25rem" : "clamp(1.375rem, 2.5vw, 1.75rem)",
-                    fontWeight: 400,
-                    lineHeight: 1.25,
-                    marginBottom: "1rem",
-                    letterSpacing: "-0.01em",
-                  }}
-                >
-                  {featured.title}
-                </h2>
-
-                {!isMobile && (
-                  <p
-                    style={{
-                      fontSize: "0.9375rem",
-                      color: theme.textSecondary,
-                      lineHeight: 1.7,
-                      marginBottom: "1.5rem",
-                    }}
-                  >
-                    {featured.description}
-                  </p>
-                )}
-
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: "0.875rem", color: theme.muted }}>
-                    {formatDuration(featured.durationSeconds)}
-                  </span>
-                  <span
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 8,
-                      fontSize: "0.9375rem",
-                      fontWeight: 500,
-                      color: theme.accent,
-                    }}
-                  >
-                    Watch now
-                    <ArrowRight size={16} />
-                  </span>
-                </div>
-              </div>
+              Tutorials coming soon
             </div>
-          </Link>
-        </section>
-      )}
+          )
+        }
+      />
 
       {/* ═══ Workflow Tutorials Grid ═══ */}
       <section style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "0 1rem 3rem" : isTablet ? "0 1.5rem 3.5rem" : "0 2rem 4rem" }}>
@@ -337,6 +148,16 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
           >
             All Tutorials
           </h2>
+          <p
+            style={{
+              fontSize: "0.9375rem",
+              color: theme.textSecondary,
+              lineHeight: 1.6,
+              marginTop: "0.5rem",
+            }}
+          >
+            Short walkthroughs on selecting, running, and reviewing Esy&apos;s agentic workflow templates — the quick-start companion to Courses.
+          </p>
         </div>
 
         <div
@@ -346,7 +167,7 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
             gap: isMobile ? "1.25rem" : "1.5rem",
           }}
         >
-          {rest.map((video: SchoolVideo) => (
+          {videos.map((video: SchoolVideo) => (
             <VideoCard
               key={video.slug}
               title={video.title}
@@ -390,7 +211,7 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
               marginTop: "0.5rem",
             }}
           >
-            Deep-dive video courses with interactive transcripts, commentary, and timestamped notes.
+            Longform courses on Esy&apos;s agentic workflow templates — structured lessons with interactive transcripts, commentary, and timestamped notes.
           </p>
         </div>
 

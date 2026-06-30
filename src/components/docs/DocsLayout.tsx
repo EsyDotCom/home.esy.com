@@ -98,8 +98,8 @@ export function DocsLayout({ children }: { children: React.ReactNode }) {
                   <BrandMark />
                 </Link>
                 <p className="footer-desc">
-                  Agentic workflow templates that automate research, verify citations, and deliver publishable
-                  artifacts.
+                  Agentic workflow templates for the AI solopreneur — research, marketing, and deliverables that grow
+                  your business.
                   <br />
                   <strong>Automate &amp; audit.</strong>
                 </p>

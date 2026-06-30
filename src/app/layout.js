@@ -61,15 +61,15 @@ export const metadata = {
     template: '%s | Esy',
     default: 'Esy — Automate & Audit. Agentic Workflows.',
   },
-  description: "Automate research, verify citations, and produce publishable artifacts — all through agentic workflow templates. Structured, auditable output by default.",
-  keywords: 'agentic workflows, verified artifacts, workflow automation, citation verification, research workflows, visual essays, auditable artifacts, structured output',
+  description: "Agentic workflow templates for the AI solopreneur. Run batch generations, track token costs, manage budgets, review output, and audit every run.",
+  keywords: 'agentic workflow templates, AI solopreneur, workflow automation, token cost tracking, AI budget management, batch generation, auditable workflows',
   metadataBase: new URL('https://esy.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'Esy — Automate & Audit. Agentic Workflows.',
-    description: 'Automate research, verify citations, and produce publishable artifacts — all through agentic workflow templates. Structured, auditable output by default.',
+    description: 'Agentic workflow templates for the AI solopreneur. Run batch generations, track token costs, manage budgets, review output, and audit every run.',
     url: 'https://esy.com',
     siteName: 'Esy',
     locale: 'en_US',
