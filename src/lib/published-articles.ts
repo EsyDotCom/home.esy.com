@@ -15,14 +15,22 @@ import { schoolVideos, type SchoolVideo } from "@/data/school-videos";
 // error is NEVER cached as an article-less page (see fetchPublished vs the
 // build-only fallback in fetchPublishedSafe).
 
-const API_URL =
-  process.env.ESY_API_URL ??
-  (process.env.NODE_ENV === "development" ? "http://localhost:8000" : "https://api.esy.com");
+const API_URL = process.env.ESY_API_URL ?? "https://api.esy.com";
 
 // Backstop only; on-demand tag revalidation is the real trigger.
 const REVALIDATE_SECONDS = 3600;
 
 type ApiArticle = ResearchVideo; // the public API response mirrors this shape
+
+// Static builds and local dev can fall back to the git registry when the API is
+// down. Production ISR must still throw so Next keeps the last-good cache
+// instead of baking in an empty list.
+function mayFallbackToRegistryOnly(): boolean {
+  return (
+    process.env.NEXT_PHASE === "phase-production-build" ||
+    process.env.NODE_ENV === "development"
+  );
+}
 
 // Headless reads: each esy.com section is a Publication. We read its published
 // documents from the publication-scoped public endpoint (no `kind` axis — the
@@ -47,15 +55,23 @@ async function fetchPublished(publicationSlug: string): Promise<ApiArticle[]> {
   return (body.items ?? []) as ApiArticle[];
 }
 
-// Build-time only graceful degradation: api.esy.com has flaked with 502s, and a
-// static build shouldn't fail just because the API is briefly unreachable —
-// fall back to the registry. At request/ISR time we deliberately let the error
+// Build-time and local dev graceful degradation: api.esy.com can 502/500 or be
+// unreachable, and `next dev` shouldn't require a local API process. Fall back
+// to the git registry. At production ISR time we deliberately let the error
 // propagate so Next serves the last-good cache instead of caching an empty list.
 async function fetchPublishedSafe(publicationSlug: string): Promise<ApiArticle[]> {
   try {
     return await fetchPublished(publicationSlug);
   } catch (err) {
-    if (process.env.NEXT_PHASE === "phase-production-build") return [];
+    if (mayFallbackToRegistryOnly()) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn(
+          `[published-articles] ${publicationSlug}: API unavailable, using static registry only.`,
+          err,
+        );
+      }
+      return [];
+    }
     throw err;
   }
 }

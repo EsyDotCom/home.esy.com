@@ -5,9 +5,6 @@ import IntelligenceCircuitryPage from "../components/IntelligenceCircuitry/Intel
 // description:
 //   "Automate research, verify citations, and produce publishable artifacts — all through agentic workflow templates. Structured, auditable output by default."
 
-// Meta description (~125 chars): lead with H1/title topic in the first 120 for mobile
-// truncation; one factual summary sentence plus a specific capability list (token
-// cost tracking, budgets, batch generations, review, audit). Target band: 140–155 desktop.
 const HOME_META_DESCRIPTION =
   "Agentic workflow templates for the AI solopreneur. Run batch generations, track token costs, manage budgets, review output, and audit every run.";
 
@@ -15,7 +12,7 @@ export const metadata = {
   title: "Esy — Agentic Workflows for the AI Solopreneur",
   description: HOME_META_DESCRIPTION,
   keywords: [
-    "agentic workflows",
+    "agentic workflow templates",
     "AI solopreneur",
     "workflow templates",
     "token cost tracking",

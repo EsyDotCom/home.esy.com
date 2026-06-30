@@ -241,7 +241,7 @@ export default function Footer () {
               <Logo href="" wordmarkOnly wordmarkFont="blackops" theme={logoTheme} />
             </div>
             <p className="footer-desc" style={{ color: theme.muted }}>
-              Agentic workflow templates that automate research, verify citations, and deliver publishable artifacts.
+              Agentic workflow templates for the AI solopreneur — research, marketing, and deliverables that grow your business.
               <br />
               <strong style={{ color: isLightMode || isNavyDark ? theme.text : 'inherit' }}>Automate &amp; audit.</strong>
             </p>
