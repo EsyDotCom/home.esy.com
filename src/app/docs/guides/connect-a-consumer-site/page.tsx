@@ -56,6 +56,14 @@ import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { verify, secretsFor } from "@/lib/verify-webhook";
 
+// Map each publication you serve to ITS route segment on this site. The segment
+// is your section path (e.g. "learn"), NOT the publication slug ("esy-learn").
+// Adding a destination is one line here.
+const SECTION_PATHS: Record<string, string> = {
+  "esy-learn": "learn",
+  // "seopage-blog": "blog",
+};
+
 export async function POST(request: NextRequest) {
   // Read the RAW body first — HMAC must hash the exact bytes Esy signed.
   const rawBody = await request.text();
@@ -65,8 +73,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // Refresh just the pages this document affects.
-  revalidatePath(\`/\${body.publication}/\${body.slug}\`);
+  // Resolve this site's path for the publication, then refresh just the pages
+  // it affects (the section list + the document). An unknown publication is
+  // rejected, not silently ignored.
+  const section = SECTION_PATHS[body.publication];
+  if (!section) {
+    return NextResponse.json({ error: "Unknown publication" }, { status: 400 });
+  }
+  revalidatePath(\`/\${section}\`);
+  revalidatePath(\`/\${section}/\${body.slug}\`);
   return NextResponse.json({ revalidated: true });
 }`;
 
@@ -171,6 +186,14 @@ export default function ConnectConsumerGuidePage() {
         <code>request.text()</code> and parse that string.
       </Callout>
 
+      <Callout title="Map to your section path, not the slug">
+        The webhook payload’s <code>publication</code> is the <em>slug</em> (e.g.{' '}
+        <code>esy-learn</code>) — a stable id, not a URL. Revalidate <em>your</em> route segment (the
+        publication’s <code>sectionPath</code>, e.g. <code>/learn</code>), which you control on the
+        consumer. Using the slug as the path is the usual cause of a wrong or doubled URL like{' '}
+        <code>/esy-learn/…</code> or <code>/learn/learn/…</code>.
+      </Callout>
+
       <h2>One env var per publication</h2>
       <p>
         If your site serves several publications, give each its own secret. Adding a new publication is
@@ -187,6 +210,45 @@ ESY_REVALIDATE_SECRET_ESY_LEARN=…`}
         connection”) to send a no-op test webhook. A 200 means your endpoint received and verified it;
         the result is recorded as delivery health on the publication.
       </p>
+
+      <h2>Operating it</h2>
+      <p>
+        Three things trip up most first connections — all on the consumer side, and all reported as a
+        failed delivery on the publication.
+      </p>
+      <Table
+        head={['Symptom', 'Cause & fix']}
+        rows={[
+          [
+            'The secret looks right, but every delivery 401s',
+            <>
+              On most hosts (Vercel included) env vars apply at <strong>build time</strong>. After
+              setting <code>ESY_REVALIDATE_SECRET_&lt;SLUG&gt;</code>, <strong>redeploy</strong> — a
+              running deployment keeps the old value.
+            </>,
+          ],
+          [
+            'Deliveries 401 right after a rotate',
+            <>
+              Rotating in Compose mints a new secret and the old one stops verifying immediately.
+              Update the consumer’s env to the new value and redeploy.
+            </>,
+          ],
+          [
+            'Every delivery shows a redirect',
+            <>
+              If your site sets <code>trailingSlash</code>, point <code>revalidateUrl</code> at the
+              canonical form (<code>…/api/revalidate/</code>). Otherwise each POST 308-redirects, which
+              some clients don’t replay cleanly.
+            </>,
+          ],
+        ]}
+      />
+      <Callout title="A failed delivery never blocks a publish">
+        Webhooks are best-effort: a rejected ping is recorded in delivery health but never rolls back a
+        valid publish. Your reader’s normal cache window still picks the change up — the webhook just
+        makes it instant. Fix the secret/redeploy and re-run “Verify connection”.
+      </Callout>
     </DocsPageShell>
   );
 }

@@ -80,6 +80,12 @@ export default function PublicationsConceptPage() {
           [<code key="ip">isPublic</code>, 'Whether the publication is exposed through the public read API.'],
         ]}
       />
+      <p>
+        <code>slug</code> and <code>sectionPath</code> are different on purpose: the <code>slug</code>{' '}
+        is a stable id (it appears in read URLs and the webhook payload), while{' '}
+        <code>sectionPath</code> is the route segment on the consumer site (e.g. <code>/learn</code>).
+        A consumer maps the slug to its own section path — it never puts the slug in the page URL.
+      </p>
 
       <Callout title="Public publications">
         Public publications (the ones served by the read API below) are provisioned by Esy. Any
