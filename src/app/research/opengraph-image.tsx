@@ -67,6 +67,34 @@ export default async function Image() {
             padding: "64px 76px 60px 76px",
           }}
         >
+          {/* Brand wordmark row — header/footer Logo treatment */}
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 44,
+                fontFamily: "BlackOpsOne",
+                letterSpacing: "0.03em",
+              }}
+            >
+              <span style={{ color: "#00A896" }}>e</span>
+              <span style={{ color: "rgba(255,255,255,0.92)" }}>sy</span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                marginLeft: 24,
+                paddingLeft: 24,
+                borderLeft: "2px solid rgba(255,255,255,0.22)",
+                color: "rgba(45,212,191,0.85)",
+                fontSize: 24,
+                letterSpacing: 6,
+              }}
+            >
+              RESEARCH
+            </div>
+          </div>
+
           {/* Title + tagline */}
           <div
             style={{
@@ -79,23 +107,9 @@ export default async function Image() {
             <div
               style={{
                 display: "flex",
-                fontSize: 84,
-                fontFamily: "BlackOpsOne",
-                letterSpacing: "0.03em",
-                lineHeight: 1.05,
-              }}
-            >
-              <span style={{ color: "#00A896" }}>e</span>
-              <span style={{ color: "#FFFFFF" }}>sy&nbsp;</span>
-              <span style={{ color: "#FFFFFF" }}>research</span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                marginTop: 30,
-                maxWidth: 920,
-                color: "rgba(255,255,255,0.74)",
-                fontSize: 32,
+                maxWidth: 940,
+                color: "#F8FAFC",
+                fontSize: 56,
                 lineHeight: 1.45,
               }}
             >
