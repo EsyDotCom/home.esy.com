@@ -42,7 +42,7 @@ export default async function Image() {
             height: 640,
             borderRadius: 640,
             background:
-              "radial-gradient(circle, rgba(0,168,150,0.30) 0%, rgba(0,168,150,0) 68%)",
+              "radial-gradient(circle, rgba(0,168,150,0.10) 0%, rgba(0,168,150,0) 68%)",
           }}
         />
         {/* Faint glow, bottom left */}
@@ -55,62 +55,27 @@ export default async function Image() {
             height: 560,
             borderRadius: 560,
             background:
-              "radial-gradient(circle, rgba(0,212,170,0.14) 0%, rgba(0,212,170,0) 66%)",
+              "radial-gradient(circle, rgba(0,212,170,0.05) 0%, rgba(0,212,170,0) 66%)",
           }}
         />
-        {/* Accent bar, left edge */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            bottom: 0,
-            left: 0,
-            width: 12,
-            background:
-              "linear-gradient(180deg, #00D4AA 0%, #00A896 55%, rgba(0,168,150,0.25) 100%)",
-          }}
-        />
-
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
             width: "100%",
-            padding: "64px 76px 60px 84px",
+            padding: "64px 76px 60px 76px",
           }}
         >
-          {/* Brand wordmark row — mirrors the header/footer Logo component:
-              "esy" in Black Ops One, teal "e", white "sy" */}
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div
-              style={{
-                display: "flex",
-                fontSize: 44,
-                fontFamily: "BlackOpsOne",
-                letterSpacing: "0.03em",
-              }}
-            >
-              <span style={{ color: "#00A896" }}>e</span>
-              <span style={{ color: "rgba(255,255,255,0.92)" }}>sy</span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                marginLeft: 24,
-                paddingLeft: 24,
-                borderLeft: "2px solid rgba(255,255,255,0.22)",
-                color: "#5EEAD4",
-                fontSize: 24,
-                letterSpacing: 6,
-              }}
-            >
-              RESEARCH
-            </div>
-          </div>
-
           {/* Title + tagline */}
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            style={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
             <div
               style={{
                 display: "flex",
@@ -130,12 +95,11 @@ export default async function Image() {
                 marginTop: 30,
                 maxWidth: 920,
                 color: "rgba(255,255,255,0.74)",
-                fontSize: 29,
+                fontSize: 32,
                 lineHeight: 1.45,
               }}
             >
-              Engineering deep dives on frontier model releases, AI coding
-              tools, and agentic workflows — from the team building Esy.
+              Engineering deep dives from the team building Esy.
             </div>
           </div>
 
@@ -157,9 +121,9 @@ export default async function Image() {
                     marginRight: 16,
                     padding: "10px 22px",
                     borderRadius: 999,
-                    border: "1px solid rgba(0,212,170,0.35)",
-                    background: "rgba(0,168,150,0.12)",
-                    color: "#5EEAD4",
+                    border: "1px solid rgba(255,255,255,0.14)",
+                    background: "rgba(255,255,255,0.05)",
+                    color: "rgba(255,255,255,0.72)",
                     fontSize: 21,
                   }}
                 >
@@ -167,7 +131,7 @@ export default async function Image() {
                 </div>
               ))}
             </div>
-            <div style={{ display: "flex", color: "#00D4AA", fontSize: 24 }}>
+            <div style={{ display: "flex", color: "rgba(45,212,191,0.8)", fontSize: 24 }}>
               esy.com/research
             </div>
           </div>
