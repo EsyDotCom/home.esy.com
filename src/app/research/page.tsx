@@ -7,11 +7,23 @@ export const metadata = {
     "Engineering deep dives on frontier model releases, AI coding tool breakdowns, agentic workflows, and the architecture behind Esy's research pipeline.",
   keywords:
     "Esy Research, frontier models, Claude Fable 5, AI coding tools, Claude Code, Cursor, agentic workflows, multi-agent architecture, workflow engine",
+  alternates: {
+    canonical: "/research/",
+  },
   openGraph: {
     title: "Esy Research — Frontier Models, AI Coding Tools & Workflows",
     description:
       "Engineering deep dives and AI tool breakdowns from the team building Esy.",
+    url: "https://esy.com/research/",
+    siteName: "Esy",
+    locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Esy Research — Frontier Models, AI Coding Tools & Workflows",
+    description:
+      "Engineering deep dives and AI tool breakdowns from the team building Esy.",
   },
 };
 
