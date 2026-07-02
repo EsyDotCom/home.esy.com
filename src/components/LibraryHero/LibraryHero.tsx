@@ -13,12 +13,15 @@ export default function LibraryHero({
   title,
   subhead,
   meta,
+  action,
   feature,
 }: {
   breadcrumb?: Crumb[];
   title: React.ReactNode;
   subhead: React.ReactNode;
   meta?: React.ReactNode;
+  /** Optional slot below the meta row (e.g. newsletter signup on /research) */
+  action?: React.ReactNode;
   feature: React.ReactNode;
 }) {
   return (
@@ -46,6 +49,7 @@ export default function LibraryHero({
           <h1 className="esy-stage__title">{title}</h1>
           <p className="esy-stage__subhead">{subhead}</p>
           {meta && <div className="esy-stage__meta">{meta}</div>}
+          {action}
         </div>
         <div className="esy-stage__feature">{feature}</div>
       </div>

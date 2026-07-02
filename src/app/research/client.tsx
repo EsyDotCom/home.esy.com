@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ResearchVideoCard } from "@/components/Research/ResearchVideoCard";
 import ResearchNewsletter from "@/components/Research/ResearchNewsletter";
+import { ResearchHeroSignup } from "@/components/Research/ResearchHeroSignup";
 import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 import { navyCalmLightTheme as theme } from "@/lib/theme";
 import LibraryHero from "@/components/LibraryHero/LibraryHero";
@@ -182,6 +183,7 @@ export default function ResearchClient({ videos }: { videos: ResearchVideo[] }) 
             <span>video + full transcript</span>
           </>
         }
+        action={<ResearchHeroSignup />}
         feature={
           <HeroCarousel
             items={featuredCarousel}
