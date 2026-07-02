@@ -4,7 +4,8 @@ import { join } from "node:path";
 
 // Social share card for /research (LinkedIn, X, Slack, iMessage).
 // Rendered at build time from the same navy/teal palette as the page
-// (navyCalmLightTheme), with the OrigamiIncised brand display font.
+// (navyCalmLightTheme), using the site's real brand wordmark: "esy" in
+// Black Ops One with the teal "e" (see components/Logo, header/footer).
 
 export const alt =
   "Esy Research — Frontier Models, AI Coding Tools & Workflows";
@@ -14,8 +15,8 @@ export const contentType = "image/png";
 const TOPICS = ["Frontier Models", "AI Coding Tools", "Agentic Workflows"];
 
 export default async function Image() {
-  const [origami, notoSans] = await Promise.all([
-    readFile(join(process.cwd(), "public/fonts/origami_incised.otf")),
+  const [blackOpsOne, notoSans] = await Promise.all([
+    readFile(join(process.cwd(), "public/fonts/black-ops-one-regular.ttf")),
     readFile(join(process.cwd(), "public/fonts/noto-sans-regular.ttf")),
   ]);
 
@@ -79,40 +80,25 @@ export default async function Image() {
             padding: "64px 76px 60px 84px",
           }}
         >
-          {/* Wordmark row */}
+          {/* Brand wordmark row — mirrors the header/footer Logo component:
+              "esy" in Black Ops One, teal "e", white "sy" */}
           <div style={{ display: "flex", alignItems: "center" }}>
             <div
               style={{
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 58,
-                height: 58,
-                borderRadius: 14,
-                background: "linear-gradient(135deg, #00D4AA 0%, #008F7A 100%)",
-                color: "#061527",
-                fontSize: 40,
-                fontFamily: "OrigamiIncised",
+                fontSize: 44,
+                fontFamily: "BlackOpsOne",
+                letterSpacing: "0.03em",
               }}
             >
-              e
+              <span style={{ color: "#00A896" }}>e</span>
+              <span style={{ color: "rgba(255,255,255,0.92)" }}>sy</span>
             </div>
             <div
               style={{
                 display: "flex",
-                marginLeft: 20,
-                color: "#FFFFFF",
-                fontSize: 36,
-                fontFamily: "OrigamiIncised",
-              }}
-            >
-              esy
-            </div>
-            <div
-              style={{
-                display: "flex",
-                marginLeft: 22,
-                paddingLeft: 22,
+                marginLeft: 24,
+                paddingLeft: 24,
                 borderLeft: "2px solid rgba(255,255,255,0.22)",
                 color: "#5EEAD4",
                 fontSize: 24,
@@ -128,18 +114,20 @@ export default async function Image() {
             <div
               style={{
                 display: "flex",
-                color: "#FFFFFF",
-                fontSize: 96,
-                fontFamily: "OrigamiIncised",
+                fontSize: 84,
+                fontFamily: "BlackOpsOne",
+                letterSpacing: "0.03em",
                 lineHeight: 1.05,
               }}
             >
-              Esy Research
+              <span style={{ color: "#00A896" }}>e</span>
+              <span style={{ color: "#FFFFFF" }}>sy&nbsp;</span>
+              <span style={{ color: "#FFFFFF" }}>research</span>
             </div>
             <div
               style={{
                 display: "flex",
-                marginTop: 26,
+                marginTop: 30,
                 maxWidth: 920,
                 color: "rgba(255,255,255,0.74)",
                 fontSize: 29,
@@ -190,8 +178,8 @@ export default async function Image() {
       ...size,
       fonts: [
         {
-          name: "OrigamiIncised",
-          data: origami,
+          name: "BlackOpsOne",
+          data: blackOpsOne,
           weight: 400,
           style: "normal",
         },
