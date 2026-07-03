@@ -7,12 +7,11 @@ import { join } from "node:path";
 // (navyCalmLightTheme), using the site's real brand wordmark: "esy" in
 // Black Ops One with the teal "e" (see components/Logo, header/footer).
 
-export const alt =
-  "Esy Research — Frontier Models, AI Coding Tools & Workflows";
+export const alt = "Esy Research — Experiments in agentic engineering";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const TOPICS = ["Frontier Models", "AI Coding Tools", "Agentic Workflows"];
+const TOPICS = ["Agents", "Models", "Workflow Design"];
 
 export default async function Image() {
   const [blackOpsOne, notoSans] = await Promise.all([
@@ -72,7 +71,7 @@ export default async function Image() {
             <div
               style={{
                 display: "flex",
-                fontSize: 44,
+                fontSize: 48,
                 fontFamily: "BlackOpsOne",
                 letterSpacing: "0.03em",
               }}
@@ -87,7 +86,7 @@ export default async function Image() {
                 paddingLeft: 24,
                 borderLeft: "2px solid rgba(255,255,255,0.22)",
                 color: "rgba(45,212,191,0.85)",
-                fontSize: 24,
+                fontSize: 26,
                 letterSpacing: 6,
               }}
             >
@@ -107,13 +106,13 @@ export default async function Image() {
             <div
               style={{
                 display: "flex",
-                maxWidth: 940,
+                maxWidth: 960,
                 color: "#F8FAFC",
-                fontSize: 56,
-                lineHeight: 1.45,
+                fontSize: 66,
+                lineHeight: 1.35,
               }}
             >
-              Engineering deep dives from the team building Esy.
+              Experiments in agentic engineering.
             </div>
           </div>
 
@@ -133,19 +132,19 @@ export default async function Image() {
                   style={{
                     display: "flex",
                     marginRight: 16,
-                    padding: "10px 22px",
+                    padding: "12px 26px",
                     borderRadius: 999,
                     border: "1px solid rgba(255,255,255,0.14)",
                     background: "rgba(255,255,255,0.05)",
-                    color: "rgba(255,255,255,0.72)",
-                    fontSize: 21,
+                    color: "rgba(255,255,255,0.78)",
+                    fontSize: 26,
                   }}
                 >
                   {topic}
                 </div>
               ))}
             </div>
-            <div style={{ display: "flex", color: "rgba(45,212,191,0.8)", fontSize: 24 }}>
+            <div style={{ display: "flex", color: "rgba(45,212,191,0.95)", fontSize: 32 }}>
               esy.com/research
             </div>
           </div>
