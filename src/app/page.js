@@ -23,6 +23,8 @@ export const metadata = {
     "auditable artifacts",
     "batch generation",
   ],
+  // og:image / twitter:image come from src/app/opengraph-image.tsx —
+  // don't pin images here or they override the generated card.
   openGraph: {
     title: "Esy — Agentic Workflows for the AI Solopreneur",
     description: HOME_META_DESCRIPTION,
@@ -30,19 +32,12 @@ export const metadata = {
     url: "https://esy.com",
     siteName: "Esy",
     locale: "en_US",
-    images: [{
-      url: "https://esy.com/og/homepage.png",
-      width: 1200,
-      height: 630,
-      alt: "Esy — Agentic Workflows for the AI Solopreneur",
-    }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Esy — Agentic Workflows for the AI Solopreneur",
     description: HOME_META_DESCRIPTION,
     site: "@EsyDotCom",
-    images: ["https://esy.com/og/homepage.png"],
   },
   alternates: {
     canonical: "https://esy.com",

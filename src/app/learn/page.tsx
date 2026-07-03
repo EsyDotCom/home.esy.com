@@ -12,6 +12,18 @@ export const metadata = {
     description:
       "Practical tutorials for the AI solopreneur — run Esy's agentic workflow templates for research, marketing, and deliverables.",
     type: "website",
+    url: "https://esy.com/learn/",
+    siteName: "Esy",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Learn | Esy",
+    description:
+      "Practical tutorials for the AI solopreneur — run Esy's agentic workflow templates for research, marketing, and deliverables.",
+  },
+  alternates: {
+    canonical: "/learn/",
   },
 };
 
