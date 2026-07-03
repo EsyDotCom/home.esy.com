@@ -27,6 +27,12 @@ const guides = [
     title: 'Connect a consumer site',
     desc: 'Render a public publication on your own site and verify Esy’s revalidation webhooks with an HMAC signature.',
   },
+  {
+    href: '/docs/guides/send-articles-to-beehiiv',
+    label: 'newsletters',
+    title: 'Send articles to Beehiiv',
+    desc: 'Connect a publication to your Beehiiv newsletter and turn any article into a reviewed, email-safe draft — no auto-sending.',
+  },
 ];
 
 function Arrow() {

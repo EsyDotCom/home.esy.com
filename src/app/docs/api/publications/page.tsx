@@ -125,8 +125,29 @@ export default function PublicationsApiPage() {
             path: '/v1/publications/{id}/verify',
             desc: 'Send a no-op test webhook and record delivery health.',
           },
+          {
+            method: 'POST',
+            path: '/v1/publications/{id}/newsletter',
+            desc: 'Connect the Beehiiv email channel (publication id + write-only API key).',
+          },
+          {
+            method: 'DELETE',
+            path: '/v1/publications/{id}/newsletter',
+            desc: 'Disconnect the email channel; the web destination is untouched.',
+          },
+          {
+            method: 'POST',
+            path: '/v1/publications/{id}/newsletter/verify',
+            desc: 'Live round-trip to Beehiiv proving the stored key and publication id resolve.',
+          },
         ]}
       />
+      <p>
+        Articles become Beehiiv drafts via{' '}
+        <code>POST /v1/documents/&#123;id&#125;/newsletter/draft</code> — see the{' '}
+        <a href="/docs/integrations/beehiiv">Beehiiv integration</a> for the model and the email-safe
+        transform.
+      </p>
 
       <h3>Create a publication</h3>
       <CodeBlock title="POST /v1/publications" language="json">

@@ -151,6 +151,19 @@ export const navigation: NavSection[] = [
     ],
   },
   {
+    title: 'Integrations',
+    items: [
+      {
+        title: 'Beehiiv (newsletters)',
+        href: '/docs/integrations/beehiiv',
+        description:
+          'Connect a publication to your Beehiiv newsletter — articles become email-safe drafts you send from Beehiiv.',
+        icon: 'plug',
+        since: '2026-07-03',
+      },
+    ],
+  },
+  {
     title: 'Guides',
     items: [
       {
@@ -178,6 +191,13 @@ export const navigation: NavSection[] = [
         description: 'Render a public publication and verify Esy’s revalidation webhooks with HMAC.',
         icon: 'plug',
         since: '2026-06-26',
+      },
+      {
+        title: 'Send articles to Beehiiv',
+        href: '/docs/guides/send-articles-to-beehiiv',
+        description: 'Connect a publication to Beehiiv and turn any article into a reviewed email draft.',
+        icon: 'globe',
+        since: '2026-07-03',
       },
     ],
   },

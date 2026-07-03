@@ -77,6 +77,12 @@ export default function PublicationsConceptPage() {
             'Where documents go live, e.g. https://esy.com + /research.',
           ],
           [<code key="ru">revalidateUrl</code>, 'The consumer’s webhook Esy pings on publish/unpublish.'],
+          [
+            <span key="bh">
+              <code>beehiivPublicationId</code> + API key
+            </span>,
+            'Optional email channel: articles can become Beehiiv drafts, per article and opt-in.',
+          ],
           [<code key="ip">isPublic</code>, 'Whether the publication is exposed through the public read API.'],
         ]}
       />
@@ -85,6 +91,13 @@ export default function PublicationsConceptPage() {
         is a stable id (it appears in read URLs and the webhook payload), while{' '}
         <code>sectionPath</code> is the route segment on the consumer site (e.g. <code>/learn</code>).
         A consumer maps the slug to its own section path — it never puts the slug in the page URL.
+      </p>
+      <p>
+        The web destination and the newsletter are <strong>independent delivery channels</strong>: a
+        publication can publish to a site, to email via{' '}
+        <a href="/docs/integrations/beehiiv">Beehiiv</a>, or both — a newsletter-only publication is
+        simply one with the web fields left blank. Publishing to the web never emails anyone;
+        sending is a separate, per-article, draft-first action.
       </p>
 
       <Callout title="Public publications">
