@@ -23,7 +23,8 @@ export type NavIcon =
   | 'palette'
   | 'app-window'
   | 'globe'
-  | 'plug';
+  | 'plug'
+  | 'key';
 
 export interface NavItem {
   title: string;
@@ -141,6 +142,13 @@ export const navigation: NavSection[] = [
         description: 'Public reads plus authoring endpoints for publications and categories.',
         icon: 'globe',
         since: '2026-06-26',
+      },
+      {
+        title: 'API Keys',
+        href: '/docs/api/api-keys',
+        description: 'Machine credentials — create, workspace-bind, authenticate, and revoke.',
+        icon: 'key',
+        since: '2026-07-03',
       },
       {
         title: 'Changelog',
