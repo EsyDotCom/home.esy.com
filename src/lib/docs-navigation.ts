@@ -24,7 +24,8 @@ export type NavIcon =
   | 'app-window'
   | 'globe'
   | 'plug'
-  | 'key';
+  | 'key'
+  | 'radio';
 
 export interface NavItem {
   title: string;
@@ -149,6 +150,13 @@ export const navigation: NavSection[] = [
         description: 'Machine credentials — create, workspace-bind, authenticate, and revoke.',
         icon: 'key',
         since: '2026-07-03',
+      },
+      {
+        title: 'Run Events (SSE)',
+        href: '/docs/api/run-events',
+        description: 'Live run updates over Server-Sent Events — snapshot, lifecycle events, reconnect ladder.',
+        icon: 'radio',
+        since: '2026-07-04',
       },
       {
         title: 'Changelog',

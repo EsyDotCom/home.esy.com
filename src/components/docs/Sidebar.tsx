@@ -21,6 +21,7 @@ import {
   Palette,
   Play,
   Plug,
+  Radio,
   Rocket,
   KeyRound,
   Search,
@@ -50,6 +51,7 @@ const iconMap: Record<NavIcon, React.ReactNode> = {
   'app-window': <AppWindow size={14} />,
   globe: <Globe size={14} />,
   key: <KeyRound size={14} />,
+  radio: <Radio size={14} />,
   plug: <Plug size={14} />,
 };
 
