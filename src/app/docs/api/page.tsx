@@ -39,6 +39,11 @@ export default function ApiPage() {
         items={[
           { method: 'POST', path: '/v1/runs', desc: 'Create and execute a workflow run.' },
           { method: 'GET', path: '/v1/runs', desc: 'List persisted runs for the authenticated workspace.' },
+          { method: 'GET', path: '/v1/runs?workerId=', desc: 'Every run attributed to a worker.' },
+          { method: 'POST', path: '/v1/orders', desc: 'Plan a batch (Generation Order) — nothing executes yet.' },
+          { method: 'POST', path: '/v1/orders/{orderId}/start', desc: 'Start a planned order.' },
+          { method: 'POST', path: '/v1/workers/{workerId}/run', desc: 'Start a worker shift now.' },
+          { method: 'POST', path: '/v1/outlets/{outletId}/items/publish', desc: 'Publish artifacts to an outlet (batched, gated).' },
           {
             method: 'GET',
             path: '/v1/runs/{runId}',
