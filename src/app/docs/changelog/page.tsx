@@ -16,7 +16,7 @@ const entries = [
       'Workers: durable principals that run bounded shifts on schedules, produce against a standing job, and report to your Inbox in their own voice (with stop-condition escalation).',
       'Assigned work: goals and tasks carry an assignee — yours or a worker\u2019s. Worker goals require measurable targets, progress by live catalog census, and achieve themselves; scheduled tasks are day directives workers check off with a completion note.',
       'Generation Orders documented: one template fanned into N child runs with variation, per-child dedupe keys, and a hard budget cap — two-phase (planned \u2192 start).',
-      'Publications are renamed Outlets and now accept artifacts: publish/unpublish are platform acts fired to your site as signed webhooks ({ outlet, action, artifactIds }); /v1/publications remains a route alias during the transition.',
+      'Outlets (new, separate from compose\u2019s Publications): channels for publishing artifacts of any kind from app.esy.com. Publish/unpublish are platform acts fired to your site as signed webhooks ({ outlet, action, artifactIds }).',
       'New references: Workers API, Planning API (goals/tasks/messages), and the expanded Outlets API.',
     ],
   },

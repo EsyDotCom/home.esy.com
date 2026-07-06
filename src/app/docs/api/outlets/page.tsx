@@ -4,7 +4,7 @@ import { Callout, CodeBlock, EndpointList, PageHeader } from '@/components/docs/
 export const metadata = {
   title: 'Outlets API',
   description:
-    'Manage outlets, publish and unpublish documents and artifacts, read the published feed, and receive signed revalidation webhooks.',
+    'Manage outlets, publish and unpublish artifacts, read the consumer feed, and receive signed revalidation webhooks.',
 };
 
 const publishExample = `POST /v1/outlets/{outletId}/items/publish
@@ -25,8 +25,8 @@ const feedExample = `GET /v1/outlets/{outletId}/items?status=published&limit=100
 
 {
   "items": [{
-    "id": "pubitem-1a2b3c4d",
-    "outletId": "…",
+    "id": "outitem-1a2b3c4d",
+    "outletId": "outlet-3f9a1c2b",
     "artifactId": "artifact-9f1e2d3c",
     "status": "published",
     "publishedBy": "worker-06997927",
@@ -49,27 +49,19 @@ export default function OutletsApiPage() {
         title="Outlets API"
         lead={
           <>
-            Outlets are the destination channels finished work ships to. Public reads need no auth; everything
-            else uses a bearer token (session or <code>esy_sk_</code> key). Publishing is per-item and gated;
-            every publish or unpublish act fires one signed webhook to the outlet’s consumer.
+            Outlets are app.esy.com’s channels for publishing artifacts of any kind — separate from the{' '}
+            <a href="/docs/api/publications">Publications API</a> (compose’s documents). All routes use a bearer
+            token (session or <code>esy_sk_</code> key). Publishing is per-item and gated; every publish or
+            unpublish act fires one signed webhook to the outlet’s consumer.
           </>
         }
-      />
-
-      <h2>Public reads (no auth)</h2>
-      <EndpointList
-        items={[
-          { method: 'GET', path: '/v1/outlets/public/{slug}/articles', desc: 'Published documents of a public outlet, newest first.' },
-          { method: 'GET', path: '/v1/outlets/public/{slug}/articles/{articleSlug}', desc: 'One published document.' },
-          { method: 'GET', path: '/v1/outlets/public/{slug}/categories', desc: 'The outlet’s ordered category taxonomy.' },
-        ]}
       />
 
       <h2>Managing outlets</h2>
       <EndpointList
         items={[
           { method: 'GET', path: '/v1/outlets', desc: 'Your outlets, with delivery health.' },
-          { method: 'POST', path: '/v1/outlets', desc: 'Create an outlet (public outlets are admin-only). The webhook secret is revealed once.' },
+          { method: 'POST', path: '/v1/outlets', desc: 'Create an outlet. If a webhook is configured, the secret is revealed once.' },
           { method: 'PATCH', path: '/v1/outlets/{outletId}', desc: 'Update destination binding, accepted kinds, and metadata.' },
           { method: 'POST', path: '/v1/outlets/{outletId}/secret/rotate', desc: 'Rotate the webhook secret (revealed once).' },
           { method: 'POST', path: '/v1/outlets/{outletId}/verify', desc: 'Send a test ping to the consumer’s webhook.' },
@@ -98,15 +90,15 @@ export default function OutletsApiPage() {
       <p>
         One POST per act to the outlet’s <code>revalidateUrl</code>, authenticated twice:{' '}
         <code>Authorization: Bearer &lt;secret&gt;</code> and an HMAC-SHA256 signature over the exact body bytes.
-        Document acts send <code>{'{ outlet, slug, action, categories }'}</code>; artifact acts send{' '}
-        <code>{'{ outlet, action, artifactIds }'}</code>. Delivery is best-effort — health lands on the outlet
+        The payload is <code>{'{ outlet, action, artifactIds }'}</code> (action <code>publish</code>,{' '}
+        <code>unpublish</code>, or <code>test</code>). Delivery is best-effort — health lands on the outlet
         record, and your periodic re-pull is the backstop.
       </p>
 
-      <Callout title="Legacy path">
-        <code>/v1/publications/…</code> remains mounted as an alias of every route above, and webhook payloads
-        carry a legacy <code>publication</code> key alongside <code>outlet</code> during the rename transition.
-        New integrations should use <code>/v1/outlets</code>.
+      <Callout title="Outlets are not Publications">
+        Documents (compose’s editorial pieces) publish through the separate{' '}
+        <a href="/docs/api/publications">Publications API</a>, whose webhook sends{' '}
+        <code>{'{ publication, slug, action, categories }'}</code>. Outlets carry artifacts only.
       </Callout>
     </DocsPageShell>
   );

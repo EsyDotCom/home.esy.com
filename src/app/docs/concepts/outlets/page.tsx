@@ -4,7 +4,7 @@ import { Callout, CodeBlock, PageHeader, Table } from '@/components/docs/Primiti
 export const metadata = {
   title: 'Outlets',
   description:
-    'The destination channel finished work ships to — documents and artifacts publish into an outlet; your site mirrors its state via a signed webhook.',
+    'Channels for publishing artifacts of any kind from app.esy.com — your site mirrors publish/unpublish state via a signed webhook.',
 };
 
 const outletShape = `{
@@ -16,13 +16,11 @@ const outletShape = `{
   "lastDeliveryStatus": "ok"
 }`;
 
-const webhookPayloads = `// documents (editorial)
-{ "outlet": "esy-research", "slug": "attention-atlas",
-  "action": "publish", "categories": ["methods"] }
+const webhookPayloads = `{ "outlet": "clip-art-catalog", "action": "publish",
+  "artifactIds": ["artifact-9f1e2d3c", "artifact-8a7b6c5d"] }
 
-// artifacts (production)
-{ "outlet": "clip-art-catalog", "action": "publish",
-  "artifactIds": ["artifact-9f1e2d3c", "artifact-8a7b6c5d"] }`;
+{ "outlet": "clip-art-catalog", "action": "unpublish",
+  "artifactIds": ["artifact-9f1e2d3c"] }`;
 
 export default function OutletsPage() {
   return (
@@ -32,11 +30,11 @@ export default function OutletsPage() {
         title="Outlets"
         lead={
           <>
-            An outlet is the destination channel finished work ships to — a factory outlet and a media outlet at
-            once. esy.com/research and esy.com/learn are outlets for hand-authored documents; the clip.art
-            catalog is an outlet for worker-produced artifacts. Producing is not publishing: work goes public by
-            being <strong>published into an outlet</strong>, and unpublishing anywhere is one flip at the
-            platform.
+            An outlet is the channel <strong>artifacts</strong> ship to — a factory outlet and a media outlet at
+            once. Artifacts of any kind, published from app.esy.com (by you, or by a worker whose job says so),
+            with unpublishing a single flip at the platform. Outlets are their own plane: hand-authored documents
+            publish through <a href="/docs/concepts/publications">Publications</a> instead — same pattern,
+            separate systems.
           </>
         }
       />
@@ -46,28 +44,28 @@ export default function OutletsPage() {
         {outletShape}
       </CodeBlock>
       <p>
-        An outlet owns its destination binding (site, accepted kinds, the consumer’s revalidation webhook and its
-        encrypted secret), its category taxonomy, delivery health, and — optionally — an email channel.
+        An outlet owns its destination binding: the site it feeds, the artifact kinds it accepts (empty = any
+        kind), the consumer’s revalidation webhook with an encrypted reveal-once secret, and delivery health.
       </p>
 
-      <h2>Two content types, one model</h2>
+      <h2>Outlet vs Publication</h2>
       <Table
-        head={['', 'Documents (editorial)', 'Artifacts (production)']}
+        head={['', 'Outlet (artifacts)', 'Publication (documents)']}
         rows={[
-          ['The content', 'hand-authored articles', 'run-produced work (images, research, …)'],
-          ['Filing + state', 'the document’s outlet + draft/published status', <span key="oi"><code>outlet items</code>: artifact ↔ outlet, published | unpublished</span>],
+          ['The content', 'run-produced artifacts of any kind (images, research, …)', 'hand-authored articles (compose)'],
+          ['Filing + state', <span key="oi"><code>outlet items</code>: artifact ↔ outlet, published | unpublished</span>, 'the document’s publication + draft/published status'],
           [
             'The gate',
+            'finished + classified (title + category) + kind accepted (empty acceptedKinds = any kind)',
             'title, slug, description, category, video',
-            'finished + classified (title + category) + kind accepted by the outlet',
           ],
-          ['Who publishes', 'you, per item', 'you — or a worker whose job says so (its report accounts for it)'],
-          ['Unpublish', 'one flip; your site hides the page in seconds', 'same — from the platform, no site admin involved'],
+          ['Who publishes', 'you — or a worker whose job says so (its report accounts for it)', 'you, per item'],
+          ['Where it lives', <code key="o">/v1/outlets</code>, <code key="p">/v1/publications</code>],
         ]}
       />
 
       <h2>How your site follows</h2>
-      <CodeBlock title="webhook payloads (Bearer secret + HMAC signature)" language="json">
+      <CodeBlock title="the outlet webhook (Bearer secret + HMAC signature)" language="json">
         {webhookPayloads}
       </CodeBlock>
       <p>
