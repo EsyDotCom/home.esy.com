@@ -4,11 +4,11 @@ import { Callout, CodeBlock, PageHeader, StepList, Table } from '@/components/do
 export const metadata = {
   title: 'Connect a consumer site',
   description:
-    'Render a public publication on your own site and verify Esy’s revalidation webhooks with an HMAC signature.',
+    'Render a public outlet on your own site and verify Esy’s revalidation webhooks with an HMAC signature.',
 };
 
 const payloadExample = `{
-  "publication": "esy-research",
+  "outlet": "esy-research",
   "slug": "the-economics-of-desalination",
   "action": "publish",
   "categories": ["policy", "energy"]
@@ -22,10 +22,10 @@ const verifyExample = `import crypto from "node:crypto";
 
 const TOLERANCE_SECONDS = 5 * 60;
 
-// Pick the secret for the publication that sent this webhook. Keep one env var
-// per publication so adding a new one never touches the others.
-function secretsFor(publication: string): string[] {
-  const key = \`ESY_REVALIDATE_SECRET_\${publication.toUpperCase().replace(/-/g, "_")}\`;
+// Pick the secret for the outlet that sent this webhook. Keep one env var
+// per outlet so adding a new one never touches the others.
+function secretsFor(outlet: string): string[] {
+  const key = \`ESY_REVALIDATE_SECRET_\${outlet.toUpperCase().replace(/-/g, "_")}\`;
   return [process.env[key]].filter(Boolean) as string[];
 }
 
@@ -56,8 +56,8 @@ import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { verify, secretsFor } from "@/lib/verify-webhook";
 
-// Map each publication you serve to ITS route segment on this site. The segment
-// is your section path (e.g. "learn"), NOT the publication slug ("esy-learn").
+// Map each outlet you serve to ITS route segment on this site. The segment
+// is your section path (e.g. "learn"), NOT the outlet slug ("esy-learn").
 // Adding a destination is one line here.
 const SECTION_PATHS: Record<string, string> = {
   "esy-learn": "learn",
@@ -69,16 +69,16 @@ export async function POST(request: NextRequest) {
   const rawBody = await request.text();
   const body = JSON.parse(rawBody);
 
-  if (!verify(rawBody, request.headers, secretsFor(body.publication))) {
+  if (!verify(rawBody, request.headers, secretsFor(body.outlet))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // Resolve this site's path for the publication, then refresh just the pages
-  // it affects (the section list + the document). An unknown publication is
+  // Resolve this site's path for the outlet, then refresh just the pages
+  // it affects (the section list + the document). An unknown outlet is
   // rejected, not silently ignored.
-  const section = SECTION_PATHS[body.publication];
+  const section = SECTION_PATHS[body.outlet];
   if (!section) {
-    return NextResponse.json({ error: "Unknown publication" }, { status: 400 });
+    return NextResponse.json({ error: "Unknown outlet" }, { status: 400 });
   }
   revalidatePath(\`/\${section}\`);
   revalidatePath(\`/\${section}/\${body.slug}\`);
@@ -93,7 +93,7 @@ export default function ConnectConsumerGuidePage() {
         title="Connect a consumer site"
         lead={
           <>
-            Render a public publication on your own site, and verify the revalidation webhooks Esy
+            Render a public outlet on your own site, and verify the revalidation webhooks Esy
             sends when content changes. Verification uses an <strong>HMAC signature</strong> so the
             shared secret never travels on the wire.
           </>
@@ -107,9 +107,9 @@ export default function ConnectConsumerGuidePage() {
             name: 'Read the public API',
             desc: (
               <>
-                Fetch a publication’s published documents from{' '}
-                <code>GET /v1/publications/public/&#123;slug&#125;/articles</code> (no auth) and render
-                them. See the <a href="/docs/api/publications">Publications API</a>.
+                Fetch an outlet’s published documents from{' '}
+                <code>GET /v1/outlets/public/&#123;slug&#125;/articles</code> (no auth) and render
+                them. See the <a href="/docs/api/outlets">Publications API</a>.
               </>
             ),
           },
@@ -118,7 +118,7 @@ export default function ConnectConsumerGuidePage() {
             desc: (
               <>
                 Create a POST route on your site (e.g. <code>/api/revalidate</code>) and set its URL as
-                the publication’s <code>revalidateUrl</code>.
+                the outlet’s <code>revalidateUrl</code>.
               </>
             ),
           },
@@ -126,7 +126,7 @@ export default function ConnectConsumerGuidePage() {
             name: 'Store the secret',
             desc: (
               <>
-                Copy the secret shown once on create/rotate into an env var named for the publication:{' '}
+                Copy the secret shown once on create/rotate into an env var named for the outlet:{' '}
                 <code>ESY_REVALIDATE_SECRET_&lt;SLUG&gt;</code>.
               </>
             ),
@@ -161,7 +161,7 @@ export default function ConnectConsumerGuidePage() {
 
       <h2>The signature</h2>
       <p>
-        Esy signs the exact string <code>{'{id}.{timestamp}.{rawBody}'}</code> with your publication’s
+        Esy signs the exact string <code>{'{id}.{timestamp}.{rawBody}'}</code> with your outlet’s
         secret:
       </p>
       <CodeBlock title="what gets signed" language="text">
@@ -187,16 +187,16 @@ export default function ConnectConsumerGuidePage() {
       </Callout>
 
       <Callout title="Map to your section path, not the slug">
-        The webhook payload’s <code>publication</code> is the <em>slug</em> (e.g.{' '}
+        The webhook payload’s <code>outlet</code> is the <em>slug</em> (e.g.{' '}
         <code>esy-learn</code>) — a stable id, not a URL. Revalidate <em>your</em> route segment (the
-        publication’s <code>sectionPath</code>, e.g. <code>/learn</code>), which you control on the
+        outlet’s <code>sectionPath</code>, e.g. <code>/learn</code>), which you control on the
         consumer. Using the slug as the path is the usual cause of a wrong or doubled URL like{' '}
         <code>/esy-learn/…</code> or <code>/learn/learn/…</code>.
       </Callout>
 
-      <h2>One env var per publication</h2>
+      <h2>One env var per outlet</h2>
       <p>
-        If your site serves several publications, give each its own secret. Adding a new publication is
+        If your site serves several outlets, give each its own secret. Adding a new outlet is
         then just a new variable — no risk to the existing ones.
       </p>
       <CodeBlock title="environment" language="bash">
@@ -206,15 +206,15 @@ ESY_REVALIDATE_SECRET_ESY_LEARN=…`}
 
       <h2>Confirm it works</h2>
       <p>
-        Use <code>POST /v1/publications/&#123;id&#125;/verify</code> (or the Connect panel’s “Verify
+        Use <code>POST /v1/outlets/&#123;id&#125;/verify</code> (or the Connect panel’s “Verify
         connection”) to send a no-op test webhook. A 200 means your endpoint received and verified it;
-        the result is recorded as delivery health on the publication.
+        the result is recorded as delivery health on the outlet.
       </p>
 
       <h2>Operating it</h2>
       <p>
         Three things trip up most first connections — all on the consumer side, and all reported as a
-        failed delivery on the publication.
+        failed delivery on the outlet.
       </p>
       <Table
         head={['Symptom', 'Cause & fix']}

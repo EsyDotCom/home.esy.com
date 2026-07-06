@@ -39,6 +39,30 @@ const atlas = [
     desc: 'Estimated, provider-reported, and reconciled cost states. Every number has a documented source.',
   },
   {
+    href: '/docs/concepts/workers',
+    label: 'Concepts',
+    title: 'Workers',
+    desc: 'Durable principals that run bounded shifts on a schedule, produce against a standing job, and report in plain language.',
+  },
+  {
+    href: '/docs/concepts/assigned-work',
+    label: 'Concepts',
+    title: 'Assigned work',
+    desc: 'Goals and tasks with an assignee — yours, or a worker\u2019s. Measurable targets, day directives, and a visible feedback loop.',
+  },
+  {
+    href: '/docs/concepts/orders',
+    label: 'Concepts',
+    title: 'Generation Orders',
+    desc: 'One template fanned into N child runs with variation, dedupe keys, and a budget cap.',
+  },
+  {
+    href: '/docs/concepts/outlets',
+    label: 'Concepts',
+    title: 'Outlets',
+    desc: 'The destination channel finished work ships to. Publish and unpublish from the platform; your site follows in seconds.',
+  },
+  {
     href: '/docs/api',
     label: 'Reference',
     title: 'API',
