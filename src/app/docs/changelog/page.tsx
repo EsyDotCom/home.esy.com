@@ -9,6 +9,18 @@ export const metadata = {
 
 const entries = [
   {
+    date: '2026-07-07',
+    tag: 'platform',
+    title: 'Outlets go URL-defined: sections, the routing ladder, endpoint secrets',
+    items: [
+      'An outlet is now URL-defined (siteUrl + sectionPath): clip.art/free, clip.art/flowers, and clip.art/worksheets are different outlets; any site — including esy.com/* surfaces — is another. projectId scopes which workers publish where.',
+      'The publish routing ladder decides WHERE each artifact ships, most specific rung first: the assigned goal’s outlet (goals carry an optional outletId) → the same-site outlet whose section matches the artifact’s category → the job’s publishTo fallback. No rung matched → the artifact stays unpublished.',
+      'Webhook secrets belong to the endpoint, not the channel (the Stripe model): outlets sharing a revalidateUrl share one secret; rotating any rotates the endpoint. A consumer holds exactly one secret no matter how many outlets ship to it.',
+      'Consumers discover their outlets from the platform roster (GET /v1/outlets filtered by their own domain) — channel lists never live in consumer configuration.',
+      'The items feed pages deterministically (stable id tiebreak), so consumer scans never re-serve or skip rows across page boundaries.',
+    ],
+  },
+  {
     date: '2026-07-06',
     tag: 'platform',
     title: 'The manufacturing tier: Workers, Assigned work, Orders, and Outlets',
