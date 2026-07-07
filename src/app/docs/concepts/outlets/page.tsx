@@ -125,8 +125,8 @@ export default function OutletsPage() {
 
       <h2>Workers publish to outlets — the framework</h2>
       <p>
-        The job’s <code>publishPolicy</code> decides <em>if</em> a shift publishes (<code>"classified"</code> —
-        what passed the classifier; <code>"none"</code> — nothing, the default). <em>Where</em> each artifact
+        The job’s <code>publishPolicy</code> decides <em>if</em> a shift publishes (<code>&quot;classified&quot;</code> —
+        what passed the classifier; <code>&quot;none&quot;</code> — nothing, the default). <em>Where</em> each artifact
         ships follows one law: <strong>goals decide what gets made; designations and sections decide where it
         ships.</strong>
       </p>
