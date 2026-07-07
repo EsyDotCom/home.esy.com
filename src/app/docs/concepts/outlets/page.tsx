@@ -80,6 +80,13 @@ export default function OutletsPage() {
         API (the esy.com pattern); catalog sites with local search and related-item machinery mirror the outlet’s
         published items into their own rows (the clip.art pattern — an <em>ingest</em>).
       </p>
+      <p>
+        <strong>The secret belongs to the endpoint, not the channel.</strong> Outlets pointing at the same{' '}
+        <code>revalidateUrl</code> share one webhook secret — creating a sibling adopts it, rotating any of them
+        rotates the endpoint (all together). Your site holds exactly one secret no matter how many outlets ship
+        to it, and discovers <em>which</em> outlets those are from the platform roster (
+        <code>GET /v1/outlets</code>, filtered by its own domain) rather than configuring channel lists.
+      </p>
 
       <Callout title="Which consumption pattern?">
         Render-time reads are the default: fetch the outlet’s published items, cache, revalidate on webhook —
