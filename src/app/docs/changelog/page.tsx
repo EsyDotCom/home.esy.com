@@ -11,6 +11,30 @@ const entries = [
   {
     date: '2026-07-07',
     tag: 'platform',
+    title: 'Specialty: the demand hierarchy — team produces → worker specialty → goals',
+    items: [
+      'A team is a department, named for what it produces: teams gain a “produces” domain, and members inherit it as their specialty when they don’t state a narrower one.',
+      'A worker’s specialty (formerly “description”) now steers every shift’s planning — identity that never reached the planner produced off-mission batches.',
+      'No worker without a WHAT: creation requires a specialty or a producing team; shifts refuse to run without one, loudly.',
+      'Reporters may not flatter: reports describe the record’s actual categories and must flag batches that don’t match the specialty.',
+      'The new-worker form gains a Publishing choice (publish classified work / keep private) — previously new workers silently never published.',
+    ],
+  },
+  {
+    date: '2026-07-07',
+    tag: 'platform',
+    title: 'The publish routing framework: the fence, Solo outlets, provenance, syndication',
+    items: [
+      'One law: goals decide WHAT gets made; designations and sections decide WHERE it ships. Goals no longer carry outlets — steering demand and routing distribution are separate systems.',
+      'The fence: a team with a designated outlet is a publishing contract — everything the crew publishes ships there; a member’s Solo outlet defers (kept dormant, wakes on leaving), sibling sections can’t poach, and “this team publishes only to X” is provable by one query.',
+      'Solo outlets replace the worker default (and the legacy job.publishTo, now fully retired): a worker’s own channel while solo — the home site’s sections sort by category, the rest lands home.',
+      'Publish provenance: every published item records why it landed where it did (routedVia: team | section | solo | manual | subscription); every assignment change is on the record.',
+      'Syndication (wire-service model): an outlet can carry every published artifact of its accepted kinds as its own act — one artifact on many sites, unpublishable per outlet, with worker fences untouched.',
+    ],
+  },
+  {
+    date: '2026-07-07',
+    tag: 'platform',
     title: 'Teams: workers organized into crews with titles and a shared channel',
     items: [
       'Teams group the roster: one team has many workers (a worker belongs to at most one), and a team carries a default outlet — the last rung of the publish ladder, so every worker on a team gets a sane publish destination with no per-worker config.',

@@ -26,7 +26,6 @@ const jobShape = `{
   }],
   "failureThreshold": 0.2,
   "defaultPriorities": "flowers, animals, space",
-  "publishTo": "clip-art-catalog",
   "publishPolicy": "classified",
   "messaging": {
     "tone": "warm, direct, first person",
@@ -57,7 +56,9 @@ export default function WorkersPage() {
         rows={[
           [<strong key="w">Worker</strong>, 'The durable principal: identity, title, job, template allow-list, status (active | paused | retired). Tenure ends only by decision.'],
           [<strong key="ti">Title</strong>, 'The worker’s role, especially within a team (e.g. Illustrator). Colors how it signs its reports; no routing keys off it.'],
-          [<strong key="tm">Team</strong>, 'A crew of workers sharing a default publish channel. One team, many workers (a worker belongs to at most one); workers on a team can hold different titles.'],
+          [<strong key="tm">Team</strong>, 'A department: named for what it PRODUCES (its domain — members inherit it as their specialty), with an optionally designated outlet — the fence: everything the crew publishes ships there.'],
+          [<strong key="sp">Specialty</strong>, 'The worker’s own WHAT — it steers what every shift plans and produces. Blank on a team = inherit the team’s produces; a solo worker must state one. No worker exists without a WHAT.'],
+          [<strong key="so">Solo outlet</strong>, 'A worker’s own channel, active only while solo. Joining a team defers to the team’s outlet — the solo outlet stays set but dormant, and wakes back up on leaving.'],
           [<strong key="j">Job</strong>, 'The standing per-shift spec: what to produce, how many, at what caps, in what voice, and where it publishes. Singular by discipline — the countable things that run are runs and orders.'],
           [<strong key="s">Shift</strong>, 'One bounded activation: trigger → plan → execute → publish → report → halt. A shift always ends; its record links every run, order, artifact, and message it touched.'],
           [<strong key="sc">Schedule</strong>, 'The WHEN primitive — a cron expression (UTC) that wakes a worker, or fires a single template directly.'],
@@ -83,25 +84,40 @@ export default function WorkersPage() {
       <p>
         Producing is not publishing: <code>publishPolicy</code> is the worker’s selection bar
         (<code>classified</code> publishes only work the classifier titled and categorized; <code>none</code>, the
-        default, publishes nothing). <em>Where</em> it ships is the routing ladder below. The legacy{' '}
-        <code>publishTo</code> job key still works, but the first-class <strong>default outlet</strong> (and the
-        worker’s team outlet) supersede it — see Teams.
+        default, publishes nothing). <em>Where</em> it ships is the framework below — destination lives on the
+        worker’s assignment, never in the job (and never on a goal).
       </p>
 
-      <h2>Teams</h2>
+      <h2>Teams, designations, and where work ships</h2>
       <p>
-        Workers can be organized into <strong>teams</strong> — a crew that shares one default publish channel.
-        One team has many workers, each able to hold a different <strong>title</strong> and its own default
-        outlet. A team gives every worker assigned to it a sane publish destination with no per-worker config.
+        One law governs distribution: <strong>designations and sections decide where work ships.</strong> Demand
+        has its own hierarchy: the team’s <strong>produces</strong> (its domain) → the worker’s{' '}
+        <strong>specialty</strong> (narrower, inherited when blank) → <strong>goals</strong> (measurable
+        campaigns, refining further). The resolved specialty steers every shift’s planning — and a worker
+        cannot exist without one.
       </p>
-      <p>Where a finished, publishable artifact ships is a ladder — most specific rung wins:</p>
       <ol>
-        <li><strong>The goal names the outlet</strong> — assigned work that names an outlet claims artifacts matching its target categories.</li>
-        <li><strong>Category → section match</strong> — the same-site outlet whose section matches the artifact’s category (<code>/flowers</code> catches <code>flowers</code>).</li>
-        <li><strong>The worker’s default outlet</strong> — its first-class channel (or the legacy <code>publishTo</code>).</li>
-        <li><strong>The team’s outlet</strong> — the crew’s channel.</li>
+        <li>
+          <strong>On a designated team → the team’s outlet. Period.</strong> A team with an outlet is a
+          publishing contract for the whole crew — the fence. A member’s Solo outlet defers (kept, dormant), a
+          matching sibling section can’t poach, and no goal can redirect. “This team publishes only to X” is
+          provable, with zero asterisks. A team <em>without</em> an outlet is organizational only.
+        </li>
+        <li>
+          <strong>Otherwise, the home site’s sections sort</strong> — the section outlet matching the artifact’s
+          category claims it (<code>/flowers</code> catches <code>flowers</code>): permanent site taxonomy that
+          outlives any goal.
+        </li>
+        <li>
+          <strong>The rest lands on the worker’s Solo outlet.</strong> No home channel → unpublished, never a
+          wrong page. A hard pin for a solo worker is a team of one.
+        </li>
       </ol>
-      <p>No rung matches → the artifact stays unpublished (never a wrong page).</p>
+      <p>
+        Every publish records its provenance (<code>routedVia</code>) and every assignment change is logged —
+        designations are audit-grade. One artifact can still appear in many outlets via{' '}
+        <a href="/docs/concepts/outlets">syndication</a>: carrying is the outlet’s act, not the worker’s.
+      </p>
 
       <h2>Stop conditions</h2>
       <p>

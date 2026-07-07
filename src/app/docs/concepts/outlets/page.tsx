@@ -123,28 +123,45 @@ export default function OutletsPage() {
         items, sitemaps at catalog scale).
       </Callout>
 
-      <h2>Workers publish to outlets — the routing ladder</h2>
+      <h2>Workers publish to outlets — the framework</h2>
       <p>
-        The job’s <code>publishPolicy</code> decides <em>if</em> a shift publishes (<code>"classified"</code> —
-        what passed the classifier; <code>"none"</code> — nothing, the default). <em>Where</em> each artifact
-        ships is a ladder, most specific rung first:
+        The job’s <code>publishPolicy</code> decides <em>if</em> a shift publishes (<code>&quot;classified&quot;</code> —
+        what passed the classifier; <code>&quot;none&quot;</code> — nothing, the default). <em>Where</em> each artifact
+        ships follows one law: <strong>goals decide what gets made; designations and sections decide where it
+        ships.</strong>
       </p>
       <ol>
         <li>
-          <strong>The goal names the outlet.</strong> A goal assigned to a worker can carry an{' '}
-          <code>outletId</code> — the expected common case. Artifacts matching the goal’s target categories ship
-          there: “the education push ships to clip.art/school.”
+          <strong>A designated team’s outlet takes everything — the fence.</strong> A team with an outlet is a
+          publishing contract for the whole crew: nothing overrides it — not a member’s Solo outlet, not a
+          matching sibling section. “This team publishes only to X” is provable by one query.
         </li>
         <li>
-          <strong>Category routing.</strong> Otherwise, an artifact routes to the same-site outlet whose{' '}
+          <strong>Otherwise, sections sort.</strong> An artifact routes to the same-site outlet whose{' '}
           <code>sectionPath</code> matches its classification category (<code>/flowers</code> catches{' '}
-          <code>flowers</code>).
+          <code>flowers</code>) — permanent site taxonomy, opt-in by construction.
         </li>
         <li>
-          <strong>The job’s <code>publishTo</code></strong> — the fallback channel. No rung matched → the
-          artifact stays unpublished, never a wrong page.
+          <strong>The rest lands on the worker’s Solo outlet</strong> — its own channel, active while solo
+          (dormant on a team, never erased). No home channel → the artifact stays unpublished, never a wrong
+          page.
         </li>
       </ol>
+      <p>
+        Every published item records <em>why</em> it landed where it did (<code>routedVia</code>:{' '}
+        <code>team:…</code> | <code>section:…</code> | <code>solo</code> | <code>manual</code> |{' '}
+        <code>subscription</code>), and every assignment change is on the record — designations are audit-grade.
+      </p>
+
+      <h2>Syndication — one artifact, many outlets</h2>
+      <p>
+        An outlet with <code>syndicate</code> on <strong>carries every published artifact of its accepted
+        kinds</strong>, wherever it was published — the wire-service model: the crew files to its designated
+        desk, subscribing channels pick the piece up off the wire. Carrying is the outlet’s own act, so team
+        fences stay whole. An artifact’s presence in each outlet is its own record, so{' '}
+        <strong>unpublish is per-outlet</strong>: hiding a piece on esy.com/clipart leaves clip.art untouched,
+        and a syndicating outlet never re-carries what you’ve hidden.
+      </p>
       <p>
         Publishing happens in one act per outlet, stamped <code>publishedBy: worker-…</code>, and the report
         accounts per channel: “Published 76/80 — clip.art/flowers: 16, clip.art catalog: 60.” See{' '}

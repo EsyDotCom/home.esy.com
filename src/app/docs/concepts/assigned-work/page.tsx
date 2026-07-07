@@ -11,7 +11,6 @@ const goalTarget = `{
   "title": "Grow education clip art",
   "assigneeWorkerId": "worker-06997927",
   "target": { "count": 150, "categories": ["education"] },
-  "outletId": "outlet-7c2d9e4f",
   "progressCount": 41,
   "activity": [
     { "at": "2026-07-06T10:14:02Z", "shiftId": "shift-1a2b3c4d",
@@ -65,10 +64,9 @@ export default function AssignedWorkPage() {
         entry, so the goal record reads like a log of the work — never a sticky note that just sits there.
       </p>
       <p>
-        A goal can also name <strong>where its output ships</strong>: an optional <code>outletId</code>. At
-        publish time, artifacts matching the goal’s target categories route to that{' '}
-        <a href="/docs/concepts/outlets">outlet</a> first — steering covers destination, not just quantity. No
-        outlet on the goal means category routing and the job’s fallback channel take over.
+        Goals decide <strong>what</strong> gets made — never where it ships. Destination is the worker&rsquo;s
+        assignment (its team&rsquo;s designated <a href="/docs/concepts/outlets">outlet</a>, or its Solo outlet)
+        and the site&rsquo;s sections. Steering demand and routing distribution are separate systems by design.
       </p>
 
       <h2>Day directives</h2>
