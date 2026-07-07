@@ -55,7 +55,9 @@ export default function WorkersPage() {
       <Table
         head={['Term', 'Meaning']}
         rows={[
-          [<strong key="w">Worker</strong>, 'The durable principal: identity, job, template allow-list, status (active | paused | retired). Tenure ends only by decision.'],
+          [<strong key="w">Worker</strong>, 'The durable principal: identity, title, job, template allow-list, status (active | paused | retired). Tenure ends only by decision.'],
+          [<strong key="ti">Title</strong>, 'The worker’s role, especially within a team (e.g. Illustrator). Colors how it signs its reports; no routing keys off it.'],
+          [<strong key="tm">Team</strong>, 'A crew of workers sharing a default publish channel. One team, many workers (a worker belongs to at most one); workers on a team can hold different titles.'],
           [<strong key="j">Job</strong>, 'The standing per-shift spec: what to produce, how many, at what caps, in what voice, and where it publishes. Singular by discipline — the countable things that run are runs and orders.'],
           [<strong key="s">Shift</strong>, 'One bounded activation: trigger → plan → execute → publish → report → halt. A shift always ends; its record links every run, order, artifact, and message it touched.'],
           [<strong key="sc">Schedule</strong>, 'The WHEN primitive — a cron expression (UTC) that wakes a worker, or fires a single template directly.'],
@@ -79,10 +81,27 @@ export default function WorkersPage() {
         {jobShape}
       </CodeBlock>
       <p>
-        Producing is not publishing: <code>publishTo</code> names the outlet its finished work ships to, and{' '}
-        <code>publishPolicy</code> is the worker’s selection bar (<code>classified</code> publishes only work the
-        classifier titled and categorized; <code>none</code>, the default, publishes nothing).
+        Producing is not publishing: <code>publishPolicy</code> is the worker’s selection bar
+        (<code>classified</code> publishes only work the classifier titled and categorized; <code>none</code>, the
+        default, publishes nothing). <em>Where</em> it ships is the routing ladder below. The legacy{' '}
+        <code>publishTo</code> job key still works, but the first-class <strong>default outlet</strong> (and the
+        worker’s team outlet) supersede it — see Teams.
       </p>
+
+      <h2>Teams</h2>
+      <p>
+        Workers can be organized into <strong>teams</strong> — a crew that shares one default publish channel.
+        One team has many workers, each able to hold a different <strong>title</strong> and its own default
+        outlet. A team gives every worker assigned to it a sane publish destination with no per-worker config.
+      </p>
+      <p>Where a finished, publishable artifact ships is a ladder — most specific rung wins:</p>
+      <ol>
+        <li><strong>The goal names the outlet</strong> — assigned work that names an outlet claims artifacts matching its target categories.</li>
+        <li><strong>Category → section match</strong> — the same-site outlet whose section matches the artifact’s category (<code>/flowers</code> catches <code>flowers</code>).</li>
+        <li><strong>The worker’s default outlet</strong> — its first-class channel (or the legacy <code>publishTo</code>).</li>
+        <li><strong>The team’s outlet</strong> — the crew’s channel.</li>
+      </ol>
+      <p>No rung matches → the artifact stays unpublished (never a wrong page).</p>
 
       <h2>Stop conditions</h2>
       <p>

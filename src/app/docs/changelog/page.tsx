@@ -11,6 +11,18 @@ const entries = [
   {
     date: '2026-07-07',
     tag: 'platform',
+    title: 'Teams: workers organized into crews with titles and a shared channel',
+    items: [
+      'Teams group the roster: one team has many workers (a worker belongs to at most one), and a team carries a default outlet — the last rung of the publish ladder, so every worker on a team gets a sane publish destination with no per-worker config.',
+      'Workers gain a title — their role, especially within a team (e.g. Illustrator) — which colors how they sign their reports. Workers on one team can hold different titles.',
+      'A worker’s publish destination is now a first-class, validated default outlet (promoting the old job.publishTo slug, which still works for compatibility).',
+      'The routing ladder grows to four rungs, most specific first: the goal’s outlet → category/section match → the worker’s default outlet → the team’s outlet → unpublished.',
+      'New Teams management on the Workers page: workers grouped under team headers, inline team create/rename/outlet-change, and an Assignment card on each worker for title, team, and default outlet.',
+    ],
+  },
+  {
+    date: '2026-07-07',
+    tag: 'platform',
     title: 'Outlets go URL-defined: sections, the routing ladder, endpoint secrets',
     items: [
       'An outlet is now URL-defined (siteUrl + sectionPath): clip.art/free, clip.art/flowers, and clip.art/worksheets are different outlets; any site — including esy.com/* surfaces — is another. projectId scopes which workers publish where.',
