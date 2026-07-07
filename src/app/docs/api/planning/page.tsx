@@ -13,14 +13,13 @@ const goalCreate = `POST /v1/goals
   "title": "Grow education clip art",
   "horizon": "quarter",
   "assigneeWorkerId": "worker-06997927",
-  "target": { "count": 150, "categories": ["education"] },
-  "outletId": "outlet-7c2d9e4f"
+  "target": { "count": 150, "categories": ["education"] }
 }
 
 // 422 without a target: a goal assigned to a worker
 // needs a measurable target (count + categories).
-// outletId (optional) names WHERE the goal's output ships —
-// it must be one of your own outlets (400 otherwise).`;
+// Goals decide WHAT gets made — never where it ships.
+// Destination lives on the worker (team / Solo outlet).`;
 
 export default function PlanningApiPage() {
   return (
