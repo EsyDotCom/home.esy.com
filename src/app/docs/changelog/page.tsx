@@ -11,6 +11,18 @@ const entries = [
   {
     date: '2026-07-07',
     tag: 'platform',
+    title: 'Specialty: the demand hierarchy — team produces → worker specialty → goals',
+    items: [
+      'A team is a department, named for what it produces: teams gain a “produces” domain, and members inherit it as their specialty when they don’t state a narrower one.',
+      'A worker’s specialty (formerly “description”) now steers every shift’s planning — identity that never reached the planner produced off-mission batches.',
+      'No worker without a WHAT: creation requires a specialty or a producing team; shifts refuse to run without one, loudly.',
+      'Reporters may not flatter: reports describe the record’s actual categories and must flag batches that don’t match the specialty.',
+      'The new-worker form gains a Publishing choice (publish classified work / keep private) — previously new workers silently never published.',
+    ],
+  },
+  {
+    date: '2026-07-07',
+    tag: 'platform',
     title: 'The publish routing framework: the fence, Solo outlets, provenance, syndication',
     items: [
       'One law: goals decide WHAT gets made; designations and sections decide WHERE it ships. Goals no longer carry outlets — steering demand and routing distribution are separate systems.',

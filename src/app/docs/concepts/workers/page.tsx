@@ -56,7 +56,8 @@ export default function WorkersPage() {
         rows={[
           [<strong key="w">Worker</strong>, 'The durable principal: identity, title, job, template allow-list, status (active | paused | retired). Tenure ends only by decision.'],
           [<strong key="ti">Title</strong>, 'The worker’s role, especially within a team (e.g. Illustrator). Colors how it signs its reports; no routing keys off it.'],
-          [<strong key="tm">Team</strong>, 'A crew of workers. A team with a designated outlet is a publishing contract — the fence: everything the crew publishes ships there, nothing overrides it. Workers on a team hold different titles.'],
+          [<strong key="tm">Team</strong>, 'A department: named for what it PRODUCES (its domain — members inherit it as their specialty), with an optionally designated outlet — the fence: everything the crew publishes ships there.'],
+          [<strong key="sp">Specialty</strong>, 'The worker’s own WHAT — it steers what every shift plans and produces. Blank on a team = inherit the team’s produces; a solo worker must state one. No worker exists without a WHAT.'],
           [<strong key="so">Solo outlet</strong>, 'A worker’s own channel, active only while solo. Joining a team defers to the team’s outlet — the solo outlet stays set but dormant, and wakes back up on leaving.'],
           [<strong key="j">Job</strong>, 'The standing per-shift spec: what to produce, how many, at what caps, in what voice, and where it publishes. Singular by discipline — the countable things that run are runs and orders.'],
           [<strong key="s">Shift</strong>, 'One bounded activation: trigger → plan → execute → publish → report → halt. A shift always ends; its record links every run, order, artifact, and message it touched.'],
@@ -89,8 +90,11 @@ export default function WorkersPage() {
 
       <h2>Teams, designations, and where work ships</h2>
       <p>
-        One law governs distribution: <strong>goals decide what gets made; designations and sections decide
-        where it ships.</strong> Demand and distribution are separate systems.
+        One law governs distribution: <strong>designations and sections decide where work ships.</strong> Demand
+        has its own hierarchy: the team’s <strong>produces</strong> (its domain) → the worker’s{' '}
+        <strong>specialty</strong> (narrower, inherited when blank) → <strong>goals</strong> (measurable
+        campaigns, refining further). The resolved specialty steers every shift’s planning — and a worker
+        cannot exist without one.
       </p>
       <ol>
         <li>
