@@ -36,7 +36,9 @@ export default function PublicationsConceptPage() {
             A <strong>Publication</strong> is a headless destination. It owns a set of published
             documents, knows where they go live (a site and a section), organizes them with its own
             categories, and exposes them through a public read API plus a revalidation webhook. Author
-            once in Compose; render anywhere.
+            once in Compose; render anywhere. Publications carry <em>documents</em>; run-produced
+            artifacts ship through <a href="/docs/concepts/outlets">Outlets</a> — a separate plane
+            that can serve the same site (esy.com consumes both).
           </>
         }
       />

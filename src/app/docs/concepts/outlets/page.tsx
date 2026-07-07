@@ -54,6 +54,35 @@ export default function OutletsPage() {
         revalidation webhook with an encrypted reveal-once secret, and delivery health.
       </p>
 
+      <h2>One site, many sections — many sites, one account</h2>
+      <p>
+        The URL-defined model is how the system scales. A catalog site fans out into as many section outlets as
+        its taxonomy needs, each with its own kind gate; other sites — including esy.com itself — are simply
+        more outlets on the same account:
+      </p>
+      <Table
+        head={['Outlet', 'sectionPath', 'acceptedKinds', 'What ships there']}
+        rows={[
+          ['clip.art/free', <code key="a">/free</code>, 'clip-art, coloring-page', 'the general catalog (the fallback channel)'],
+          ['clip.art/flowers', <code key="b">/flowers</code>, 'clip-art', 'category routing catches flowers-classified artifacts'],
+          ['clip.art/coloring-pages', <code key="c">/coloring-pages</code>, 'coloring-page', 'kind-gated: only coloring pages pass'],
+          ['clip.art/worksheets', <code key="d">/worksheets</code>, 'worksheet', 'worksheets get their own channel when their URL taxonomy lands'],
+          ['esy.com/…', <code key="e">/…</code>, 'any', 'esy.com surfaces consume artifact outlets too — see below'],
+        ]}
+      />
+      <p>
+        Nothing about this list lives in any consumer’s configuration: adding clip.art/school is one create in
+        app.esy.com, discovered by the site on its next ping. The routing ladder (below) spreads a single
+        worker’s shift across all of them — kind gates and section matches decide, not per-site plumbing.
+      </p>
+
+      <Callout title="esy.com consumes both planes">
+        esy.com already renders hand-authored documents through <strong>Publications</strong> (/research,
+        /learn — compose’s plane). As artifacts start publishing to esy.com/* surfaces, the same domain also
+        consumes <strong>Outlets</strong>. The two planes coexist on one site and never merge: documents keep
+        their editorial machinery, artifacts keep theirs, and each surface reads from the plane it belongs to.
+      </Callout>
+
       <h2>Outlet vs Publication</h2>
       <Table
         head={['', 'Outlet (artifacts)', 'Publication (documents)']}

@@ -62,7 +62,7 @@ export default function OutletsApiPage() {
       <h2>Managing outlets</h2>
       <EndpointList
         items={[
-          { method: 'GET', path: '/v1/outlets', desc: 'Your outlets, with delivery health.' },
+          { method: 'GET', path: '/v1/outlets', desc: 'Your outlets, with delivery health. Consumers discover which outlets to mirror here — filter siteUrl by your own domain; channel lists never live in consumer config.' },
           { method: 'POST', path: '/v1/outlets', desc: 'Create an outlet. If a webhook is configured, the secret is revealed once.' },
           { method: 'PATCH', path: '/v1/outlets/{outletId}', desc: 'Update destination binding, accepted kinds, and metadata.' },
           { method: 'POST', path: '/v1/outlets/{outletId}/secret/rotate', desc: 'Rotate the webhook secret (revealed once).' },
