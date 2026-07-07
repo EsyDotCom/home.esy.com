@@ -8,9 +8,12 @@ export const metadata = {
 };
 
 const outletShape = `{
-  "name": "clip.art catalog",
-  "slug": "clip-art-catalog",
+  "name": "clip.art/flowers",
+  "slug": "clip-art-flowers",
   "siteUrl": "https://clip.art",
+  "sectionPath": "/flowers",
+  "description": "The flowers section of the clip.art catalog",
+  "projectId": null,
   "acceptedKinds": ["clip-art", "coloring-page"],
   "revalidateUrl": "https://clip.art/api/ingest/esy",
   "lastDeliveryStatus": "ok"
@@ -44,8 +47,11 @@ export default function OutletsPage() {
         {outletShape}
       </CodeBlock>
       <p>
-        An outlet owns its destination binding: the site it feeds, the artifact kinds it accepts (empty = any
-        kind), the consumer’s revalidation webhook with an encrypted reveal-once secret, and delivery health.
+        An outlet is <strong>URL-defined</strong>: <code>siteUrl</code> + <code>sectionPath</code>.{' '}
+        <code>clip.art/free</code> and <code>clip.art/flowers</code> are different outlets; another site is
+        another outlet. Beyond the address, an outlet owns the artifact kinds it accepts (empty = any kind), an
+        optional project scope (a project-bound outlet is invisible to other projects’ workers), the consumer’s
+        revalidation webhook with an encrypted reveal-once secret, and delivery health.
       </p>
 
       <h2>Outlet vs Publication</h2>
@@ -81,12 +87,33 @@ export default function OutletsPage() {
         items, sitemaps at catalog scale).
       </Callout>
 
-      <h2>Workers publish to outlets</h2>
+      <h2>Workers publish to outlets — the routing ladder</h2>
       <p>
-        A worker’s job may name an outlet (<code>publishTo</code>) and a selection bar (<code>publishPolicy</code>).
-        Its shift publishes the passing work in one act, stamped <code>publishedBy: worker-…</code>, and the
-        report says so: “Published 76/80 to clip.art catalog.” See{' '}
-        <a href="/docs/concepts/workers">Workers</a>.
+        The job’s <code>publishPolicy</code> decides <em>if</em> a shift publishes (<code>"classified"</code> —
+        what passed the classifier; <code>"none"</code> — nothing, the default). <em>Where</em> each artifact
+        ships is a ladder, most specific rung first:
+      </p>
+      <ol>
+        <li>
+          <strong>The goal names the outlet.</strong> A goal assigned to a worker can carry an{' '}
+          <code>outletId</code> — the expected common case. Artifacts matching the goal’s target categories ship
+          there: “the education push ships to clip.art/school.”
+        </li>
+        <li>
+          <strong>Category routing.</strong> Otherwise, an artifact routes to the same-site outlet whose{' '}
+          <code>sectionPath</code> matches its classification category (<code>/flowers</code> catches{' '}
+          <code>flowers</code>).
+        </li>
+        <li>
+          <strong>The job’s <code>publishTo</code></strong> — the fallback channel. No rung matched → the
+          artifact stays unpublished, never a wrong page.
+        </li>
+      </ol>
+      <p>
+        Publishing happens in one act per outlet, stamped <code>publishedBy: worker-…</code>, and the report
+        accounts per channel: “Published 76/80 — clip.art/flowers: 16, clip.art catalog: 60.” See{' '}
+        <a href="/docs/concepts/workers">Workers</a> and{' '}
+        <a href="/docs/concepts/assigned-work">Assigned work</a>.
       </p>
     </DocsPageShell>
   );
