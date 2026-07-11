@@ -92,8 +92,9 @@ export default function WorkflowTemplatesPage() {
       <h2>Composition</h2>
       <p>
         A workflow template is a versioned definition for how a particular kind of artifact gets produced. The id
-        is stable; runtime behavior evolves through explicit versions and configuration snapshots captured on each
-        run.
+        is stable and <Link href="/docs/concepts/template-naming">verb-first</Link> (
+        <code>generate-clip-art-asset</code>, <code>build-demand-brief</code>); runtime behavior evolves through
+        explicit versions and configuration snapshots captured on each run.
       </p>
 
       <CodeBlock title="workflow.json" language="json">
