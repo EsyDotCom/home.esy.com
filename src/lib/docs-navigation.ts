@@ -73,6 +73,13 @@ export const navigation: NavSection[] = [
         icon: 'workflow',
       },
       {
+        title: 'Template naming',
+        href: '/docs/concepts/template-naming',
+        description: 'The verb-first id convention and the verb registry — generate invents, build computes, compose writes from sources.',
+        icon: 'book',
+        since: '2026-07-11',
+      },
+      {
         title: 'Workflow specifications',
         href: '/docs/concepts/workflow-specifications',
         description: 'Per-run populated instances of a Template. The deterministic blueprint production reads.',
