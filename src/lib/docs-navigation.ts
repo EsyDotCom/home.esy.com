@@ -286,13 +286,29 @@ export const navigation: NavSection[] = [
   },
 ];
 
-/** How long a `since` item keeps its "New" badge before it auto-expires. */
-export const NEW_BADGE_DAYS = 21;
+/**
+ * "New" badge standard.
+ *
+ * A nav item shows NEW for exactly ONE WEEK after its `since` date, then the
+ * badge auto-expires. The window is strict: an item whose `since` is 7+ days
+ * old is no longer new (see `isItemNew`).
+ *
+ * Rationale: the badge exists to catch a returning reader up on what changed
+ * since their last visit — it must mean *genuinely recent*. A week is the right
+ * horizon: long enough that a weekly visitor sees each addition at least once,
+ * short enough that nothing week-old still claims to be new. (It was 21 days,
+ * which left a month-old page badged.)
+ *
+ * `since` is the date the page went live. Set it when adding an item; never
+ * bump it to re-badge an old page — that is what a changelog entry is for.
+ */
+export const NEW_BADGE_DAYS = 7;
 
 /**
- * Whether an item should show the "New" badge: it has a `since` date that is in
- * the past and within the freshness window. Time-based so badges retire on their
- * own instead of lingering until someone remembers to delete the flag.
+ * Whether an item should show the "New" badge: it has a `since` date in the past
+ * and within the freshness window (strictly less than NEW_BADGE_DAYS old). Time-
+ * based so badges retire on their own instead of lingering until someone
+ * remembers to delete the flag.
  */
 export function isItemNew(item: NavItem, now: Date = new Date()): boolean {
   if (!item.since) return false;
