@@ -64,7 +64,6 @@ export const navigation: NavSection[] = [
         href: '/docs/concepts/workflow-schemas',
         description: 'The platform contract every Workflow Template must satisfy.',
         icon: 'layers',
-        since: '2026-06-05',
       },
       {
         title: 'Workflow templates',
@@ -84,14 +83,12 @@ export const navigation: NavSection[] = [
         href: '/docs/concepts/workflow-specifications',
         description: 'Per-run populated instances of a Template. The deterministic blueprint production reads.',
         icon: 'file-text',
-        since: '2026-06-05',
       },
       {
         title: 'Workflow versioning',
         href: '/docs/concepts/workflow-versioning',
         description: 'Templates are immutable and versioned; runs pin the exact version they executed for reproducibility.',
         icon: 'history',
-        since: '2026-06-05',
       },
       {
         title: 'Runs',
@@ -110,7 +107,6 @@ export const navigation: NavSection[] = [
         href: '/docs/concepts/sub-workflows',
         description: 'How a workflow composes another workflow as a child run, with linked artifacts and rolled-up cost.',
         icon: 'workflow',
-        since: '2026-06-05',
       },
       {
         title: 'Costs',
@@ -123,42 +119,36 @@ export const navigation: NavSection[] = [
         href: '/docs/concepts/budgets',
         description: 'Spend limits at organization, project, or workflow scope, enforced before a run executes.',
         icon: 'wallet',
-        since: '2026-06-05',
       },
       {
         title: 'Workers',
         href: '/docs/concepts/workers',
         description: 'Durable principals that run bounded shifts on a schedule and report in plain language.',
         icon: 'users',
-        since: '2026-07-06',
       },
       {
         title: 'Assigned work',
         href: '/docs/concepts/assigned-work',
         description: 'Goals and tasks, assignable to you or a worker — measurable, tracked, and accounted for.',
         icon: 'compass',
-        since: '2026-07-06',
       },
       {
         title: 'Generation Orders',
         href: '/docs/concepts/orders',
         description: 'One template fanned into N child runs with variation, dedupe keys, and a budget cap.',
         icon: 'layers',
-        since: '2026-07-06',
       },
       {
         title: 'Publications',
         href: '/docs/concepts/publications',
         description: 'Headless destinations that own published documents, categories, and a revalidation webhook.',
         icon: 'globe',
-        since: '2026-06-26',
       },
       {
         title: 'Outlets',
         href: '/docs/concepts/outlets',
         description: 'Channels for publishing artifacts of any kind from app.esy.com — separate from Publications.',
         icon: 'globe',
-        since: '2026-07-06',
       },
     ],
   },
@@ -176,35 +166,30 @@ export const navigation: NavSection[] = [
         href: '/docs/api/publications',
         description: 'Public reads plus authoring endpoints for publications and categories.',
         icon: 'globe',
-        since: '2026-06-26',
       },
       {
         title: 'Outlets API',
         href: '/docs/api/outlets',
         description: 'Publish and unpublish artifacts, read the consumer feed, receive signed webhooks.',
         icon: 'globe',
-        since: '2026-07-06',
       },
       {
         title: 'Workers API',
         href: '/docs/api/workers',
         description: 'Hire and steer workers: run-now, shift records, and the schedules that wake them.',
         icon: 'users',
-        since: '2026-07-06',
       },
       {
         title: 'Planning API',
         href: '/docs/api/planning',
         description: 'Goals, tasks, and Inbox messages — the assignable planning plane.',
         icon: 'compass',
-        since: '2026-07-06',
       },
       {
         title: 'API Keys',
         href: '/docs/api/api-keys',
         description: 'Machine credentials — create, workspace-bind, authenticate, and revoke.',
         icon: 'key',
-        since: '2026-07-03',
       },
       {
         title: 'Changelog',
@@ -223,7 +208,6 @@ export const navigation: NavSection[] = [
         description:
           'Connect a publication to your Beehiiv newsletter — articles become email-safe drafts you send from Beehiiv.',
         icon: 'plug',
-        since: '2026-07-03',
       },
     ],
   },
@@ -247,21 +231,18 @@ export const navigation: NavSection[] = [
         href: '/docs/guides/compose-with-artifact-inputs',
         description: 'Let a workflow accept an existing artifact as input — supply one or generate it.',
         icon: 'workflow',
-        since: '2026-06-05',
       },
       {
         title: 'Connect a consumer site',
         href: '/docs/guides/connect-a-consumer-site',
         description: 'Render a public publication and verify Esy’s revalidation webhooks with HMAC.',
         icon: 'plug',
-        since: '2026-06-26',
       },
       {
         title: 'Send articles to Beehiiv',
         href: '/docs/guides/send-articles-to-beehiiv',
         description: 'Connect a publication to Beehiiv and turn any article into a reviewed email draft.',
         icon: 'globe',
-        since: '2026-07-03',
       },
     ],
   },
@@ -286,13 +267,29 @@ export const navigation: NavSection[] = [
   },
 ];
 
-/** How long a `since` item keeps its "New" badge before it auto-expires. */
-export const NEW_BADGE_DAYS = 21;
+/**
+ * "New" badge standard.
+ *
+ * A nav item shows NEW for exactly ONE WEEK after its `since` date, then the
+ * badge auto-expires. The window is strict: an item whose `since` is 7+ days
+ * old is no longer new (see `isItemNew`).
+ *
+ * Rationale: the badge exists to catch a returning reader up on what changed
+ * since their last visit — it must mean *genuinely recent*. A week is the right
+ * horizon: long enough that a weekly visitor sees each addition at least once,
+ * short enough that nothing week-old still claims to be new. (It was 21 days,
+ * which left a month-old page badged.)
+ *
+ * `since` is the date the page went live. Set it when adding an item; never
+ * bump it to re-badge an old page — that is what a changelog entry is for.
+ */
+export const NEW_BADGE_DAYS = 7;
 
 /**
- * Whether an item should show the "New" badge: it has a `since` date that is in
- * the past and within the freshness window. Time-based so badges retire on their
- * own instead of lingering until someone remembers to delete the flag.
+ * Whether an item should show the "New" badge: it has a `since` date in the past
+ * and within the freshness window (strictly less than NEW_BADGE_DAYS old). Time-
+ * based so badges retire on their own instead of lingering until someone
+ * remembers to delete the flag.
  */
 export function isItemNew(item: NavItem, now: Date = new Date()): boolean {
   if (!item.since) return false;
