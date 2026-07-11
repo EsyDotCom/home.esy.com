@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Play } from "lucide-react";
 import { VideoCard } from "@/components/School/VideoCard";
 import SchoolNewsletter from "@/components/School/SchoolNewsletter";
+import { LearnHeroSignup } from "@/components/School/LearnHeroSignup";
 import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 import { navyCalmLightTheme as theme } from "@/lib/theme";
 import { type SchoolVideo } from "@/data/school-videos";
@@ -102,6 +103,8 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
             <span>free</span>
           </>
         }
+        // Newsletter capture in the hero (Learn publication), mirroring /research.
+        action={<LearnHeroSignup />}
         feature={
           featuredCarousel.length > 0 ? (
             <HeroCarousel
