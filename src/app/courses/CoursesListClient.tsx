@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, Play, CheckCircle2 } from 'lucide-react';
 import { courses } from '@/lib/learn/mockData';
 import { useNewsletterSubscribe } from '@/hooks/useNewsletterSubscribe';
+import { LearnHeroSignup } from '@/components/School/LearnHeroSignup';
 import LibraryHero from '@/components/LibraryHero/LibraryHero';
 
 /* ─────────────────────────────────────────────
@@ -77,6 +78,8 @@ export default function CoursesListClient() {
             <span>self-paced, free</span>
           </>
         }
+        // Newsletter capture in the hero (Learn publication), shared with /learn.
+        action={<LearnHeroSignup />}
         feature={
           // Featured-course spotlight — courses have no cover art, so we render the
           // signature gradient + emoji card to fill the stage's feature column.
