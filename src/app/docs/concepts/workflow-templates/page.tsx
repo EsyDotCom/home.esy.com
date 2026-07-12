@@ -302,6 +302,10 @@ export default function WorkflowTemplatesPage() {
           versions are published, selected, and pinned by runs.
         </li>
         <li>
+          <Link href="/docs/concepts/runtime-steps">Runtime steps</Link> — the step contract: kinds, prompt
+          references, model binding, and the sizing limits (maxTokens, timeouts, estimates).
+        </li>
+        <li>
           <Link href="/docs/concepts/workflow-specifications">Workflow specifications</Link> — per-run populated
           instances of a Template.
         </li>

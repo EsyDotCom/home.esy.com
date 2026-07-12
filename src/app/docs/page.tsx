@@ -15,6 +15,12 @@ const atlas = [
     desc: 'Reusable templates that satisfy the Schema. Define intake, runtime steps, providers, quality gates, and budget policy.',
   },
   {
+    href: '/docs/concepts/runtime-steps',
+    label: 'Concepts · Workflow primitives',
+    title: 'Runtime steps',
+    desc: 'The executable program inside a Template: step kinds, prompt references, model binding, and the sizing contract — maxTokens, timeouts, estimates — with a worked example.',
+  },
+  {
     href: '/docs/concepts/workflow-specifications',
     label: 'Concepts · Workflow primitives',
     title: 'Workflow specifications',
