@@ -155,8 +155,6 @@ The point of running everything through a template — even for something as sim
     ],
     relatedSlugs: [
       "chatgpt-images-2-vs-nano-banana-2",
-      "agentic-research-pipeline-design",
-      "mux-video-pipeline-nextjs",
     ],
   },
   {
@@ -180,7 +178,6 @@ The point of running everything through a template — even for something as sim
     ],
     relatedSlugs: [
       "claude-fable-5-first-impressions",
-      "agentic-research-pipeline-design",
       "building-multi-agent-workflows-claude-code",
     ],
   },
@@ -223,8 +220,6 @@ The biggest lesson: treat agents like microservices, not like a conversation. Th
     tags: ["claude-code", "multi-agent", "architecture", "LLM orchestration"],
     relatedSlugs: [
       "cursor-workflow-patterns-production",
-      "agentic-research-pipeline-design",
-      "mux-video-pipeline-nextjs",
     ],
   },
   {
@@ -270,106 +265,6 @@ The overarching pattern: AI coding tools amplify your engineering judgment, they
     tags: ["cursor", "ai-coding", "developer-workflow", "production"],
     relatedSlugs: [
       "building-multi-agent-workflows-claude-code",
-      "mux-video-pipeline-nextjs",
-      "agentic-research-pipeline-design",
-    ],
-  },
-  {
-    slug: "agentic-research-pipeline-design",
-    title: "Designing the Esy Research Pipeline — From Question to Cited Artifact",
-    description:
-      "A deep dive into how Esy's workflow engine transforms a research question into a fully cited, structured artifact — the pipeline stages, LLM selection per stage, and quality gates.",
-    category: "workflows",
-    categoryLabel: "Workflow Research",
-    durationSeconds: 660,
-    publishedAt: "2026-02-10",
-    muxPlaybackId: "EcHgOK9coz5K4rjSwOkoE7Y7O01201YMIC200RI6lNxnhs",
-    transcript: "",
-    content: `The promise of Esy is simple: you provide a research question, and you receive a structured, cited artifact. The engineering behind that promise is anything but simple. This post breaks down the complete research pipeline — every stage, every decision point, and every quality gate between input and output.
-
-## The Pipeline
-
-Every Esy workflow follows the same macro-structure, though the specifics vary by template:
-
-1. **Intake** — Parse the user's input, extract intent, identify constraints
-2. **Research** — Source discovery, relevance scoring, fact extraction
-3. **Outline** — Structural design based on artifact type and content
-4. **Draft** — Content generation within the structural framework
-5. **Cite & Format** — Citation verification, format compliance, consistency checks
-6. **Artifact** — Final assembly, export formatting, metadata attachment
-
-## LLM Selection Per Stage
-
-Not every stage benefits from the same model. Research-heavy stages need models with strong factual grounding and source awareness. Drafting stages need models with strong prose quality. Citation stages need precision and consistency over creativity.
-
-At Esy, different pipeline stages use different models — and this isn't about cost optimization. It's about quality optimization. A model that writes beautiful prose might hallucinate citations. A model that's rigorous about facts might produce stilted writing.
-
-## Quality Gates
-
-Between each stage, a validation step checks the output before passing it downstream:
-- After Research: Are sources real? Are they relevant? Is there sufficient coverage?
-- After Outline: Does the structure match the artifact type? Are all sources assigned?
-- After Draft: Does the content follow the outline? Are claims supported?
-- After Cite: Do all citations resolve? Is the format consistent?
-
-These gates are the difference between a demo and a product. Without them, you get impressive-looking output that falls apart under scrutiny.
-
-## The Hard Problem: Citation Grounding
-
-The single hardest engineering problem in this pipeline is citation grounding — ensuring that when the artifact says "According to Smith et al. (2024)," there's an actual Smith et al. (2024) paper that actually says what the artifact claims it says. This is where most AI writing tools fail, and it's where Esy invests the most engineering effort.`,
-    tags: ["workflow-engine", "research-pipeline", "citation", "architecture"],
-    relatedSlugs: [
-      "building-multi-agent-workflows-claude-code",
-      "mux-video-pipeline-nextjs",
-      "cursor-workflow-patterns-production",
-    ],
-  },
-  {
-    slug: "mux-video-pipeline-nextjs",
-    title: "Building a Video-First Content Platform with MUX and Next.js",
-    description:
-      "How Esy's school and research pages use MUX for video hosting, transcript generation, and SEO-optimized content delivery — the full technical implementation from upload to ranked page.",
-    category: "workflows",
-    categoryLabel: "Workflow Research",
-    durationSeconds: 480,
-    publishedAt: "2026-02-05",
-    muxPlaybackId: "EcHgOK9coz5K4rjSwOkoE7Y7O01201YMIC200RI6lNxnhs",
-    transcript: "",
-    content: `Video-first content pages are an SEO weapon hiding in plain sight. A page with a MUX-hosted video hero, crawlable transcript below, and written content underneath hits three ranking signals simultaneously: dwell time (video), content depth (article), and keyword density (transcript). This post covers the full technical implementation at Esy.
-
-## The Architecture
-
-The content platform runs on Next.js 15 with static generation. Each video page is a statically generated route that includes:
-- A MUX video player at the hero position
-- A collapsible transcript toggle below the player
-- A full written article underneath
-- Related content in a sticky sidebar
-
-The data model for each video lives in a TypeScript data file — not a CMS. This keeps the build pipeline simple and the content version-controlled.
-
-## MUX Integration
-
-MUX handles video hosting, adaptive bitrate streaming, and thumbnail generation. The integration is minimal:
-- Upload a video to MUX, get a playback ID
-- Use \`@mux/mux-player-react\` in a client component
-- Generate thumbnails via \`https://image.mux.com/{playbackId}/thumbnail.jpg\`
-
-The player is configured for on-demand streaming with custom brand colors, playback rate controls, and keyboard shortcuts.
-
-## The SEO Play
-
-The transcript is the key. MUX can generate transcripts automatically, but even a manually written transcript serves the same purpose: it puts the video's spoken content into crawlable HTML. A 10-minute video about "building agentic workflows with Claude Code" produces 2,000+ words of keyword-rich content that Google indexes immediately.
-
-Combined with the written article below the video, each page targets long-tail keywords with very low competition. "How to build multi-agent workflows" has almost no SEO competition right now. In 12 months, it will.
-
-## Build-Time Generation
-
-Every video page uses \`generateStaticParams\` to produce static HTML at build time. No server-side rendering, no edge functions, no API calls at request time. The page loads instantly from a CDN. MUX handles the video streaming separately.`,
-    tags: ["mux", "next.js", "video-platform", "seo", "static-generation"],
-    relatedSlugs: [
-      "agentic-research-pipeline-design",
-      "building-multi-agent-workflows-claude-code",
-      "cursor-workflow-patterns-production",
     ],
   },
 ];

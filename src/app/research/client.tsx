@@ -173,7 +173,7 @@ export default function ResearchClient({ videos }: { videos: ResearchVideo[] }) 
       <LibraryHero
         breadcrumb={[{ label: "Home", href: "/" }, { label: "Research" }]}
         title="Research"
-        subhead="Engineering deep dives on frontier models, AI coding tools, and the workflows behind Esy, with video breakdowns and full transcripts."
+        subhead="Research on how to design, develop, and deploy agentic workflows — with breakdowns of frontier models and their tradeoffs, and the AI coding tools we build with."
         meta={
           <>
             <span>
