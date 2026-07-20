@@ -267,7 +267,7 @@ export default function LessonClient({ course, lesson, chapterTitle }: LessonCli
           }}>
             <Link href="/" style={{ color: mutedColor, textDecoration: 'none', transition: 'color 0.15s' }}>Home</Link>
             <span style={{ opacity: 0.5 }}>›</span>
-            <Link href="/courses" style={{ color: mutedColor, textDecoration: 'none', transition: 'color 0.15s' }}>Courses</Link>
+            <Link href="/courses" style={{ color: mutedColor, textDecoration: 'none', transition: 'color 0.15s' }}>AI Courses</Link>
             <span style={{ opacity: 0.5 }}>›</span>
             <Link href={`/courses/${course.slug}`} style={{ color: mutedColor, textDecoration: 'none', transition: 'color 0.15s' }}>{course.title}</Link>
             <span style={{ opacity: 0.5 }}>›</span>

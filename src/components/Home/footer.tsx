@@ -280,7 +280,7 @@ export default function Footer () {
             links={[
               { href: "/docs", text: "Docs" },
               { href: "/learn/", text: "Learn" },
-              { href: "/courses/", text: "Courses" },
+              { href: "/courses/", text: "AI Courses" },
               { href: "/research/", text: "Research" },
             ]}
           />

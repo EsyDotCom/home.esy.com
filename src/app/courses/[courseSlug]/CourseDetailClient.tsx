@@ -189,7 +189,7 @@ export default function CourseDetailClient({ course }: CourseDetailClientProps) 
                 onMouseEnter={e => (e.currentTarget.style.color = accent)}
                 onMouseLeave={e => (e.currentTarget.style.color = muted)}
               >
-                Courses
+                AI Courses
               </Link>
               <ChevronRight size={12} style={{ opacity: 0.5 }} />
               <span style={{ color: textSecondary }}>{course.title}</span>

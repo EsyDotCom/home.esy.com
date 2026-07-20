@@ -138,7 +138,7 @@ export function DocsLayout({ children }: { children: React.ReactNode }) {
                 title="Resources"
                 links={[
                   { href: 'https://esy.com/research/', text: 'Research' },
-                  { href: 'https://esy.com/courses/', text: 'Courses' },
+                  { href: 'https://esy.com/courses/', text: 'AI Courses' },
                   { href: '/docs/api', text: 'API' },
                   { href: '/docs/guides', text: 'Guides' },
                 ]}

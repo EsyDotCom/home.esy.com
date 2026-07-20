@@ -135,7 +135,7 @@ export const useSchoolSearch = ({
         id: `course-${course.title}`,
         title: course.title,
         description: `${course.duration} • ${course.level} • ${course.students}`,
-        category: 'Courses',
+        category: 'AI Courses',
         type: 'course' as const,
         isPro: false,
         metadata: {

@@ -159,7 +159,7 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
               marginTop: "0.5rem",
             }}
           >
-            Short walkthroughs on selecting, running, and reviewing Esy&apos;s agentic workflow templates — the quick-start companion to Courses.
+            Short walkthroughs on selecting, running, and reviewing Esy&apos;s agentic workflow templates — the quick-start companion to AI Courses.
           </p>
         </div>
 
@@ -204,7 +204,7 @@ export default function SchoolVideosClient({ videos: allVideos }: { videos: Scho
               color: theme.text,
             }}
           >
-            Courses
+            AI Courses
           </h2>
           <p
             style={{

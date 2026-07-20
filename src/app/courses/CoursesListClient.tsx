@@ -66,8 +66,8 @@ export default function CoursesListClient() {
     }}>
       {/* ═══ Library stage hero (shared with the artifact catalog pages) ═══ */}
       <LibraryHero
-        breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Courses' }]}
-        title="Courses"
+        breadcrumb={[{ label: 'Home', href: '/' }, { label: 'AI Courses' }]}
+        title="AI Courses"
         subhead="Practical courses for the AI solopreneur — learn to build agents, design agentic workflows, and use AI Coding Tools to run and grow your business."
         meta={
           <>

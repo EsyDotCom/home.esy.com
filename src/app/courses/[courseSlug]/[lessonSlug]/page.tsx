@@ -15,17 +15,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const { course, lesson } = result;
   return {
-    title: `${lesson.title} | ${course.title}`,
+    title: `${lesson.title} | ${course.title} | Esy AI Courses`,
     description: lesson.description,
     openGraph: {
-      title: `${lesson.title} | ${course.title} | Esy`,
+      title: `${lesson.title} | ${course.title} | Esy AI Courses`,
       description: lesson.description,
       type: 'video.other',
       url: `https://esy.com/courses/${courseSlug}/${lessonSlug}`,
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${lesson.title} | ${course.title}`,
+      title: `${lesson.title} | ${course.title} | Esy AI Courses`,
       description: lesson.description,
     },
   };
