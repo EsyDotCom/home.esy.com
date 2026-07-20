@@ -13,17 +13,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!course) return { title: 'Course Not Found' };
 
   return {
-    title: `${course.title} | Esy Courses`,
+    title: `${course.title} | Esy AI Courses`,
     description: course.description,
     openGraph: {
-      title: `${course.title} | Esy Courses`,
+      title: `${course.title} | Esy AI Courses`,
       description: course.description,
       type: 'website',
       url: `https://esy.com/courses/${courseSlug}`,
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${course.title} | Esy`,
+      title: `${course.title} | Esy AI Courses`,
       description: course.description,
     },
   };
