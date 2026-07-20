@@ -53,7 +53,7 @@ export function AgentsTermChip({ slug, label }: AgentsTermChipProps) {
 
   return (
     <Link
-      href={`/agents/terms/${slug}`}
+      href={`/ai-agents/terms/${slug}`}
       style={{
         display: 'inline-flex',
         alignItems: 'center',

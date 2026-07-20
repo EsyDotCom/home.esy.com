@@ -23,11 +23,11 @@ export interface AgentPageContent {
 }
 
 // =============================================================================
-// HUB PAGE - /agents
+// HUB PAGE - /ai-agents
 // =============================================================================
 export const hubPageContent: AgentPageContent = {
-  slug: "agents",
-  title: "Agents Reference",
+  slug: "ai-agents",
+  title: "AI Agents Reference",
   lede: "A comprehensive reference guide to AI agents, agentic workflows, and orchestration patterns. Designed for practitioners building intelligent systems.",
   metaDescription: "Reference guide to AI agents, agentic workflows, and orchestration. Learn core concepts, architecture patterns, and implementation examples.",
   sections: [
@@ -61,10 +61,10 @@ Use this guide to:
 };
 
 // =============================================================================
-// CANONICAL PAGE - /agents/ai-agents
+// CANONICAL PAGE - /ai-agents/what-are-ai-agents
 // =============================================================================
 export const canonicalPageContent: AgentPageContent = {
-  slug: "ai-agents",
+  slug: "what-are-ai-agents",
   title: "What are AI Agents?",
   lede: "AI agents are systems that perceive their environment, reason about goals, take actions, and evaluate outcomes—operating with varying degrees of autonomy.",
   metaDescription: "Understand AI agents: definition, the agentic loop (perceive-reason-act-evaluate), autonomy spectrum, and how agents differ from chatbots and scripts.",
@@ -167,7 +167,7 @@ Each entry includes why the concept matters, common misconceptions, and cross-re
 };
 
 // =============================================================================
-// TERM PAGES - /agents/terms/*
+// TERM PAGES - /ai-agents/terms/*
 // =============================================================================
 export const termPagesContent: Record<string, AgentPageContent> = {
   "agentic-workflow": {
@@ -623,7 +623,7 @@ For many applications, human oversight is a feature, not a limitation. The goal 
 };
 
 // =============================================================================
-// PATTERN PAGES - /agents/patterns/*
+// PATTERN PAGES - /ai-agents/patterns/*
 // =============================================================================
 export const patternPagesContent: Record<string, AgentPageContent> = {
   "planner-executor": {
@@ -872,7 +872,7 @@ This systematically improves essay quality while maintaining reasonable generati
 };
 
 // =============================================================================
-// WORKFLOW PAGES - /agents/workflows/*
+// WORKFLOW PAGES - /ai-agents/workflows/*
 // =============================================================================
 export const workflowPagesContent: Record<string, AgentPageContent> = {
   "gated-agent-pipeline": {

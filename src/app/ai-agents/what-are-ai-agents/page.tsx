@@ -14,14 +14,14 @@ import {
 } from "@/lib/agents-navigation";
 import { getCanonicalContent } from "@/content/agents/content";
 
-const pageHref = "/agents/ai-agents";
+const pageHref = "/ai-agents/what-are-ai-agents";
 
 export const metadata: Metadata = {
-  title: "What are AI Agents? Definition & Overview | Esy Agents Reference",
+  title: "What are AI Agents? Definition & Overview | Esy AI Agents Reference",
   description: "Understand AI agents: definition, the agentic loop (perceive-reason-act-evaluate), autonomy spectrum, and how agents differ from chatbots and scripts.",
   keywords: "AI agents, what are AI agents, agentic loop, agent definition, LLM agents, autonomous agents, agent capabilities",
   openGraph: {
-    title: "What are AI Agents? | Esy Agents Reference",
+    title: "What are AI Agents? | Esy AI Agents Reference",
     description: "Definition, capabilities, and the agentic loop that powers AI agent systems.",
     url: `https://esy.com${pageHref}`,
     type: "article",
@@ -43,7 +43,7 @@ const jsonLd = {
   headline: "What are AI Agents?",
   description: "Understand AI agents: definition, the agentic loop (perceive-reason-act-evaluate), autonomy spectrum, and how agents differ from chatbots and scripts.",
   url: `https://esy.com${pageHref}`,
-  articleSection: "Agents Reference",
+  articleSection: "AI Agents Reference",
   author: {
     "@type": "Person",
     name: "Zev Uhuru",
@@ -62,7 +62,7 @@ const jsonLd = {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: "https://esy.com" },
-      { "@type": "ListItem", position: 2, name: "Agents", item: "https://esy.com/agents" },
+      { "@type": "ListItem", position: 2, name: "AI Agents", item: "https://esy.com/ai-agents" },
       { "@type": "ListItem", position: 3, name: "What are AI Agents?", item: `https://esy.com${pageHref}` },
     ],
   },

@@ -326,7 +326,7 @@ export function AgentsSidebar({ onOpenSearch }: { onOpenSearch?: () => void }) {
           borderBottom: `1px solid ${theme.border}`,
         }}>
           <Logo 
-            href="/agents"
+            href="/ai-agents"
             wordmarkOnly
             wordmarkFont="blackops"
             theme={isDarkMode ? "navy-dark" : "light"}

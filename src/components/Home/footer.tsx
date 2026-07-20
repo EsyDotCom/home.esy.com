@@ -53,7 +53,7 @@ export default function Footer () {
         const isCoursesPage = normalizedPath === '/courses' || normalizedPath.startsWith('/courses/');
         const isTemplatesPage = normalizedPath === '/workflows' || normalizedPath.startsWith('/workflows/');
         const isDocsPage = normalizedPath === '/docs' || normalizedPath.startsWith('/docs/');
-        const isAgentsPage = normalizedPath === '/agents' || normalizedPath.startsWith('/agents/');
+        const isAgentsPage = normalizedPath === '/ai-agents' || normalizedPath.startsWith('/ai-agents/');
         const isModelsPage = normalizedPath === '/models' || normalizedPath.startsWith('/models/');
         const isContactPage = normalizedPath === '/contact';
         const isTermsPage = normalizedPath === '/terms';
@@ -270,7 +270,7 @@ export default function Footer () {
             title="Explore"
             links={[
               { href: "/workflows/", text: "Workflows" },
-              // { href: "/agents/", text: "Agents" },
+              // { href: "/ai-agents/", text: "AI Agents" },
               { href: "/glossary/", text: "Glossary" },
             ]}
           />

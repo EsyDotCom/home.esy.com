@@ -54,7 +54,7 @@ export function AgentsSearchModal({ isOpen, onClose }: AgentsSearchModalProps) {
     searchIndex.filter(item => 
       item.type === 'canonical' || 
       item.type === 'hub' ||
-      item.href === '/agents/terms/agentic-workflow'
+      item.href === '/ai-agents/terms/agentic-workflow'
     ).slice(0, 4),
     [searchIndex]
   );

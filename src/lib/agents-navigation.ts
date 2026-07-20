@@ -25,15 +25,15 @@ export const agentsNavigation: NavSection[] = [
     description: "Start here",
     items: [
       {
-        title: "Agents Reference",
-        href: "/agents",
+        title: "AI Agents Reference",
+        href: "/ai-agents",
         description: "A reference guide to AI agents and orchestration",
         type: "hub",
         icon: "book",
       },
       {
         title: "What are AI Agents?",
-        href: "/agents/ai-agents",
+        href: "/ai-agents/what-are-ai-agents",
         description: "Definition, capabilities, and the agentic loop",
         type: "canonical",
         icon: "bot",
@@ -47,49 +47,49 @@ export const agentsNavigation: NavSection[] = [
     items: [
       {
         title: "Agentic Workflow",
-        href: "/agents/terms/agentic-workflow",
+        href: "/ai-agents/terms/agentic-workflow",
         description: "Multi-step AI task automation",
         type: "term",
         icon: "workflow",
       },
       {
         title: "Agentic Loop",
-        href: "/agents/terms/agentic-loop",
+        href: "/ai-agents/terms/agentic-loop",
         description: "The perceive-reason-act-evaluate cycle",
         type: "term",
         icon: "refresh",
       },
       {
         title: "Tool Use",
-        href: "/agents/terms/tool-use",
+        href: "/ai-agents/terms/tool-use",
         description: "How agents interact with external systems",
         type: "term",
         icon: "wrench",
       },
       {
         title: "Memory",
-        href: "/agents/terms/memory",
+        href: "/ai-agents/terms/memory",
         description: "Short-term and long-term context retention",
         type: "term",
         icon: "database",
       },
       {
         title: "Planning",
-        href: "/agents/terms/planning",
+        href: "/ai-agents/terms/planning",
         description: "Goal decomposition and task sequencing",
         type: "term",
         icon: "map",
       },
       {
         title: "Orchestration",
-        href: "/agents/terms/orchestration",
+        href: "/ai-agents/terms/orchestration",
         description: "Coordinating multiple agents or steps",
         type: "term",
         icon: "network",
       },
       {
         title: "Human-in-the-Loop",
-        href: "/agents/terms/human-in-the-loop",
+        href: "/ai-agents/terms/human-in-the-loop",
         description: "Human oversight in autonomous systems",
         type: "term",
         icon: "user-check",
@@ -102,21 +102,21 @@ export const agentsNavigation: NavSection[] = [
     items: [
       {
         title: "Planner-Executor",
-        href: "/agents/patterns/planner-executor",
+        href: "/ai-agents/patterns/planner-executor",
         description: "Separate planning from execution",
         type: "pattern",
         icon: "git-branch",
       },
       {
         title: "Router-Supervisor",
-        href: "/agents/patterns/router-supervisor",
+        href: "/ai-agents/patterns/router-supervisor",
         description: "Dynamic task routing with oversight",
         type: "pattern",
         icon: "git-merge",
       },
       {
         title: "Reflect-Revise",
-        href: "/agents/patterns/reflect-revise",
+        href: "/ai-agents/patterns/reflect-revise",
         description: "Self-evaluation and iterative improvement",
         type: "pattern",
         icon: "repeat",
@@ -129,14 +129,14 @@ export const agentsNavigation: NavSection[] = [
     items: [
       {
         title: "Gated Agent Pipeline",
-        href: "/agents/workflows/gated-agent-pipeline",
+        href: "/ai-agents/workflows/gated-agent-pipeline",
         description: "Quality gates between agent steps",
         type: "workflow",
         icon: "shield-check",
       },
       {
         title: "Research Agent Workflow",
-        href: "/agents/workflows/research-agent-workflow",
+        href: "/ai-agents/workflows/research-agent-workflow",
         description: "End-to-end research automation",
         type: "workflow",
         icon: "search",
@@ -180,19 +180,19 @@ export function getAgentBreadcrumbs(
 ): { title: string; href: string }[] {
   const breadcrumbs = [
     { title: "Home", href: "/" },
-    { title: "Agents", href: "/agents" },
+    { title: "AI Agents", href: "/ai-agents" },
   ];
 
-  if (href !== "/agents") {
+  if (href !== "/ai-agents") {
     const page = getAgentPageByHref(href);
     if (page) {
       // Add type-based intermediate breadcrumb
       if (page.type === "term") {
-        breadcrumbs.push({ title: "Terms", href: "/agents#terms" });
+        breadcrumbs.push({ title: "Terms", href: "/ai-agents#terms" });
       } else if (page.type === "pattern") {
-        breadcrumbs.push({ title: "Patterns", href: "/agents#patterns" });
+        breadcrumbs.push({ title: "Patterns", href: "/ai-agents#patterns" });
       } else if (page.type === "workflow") {
-        breadcrumbs.push({ title: "Workflows", href: "/agents#workflows" });
+        breadcrumbs.push({ title: "Workflows", href: "/ai-agents#workflows" });
       }
       breadcrumbs.push({ title: page.title, href: page.href });
     }

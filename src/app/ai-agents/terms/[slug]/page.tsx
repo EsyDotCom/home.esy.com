@@ -11,44 +11,44 @@ import {
   getAgentBreadcrumbs, 
   getAdjacentAgentPages 
 } from "@/lib/agents-navigation";
-import { getPatternContent, getAllPatternSlugs } from "@/content/agents/content";
+import { getTermContent, getAllTermSlugs } from "@/content/agents/content";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Generate static paths for all pattern pages
+// Generate static paths for all term pages
 export async function generateStaticParams() {
-  const slugs = getAllPatternSlugs();
+  const slugs = getAllTermSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 
-// Generate metadata for each pattern page
+// Generate metadata for each term page
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const content = getPatternContent(slug);
+  const content = getTermContent(slug);
   
   if (!content) {
     return {
-      title: "Pattern Not Found | Esy Agents Reference",
+      title: "Term Not Found | Esy AI Agents Reference",
     };
   }
 
-  const pageHref = `/agents/patterns/${slug}`;
+  const pageHref = `/ai-agents/terms/${slug}`;
 
   return {
-    title: `${content.title} | Esy Agents Reference`,
+    title: `${content.title} - Definition | Esy AI Agents Reference`,
     description: content.metaDescription,
-    keywords: `${content.title}, agent pattern, AI architecture, ${slug.replace(/-/g, ' ')}`,
+    keywords: `${content.title}, AI agents, ${slug.replace(/-/g, ' ')}, agentic systems`,
     openGraph: {
-      title: `${content.title} | Esy Agents Reference`,
+      title: `${content.title} | Esy AI Agents Reference`,
       description: content.lede,
       url: `https://esy.com${pageHref}`,
       type: "article",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${content.title} | Esy Agents Reference`,
+      title: `${content.title} | Esy AI Agents Reference`,
       description: content.lede,
     },
     alternates: {
@@ -57,15 +57,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function PatternPage({ params }: PageProps) {
+export default async function TermPage({ params }: PageProps) {
   const { slug } = await params;
-  const content = getPatternContent(slug);
+  const content = getTermContent(slug);
   
   if (!content) {
     notFound();
   }
 
-  const pageHref = `/agents/patterns/${slug}`;
+  const pageHref = `/ai-agents/terms/${slug}`;
   const breadcrumbs = getAgentBreadcrumbs(pageHref);
   const { prev, next } = getAdjacentAgentPages(pageHref);
   
@@ -82,7 +82,7 @@ export default async function PatternPage({ params }: PageProps) {
     headline: content.title,
     description: content.metaDescription,
     url: `https://esy.com${pageHref}`,
-    articleSection: "Agents Reference - Patterns",
+    articleSection: "AI Agents Reference - Terms",
     publisher: {
       "@type": "Organization",
       name: "Esy",
@@ -116,8 +116,8 @@ export default async function PatternPage({ params }: PageProps) {
               alignItems: 'center',
               gap: '0.375rem',
               padding: '0.25rem 0.625rem',
-              background: 'rgba(74, 222, 128, 0.1)',
-              border: '1px solid rgba(74, 222, 128, 0.15)',
+              background: 'rgba(96, 165, 250, 0.1)',
+              border: '1px solid rgba(96, 165, 250, 0.15)',
               borderRadius: '5px',
               marginBottom: '0.875rem',
             }}>
@@ -126,9 +126,9 @@ export default async function PatternPage({ params }: PageProps) {
                 fontWeight: 600, 
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em',
-                color: '#4ade80',
+                color: '#60a5fa',
               }}>
-                Architecture Pattern
+                Core Term
               </span>
             </div>
             <h1>{content.title}</h1>
