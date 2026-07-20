@@ -44,9 +44,9 @@ const darkTheme = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Agents Reference",
+  name: "AI Agents Reference",
   description: "A comprehensive reference guide to AI agents, agentic workflows, and orchestration patterns.",
-  url: "https://esy.com/agents",
+  url: "https://esy.com/ai-agents",
   publisher: {
     "@type": "Organization",
     name: "Esy",
@@ -66,7 +66,7 @@ export function AgentsHubClient() {
   const terms = getAgentPagesByType('term');
   const patterns = getAgentPagesByType('pattern');
   const workflows = getAgentPagesByType('workflow');
-  const canonical = agentsNavigation[0].items.find(item => item.href === '/agents/ai-agents');
+  const canonical = agentsNavigation[0].items.find(item => item.href === '/ai-agents/what-are-ai-agents');
 
   useEffect(() => {
     const checkTheme = () => {
@@ -92,7 +92,7 @@ export function AgentsHubClient() {
         {/* Breadcrumbs */}
         <AgentsBreadcrumbs items={[
           { title: 'Home', href: '/' },
-          { title: 'Agents', href: '/agents' },
+          { title: 'AI Agents', href: '/ai-agents' },
         ]} />
 
         {/* Header */}

@@ -11,44 +11,44 @@ import {
   getAgentBreadcrumbs, 
   getAdjacentAgentPages 
 } from "@/lib/agents-navigation";
-import { getTermContent, getAllTermSlugs } from "@/content/agents/content";
+import { getWorkflowContent, getAllWorkflowSlugs } from "@/content/agents/content";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Generate static paths for all term pages
+// Generate static paths for all workflow pages
 export async function generateStaticParams() {
-  const slugs = getAllTermSlugs();
+  const slugs = getAllWorkflowSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 
-// Generate metadata for each term page
+// Generate metadata for each workflow page
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const content = getTermContent(slug);
+  const content = getWorkflowContent(slug);
   
   if (!content) {
     return {
-      title: "Term Not Found | Esy Agents Reference",
+      title: "Workflow Not Found | Esy AI Agents Reference",
     };
   }
 
-  const pageHref = `/agents/terms/${slug}`;
+  const pageHref = `/ai-agents/workflows/${slug}`;
 
   return {
-    title: `${content.title} - Definition | Esy Agents Reference`,
+    title: `${content.title} | Esy AI Agents Reference`,
     description: content.metaDescription,
-    keywords: `${content.title}, AI agents, ${slug.replace(/-/g, ' ')}, agentic systems`,
+    keywords: `${content.title}, Esy workflow, agent workflow, ${slug.replace(/-/g, ' ')}`,
     openGraph: {
-      title: `${content.title} | Esy Agents Reference`,
+      title: `${content.title} | Esy AI Agents Reference`,
       description: content.lede,
       url: `https://esy.com${pageHref}`,
       type: "article",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${content.title} | Esy Agents Reference`,
+      title: `${content.title} | Esy AI Agents Reference`,
       description: content.lede,
     },
     alternates: {
@@ -57,15 +57,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function TermPage({ params }: PageProps) {
+export default async function WorkflowPage({ params }: PageProps) {
   const { slug } = await params;
-  const content = getTermContent(slug);
+  const content = getWorkflowContent(slug);
   
   if (!content) {
     notFound();
   }
 
-  const pageHref = `/agents/terms/${slug}`;
+  const pageHref = `/ai-agents/workflows/${slug}`;
   const breadcrumbs = getAgentBreadcrumbs(pageHref);
   const { prev, next } = getAdjacentAgentPages(pageHref);
   
@@ -82,7 +82,7 @@ export default async function TermPage({ params }: PageProps) {
     headline: content.title,
     description: content.metaDescription,
     url: `https://esy.com${pageHref}`,
-    articleSection: "Agents Reference - Terms",
+    articleSection: "AI Agents Reference - Workflows",
     publisher: {
       "@type": "Organization",
       name: "Esy",
@@ -116,8 +116,8 @@ export default async function TermPage({ params }: PageProps) {
               alignItems: 'center',
               gap: '0.375rem',
               padding: '0.25rem 0.625rem',
-              background: 'rgba(96, 165, 250, 0.1)',
-              border: '1px solid rgba(96, 165, 250, 0.15)',
+              background: 'rgba(251, 191, 36, 0.1)',
+              border: '1px solid rgba(251, 191, 36, 0.15)',
               borderRadius: '5px',
               marginBottom: '0.875rem',
             }}>
@@ -126,9 +126,9 @@ export default async function TermPage({ params }: PageProps) {
                 fontWeight: 600, 
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em',
-                color: '#60a5fa',
+                color: '#fbbf24',
               }}>
-                Core Term
+                Esy Workflow
               </span>
             </div>
             <h1>{content.title}</h1>

@@ -129,7 +129,7 @@ export function DocsLayout({ children }: { children: React.ReactNode }) {
                 title="Explore"
                 links={[
                   { href: 'https://esy.com/templates/', text: 'Templates' },
-                  { href: 'https://esy.com/agents/', text: 'Agents' },
+                  { href: 'https://esy.com/ai-agents/', text: 'AI Agents' },
                   { href: 'https://esy.com/glossary/', text: 'Glossary' },
                 ]}
               />

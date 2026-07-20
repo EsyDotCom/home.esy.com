@@ -63,7 +63,7 @@ const ConditionalNavigation = () => {
   const isDocsPage = normalizedPath?.startsWith('/docs');
   
   // Check if we're on agents reference pages (own sidebar navigation)
-  const isAgentsPage = normalizedPath?.startsWith('/agents');
+  const isAgentsPage = normalizedPath?.startsWith('/ai-agents');
   
   // Individual infographic detail pages use their own artifact toolbar
   const isInfographicViewPage = normalizedPath?.startsWith('/infographics/') && normalizedPath !== '/infographics';

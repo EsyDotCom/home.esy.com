@@ -11,44 +11,44 @@ import {
   getAgentBreadcrumbs, 
   getAdjacentAgentPages 
 } from "@/lib/agents-navigation";
-import { getWorkflowContent, getAllWorkflowSlugs } from "@/content/agents/content";
+import { getPatternContent, getAllPatternSlugs } from "@/content/agents/content";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Generate static paths for all workflow pages
+// Generate static paths for all pattern pages
 export async function generateStaticParams() {
-  const slugs = getAllWorkflowSlugs();
+  const slugs = getAllPatternSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 
-// Generate metadata for each workflow page
+// Generate metadata for each pattern page
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const content = getWorkflowContent(slug);
+  const content = getPatternContent(slug);
   
   if (!content) {
     return {
-      title: "Workflow Not Found | Esy Agents Reference",
+      title: "Pattern Not Found | Esy AI Agents Reference",
     };
   }
 
-  const pageHref = `/agents/workflows/${slug}`;
+  const pageHref = `/ai-agents/patterns/${slug}`;
 
   return {
-    title: `${content.title} | Esy Agents Reference`,
+    title: `${content.title} | Esy AI Agents Reference`,
     description: content.metaDescription,
-    keywords: `${content.title}, Esy workflow, agent workflow, ${slug.replace(/-/g, ' ')}`,
+    keywords: `${content.title}, agent pattern, AI architecture, ${slug.replace(/-/g, ' ')}`,
     openGraph: {
-      title: `${content.title} | Esy Agents Reference`,
+      title: `${content.title} | Esy AI Agents Reference`,
       description: content.lede,
       url: `https://esy.com${pageHref}`,
       type: "article",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${content.title} | Esy Agents Reference`,
+      title: `${content.title} | Esy AI Agents Reference`,
       description: content.lede,
     },
     alternates: {
@@ -57,15 +57,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function WorkflowPage({ params }: PageProps) {
+export default async function PatternPage({ params }: PageProps) {
   const { slug } = await params;
-  const content = getWorkflowContent(slug);
+  const content = getPatternContent(slug);
   
   if (!content) {
     notFound();
   }
 
-  const pageHref = `/agents/workflows/${slug}`;
+  const pageHref = `/ai-agents/patterns/${slug}`;
   const breadcrumbs = getAgentBreadcrumbs(pageHref);
   const { prev, next } = getAdjacentAgentPages(pageHref);
   
@@ -82,7 +82,7 @@ export default async function WorkflowPage({ params }: PageProps) {
     headline: content.title,
     description: content.metaDescription,
     url: `https://esy.com${pageHref}`,
-    articleSection: "Agents Reference - Workflows",
+    articleSection: "AI Agents Reference - Patterns",
     publisher: {
       "@type": "Organization",
       name: "Esy",
@@ -116,8 +116,8 @@ export default async function WorkflowPage({ params }: PageProps) {
               alignItems: 'center',
               gap: '0.375rem',
               padding: '0.25rem 0.625rem',
-              background: 'rgba(251, 191, 36, 0.1)',
-              border: '1px solid rgba(251, 191, 36, 0.15)',
+              background: 'rgba(74, 222, 128, 0.1)',
+              border: '1px solid rgba(74, 222, 128, 0.15)',
               borderRadius: '5px',
               marginBottom: '0.875rem',
             }}>
@@ -126,9 +126,9 @@ export default async function WorkflowPage({ params }: PageProps) {
                 fontWeight: 600, 
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em',
-                color: '#fbbf24',
+                color: '#4ade80',
               }}>
-                Esy Workflow
+                Architecture Pattern
               </span>
             </div>
             <h1>{content.title}</h1>

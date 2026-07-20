@@ -228,11 +228,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   })
 
-  // Agents reference pages (patterns, terms, workflows)
+  // AI Agents reference pages (patterns, terms, workflows)
   const agentRoutes = [
-    ...getAllPatternSlugs().map(slug => `/agents/patterns/${slug}`),
-    ...getAllTermSlugs().map(slug => `/agents/terms/${slug}`),
-    ...getAllWorkflowSlugs().map(slug => `/agents/workflows/${slug}`),
+    ...getAllPatternSlugs().map(slug => `/ai-agents/patterns/${slug}`),
+    ...getAllTermSlugs().map(slug => `/ai-agents/terms/${slug}`),
+    ...getAllWorkflowSlugs().map(slug => `/ai-agents/workflows/${slug}`),
   ]
   agentRoutes.forEach(route => {
     sitemap.push({

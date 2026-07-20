@@ -71,6 +71,25 @@ const nextConfig = {
   // Redirect legacy paths to /essays/
   async redirects() {
     return dedupeRedirects([
+      // Agents Reference renamed to AI Agents (Jul 2026) — "agents" alone is
+      // ambiguous as a search term; the book targets the "AI agents" head term.
+      {
+        source: '/agents',
+        destination: '/ai-agents',
+        permanent: true,
+      },
+      // The old overview chapter can't keep its slug (would stutter as
+      // /ai-agents/ai-agents), so it needs a specific rule before the catch-all.
+      {
+        source: '/agents/ai-agents',
+        destination: '/ai-agents/what-are-ai-agents',
+        permanent: true,
+      },
+      {
+        source: '/agents/:path*',
+        destination: '/ai-agents/:path*',
+        permanent: true,
+      },
       // Prompt library retired (Jun 2026) — send old traffic to workflows
       {
         source: '/prompt-library',

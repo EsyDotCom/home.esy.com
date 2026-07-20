@@ -39,7 +39,7 @@ const ConditionalFooter = () => {
   }
   
   // Check if we're on agents reference pages (they have their own sidebar/CTA)
-  const isAgentsPage = normalizedPath?.startsWith('/agents');
+  const isAgentsPage = normalizedPath?.startsWith('/ai-agents');
   if (isAgentsPage) {
     return null;
   }

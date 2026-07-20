@@ -128,7 +128,7 @@ export default function Navigation({
         const isBlogArticle = normalizedPath.includes('/blog/') && normalizedPath !== '/blog';
         const isTemplatesPage = normalizedPath === '/workflows' || normalizedPath.startsWith('/workflows/');
         const isDocsPage = normalizedPath === '/docs' || normalizedPath.startsWith('/docs/');
-        const isAgentsPage = normalizedPath === '/agents' || normalizedPath.startsWith('/agents/');
+        const isAgentsPage = normalizedPath === '/ai-agents' || normalizedPath.startsWith('/ai-agents/');
         const isModelsPage = normalizedPath === '/models' || normalizedPath.startsWith('/models/');
         const isContactPage = normalizedPath === '/contact';
         const isTermsPage = normalizedPath === '/terms';
