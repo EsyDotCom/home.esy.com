@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-21T16:28:48.393012Z",
+  "generatedAt": "2026-07-21T16:36:11.719901Z",
   "id": "generate-essay-narrative",
   "name": "Generate Narrative Essay",
   "description": "Tell a true, reflective story: shape a premise and narrative arc, structure the scenes, then draft a narrative essay with vivid detail and a clear reflective takeaway.",

@@ -28,6 +28,8 @@ import './ArtifactDetailTemplate.css';
 export default function ArtifactDetailTemplate({
   template,
   relatedTemplates,
+  contractHref,
+  contractVersion,
 }: ArtifactDetailTemplateProps) {
   const {
     title,
@@ -126,7 +128,18 @@ export default function ArtifactDetailTemplate({
               <Link href={exploreArtifactsHref} className="adt-cta-secondary">
                 Explore Artifacts
               </Link>
+              {contractHref && (
+                <Link href={contractHref} className="adt-cta-secondary">
+                  Full contract
+                </Link>
+              )}
             </div>
+            {contractHref && (
+              <p className="adt-contract-note">
+                Immutable template{contractVersion ? ` · v${contractVersion}` : ''} —{' '}
+                <Link href={contractHref}>read the published contract</Link>.
+              </p>
+            )}
           </div>
         </section>
       </div>
