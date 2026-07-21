@@ -1,5 +1,8 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
+import WorkflowLanding from '@/components/workflow-contract/WorkflowLanding';
+import { getCatalogEntry, getWorkflowCatalog } from '@/lib/workflow-catalog';
+import { getContract } from '@/lib/workflow-contracts';
 import Script from 'next/script';
 import TemplateDetailClient from './TemplateDetailClient';
 import { ArtifactDetailTemplate } from '@/components/ArtifactDetailTemplate';
@@ -18,9 +21,14 @@ interface Props {
 
 export async function generateStaticParams() {
   const templates = getAllTemplates();
-  return templates.map((template) => ({
-    slug: template.slug,
-  }));
+  const curated = templates.map((template) => ({ slug: template.slug }));
+  // Catalog workflows get first-class landings too (2026-07-21): every public
+  // registry template renders /workflows/<id> from its committed snapshot.
+  const curatedSlugs = new Set(curated.map((c) => c.slug));
+  const catalog = getWorkflowCatalog()
+    .filter((e) => !curatedSlugs.has(e.id))
+    .map((e) => ({ slug: e.id }));
+  return [...curated, ...catalog];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -28,6 +36,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const template = getTemplateBySlug(slug);
 
   if (!template) {
+    const entry = getCatalogEntry(slug);
+    if (entry) {
+      return {
+        title: `${entry.name} | Esy Workflows`,
+        description: entry.shortDescription || entry.description,
+        alternates: { canonical: `https://esy.com/workflows/${entry.id}` },
+        openGraph: {
+          title: `${entry.name} | Esy Workflows`,
+          description: entry.shortDescription || entry.description,
+          url: `https://esy.com/workflows/${entry.id}`,
+          type: 'article',
+        },
+      };
+    }
     return {
       title: 'Workflow Template Not Found | Esy',
     };
@@ -83,6 +105,16 @@ export default async function TemplateDetailPage({ params }: Props) {
   const template = getTemplateBySlug(slug);
 
   if (!template) {
+    // Catalog workflow (registry-published, no curated page): render the
+    // snapshot-driven landing. Deprecated ids 301 to their successor.
+    const entry = getCatalogEntry(slug);
+    if (entry) {
+      const contract = getContract(slug);
+      if (contract?.status === 'deprecated' && contract.supersededById) {
+        permanentRedirect(`/workflows/${contract.supersededById}`);
+      }
+      return <WorkflowLanding entry={entry} contract={contract} />;
+    }
     notFound();
   }
 

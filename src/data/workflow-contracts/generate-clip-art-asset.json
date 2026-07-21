@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "generatedAt": "2026-07-21T16:01:50.095829Z",
   "id": "generate-clip-art-asset",
   "name": "Generate Clip Art Asset",
   "description": "Generate an internal ESY visual artifact using the clip.art prompt/style contract, provider runtime policy, ESY R2 storage, and review-ready metadata.",

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import FooterColumn from "@/components/Home/footerColumn";
@@ -270,7 +271,7 @@ export default function Footer () {
             title="Explore"
             links={[
               { href: "/workflows/", text: "Workflows" },
-              // { href: "/ai-agents/", text: "AI Agents" },
+              { href: "/ai-agents/", text: "AI Agents" },
               { href: "/glossary/", text: "Glossary" },
             ]}
           />
@@ -295,7 +296,21 @@ export default function Footer () {
             ]}
           />
         </div>
-        
+
+        {/* Extended footer row — full-width band of internal links to the
+            artifact catalogs (SEO). A row rather than a fourth column so it
+            can grow as new artifact classes ship. */}
+        <div className="footer-extended">
+          <h4>Artifacts</h4>
+          <div className="footer-extended-links">
+            <Link href="/artifacts/" className="footer-link">Artifact Gallery</Link>
+            <Link href="/essays/" className="footer-link">Visual Essays</Link>
+            <Link href="/photo-essays/" className="footer-link">Photo Essays</Link>
+            <Link href="/infographics/" className="footer-link">Infographics</Link>
+            <Link href="/clip-art/" className="footer-link">Clip Art</Link>
+          </div>
+        </div>
+
         <div className="footer-bottom" style={{ borderTopColor: theme.border }}>
           <p style={{ color: theme.faint }}>&copy; 2024-2026 ESY, LLC. All rights reserved.</p>
         </div>

@@ -1858,6 +1858,30 @@ html {
   transform: translateX(2px);
 }
 
+/* Extended footer row — full-width artifact catalog band below the columns.
+   Links reuse .footer-link so the light/navy-dark variants style them free. */
+.footer-extended {
+  max-width: 1440px;
+  margin: 2.5rem auto 0;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(63, 63, 70, 0.2);
+}
+
+.footer-extended h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #71717a;
+  margin-bottom: 0.875rem;
+}
+
+.footer-extended-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem 1.75rem;
+}
+
 .footer-bottom {
   margin-top: 3rem;
   padding-top: 2rem;
@@ -1890,6 +1914,14 @@ html {
   color: #64748b;
 }
 
+.footer--light .footer-extended {
+  border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+.footer--light .footer-extended h4 {
+  color: #0f172a;
+}
+
 /* ─── Navy Dark theme overrides ─────────────────────────────
    The default greys (#71717a / #a1a1aa) were tuned for a dark
    charcoal footer. On the navy gradient (#0A2540 → #061527)
@@ -1910,6 +1942,14 @@ html {
 
 .footer--navy-dark .footer-bottom {
   border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.footer--navy-dark .footer-extended {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.footer--navy-dark .footer-extended h4 {
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .footer--light .social-link {
