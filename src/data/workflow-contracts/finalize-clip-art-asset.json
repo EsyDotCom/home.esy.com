@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-21T16:36:11.719901Z",
+  "generatedAt": "2026-07-21T16:43:53.660506Z",
   "id": "finalize-clip-art-asset",
   "name": "Finalize Clip Art Asset",
   "description": "Produce the distribution-ready export of an ACCEPTED clip-art artifact: ESRGAN upscale to the ~3000px master, then local export normalization (alpha-trimmed bounding box + margin, stray-speck floor, sRGB by convention, 300-DPI transparent PNG). Quality is added HERE, on the image a human approved — never by re-rendering, which would be a new sample rather than a sharper version of the accepted one. This is the storefront's credit-gated draft->finalize step and the source of the export URLs the pack ingest ships verbatim.",

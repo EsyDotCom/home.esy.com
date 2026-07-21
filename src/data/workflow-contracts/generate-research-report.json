@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-21T16:36:11.719901Z",
+  "generatedAt": "2026-07-21T16:43:53.660506Z",
   "id": "generate-research-report",
   "name": "Generate Research Report",
   "description": "Produce a structured, cited research report on a topic using LLM synthesis. Reusable on its own or as a sub-workflow feeding other artifacts.",

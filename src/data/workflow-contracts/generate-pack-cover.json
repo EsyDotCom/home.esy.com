@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-21T16:36:11.719901Z",
+  "generatedAt": "2026-07-21T16:43:53.660506Z",
   "id": "generate-pack-cover",
   "name": "Generate Pack Cover",
   "description": "Compose the marketplace hero cover for a theme pack: a single composed scene rendered from the pack plan's cover instruction against MULTIPLE reference images (character sheet + hero assets — gpt-image-2 edits accept several inputs at high fidelity). Portrait 3:4, thumbnail-first composition. Contact-sheet preview grids remain the consumer's deterministic concern.",

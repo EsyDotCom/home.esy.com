@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-21T16:36:11.719901Z",
+  "generatedAt": "2026-07-21T16:43:53.660506Z",
   "id": "generate-research-infographic",
   "name": "Generate Research Infographic",
   "description": "Produce a vertical infographic that visualizes a research report. Invokes the Generate Research Report workflow as a sub-workflow, then renders its findings as an image with gpt-image-2.",
