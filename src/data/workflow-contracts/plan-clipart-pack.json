@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-21T16:01:50.095829Z",
+  "generatedAt": "2026-07-21T16:28:48.393012Z",
   "id": "plan-clipart-pack",
   "name": "Plan Clip Art Theme Pack",
   "description": "Plan a complete clip-art THEME PACK the way successful marketplace sellers do: theme/market research, a committed style recipe (with a character bible when the theme sells better around one recurring character), a fully-compiled asset manifest with deliberate element-type variety, and the full listing kit (count-bearing titles, answer-first summary, SEO copy, 13 tags, FAQ, plain-English license, per-asset alt text, cover concept). Emits objective packFacts — the consuming storefront maps facts to tier/price. Items feed a Generation Order over generate-clip-art-asset-ref (character packs) or generate-clip-art-asset-v2.",

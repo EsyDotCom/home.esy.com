@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-21T16:01:50.095829Z",
+  "generatedAt": "2026-07-21T16:28:48.393012Z",
   "id": "edit-image",
   "name": "Edit Image (Instruction)",
   "description": "Edit a platform-stored image with a natural-language instruction (OpenAI images/edits), with optional background re-removal for transparent assets.",
