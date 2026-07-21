@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-21T16:28:48.393012Z",
+  "generatedAt": "2026-07-21T16:36:11.719901Z",
   "id": "generate-clip-art-asset-v2",
   "name": "Generate Clip Art (v2)",
   "description": "Generate a catalog-ready clip-art asset: styled render, optional background removal (variant selectable via the backgroundRemover role), and classifier-produced catalog metadata — one audited run per asset. Successor to generate-clip-art-asset.",

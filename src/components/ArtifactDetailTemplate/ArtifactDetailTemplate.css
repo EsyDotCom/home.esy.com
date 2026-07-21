@@ -681,3 +681,17 @@
     padding: 40px 16px 64px;
   }
 }
+
+/* Contract note under the hero CTAs (2026-07-21: registry contract pages). */
+.adt-contract-note {
+  margin-top: 0.9rem;
+  font-size: 0.82rem;
+  color: rgba(10, 37, 64, 0.5);
+}
+.adt-contract-note a {
+  color: #00a896;
+  text-decoration: none;
+}
+.adt-contract-note a:hover {
+  text-decoration: underline;
+}

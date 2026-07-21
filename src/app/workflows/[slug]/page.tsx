@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
-import WorkflowLanding from '@/components/workflow-contract/WorkflowLanding';
 import { getCatalogEntry, getWorkflowCatalog } from '@/lib/workflow-catalog';
 import { getContract } from '@/lib/workflow-contracts';
+import { catalogEntryToTemplate, getCatalogRelated } from '@/lib/templates/from-catalog';
 import Script from 'next/script';
 import TemplateDetailClient from './TemplateDetailClient';
 import { ArtifactDetailTemplate } from '@/components/ArtifactDetailTemplate';
@@ -105,15 +105,24 @@ export default async function TemplateDetailPage({ params }: Props) {
   const template = getTemplateBySlug(slug);
 
   if (!template) {
-    // Catalog workflow (registry-published, no curated page): render the
-    // snapshot-driven landing. Deprecated ids 301 to their successor.
+    // Catalog workflow (registry-published, no curated page): same premium
+    // detail format as the curated set — ArtifactDetailTemplate with the
+    // animated WorkflowCircuit — synthesized from committed snapshots.
+    // Deprecated ids 301 to their successor.
     const entry = getCatalogEntry(slug);
     if (entry) {
       const contract = getContract(slug);
       if (contract?.status === 'deprecated' && contract.supersededById) {
         permanentRedirect(`/workflows/${contract.supersededById}`);
       }
-      return <WorkflowLanding entry={entry} contract={contract} />;
+      return (
+        <ArtifactDetailTemplate
+          template={catalogEntryToTemplate(entry, contract)}
+          relatedTemplates={getCatalogRelated(entry)}
+          contractHref={`/workflows/${entry.id}/contract`}
+          contractVersion={entry.version}
+        />
+      );
     }
     notFound();
   }
@@ -137,6 +146,8 @@ export default async function TemplateDetailPage({ params }: Props) {
         <ArtifactDetailTemplate
           template={template}
           relatedTemplates={relatedTemplates}
+          contractHref={getContract(slug) ? `/workflows/${slug}/contract` : undefined}
+          contractVersion={getCatalogEntry(slug)?.version}
         />
       </>
     );
