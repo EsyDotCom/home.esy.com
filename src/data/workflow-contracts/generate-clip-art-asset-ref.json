@@ -1,0 +1,342 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-clip-art-asset-ref",
+  "name": "Generate Clip Art (reference-consistent)",
+  "description": "Sibling of generate-clip-art-asset-v2 for CHARACTER PACKS: renders each asset AGAINST a character reference sheet (openai/image-edit) so the same character holds across a whole pack. The prompt must be fully compiled (compactBible + subject + styleFragment — plan-clipart-pack does this); the reference sheet URL is shared across an order's children via intake_base. Then background removal and catalog classification, exactly like v2.",
+  "shortDescription": "Reference-consistent clip-art asset (character packs).",
+  "artifactClass": "visual",
+  "outputType": "visual",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.07.18",
+  "stages": [
+    {
+      "name": "Render",
+      "description": "Render the asset against the reference sheet.",
+      "stepCount": 1
+    },
+    {
+      "name": "Post-process",
+      "description": "Remove the background when transparency is requested.",
+      "stepCount": 1
+    },
+    {
+      "name": "Classify",
+      "description": "Produce catalog metadata.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "prompt",
+        "type": "string",
+        "required": true,
+        "description": "FULLY compiled prompt (character bible + subject + style fragment)"
+      },
+      {
+        "name": "referenceUrl",
+        "type": "string",
+        "required": true,
+        "description": "Character-set sheet URL (platform storage or trusted origin)"
+      },
+      {
+        "name": "style",
+        "type": "enum",
+        "required": true,
+        "description": "Clip-art style",
+        "default": "flat",
+        "options": [
+          "flat",
+          "minimal",
+          "outline",
+          "black-and-white",
+          "cartoon",
+          "mascot",
+          "sticker",
+          "emoji",
+          "vintage",
+          "watercolor",
+          "storybook",
+          "isometric",
+          "clay",
+          "chibi",
+          "pixel",
+          "kawaii",
+          "3d",
+          "doodle"
+        ]
+      },
+      {
+        "name": "aspectRatio",
+        "type": "enum",
+        "required": false,
+        "description": "Aspect ratio",
+        "default": "1:1",
+        "options": [
+          "1:1",
+          "3:4",
+          "4:3"
+        ]
+      },
+      {
+        "name": "quality",
+        "type": "enum",
+        "required": false,
+        "description": "Render quality tier",
+        "default": "medium",
+        "options": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      {
+        "name": "backgroundRemovalEnabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Remove the background for transparency",
+        "default": true
+      },
+      {
+        "name": "elementType",
+        "type": "enum",
+        "required": false,
+        "default": "",
+        "description": "Pack element type; 'pattern' ships full-bleed and skips background removal",
+        "options": [
+          "",
+          "subject",
+          "pose",
+          "prop",
+          "border",
+          "corner",
+          "pattern",
+          "scene"
+        ]
+      },
+      {
+        "name": "categories",
+        "type": "string",
+        "required": false,
+        "description": "Comma-separated category slugs the classifier may choose from"
+      },
+      {
+        "name": "textPolicy",
+        "type": "enum",
+        "required": false,
+        "default": "",
+        "options": [
+          "",
+          "none",
+          "exact",
+          "freeform"
+        ],
+        "description": "Per-item text contract: none = text forbidden; exact = must match expectedText; freeform = text allowed, judged on legibility/spelling only. Empty derives from textBearing (true=exact, false=none)."
+      },
+      {
+        "name": "textBearing",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "description": "True when the asset must carry legible text (the OCR gate then checks it)"
+      },
+      {
+        "name": "expectedText",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The EXACT text the asset must carry; leave empty unless textPolicy is 'exact'"
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Render from reference",
+      "kind": "tool",
+      "role": "imageEditor",
+      "inputPath": "intake.referenceUrl"
+    },
+    {
+      "id": "step-2",
+      "name": "Remove background",
+      "kind": "tool",
+      "role": "backgroundRemover",
+      "inputPath": "step-1.url"
+    },
+    {
+      "id": "step-3",
+      "name": "Classify asset",
+      "kind": "llm",
+      "capability": "text",
+      "role": "classifier",
+      "jsonSchema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Catalog-ready title, <= 60 chars"
+          },
+          "slug": {
+            "type": "string",
+            "description": "kebab-case URL slug"
+          },
+          "description": {
+            "type": "string",
+            "description": "1-2 sentence SEO-friendly description"
+          },
+          "category": {
+            "type": "string",
+            "description": "One of the provided categories, or 'uncategorized'"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "3-8 search tags"
+          }
+        },
+        "required": [
+          "title",
+          "slug",
+          "description",
+          "category"
+        ],
+        "additionalProperties": false
+      },
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-4",
+      "name": "Text gate",
+      "kind": "llm",
+      "capability": "text",
+      "role": "textGate",
+      "requireTrue": "pass",
+      "failMessage": "OCR text gate rejected the render",
+      "jsonSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "foundText": {
+            "type": "string",
+            "description": "All legible text read from the image; empty if none"
+          },
+          "pass": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "foundText",
+          "pass",
+          "reason"
+        ]
+      },
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-render",
+      "name": "Provider execution",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "raw-image"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "gate-bg",
+      "name": "Background removal",
+      "type": "quality",
+      "inputs": [
+        "raw-image"
+      ],
+      "outputs": [
+        "processed-image"
+      ],
+      "unlocks": [
+        "step-3"
+      ]
+    },
+    {
+      "id": "gate-text",
+      "name": "Text gate",
+      "type": "quality",
+      "inputs": [
+        "processed-image"
+      ],
+      "outputs": [
+        "verified-image"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "visual",
+    "artifactType": "clip-art",
+    "files": [
+      "image/webp"
+    ],
+    "metadata": {
+      "style": "string",
+      "referenceUrl": "string",
+      "backgroundRemoved": "boolean",
+      "classification": "object"
+    }
+  },
+  "providers": {
+    "imageEditor": "redacted",
+    "backgroundRemover": "redacted",
+    "classifier": "redacted",
+    "textGate": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.07.14",
+      "revision": 1,
+      "contentHash": "sha256:75dbcc89df730d423ea84520b0bf4342967a865e752f5757ff25b997befa5a7f",
+      "createdAt": "2026-07-15T15:18:56.167968Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 2,
+      "contentHash": "sha256:7db51991c649990f8dba204a2296995cc7a357315fa591ea1300a5ffb0f171b4",
+      "createdAt": "2026-07-18T19:19:14.239374Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 3,
+      "contentHash": "sha256:5f7981451dfed80c62fa43445d2283602fa5e7e5e23df6f1780ebd4310d8aa14",
+      "createdAt": "2026-07-18T19:45:20.743388Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 8,
+      "contentHash": "sha256:790b27bf473b27573f4235610a73a45d8ae1e74e929a17a0e8e9a5c065e59dba",
+      "createdAt": "2026-07-20T20:32:29.806659Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 9,
+      "contentHash": "sha256:4536a4fef4e70e5e09d6955d7f4ddc156d2c1453f2c12f4a6db708797c6e50a3",
+      "createdAt": "2026-07-20T21:59:54.012027Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:45:42.584629Z"
+}

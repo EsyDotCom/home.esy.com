@@ -1,0 +1,150 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-essay-analytical",
+  "name": "Generate Analytical Essay",
+  "description": "Deconstruct a text, event, or concept through a critical lens: perform close reading, identify patterns and themes, then produce a structured analytical essay grounded in specific evidence from the source.",
+  "shortDescription": "Analyze a text or concept through a critical lens.",
+  "artifactClass": "research",
+  "outputType": "writing",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.06.04",
+  "stages": [
+    {
+      "name": "Analyze",
+      "description": "Close-read the source and surface patterns.",
+      "stepCount": 1
+    },
+    {
+      "name": "Outline",
+      "description": "Frame the interpretation under a thesis.",
+      "stepCount": 1
+    },
+    {
+      "name": "Draft",
+      "description": "Compose the analysis with textual evidence.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "subject",
+        "type": "string",
+        "required": true,
+        "description": "The text, work, event, or concept to analyze"
+      },
+      {
+        "name": "lens",
+        "type": "string",
+        "required": false,
+        "description": "Analytical lens or framework (e.g. historical, feminist, formal)"
+      },
+      {
+        "name": "citationStyle",
+        "type": "enum",
+        "required": false,
+        "description": "Citation style for any cited sources",
+        "default": "MLA",
+        "options": [
+          "MLA",
+          "APA",
+          "Chicago"
+        ]
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Develop",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-2",
+      "name": "Outline",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-3",
+      "name": "Draft",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-develop",
+      "name": "Develop",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "material"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "gate-outline",
+      "name": "Outline",
+      "type": "quality",
+      "inputs": [
+        "material"
+      ],
+      "outputs": [
+        "outline"
+      ],
+      "unlocks": [
+        "step-3"
+      ]
+    },
+    {
+      "id": "gate-draft",
+      "name": "Draft",
+      "type": "quality",
+      "inputs": [
+        "outline"
+      ],
+      "outputs": [
+        "draft"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "research",
+    "artifactType": "essay",
+    "files": [],
+    "metadata": {
+      "sections": "array",
+      "sources": "array"
+    }
+  },
+  "providers": {
+    "text": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.06.04",
+      "revision": 1,
+      "contentHash": "sha256:da167aa159c9b0278a764823a192ce596ddf30e5f0339f2c421b3a67c08f877e",
+      "createdAt": "2026-06-04T23:03:40.602496Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:44:43.709371Z"
+}

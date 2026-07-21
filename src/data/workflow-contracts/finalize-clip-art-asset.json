@@ -1,0 +1,113 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "finalize-clip-art-asset",
+  "name": "Finalize Clip Art Asset",
+  "description": "Produce the distribution-ready export of an ACCEPTED clip-art artifact: ESRGAN upscale to the ~3000px master, then local export normalization (alpha-trimmed bounding box + margin, stray-speck floor, sRGB by convention, 300-DPI transparent PNG). Quality is added HERE, on the image a human approved — never by re-rendering, which would be a new sample rather than a sharper version of the accepted one. This is the storefront's credit-gated draft->finalize step and the source of the export URLs the pack ingest ships verbatim.",
+  "shortDescription": "Distribution-ready 300-DPI PNG export of an accepted asset.",
+  "artifactClass": "visual",
+  "outputType": "visual",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.07.18",
+  "stages": [
+    {
+      "name": "Upscale",
+      "description": "ESRGAN 3x to the ~3000px export master.",
+      "stepCount": 1
+    },
+    {
+      "name": "Export",
+      "description": "Trim, margin, sRGB, 300-DPI PNG.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "asset",
+        "type": "artifactReference",
+        "required": true,
+        "description": "The accepted clip-art artifact to finalize.",
+        "artifactClass": "visual",
+        "artifactType": "clip-art"
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Upscale",
+      "kind": "tool",
+      "role": "upscaler",
+      "inputPath": "inputs.asset.url"
+    },
+    {
+      "id": "step-2",
+      "name": "Export master",
+      "kind": "tool",
+      "role": "exporter",
+      "inputPath": "step-1.url"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-upscale",
+      "name": "Upscale",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "master"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "gate-export",
+      "name": "Export",
+      "type": "quality",
+      "inputs": [
+        "master"
+      ],
+      "outputs": [
+        "export"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "visual",
+    "artifactType": "clip-art-export",
+    "files": [
+      "image/png"
+    ],
+    "metadata": {
+      "width": "integer",
+      "height": "integer",
+      "dpi": "integer",
+      "sourceArtifactId": "string"
+    }
+  },
+  "providers": {
+    "upscaler": "redacted",
+    "exporter": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.07.18",
+      "revision": 1,
+      "contentHash": "sha256:547ad9d6afce739451b784eb2ab9c513ad931b8e642dc36b79073a14e93b31ae",
+      "createdAt": "2026-07-18T20:59:36.831483Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 2,
+      "contentHash": "sha256:e7035d73c58d6fc907a72e362b589c48f530a60c33917cabbf17408f274ba6b5",
+      "createdAt": "2026-07-18T21:48:03.665820Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:45:45.302625Z"
+}

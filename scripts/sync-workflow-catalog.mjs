@@ -85,6 +85,41 @@ async function sync() {
   };
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(snapshot, null, 2) + '\n');
   console.log(`Wrote ${path.relative(ROOT, OUTPUT_PATH)} (${snapshot.total} entries).`);
+
+  // Per-template contract snapshots (plans/2026-07-21-workflow-contract-pages.md):
+  // GET /v1/catalog/workflows/{id} serves the public contract — whitelisted step
+  // topology, artifact schema, version lineage, redaction markers. Each becomes
+  // src/data/workflow-contracts/<id>.json; /workflows/<id>/contract renders ONLY
+  // from these committed files. Same safety rule: a failed per-id fetch keeps
+  // the existing file and fails the run loudly.
+  const contractsDir = path.join(ROOT, 'src/data/workflow-contracts');
+  fs.mkdirSync(contractsDir, { recursive: true });
+  let wrote = 0;
+  for (const item of payload.items) {
+    const contractUrl = `${API_BASE.replace(/\/$/, '')}/v1/catalog/workflows/${item.id}`;
+    let contract;
+    try {
+      const res = await fetch(contractUrl, { headers: { accept: 'application/json' } });
+      if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+      contract = await res.json();
+    } catch (err) {
+      console.error(`Contract fetch failed for ${item.id}: ${err.message}`);
+      console.error('Leaving existing contract snapshots untouched.');
+      process.exit(1);
+    }
+    if (!contract || contract.id !== item.id || !contract.intakeSchema) {
+      console.error(`Contract payload for ${item.id} is malformed — refusing to overwrite.`);
+      process.exit(1);
+    }
+    const out = {
+      _comment: 'SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).',
+      generatedAt: snapshot.generatedAt,
+      ...contract,
+    };
+    fs.writeFileSync(path.join(contractsDir, `${item.id}.json`), JSON.stringify(out, null, 2) + '\n');
+    wrote += 1;
+  }
+  console.log(`Wrote ${wrote} contract snapshots to src/data/workflow-contracts/.`);
 }
 
 const arg = process.argv[2];

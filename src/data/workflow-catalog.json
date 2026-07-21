@@ -1,8 +1,117 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows). Mirrors the platform's published, versioned workflow templates.",
-  "generatedAt": "2026-06-10T07:52:42.325239Z",
-  "total": 9,
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "total": 21,
   "items": [
+    {
+      "id": "edit-image",
+      "name": "Edit Image (Instruction)",
+      "description": "Edit a platform-stored image with a natural-language instruction (OpenAI images/edits), with optional background re-removal for transparent assets.",
+      "shortDescription": "Instruction-based image edit (img2img).",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "quick",
+      "estimatedRuntime": "20-60 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Edit",
+          "description": "Apply the instruction to the source image.",
+          "stepCount": 1
+        },
+        {
+          "name": "Post-process",
+          "description": "Re-remove the background when transparency is requested.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Source image URL (platform storage)",
+        "Edit instruction",
+        "Transparency preference"
+      ],
+      "whatYouGet": [
+        "Edited image in ESY R2",
+        "Source provenance",
+        "Per-step cost ledger"
+      ],
+      "qaChecks": [
+        "Instruction fidelity",
+        "Subject preservation"
+      ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "sourceUrl",
+            "type": "string",
+            "required": true,
+            "description": "Platform artifact URL of the image to edit"
+          },
+          {
+            "name": "instruction",
+            "type": "string",
+            "required": true,
+            "description": "Natural-language edit instruction"
+          },
+          {
+            "name": "backgroundRemovalEnabled",
+            "type": "boolean",
+            "required": false,
+            "description": "Re-remove the background after editing",
+            "default": false
+          }
+        ]
+      },
+      "version": "2026.07.18",
+      "cadence": "On demand",
+      "updatedAt": "2026-07-21T15:45:29.081106Z"
+    },
+    {
+      "id": "finalize-clip-art-asset",
+      "name": "Finalize Clip Art Asset",
+      "description": "Produce the distribution-ready export of an ACCEPTED clip-art artifact: ESRGAN upscale to the ~3000px master, then local export normalization (alpha-trimmed bounding box + margin, stray-speck floor, sRGB by convention, 300-DPI transparent PNG). Quality is added HERE, on the image a human approved — never by re-rendering, which would be a new sample rather than a sharper version of the accepted one. This is the storefront's credit-gated draft->finalize step and the source of the export URLs the pack ingest ships verbatim.",
+      "shortDescription": "Distribution-ready 300-DPI PNG export of an accepted asset.",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "quick",
+      "estimatedRuntime": "20-60 sec",
+      "includesQa": false,
+      "stages": [
+        {
+          "name": "Upscale",
+          "description": "ESRGAN 3x to the ~3000px export master.",
+          "stepCount": 1
+        },
+        {
+          "name": "Export",
+          "description": "Trim, margin, sRGB, 300-DPI PNG.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "An accepted clip-art artifact"
+      ],
+      "whatYouGet": [
+        "Export-grade transparent PNG (~3000px, 300 DPI) in ESY R2",
+        "Per-step cost ledger"
+      ],
+      "qaChecks": [],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "asset",
+            "type": "artifactReference",
+            "required": true,
+            "description": "The accepted clip-art artifact to finalize.",
+            "artifactClass": "visual",
+            "artifactType": "clip-art"
+          }
+        ]
+      },
+      "version": "2026.07.18",
+      "cadence": "On demand",
+      "updatedAt": "2026-07-21T15:45:45.302625Z"
+    },
     {
       "id": "generate-essay-analytical",
       "name": "Generate Analytical Essay",
@@ -75,7 +184,7 @@
       },
       "version": "2026.06.04",
       "cadence": "On demand",
-      "updatedAt": "2026-06-04T23:03:40.602496Z"
+      "updatedAt": "2026-07-21T15:44:43.709371Z"
     },
     {
       "id": "generate-essay-argumentative",
@@ -157,7 +266,442 @@
       },
       "version": "2026.06.04",
       "cadence": "On demand",
-      "updatedAt": "2026-06-04T23:03:40.258803Z"
+      "updatedAt": "2026-07-21T15:44:41.917069Z"
+    },
+    {
+      "id": "generate-character-set",
+      "name": "Generate Character Reference Set",
+      "description": "Render the practitioner-standard labeled character reference sheet (front view, full-body, three-quarter view, expression grid — name written on the sheet, plain neutral background) from a character bible. The sheet is the visual anchor for reference-consistent generation: pass its URL to generate-clip-art-asset-ref and generate-pack-cover. Product-agnostic — storyboard/scene pipelines can consume the same character-set artifact.",
+      "shortDescription": "Labeled character reference model sheet.",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "quick",
+      "estimatedRuntime": "30-90 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Render",
+          "description": "Render the labeled model sheet.",
+          "stepCount": 1
+        },
+        {
+          "name": "Classify",
+          "description": "Title the sheet for the library.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Character bible (from plan-clipart-pack or hand-written)",
+        "Style",
+        "Pack title"
+      ],
+      "whatYouGet": [
+        "Reference sheet in ESY R2 (the reference URL for asset/cover runs)",
+        "Per-step cost ledger"
+      ],
+      "qaChecks": [
+        "Same character in every panel",
+        "Label legibility",
+        "Neutral background"
+      ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "characterSpec",
+            "type": "string",
+            "required": true,
+            "description": "The character bible (compactBible or full spec text)"
+          },
+          {
+            "name": "style",
+            "type": "enum",
+            "required": true,
+            "description": "Pack style",
+            "default": "flat",
+            "options": [
+              "flat",
+              "minimal",
+              "outline",
+              "black-and-white",
+              "cartoon",
+              "mascot",
+              "sticker",
+              "emoji",
+              "vintage",
+              "watercolor",
+              "storybook",
+              "isometric",
+              "clay",
+              "chibi",
+              "pixel",
+              "kawaii",
+              "3d",
+              "doodle"
+            ]
+          },
+          {
+            "name": "packTitle",
+            "type": "string",
+            "required": false,
+            "description": "Pack context for the sheet label"
+          },
+          {
+            "name": "quality",
+            "type": "enum",
+            "required": false,
+            "description": "Render quality tier",
+            "default": "high",
+            "options": [
+              "low",
+              "medium",
+              "high"
+            ]
+          }
+        ]
+      },
+      "version": "2026.07.14",
+      "cadence": "On demand",
+      "updatedAt": "2026-07-21T15:45:40.792583Z"
+    },
+    {
+      "id": "generate-clip-art-asset-ref",
+      "name": "Generate Clip Art (reference-consistent)",
+      "description": "Sibling of generate-clip-art-asset-v2 for CHARACTER PACKS: renders each asset AGAINST a character reference sheet (openai/image-edit) so the same character holds across a whole pack. The prompt must be fully compiled (compactBible + subject + styleFragment — plan-clipart-pack does this); the reference sheet URL is shared across an order's children via intake_base. Then background removal and catalog classification, exactly like v2.",
+      "shortDescription": "Reference-consistent clip-art asset (character packs).",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "quick",
+      "estimatedRuntime": "30-90 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Render",
+          "description": "Render the asset against the reference sheet.",
+          "stepCount": 1
+        },
+        {
+          "name": "Post-process",
+          "description": "Remove the background when transparency is requested.",
+          "stepCount": 1
+        },
+        {
+          "name": "Classify",
+          "description": "Produce catalog metadata.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Fully-compiled prompt",
+        "Reference sheet URL",
+        "Style",
+        "Quality tier",
+        "Category list"
+      ],
+      "whatYouGet": [
+        "Final + raw images in ESY R2",
+        "Catalog metadata",
+        "Per-step cost ledger"
+      ],
+      "qaChecks": [
+        "Character fidelity to the reference sheet",
+        "Prompt fit",
+        "Background/transparency"
+      ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "prompt",
+            "type": "string",
+            "required": true,
+            "description": "FULLY compiled prompt (character bible + subject + style fragment)"
+          },
+          {
+            "name": "referenceUrl",
+            "type": "string",
+            "required": true,
+            "description": "Character-set sheet URL (platform storage or trusted origin)"
+          },
+          {
+            "name": "style",
+            "type": "enum",
+            "required": true,
+            "description": "Clip-art style",
+            "default": "flat",
+            "options": [
+              "flat",
+              "minimal",
+              "outline",
+              "black-and-white",
+              "cartoon",
+              "mascot",
+              "sticker",
+              "emoji",
+              "vintage",
+              "watercolor",
+              "storybook",
+              "isometric",
+              "clay",
+              "chibi",
+              "pixel",
+              "kawaii",
+              "3d",
+              "doodle"
+            ]
+          },
+          {
+            "name": "aspectRatio",
+            "type": "enum",
+            "required": false,
+            "description": "Aspect ratio",
+            "default": "1:1",
+            "options": [
+              "1:1",
+              "3:4",
+              "4:3"
+            ]
+          },
+          {
+            "name": "quality",
+            "type": "enum",
+            "required": false,
+            "description": "Render quality tier",
+            "default": "medium",
+            "options": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          {
+            "name": "backgroundRemovalEnabled",
+            "type": "boolean",
+            "required": false,
+            "description": "Remove the background for transparency",
+            "default": true
+          },
+          {
+            "name": "elementType",
+            "type": "enum",
+            "required": false,
+            "default": "",
+            "description": "Pack element type; 'pattern' ships full-bleed and skips background removal",
+            "options": [
+              "",
+              "subject",
+              "pose",
+              "prop",
+              "border",
+              "corner",
+              "pattern",
+              "scene"
+            ]
+          },
+          {
+            "name": "categories",
+            "type": "string",
+            "required": false,
+            "description": "Comma-separated category slugs the classifier may choose from"
+          },
+          {
+            "name": "textPolicy",
+            "type": "enum",
+            "required": false,
+            "default": "",
+            "options": [
+              "",
+              "none",
+              "exact",
+              "freeform"
+            ],
+            "description": "Per-item text contract: none = text forbidden; exact = must match expectedText; freeform = text allowed, judged on legibility/spelling only. Empty derives from textBearing (true=exact, false=none)."
+          },
+          {
+            "name": "textBearing",
+            "type": "boolean",
+            "required": false,
+            "default": false,
+            "description": "True when the asset must carry legible text (the OCR gate then checks it)"
+          },
+          {
+            "name": "expectedText",
+            "type": "string",
+            "required": false,
+            "default": "",
+            "description": "The EXACT text the asset must carry; leave empty unless textPolicy is 'exact'"
+          }
+        ]
+      },
+      "version": "2026.07.18",
+      "cadence": "On demand",
+      "updatedAt": "2026-07-21T15:45:42.584629Z"
+    },
+    {
+      "id": "generate-clip-art-asset-v2",
+      "name": "Generate Clip Art (v2)",
+      "description": "Generate a catalog-ready clip-art asset: styled render, optional background removal (variant selectable via the backgroundRemover role), and classifier-produced catalog metadata — one audited run per asset. Successor to generate-clip-art-asset.",
+      "shortDescription": "Catalog-ready clip-art asset with classification.",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "quick",
+      "estimatedRuntime": "30-90 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Render",
+          "description": "Compose the styled prompt and call the image model.",
+          "stepCount": 1
+        },
+        {
+          "name": "Post-process",
+          "description": "Remove the background when transparency is requested.",
+          "stepCount": 1
+        },
+        {
+          "name": "Classify",
+          "description": "Produce catalog metadata (title/slug/description/category/tags).",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Subject prompt",
+        "Style",
+        "Aspect ratio",
+        "Quality tier",
+        "Transparency preference",
+        "Category list"
+      ],
+      "whatYouGet": [
+        "Final + raw images in ESY R2",
+        "Catalog metadata",
+        "Resolved provider prompt",
+        "Per-step cost ledger"
+      ],
+      "qaChecks": [
+        "Visual quality",
+        "Prompt fit",
+        "Background/transparency"
+      ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "prompt",
+            "type": "string",
+            "required": true,
+            "description": "Subject prompt for the isolated object or character"
+          },
+          {
+            "name": "style",
+            "type": "enum",
+            "required": true,
+            "description": "Clip-art style",
+            "default": "flat",
+            "options": [
+              "flat",
+              "minimal",
+              "outline",
+              "black-and-white",
+              "cartoon",
+              "mascot",
+              "sticker",
+              "emoji",
+              "vintage",
+              "watercolor",
+              "storybook",
+              "isometric",
+              "clay",
+              "chibi",
+              "pixel",
+              "kawaii",
+              "3d",
+              "doodle"
+            ]
+          },
+          {
+            "name": "aspectRatio",
+            "type": "enum",
+            "required": true,
+            "description": "Aspect ratio",
+            "default": "1:1",
+            "options": [
+              "1:1",
+              "3:4",
+              "4:3"
+            ]
+          },
+          {
+            "name": "quality",
+            "type": "enum",
+            "required": false,
+            "description": "Render quality tier",
+            "default": "low",
+            "options": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          {
+            "name": "backgroundRemovalEnabled",
+            "type": "boolean",
+            "required": false,
+            "description": "Remove the background for transparency",
+            "default": true
+          },
+          {
+            "name": "elementType",
+            "type": "enum",
+            "required": false,
+            "default": "",
+            "description": "Pack element type; 'pattern' ships full-bleed and skips background removal",
+            "options": [
+              "",
+              "subject",
+              "pose",
+              "prop",
+              "border",
+              "corner",
+              "pattern",
+              "scene"
+            ]
+          },
+          {
+            "name": "categories",
+            "type": "string",
+            "required": false,
+            "description": "Comma-separated category slugs the classifier may choose from"
+          },
+          {
+            "name": "textPolicy",
+            "type": "enum",
+            "required": false,
+            "default": "",
+            "options": [
+              "",
+              "none",
+              "exact",
+              "freeform"
+            ],
+            "description": "Per-item text contract: none = text forbidden; exact = must match expectedText; freeform = text allowed, judged on legibility/spelling only. Empty derives from textBearing (true=exact, false=none)."
+          },
+          {
+            "name": "textBearing",
+            "type": "boolean",
+            "required": false,
+            "default": false,
+            "description": "True when the asset must carry legible text (the OCR gate then checks it)"
+          },
+          {
+            "name": "expectedText",
+            "type": "string",
+            "required": false,
+            "default": "",
+            "description": "The EXACT text the asset must carry; leave empty unless textPolicy is 'exact'"
+          }
+        ]
+      },
+      "version": "2026.07.18",
+      "cadence": "On demand",
+      "updatedAt": "2026-07-21T15:45:22.895745Z"
     },
     {
       "id": "generate-clip-art-asset",
@@ -250,7 +794,7 @@
       },
       "version": "2026.05.16",
       "cadence": "On demand",
-      "updatedAt": "2026-06-04T23:03:39.995717Z"
+      "updatedAt": "2026-07-21T15:44:41.201665Z"
     },
     {
       "id": "generate-essay-college-application",
@@ -327,7 +871,99 @@
       },
       "version": "2026.06.04",
       "cadence": "On demand",
-      "updatedAt": "2026-06-04T23:03:41.537179Z"
+      "updatedAt": "2026-07-21T15:44:50.059657Z"
+    },
+    {
+      "id": "generate-coloring-page",
+      "name": "Generate Coloring Page",
+      "description": "Generate a printable coloring page: clean black line art on a white background (no fills, no shading), plus classifier-produced catalog metadata.",
+      "shortDescription": "Printable line-art coloring page with classification.",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "quick",
+      "estimatedRuntime": "30-90 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Render",
+          "description": "Compose the line-art prompt and call the image model.",
+          "stepCount": 1
+        },
+        {
+          "name": "Classify",
+          "description": "Produce catalog metadata.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Subject prompt",
+        "Aspect ratio",
+        "Quality tier",
+        "Category list"
+      ],
+      "whatYouGet": [
+        "Printable line-art image in ESY R2",
+        "Catalog metadata",
+        "Resolved provider prompt",
+        "Per-step cost ledger"
+      ],
+      "qaChecks": [
+        "Line-art purity (no fills/shading)",
+        "Prompt fit"
+      ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "prompt",
+            "type": "string",
+            "required": true,
+            "description": "Subject of the coloring page"
+          },
+          {
+            "name": "style",
+            "type": "enum",
+            "required": false,
+            "description": "Coloring style",
+            "default": "coloring",
+            "options": [
+              "coloring"
+            ]
+          },
+          {
+            "name": "aspectRatio",
+            "type": "enum",
+            "required": true,
+            "description": "Aspect ratio",
+            "default": "3:4",
+            "options": [
+              "3:4",
+              "1:1",
+              "4:3"
+            ]
+          },
+          {
+            "name": "quality",
+            "type": "enum",
+            "required": false,
+            "description": "Render quality tier",
+            "default": "medium",
+            "options": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          {
+            "name": "categories",
+            "type": "string",
+            "required": false,
+            "description": "Comma-separated category slugs the classifier may choose from"
+          }
+        ]
+      },
+      "version": "2026.07.04",
+      "cadence": "On demand",
+      "updatedAt": "2026-07-21T15:45:23.933391Z"
     },
     {
       "id": "generate-essay-expository",
@@ -401,7 +1037,115 @@
       },
       "version": "2026.06.04",
       "cadence": "On demand",
-      "updatedAt": "2026-06-04T23:03:40.931989Z"
+      "updatedAt": "2026-07-21T15:44:45.600661Z"
+    },
+    {
+      "id": "generate-illustration",
+      "name": "Generate Illustration",
+      "description": "Generate a full-scene illustration (detailed background, environment, lighting) in one of 16 styles, plus classifier-produced catalog metadata.",
+      "shortDescription": "Full-scene styled illustration with classification.",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "quick",
+      "estimatedRuntime": "30-90 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Render",
+          "description": "Compose the styled scene prompt and call the image model.",
+          "stepCount": 1
+        },
+        {
+          "name": "Classify",
+          "description": "Produce catalog metadata.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Scene prompt",
+        "Style",
+        "Aspect ratio",
+        "Quality tier",
+        "Category list"
+      ],
+      "whatYouGet": [
+        "Illustration in ESY R2",
+        "Catalog metadata",
+        "Resolved provider prompt",
+        "Per-step cost ledger"
+      ],
+      "qaChecks": [
+        "Visual quality",
+        "Prompt fit"
+      ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "prompt",
+            "type": "string",
+            "required": true,
+            "description": "Scene to illustrate"
+          },
+          {
+            "name": "style",
+            "type": "enum",
+            "required": true,
+            "description": "Illustration style",
+            "default": "flat",
+            "options": [
+              "flat",
+              "cartoon",
+              "watercolor",
+              "vintage",
+              "3d",
+              "doodle",
+              "kawaii",
+              "storybook",
+              "digital-art",
+              "fantasy",
+              "anime",
+              "collage",
+              "gouache",
+              "paper-art",
+              "chalk-pastel",
+              "retro"
+            ]
+          },
+          {
+            "name": "aspectRatio",
+            "type": "enum",
+            "required": true,
+            "description": "Aspect ratio",
+            "default": "4:3",
+            "options": [
+              "4:3",
+              "1:1",
+              "3:4"
+            ]
+          },
+          {
+            "name": "quality",
+            "type": "enum",
+            "required": false,
+            "description": "Render quality tier",
+            "default": "medium",
+            "options": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          {
+            "name": "categories",
+            "type": "string",
+            "required": false,
+            "description": "Comma-separated category slugs the classifier may choose from"
+          }
+        ]
+      },
+      "version": "2026.07.04",
+      "cadence": "On demand",
+      "updatedAt": "2026-07-21T15:45:25.987802Z"
     },
     {
       "id": "generate-essay-narrative",
@@ -473,7 +1217,75 @@
       },
       "version": "2026.06.04",
       "cadence": "On demand",
-      "updatedAt": "2026-06-04T23:03:41.182662Z"
+      "updatedAt": "2026-07-21T15:44:46.341955Z"
+    },
+    {
+      "id": "generate-pack-cover",
+      "name": "Generate Pack Cover",
+      "description": "Compose the marketplace hero cover for a theme pack: a single composed scene rendered from the pack plan's cover instruction against MULTIPLE reference images (character sheet + hero assets — gpt-image-2 edits accept several inputs at high fidelity). Portrait 3:4, thumbnail-first composition. Contact-sheet preview grids remain the consumer's deterministic concern.",
+      "shortDescription": "Composed marketplace hero cover from pack references.",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "quick",
+      "estimatedRuntime": "30-90 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Compose",
+          "description": "Render the hero cover from the references.",
+          "stepCount": 1
+        },
+        {
+          "name": "Classify",
+          "description": "Title the cover for the library.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Cover instruction (from the pack plan)",
+        "Reference image URLs",
+        "Pack title"
+      ],
+      "whatYouGet": [
+        "Cover image in ESY R2",
+        "Per-step cost ledger"
+      ],
+      "qaChecks": [
+        "Subject centered (thumbnail-safe)",
+        "Overlay text legible at thumbnail size",
+        "Reference fidelity"
+      ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "coverInstruction",
+            "type": "string",
+            "required": true,
+            "description": "Full cover instruction (plan-clipart-pack coverConcept.instruction)"
+          },
+          {
+            "name": "referenceUrls",
+            "type": "string",
+            "required": true,
+            "description": "Comma-separated reference image URLs (character sheet + 2-4 hero assets)"
+          },
+          {
+            "name": "packTitle",
+            "type": "string",
+            "required": true,
+            "description": "Pack title (overlay text context)"
+          },
+          {
+            "name": "assetCount",
+            "type": "number",
+            "required": false,
+            "description": "Element count for the '50 PNG'-style callout"
+          }
+        ]
+      },
+      "version": "2026.07.14",
+      "cadence": "On demand",
+      "updatedAt": "2026-07-21T15:45:44.569316Z"
     },
     {
       "id": "generate-research-infographic",
@@ -549,7 +1361,7 @@
       },
       "version": "2026.06.01",
       "cadence": "On demand",
-      "updatedAt": "2026-06-04T23:03:39.410895Z"
+      "updatedAt": "2026-07-21T15:44:30.041423Z"
     },
     {
       "id": "generate-research-paper",
@@ -631,7 +1443,7 @@
       },
       "version": "2026.06.04",
       "cadence": "On demand",
-      "updatedAt": "2026-06-04T23:03:41.800729Z"
+      "updatedAt": "2026-07-21T15:44:50.910322Z"
     },
     {
       "id": "generate-research-report",
@@ -686,7 +1498,344 @@
       },
       "version": "2026.05.29",
       "cadence": "On demand",
-      "updatedAt": "2026-06-04T23:03:38.702386Z"
+      "updatedAt": "2026-07-21T15:44:28.300697Z"
+    },
+    {
+      "id": "generate-worksheet",
+      "name": "Generate Worksheet",
+      "description": "Generate a printable children's practice worksheet (grade/subject/topic-driven) with the kid-safety contract baked into the prompt, plus classifier-produced catalog metadata.",
+      "shortDescription": "Printable kid-safe educational worksheet.",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "quick",
+      "estimatedRuntime": "30-90 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Render",
+          "description": "Compose the worksheet prompt (safety preamble included) and call the image model.",
+          "stepCount": 1
+        },
+        {
+          "name": "Classify",
+          "description": "Produce catalog metadata.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Grade level",
+        "Subject",
+        "Topic",
+        "Theme",
+        "Optional extra direction",
+        "Category list"
+      ],
+      "whatYouGet": [
+        "Printable worksheet in ESY R2",
+        "Catalog metadata",
+        "Resolved provider prompt",
+        "Per-step cost ledger"
+      ],
+      "qaChecks": [
+        "Kid-safety checklist",
+        "Educational layout",
+        "Text legibility"
+      ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "grade",
+            "type": "string",
+            "required": true,
+            "description": "Grade level (e.g. kindergarten, 2nd grade)"
+          },
+          {
+            "name": "subject",
+            "type": "string",
+            "required": true,
+            "description": "Subject (e.g. math, reading)"
+          },
+          {
+            "name": "topic",
+            "type": "string",
+            "required": true,
+            "description": "Specific skill/topic (e.g. addition to 10)"
+          },
+          {
+            "name": "theme",
+            "type": "string",
+            "required": false,
+            "description": "Visual theme (e.g. dinosaurs, space)"
+          },
+          {
+            "name": "prompt",
+            "type": "string",
+            "required": false,
+            "description": "Extra direction for the layout/content"
+          },
+          {
+            "name": "style",
+            "type": "enum",
+            "required": false,
+            "description": "Worksheet style",
+            "default": "cartoon",
+            "options": [
+              "cartoon"
+            ]
+          },
+          {
+            "name": "quality",
+            "type": "enum",
+            "required": false,
+            "description": "Render quality tier",
+            "default": "medium",
+            "options": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          {
+            "name": "categories",
+            "type": "string",
+            "required": false,
+            "description": "Comma-separated category slugs the classifier may choose from"
+          }
+        ]
+      },
+      "version": "2026.07.04",
+      "cadence": "On demand",
+      "updatedAt": "2026-07-21T15:45:28.208827Z"
+    },
+    {
+      "id": "plan-clipart-pack",
+      "name": "Plan Clip Art Theme Pack",
+      "description": "Plan a complete clip-art THEME PACK the way successful marketplace sellers do: theme/market research, a committed style recipe (with a character bible when the theme sells better around one recurring character), a fully-compiled asset manifest with deliberate element-type variety, and the full listing kit (count-bearing titles, answer-first summary, SEO copy, 13 tags, FAQ, plain-English license, per-asset alt text, cover concept). Emits objective packFacts — the consuming storefront maps facts to tier/price. Items feed a Generation Order over generate-clip-art-asset-ref (character packs) or generate-clip-art-asset-v2.",
+      "shortDescription": "Research + plan a complete clip-art theme pack with listing kit.",
+      "artifactClass": "knowledge",
+      "outputType": "knowledge",
+      "depth": "standard",
+      "estimatedRuntime": "2-5 min",
+      "includesQa": false,
+      "stages": [
+        {
+          "name": "Research",
+          "description": "How this theme sells as a bundle; element mix; character decision.",
+          "stepCount": 1
+        },
+        {
+          "name": "Style",
+          "description": "Committed style recipe + character bible.",
+          "stepCount": 1
+        },
+        {
+          "name": "Manifest",
+          "description": "Fully-compiled asset prompts with element-type variety.",
+          "stepCount": 1
+        },
+        {
+          "name": "Listing",
+          "description": "Listing kit + objective packFacts + cover concept.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Theme",
+        "Asset count",
+        "Audience",
+        "Pack goal",
+        "Style",
+        "Style notes"
+      ],
+      "whatYouGet": [
+        "A clipart-pack-plan artifact: manifest + listing kit + packFacts + cover concept",
+        "Stage artifacts per station (research, style recipe, manifest)"
+      ],
+      "qaChecks": [],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "theme",
+            "type": "string",
+            "required": true,
+            "description": "Pack theme (e.g. 'vintage fox detective')"
+          },
+          {
+            "name": "count",
+            "type": "number",
+            "required": false,
+            "description": "Assets to plan",
+            "default": 40
+          },
+          {
+            "name": "audience",
+            "type": "string",
+            "required": false,
+            "description": "Who this pack is for (e.g. teachers and classrooms)"
+          },
+          {
+            "name": "packGoal",
+            "type": "string",
+            "required": false,
+            "description": "What buyers make with it (e.g. classroom decor)"
+          },
+          {
+            "name": "style",
+            "type": "enum",
+            "required": false,
+            "description": "clip-art style",
+            "default": "flat",
+            "options": [
+              "flat",
+              "minimal",
+              "outline",
+              "black-and-white",
+              "cartoon",
+              "mascot",
+              "sticker",
+              "emoji",
+              "vintage",
+              "watercolor",
+              "storybook",
+              "isometric",
+              "clay",
+              "chibi",
+              "pixel",
+              "kawaii",
+              "3d",
+              "doodle"
+            ]
+          },
+          {
+            "name": "styleNotes",
+            "type": "string",
+            "required": false,
+            "description": "Freeform style direction layered on the base style"
+          },
+          {
+            "name": "avoidList",
+            "type": "string",
+            "required": false,
+            "description": "Subjects/motifs to avoid"
+          },
+          {
+            "name": "recentCatalog",
+            "type": "string",
+            "required": false,
+            "description": "JSON snapshot of recent catalog titles (novelty context)"
+          },
+          {
+            "name": "brandNotes",
+            "type": "string",
+            "required": false,
+            "description": "Brand voice/constraints"
+          },
+          {
+            "name": "wantsCharacter",
+            "type": "enum",
+            "required": false,
+            "description": "Recurring character?",
+            "default": "auto",
+            "options": [
+              "auto",
+              "yes",
+              "no"
+            ]
+          }
+        ]
+      },
+      "version": "2026.07.18",
+      "cadence": "On demand",
+      "updatedAt": "2026-07-21T15:45:40.036960Z"
+    },
+    {
+      "id": "remove-image-background",
+      "name": "Remove Image Background",
+      "description": "Remove the background from a platform-stored image. The removal model (BiRefNet variants / BRIA) is selectable per run via the backgroundRemover role.",
+      "shortDescription": "Background removal as a standalone run.",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "quick",
+      "estimatedRuntime": "5-20 sec",
+      "includesQa": true,
+      "stages": [
+        {
+          "name": "Post-process",
+          "description": "Remove the background and store the transparent image.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "Source image URL (platform storage)"
+      ],
+      "whatYouGet": [
+        "Transparent image in ESY R2",
+        "Source provenance",
+        "Per-step cost ledger"
+      ],
+      "qaChecks": [
+        "Edge quality",
+        "Subject preservation"
+      ],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "sourceUrl",
+            "type": "string",
+            "required": true,
+            "description": "Platform artifact URL of the image to process"
+          }
+        ]
+      },
+      "version": "2026.07.18",
+      "cadence": "On demand",
+      "updatedAt": "2026-07-21T15:45:31.110246Z"
+    },
+    {
+      "id": "upscale-to-print-clip-art-asset",
+      "name": "Upscale to Print — Clip Art Asset",
+      "description": "Produce the distribution-ready export of an ACCEPTED clip-art artifact: ESRGAN upscale to the ~3000px master, then local export normalization (alpha-trimmed bounding box + margin, stray-speck floor, sRGB by convention, 300-DPI transparent PNG). Quality is added HERE, on the image a human approved — never by re-rendering, which would be a new sample rather than a sharper version of the accepted one. This is the storefront's credit-gated draft->finalize step and the source of the export URLs the pack ingest ships verbatim.",
+      "shortDescription": "Distribution-ready 300-DPI PNG export of an accepted asset.",
+      "artifactClass": "visual",
+      "outputType": "visual",
+      "depth": "quick",
+      "estimatedRuntime": "20-60 sec",
+      "includesQa": false,
+      "stages": [
+        {
+          "name": "Upscale",
+          "description": "ESRGAN 3x to the ~3000px export master.",
+          "stepCount": 1
+        },
+        {
+          "name": "Export",
+          "description": "Trim, margin, sRGB, 300-DPI PNG.",
+          "stepCount": 1
+        }
+      ],
+      "whatYouProvide": [
+        "An accepted clip-art artifact"
+      ],
+      "whatYouGet": [
+        "Export-grade transparent PNG (~3000px, 300 DPI) in ESY R2",
+        "Per-step cost ledger"
+      ],
+      "qaChecks": [],
+      "intakeSchema": {
+        "fields": [
+          {
+            "name": "asset",
+            "type": "artifactReference",
+            "required": true,
+            "description": "The accepted clip-art artifact to finalize.",
+            "artifactClass": "visual",
+            "artifactType": "clip-art"
+          }
+        ]
+      },
+      "version": "2026.07.18",
+      "cadence": "On demand",
+      "updatedAt": "2026-07-21T15:45:45.663112Z"
     }
   ]
 }

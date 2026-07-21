@@ -1,0 +1,171 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-coloring-page",
+  "name": "Generate Coloring Page",
+  "description": "Generate a printable coloring page: clean black line art on a white background (no fills, no shading), plus classifier-produced catalog metadata.",
+  "shortDescription": "Printable line-art coloring page with classification.",
+  "artifactClass": "visual",
+  "outputType": "visual",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.07.04",
+  "stages": [
+    {
+      "name": "Render",
+      "description": "Compose the line-art prompt and call the image model.",
+      "stepCount": 1
+    },
+    {
+      "name": "Classify",
+      "description": "Produce catalog metadata.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "prompt",
+        "type": "string",
+        "required": true,
+        "description": "Subject of the coloring page"
+      },
+      {
+        "name": "style",
+        "type": "enum",
+        "required": false,
+        "description": "Coloring style",
+        "default": "coloring",
+        "options": [
+          "coloring"
+        ]
+      },
+      {
+        "name": "aspectRatio",
+        "type": "enum",
+        "required": true,
+        "description": "Aspect ratio",
+        "default": "3:4",
+        "options": [
+          "3:4",
+          "1:1",
+          "4:3"
+        ]
+      },
+      {
+        "name": "quality",
+        "type": "enum",
+        "required": false,
+        "description": "Render quality tier",
+        "default": "medium",
+        "options": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      {
+        "name": "categories",
+        "type": "string",
+        "required": false,
+        "description": "Comma-separated category slugs the classifier may choose from"
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Render line art",
+      "kind": "image",
+      "role": "imageGenerator",
+      "promptTemplate": "redacted"
+    },
+    {
+      "id": "step-2",
+      "name": "Classify asset",
+      "kind": "llm",
+      "capability": "text",
+      "role": "classifier",
+      "jsonSchema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Catalog-ready title, <= 60 chars"
+          },
+          "slug": {
+            "type": "string",
+            "description": "kebab-case URL slug"
+          },
+          "description": {
+            "type": "string",
+            "description": "1-2 sentence SEO-friendly description"
+          },
+          "category": {
+            "type": "string",
+            "description": "One of the provided categories, or 'uncategorized'"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "3-8 search tags"
+          }
+        },
+        "required": [
+          "title",
+          "slug",
+          "description",
+          "category"
+        ],
+        "additionalProperties": false
+      },
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-render",
+      "name": "Provider execution",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "line-art"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "visual",
+    "artifactType": "coloring-page",
+    "files": [
+      "image/webp"
+    ],
+    "metadata": {
+      "aspectRatio": "enum [3:4, 1:1, 4:3]",
+      "quality": "enum [low, medium, high]",
+      "classification": "object"
+    }
+  },
+  "providers": {
+    "imageGenerator": "redacted",
+    "classifier": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.07.04",
+      "revision": 1,
+      "contentHash": "sha256:fde512a832e869e9e8f20b4e0be2d4e839f1d578961e99ce7f64fd9d09b45576",
+      "createdAt": "2026-07-04T21:49:03.195883Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:45:23.933391Z"
+}

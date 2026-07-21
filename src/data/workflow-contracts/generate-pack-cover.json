@@ -1,0 +1,137 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-pack-cover",
+  "name": "Generate Pack Cover",
+  "description": "Compose the marketplace hero cover for a theme pack: a single composed scene rendered from the pack plan's cover instruction against MULTIPLE reference images (character sheet + hero assets — gpt-image-2 edits accept several inputs at high fidelity). Portrait 3:4, thumbnail-first composition. Contact-sheet preview grids remain the consumer's deterministic concern.",
+  "shortDescription": "Composed marketplace hero cover from pack references.",
+  "artifactClass": "visual",
+  "outputType": "visual",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.07.14",
+  "stages": [
+    {
+      "name": "Compose",
+      "description": "Render the hero cover from the references.",
+      "stepCount": 1
+    },
+    {
+      "name": "Classify",
+      "description": "Title the cover for the library.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "coverInstruction",
+        "type": "string",
+        "required": true,
+        "description": "Full cover instruction (plan-clipart-pack coverConcept.instruction)"
+      },
+      {
+        "name": "referenceUrls",
+        "type": "string",
+        "required": true,
+        "description": "Comma-separated reference image URLs (character sheet + 2-4 hero assets)"
+      },
+      {
+        "name": "packTitle",
+        "type": "string",
+        "required": true,
+        "description": "Pack title (overlay text context)"
+      },
+      {
+        "name": "assetCount",
+        "type": "number",
+        "required": false,
+        "description": "Element count for the '50 PNG'-style callout"
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Compose cover",
+      "kind": "tool",
+      "role": "imageEditor",
+      "inputPath": "intake.referenceUrls"
+    },
+    {
+      "id": "step-2",
+      "name": "Title the cover",
+      "kind": "llm",
+      "capability": "text",
+      "role": "classifier",
+      "jsonSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Library-ready title, <= 60 chars"
+          },
+          "slug": {
+            "type": "string",
+            "description": "kebab-case URL slug"
+          },
+          "description": {
+            "type": "string",
+            "description": "1 sentence"
+          }
+        },
+        "required": [
+          "title",
+          "slug",
+          "description"
+        ]
+      },
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-compose",
+      "name": "Provider execution",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "cover-image"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "visual",
+    "artifactType": "pack-cover",
+    "files": [
+      "image/webp"
+    ],
+    "metadata": {
+      "packTitle": "string",
+      "assetCount": "number",
+      "classification": "object"
+    }
+  },
+  "providers": {
+    "imageEditor": "redacted",
+    "classifier": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.07.14",
+      "revision": 1,
+      "contentHash": "sha256:8ad47d7697224b7f6cc2d4acfb5e1d2e3b92efb57c08ba4b0eab5428ab9c0f96",
+      "createdAt": "2026-07-15T15:18:56.341351Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:45:44.569316Z"
+}

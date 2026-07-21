@@ -1,0 +1,110 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-research-report",
+  "name": "Generate Research Report",
+  "description": "Produce a structured, cited research report on a topic using LLM synthesis. Reusable on its own or as a sub-workflow feeding other artifacts.",
+  "shortDescription": "Synthesize a structured, cited research report.",
+  "artifactClass": "research",
+  "outputType": "research",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.05.29",
+  "stages": [
+    {
+      "name": "Outline",
+      "description": "Plan the report structure.",
+      "stepCount": 1
+    },
+    {
+      "name": "Synthesize",
+      "description": "Write the full cited report.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "topic",
+        "type": "string",
+        "required": true,
+        "description": "Research topic or question"
+      },
+      {
+        "name": "audience",
+        "type": "string",
+        "required": false,
+        "description": "Intended audience"
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Outline report",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-2",
+      "name": "Synthesize report",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-outline",
+      "name": "Outline",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "outline"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "gate-report",
+      "name": "Report synthesis",
+      "type": "quality",
+      "inputs": [
+        "outline"
+      ],
+      "outputs": [
+        "report"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "research",
+    "artifactType": "research-report",
+    "files": [],
+    "metadata": {
+      "sections": "array",
+      "sources": "array"
+    }
+  },
+  "providers": {
+    "text": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.05.29",
+      "revision": 2,
+      "contentHash": "sha256:f58d7bfab791822e8048d14311aa04b49bb4ca27a1717fdc83b628a2cff97d71",
+      "createdAt": "2026-06-04T23:03:38.702386Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:44:28.300697Z"
+}

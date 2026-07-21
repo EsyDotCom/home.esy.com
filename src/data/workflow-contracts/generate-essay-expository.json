@@ -1,0 +1,150 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-essay-expository",
+  "name": "Generate Expository Essay",
+  "description": "Explain a topic clearly and objectively: organize the key facts and concepts into a logical structure, then draft a balanced expository essay that informs without arguing a side.",
+  "shortDescription": "Explain a topic clearly in a balanced expository essay.",
+  "artifactClass": "research",
+  "outputType": "writing",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.06.04",
+  "stages": [
+    {
+      "name": "Develop",
+      "description": "Gather the key facts and concepts.",
+      "stepCount": 1
+    },
+    {
+      "name": "Outline",
+      "description": "Sequence the explanation logically.",
+      "stepCount": 1
+    },
+    {
+      "name": "Draft",
+      "description": "Compose a clear, balanced explanation.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "topic",
+        "type": "string",
+        "required": true,
+        "description": "Topic to explain"
+      },
+      {
+        "name": "audience",
+        "type": "string",
+        "required": false,
+        "description": "Intended audience"
+      },
+      {
+        "name": "citationStyle",
+        "type": "enum",
+        "required": false,
+        "description": "Citation style for any cited sources",
+        "default": "MLA",
+        "options": [
+          "MLA",
+          "APA",
+          "Chicago"
+        ]
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Develop",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-2",
+      "name": "Outline",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-3",
+      "name": "Draft",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-develop",
+      "name": "Develop",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "material"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "gate-outline",
+      "name": "Outline",
+      "type": "quality",
+      "inputs": [
+        "material"
+      ],
+      "outputs": [
+        "outline"
+      ],
+      "unlocks": [
+        "step-3"
+      ]
+    },
+    {
+      "id": "gate-draft",
+      "name": "Draft",
+      "type": "quality",
+      "inputs": [
+        "outline"
+      ],
+      "outputs": [
+        "draft"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "research",
+    "artifactType": "essay",
+    "files": [],
+    "metadata": {
+      "sections": "array",
+      "sources": "array"
+    }
+  },
+  "providers": {
+    "text": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.06.04",
+      "revision": 1,
+      "contentHash": "sha256:b179832d3d779d81aaa6e85a226ff4459b9cf1b92302a8a05eda253b14b4ce9c",
+      "createdAt": "2026-06-04T23:03:40.931989Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:44:45.600661Z"
+}

@@ -1,0 +1,156 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-research-paper",
+  "name": "Generate Research Paper",
+  "description": "Produce a multi-section academic research paper: synthesize the evidence around a research question, plan the standard sections, then draft a cited paper with an abstract, body sections, and references.",
+  "shortDescription": "Draft a cited, multi-section academic research paper.",
+  "artifactClass": "research",
+  "outputType": "writing",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.06.04",
+  "stages": [
+    {
+      "name": "Synthesize",
+      "description": "Synthesize evidence around the question.",
+      "stepCount": 1
+    },
+    {
+      "name": "Outline",
+      "description": "Plan the standard paper sections.",
+      "stepCount": 1
+    },
+    {
+      "name": "Draft",
+      "description": "Write the cited, multi-section paper.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "topic",
+        "type": "string",
+        "required": true,
+        "description": "Paper topic"
+      },
+      {
+        "name": "researchQuestion",
+        "type": "string",
+        "required": false,
+        "description": "Specific research question or hypothesis"
+      },
+      {
+        "name": "audience",
+        "type": "string",
+        "required": false,
+        "description": "Intended audience"
+      },
+      {
+        "name": "citationStyle",
+        "type": "enum",
+        "required": false,
+        "description": "Citation style for any cited sources",
+        "default": "APA",
+        "options": [
+          "MLA",
+          "APA",
+          "Chicago"
+        ]
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Develop",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-2",
+      "name": "Outline",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-3",
+      "name": "Draft",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-develop",
+      "name": "Develop",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "material"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "gate-outline",
+      "name": "Outline",
+      "type": "quality",
+      "inputs": [
+        "material"
+      ],
+      "outputs": [
+        "outline"
+      ],
+      "unlocks": [
+        "step-3"
+      ]
+    },
+    {
+      "id": "gate-draft",
+      "name": "Draft",
+      "type": "quality",
+      "inputs": [
+        "outline"
+      ],
+      "outputs": [
+        "draft"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "research",
+    "artifactType": "essay",
+    "files": [],
+    "metadata": {
+      "sections": "array",
+      "sources": "array"
+    }
+  },
+  "providers": {
+    "text": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.06.04",
+      "revision": 1,
+      "contentHash": "sha256:a270db1e4bb86c22d352632b8408b9125d7c31386d4eb86c2b728c5f30955ef9",
+      "createdAt": "2026-06-04T23:03:41.800729Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:44:50.910322Z"
+}

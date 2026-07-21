@@ -1,0 +1,156 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-essay-argumentative",
+  "name": "Generate Argumentative Essay",
+  "description": "Build a thesis-driven argumentative essay: develop supporting evidence and the strongest counterarguments, organize them under a clear thesis, then draft a fully structured essay with a counterargument section and conclusion.",
+  "shortDescription": "Draft a thesis-driven argumentative essay with rebuttals.",
+  "artifactClass": "research",
+  "outputType": "writing",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.06.04",
+  "stages": [
+    {
+      "name": "Develop",
+      "description": "Develop evidence and map counterarguments.",
+      "stepCount": 1
+    },
+    {
+      "name": "Outline",
+      "description": "Organize evidence under a clear thesis.",
+      "stepCount": 1
+    },
+    {
+      "name": "Draft",
+      "description": "Compose the argument with a rebuttal.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "topic",
+        "type": "string",
+        "required": true,
+        "description": "Essay topic or question"
+      },
+      {
+        "name": "stance",
+        "type": "string",
+        "required": true,
+        "description": "The position the essay should defend"
+      },
+      {
+        "name": "audience",
+        "type": "string",
+        "required": false,
+        "description": "Intended audience"
+      },
+      {
+        "name": "citationStyle",
+        "type": "enum",
+        "required": false,
+        "description": "Citation style for any cited sources",
+        "default": "MLA",
+        "options": [
+          "MLA",
+          "APA",
+          "Chicago"
+        ]
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Develop",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-2",
+      "name": "Outline",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-3",
+      "name": "Draft",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-develop",
+      "name": "Develop",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "material"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "gate-outline",
+      "name": "Outline",
+      "type": "quality",
+      "inputs": [
+        "material"
+      ],
+      "outputs": [
+        "outline"
+      ],
+      "unlocks": [
+        "step-3"
+      ]
+    },
+    {
+      "id": "gate-draft",
+      "name": "Draft",
+      "type": "quality",
+      "inputs": [
+        "outline"
+      ],
+      "outputs": [
+        "draft"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "research",
+    "artifactType": "essay",
+    "files": [],
+    "metadata": {
+      "sections": "array",
+      "sources": "array"
+    }
+  },
+  "providers": {
+    "text": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.06.04",
+      "revision": 1,
+      "contentHash": "sha256:b26c20aa3fde4b7b58b43e93b6877965779a1ec73e19b59cfccfe5d2ede9d476",
+      "createdAt": "2026-06-04T23:03:40.258803Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:44:41.917069Z"
+}

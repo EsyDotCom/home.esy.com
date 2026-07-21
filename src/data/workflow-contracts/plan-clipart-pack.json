@@ -1,0 +1,703 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "plan-clipart-pack",
+  "name": "Plan Clip Art Theme Pack",
+  "description": "Plan a complete clip-art THEME PACK the way successful marketplace sellers do: theme/market research, a committed style recipe (with a character bible when the theme sells better around one recurring character), a fully-compiled asset manifest with deliberate element-type variety, and the full listing kit (count-bearing titles, answer-first summary, SEO copy, 13 tags, FAQ, plain-English license, per-asset alt text, cover concept). Emits objective packFacts — the consuming storefront maps facts to tier/price. Items feed a Generation Order over generate-clip-art-asset-ref (character packs) or generate-clip-art-asset-v2.",
+  "shortDescription": "Research + plan a complete clip-art theme pack with listing kit.",
+  "artifactClass": "knowledge",
+  "outputType": "knowledge",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.07.18",
+  "stages": [
+    {
+      "name": "Research",
+      "description": "How this theme sells as a bundle; element mix; character decision.",
+      "stepCount": 1
+    },
+    {
+      "name": "Style",
+      "description": "Committed style recipe + character bible.",
+      "stepCount": 1
+    },
+    {
+      "name": "Manifest",
+      "description": "Fully-compiled asset prompts with element-type variety.",
+      "stepCount": 1
+    },
+    {
+      "name": "Listing",
+      "description": "Listing kit + objective packFacts + cover concept.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "theme",
+        "type": "string",
+        "required": true,
+        "description": "Pack theme (e.g. 'vintage fox detective')"
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "required": false,
+        "description": "Assets to plan",
+        "default": 40
+      },
+      {
+        "name": "audience",
+        "type": "string",
+        "required": false,
+        "description": "Who this pack is for (e.g. teachers and classrooms)"
+      },
+      {
+        "name": "packGoal",
+        "type": "string",
+        "required": false,
+        "description": "What buyers make with it (e.g. classroom decor)"
+      },
+      {
+        "name": "style",
+        "type": "enum",
+        "required": false,
+        "description": "clip-art style",
+        "default": "flat",
+        "options": [
+          "flat",
+          "minimal",
+          "outline",
+          "black-and-white",
+          "cartoon",
+          "mascot",
+          "sticker",
+          "emoji",
+          "vintage",
+          "watercolor",
+          "storybook",
+          "isometric",
+          "clay",
+          "chibi",
+          "pixel",
+          "kawaii",
+          "3d",
+          "doodle"
+        ]
+      },
+      {
+        "name": "styleNotes",
+        "type": "string",
+        "required": false,
+        "description": "Freeform style direction layered on the base style"
+      },
+      {
+        "name": "avoidList",
+        "type": "string",
+        "required": false,
+        "description": "Subjects/motifs to avoid"
+      },
+      {
+        "name": "recentCatalog",
+        "type": "string",
+        "required": false,
+        "description": "JSON snapshot of recent catalog titles (novelty context)"
+      },
+      {
+        "name": "brandNotes",
+        "type": "string",
+        "required": false,
+        "description": "Brand voice/constraints"
+      },
+      {
+        "name": "wantsCharacter",
+        "type": "enum",
+        "required": false,
+        "description": "Recurring character?",
+        "default": "auto",
+        "options": [
+          "auto",
+          "yes",
+          "no"
+        ]
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Theme & market research",
+      "kind": "llm",
+      "capability": "text",
+      "role": "packResearcher",
+      "emitsArtifact": {
+        "artifactType": "pack-theme-research",
+        "title": "Pack Theme Research — {intake.theme}"
+      },
+      "jsonSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "themeAngle": {
+            "type": "string",
+            "description": "The specific angle vs the generic version of this theme"
+          },
+          "buyerUseCases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "subMotifs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "elementMix": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "subjects": {
+                "type": "integer"
+              },
+              "poses": {
+                "type": "integer"
+              },
+              "props": {
+                "type": "integer"
+              },
+              "borders": {
+                "type": "integer"
+              },
+              "patterns": {
+                "type": "integer"
+              },
+              "scenes": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "subjects",
+              "poses",
+              "props",
+              "borders",
+              "patterns",
+              "scenes"
+            ]
+          },
+          "wantsCharacter": {
+            "type": "boolean",
+            "description": "Does this pack sell better around one recurring character?"
+          },
+          "differentiation": {
+            "type": "string"
+          },
+          "titleAngles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "themeAngle",
+          "buyerUseCases",
+          "subMotifs",
+          "elementMix",
+          "wantsCharacter",
+          "differentiation",
+          "titleAngles"
+        ]
+      },
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-2",
+      "name": "Style recipe & character bible",
+      "kind": "llm",
+      "capability": "text",
+      "role": "styleDirector",
+      "emitsArtifact": {
+        "artifactType": "pack-style-recipe",
+        "title": "Style Recipe — {intake.theme}"
+      },
+      "jsonSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "styleName": {
+            "type": "string"
+          },
+          "styleFragment": {
+            "type": "string",
+            "description": "The EXACT sentence fragment appended to every asset prompt"
+          },
+          "palette": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "hex": {
+                  "type": "string"
+                },
+                "usage": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "hex",
+                "usage"
+              ]
+            }
+          },
+          "linework": {
+            "type": "string"
+          },
+          "shading": {
+            "type": "string"
+          },
+          "antiCliches": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "characterSpec": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "present": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "description": "Species / creature / person kind"
+              },
+              "build": {
+                "type": "string"
+              },
+              "faceDetails": {
+                "type": "string"
+              },
+              "hair": {
+                "type": "string",
+                "description": "Hair / fur / plumage"
+              },
+              "wardrobe": {
+                "type": "string"
+              },
+              "signatureProps": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "expressionStyle": {
+                "type": "string"
+              },
+              "movementStyle": {
+                "type": "string"
+              },
+              "doNotChange": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "allowedChanges": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "compactBible": {
+                "type": "string",
+                "description": "Short paragraph front-loaded into every asset prompt"
+              }
+            },
+            "required": [
+              "present",
+              "name",
+              "kind",
+              "build",
+              "faceDetails",
+              "hair",
+              "wardrobe",
+              "signatureProps",
+              "expressionStyle",
+              "movementStyle",
+              "doNotChange",
+              "allowedChanges",
+              "compactBible"
+            ]
+          }
+        },
+        "required": [
+          "styleName",
+          "styleFragment",
+          "palette",
+          "linework",
+          "shading",
+          "antiCliches",
+          "characterSpec"
+        ]
+      },
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-3",
+      "name": "Asset manifest",
+      "kind": "llm",
+      "capability": "text",
+      "role": "planner",
+      "repeat": {
+        "countPath": "intake.count",
+        "maxPerChunk": 40,
+        "mergeKey": "items",
+        "sliceListPath": "step-1.json.subMotifs"
+      },
+      "emitsArtifact": {
+        "artifactType": "pack-manifest",
+        "title": "Asset Manifest — {intake.theme}"
+      },
+      "jsonSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "prompt": {
+                  "type": "string",
+                  "description": "FULLY compiled generation prompt"
+                },
+                "elementType": {
+                  "type": "string",
+                  "enum": [
+                    "subject",
+                    "pose",
+                    "prop",
+                    "border",
+                    "corner",
+                    "pattern",
+                    "scene"
+                  ]
+                },
+                "category": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "altText": {
+                  "type": "string"
+                },
+                "textBearing": {
+                  "type": "boolean",
+                  "description": "True when the asset is designed to contain legible text"
+                },
+                "expectedText": {
+                  "type": "string",
+                  "description": "The EXACT text the asset must carry; empty string unless textPolicy is 'exact'"
+                },
+                "textPolicy": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "exact",
+                    "freeform"
+                  ],
+                  "description": "none = text forbidden (prompt carries a hard no-text clause); exact = expectedText verbatim; freeform = ambient text allowed, judged on legibility/spelling only"
+                },
+                "quality": {
+                  "type": "string",
+                  "enum": [
+                    "low",
+                    "medium",
+                    "high"
+                  ],
+                  "description": "Render tier: low only for isolated subject/pose/prop items; medium+ for patterns, scenes, borders, and any text-bearing item"
+                }
+              },
+              "required": [
+                "title",
+                "prompt",
+                "elementType",
+                "category",
+                "altText",
+                "textBearing",
+                "expectedText",
+                "textPolicy",
+                "quality"
+              ]
+            }
+          },
+          "rationale": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "items",
+          "rationale"
+        ]
+      },
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-4",
+      "name": "Listing kit",
+      "kind": "llm",
+      "capability": "text",
+      "role": "copywriter",
+      "jsonSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "listing": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "titleOptions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Count-bearing titles (element count stated)"
+              },
+              "answerFirstSummary": {
+                "type": "string",
+                "description": "40-60 word self-contained block (AEO/PDP)"
+              },
+              "shortDescription": {
+                "type": "string"
+              },
+              "longDescription": {
+                "type": "string"
+              },
+              "whatsIncluded": {
+                "type": "string"
+              },
+              "useCases": {
+                "type": "string"
+              },
+              "faq": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "q": {
+                      "type": "string"
+                    },
+                    "a": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "q",
+                    "a"
+                  ]
+                }
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Exactly 13 marketplace tags"
+              },
+              "licenseSummary": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "titleOptions",
+              "answerFirstSummary",
+              "shortDescription",
+              "longDescription",
+              "whatsIncluded",
+              "useCases",
+              "faq",
+              "tags",
+              "licenseSummary"
+            ]
+          },
+          "packFacts": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "count": {
+                "type": "integer"
+              },
+              "elementTypeMix": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "subjects": {
+                    "type": "integer"
+                  },
+                  "poses": {
+                    "type": "integer"
+                  },
+                  "props": {
+                    "type": "integer"
+                  },
+                  "borders": {
+                    "type": "integer"
+                  },
+                  "patterns": {
+                    "type": "integer"
+                  },
+                  "scenes": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "subjects",
+                  "poses",
+                  "props",
+                  "borders",
+                  "patterns",
+                  "scenes"
+                ]
+              },
+              "compositionDepth": {
+                "type": "boolean",
+                "description": "True when scenes/borders/patterns exist, not only isolated objects"
+              },
+              "textBearing": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "count",
+              "elementTypeMix",
+              "compositionDepth",
+              "textBearing"
+            ]
+          },
+          "coverConcept": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "instruction": {
+                "type": "string",
+                "description": "Full image-edit instruction for generate-pack-cover"
+              },
+              "heroItemTitles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "layoutNotes": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "instruction",
+              "heroItemTitles",
+              "layoutNotes"
+            ]
+          },
+          "rationale": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "listing",
+          "packFacts",
+          "coverConcept",
+          "rationale"
+        ]
+      },
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [],
+  "artifactSchema": {
+    "artifactClass": "knowledge",
+    "artifactType": "clipart-pack-plan",
+    "files": [],
+    "metadata": {
+      "items": "array",
+      "listing": "object",
+      "packFacts": "object",
+      "coverConcept": "object",
+      "rationale": "string"
+    }
+  },
+  "providers": {
+    "packResearcher": "redacted",
+    "styleDirector": "redacted",
+    "planner": "redacted",
+    "copywriter": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.07.14",
+      "revision": 1,
+      "contentHash": "sha256:208d8ec305206e79c481103e649fc453de46badb7fd338fef0508e4739b84d54",
+      "createdAt": "2026-07-15T15:18:55.617086Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 2,
+      "contentHash": "sha256:813cc731367190eaa82c14e0643e9c157411ddd0306a626d1c36d7eec51ad80a",
+      "createdAt": "2026-07-18T19:19:13.022052Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 7,
+      "contentHash": "sha256:bbbf0595fba744e2f10c2b822defeaa5792c36356e2b0275e633ff8de1fe1e5c",
+      "createdAt": "2026-07-19T02:41:47.952945Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 9,
+      "contentHash": "sha256:a08c6689cb98d5778bbbbcf3b5b6073f931768c5801eccfba65771ecbe76f8a3",
+      "createdAt": "2026-07-20T21:59:51.269832Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 10,
+      "contentHash": "sha256:79d3f97d3f38f1f95528e9d71574f48042478bfcc60b93cf74fe915bc98f1c93",
+      "createdAt": "2026-07-21T13:17:14.060739Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 12,
+      "contentHash": "sha256:34812406734e93ef97c33c5e8631f13d25db5befc339c00a08f0763d03c28742",
+      "createdAt": "2026-07-21T14:12:09.735480Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:45:40.036960Z"
+}

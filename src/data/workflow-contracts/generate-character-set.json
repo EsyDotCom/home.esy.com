@@ -1,0 +1,164 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-character-set",
+  "name": "Generate Character Reference Set",
+  "description": "Render the practitioner-standard labeled character reference sheet (front view, full-body, three-quarter view, expression grid — name written on the sheet, plain neutral background) from a character bible. The sheet is the visual anchor for reference-consistent generation: pass its URL to generate-clip-art-asset-ref and generate-pack-cover. Product-agnostic — storyboard/scene pipelines can consume the same character-set artifact.",
+  "shortDescription": "Labeled character reference model sheet.",
+  "artifactClass": "visual",
+  "outputType": "visual",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.07.14",
+  "stages": [
+    {
+      "name": "Render",
+      "description": "Render the labeled model sheet.",
+      "stepCount": 1
+    },
+    {
+      "name": "Classify",
+      "description": "Title the sheet for the library.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "characterSpec",
+        "type": "string",
+        "required": true,
+        "description": "The character bible (compactBible or full spec text)"
+      },
+      {
+        "name": "style",
+        "type": "enum",
+        "required": true,
+        "description": "Pack style",
+        "default": "flat",
+        "options": [
+          "flat",
+          "minimal",
+          "outline",
+          "black-and-white",
+          "cartoon",
+          "mascot",
+          "sticker",
+          "emoji",
+          "vintage",
+          "watercolor",
+          "storybook",
+          "isometric",
+          "clay",
+          "chibi",
+          "pixel",
+          "kawaii",
+          "3d",
+          "doodle"
+        ]
+      },
+      {
+        "name": "packTitle",
+        "type": "string",
+        "required": false,
+        "description": "Pack context for the sheet label"
+      },
+      {
+        "name": "quality",
+        "type": "enum",
+        "required": false,
+        "description": "Render quality tier",
+        "default": "high",
+        "options": [
+          "low",
+          "medium",
+          "high"
+        ]
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Render model sheet",
+      "kind": "image",
+      "role": "imageGenerator",
+      "promptTemplate": "redacted"
+    },
+    {
+      "id": "step-2",
+      "name": "Title the sheet",
+      "kind": "llm",
+      "capability": "text",
+      "role": "classifier",
+      "jsonSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Library-ready title, <= 60 chars"
+          },
+          "slug": {
+            "type": "string",
+            "description": "kebab-case URL slug"
+          },
+          "description": {
+            "type": "string",
+            "description": "1 sentence"
+          }
+        },
+        "required": [
+          "title",
+          "slug",
+          "description"
+        ]
+      },
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-render",
+      "name": "Provider execution",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "model-sheet"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "visual",
+    "artifactType": "character-set",
+    "files": [
+      "image/webp"
+    ],
+    "metadata": {
+      "style": "string",
+      "packTitle": "string",
+      "classification": "object"
+    }
+  },
+  "providers": {
+    "imageGenerator": "redacted",
+    "classifier": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.07.14",
+      "revision": 1,
+      "contentHash": "sha256:3bd625867018ccf8e254b4c86eea888c62906e9344502a4b20ecc61b9e0295d4",
+      "createdAt": "2026-07-15T15:18:55.780841Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:45:40.792583Z"
+}
