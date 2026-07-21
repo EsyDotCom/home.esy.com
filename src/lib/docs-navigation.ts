@@ -58,6 +58,41 @@ export const navigation: NavSection[] = [
     ],
   },
   {
+    title: 'Contract rules',
+    items: [
+      {
+        title: 'Text policies',
+        href: '/docs/contracts/text-policies',
+        description: 'none / exact / freeform — what text is allowed and what the gate verifies.',
+        since: '2026-07-21',
+      },
+      {
+        title: 'Element types & render modes',
+        href: '/docs/contracts/element-types-and-render-modes',
+        description: 'Transparent cutouts vs full-bleed tiles, and why patterns never get background removal.',
+        since: '2026-07-21',
+      },
+      {
+        title: 'Quality tiers',
+        href: '/docs/contracts/quality-tiers',
+        description: 'What each tier is validated for; quality is added after acceptance.',
+        since: '2026-07-21',
+      },
+      {
+        title: 'Gates & checks',
+        href: '/docs/contracts/gates-and-checks',
+        description: 'Humans approve at gates; machines preserve between them.',
+        since: '2026-07-21',
+      },
+      {
+        title: 'Chunked planning',
+        href: '/docs/contracts/chunked-planning',
+        description: 'How big-list planning scales: bounded calls, disjoint slices, deterministic merge.',
+        since: '2026-07-21',
+      },
+    ],
+  },
+  {
     title: 'Concepts',
     items: [
       {
