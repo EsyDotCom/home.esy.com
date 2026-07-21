@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-21T16:36:11.719901Z",
+  "generatedAt": "2026-07-21T16:43:53.660506Z",
   "id": "generate-clip-art-asset-ref",
   "name": "Generate Clip Art (reference-consistent)",
   "description": "Sibling of generate-clip-art-asset-v2 for CHARACTER PACKS: renders each asset AGAINST a character reference sheet (openai/image-edit) so the same character holds across a whole pack. The prompt must be fully compiled (compactBible + subject + styleFragment — plan-clipart-pack does this); the reference sheet URL is shared across an order's children via intake_base. Then background removal and catalog classification, exactly like v2.",
