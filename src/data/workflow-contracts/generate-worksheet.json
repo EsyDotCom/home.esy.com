@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "generatedAt": "2026-07-21T16:01:50.095829Z",
   "id": "generate-worksheet",
   "name": "Generate Worksheet",
   "description": "Generate a printable children's practice worksheet (grade/subject/topic-driven) with the kid-safety contract baked into the prompt, plus classifier-produced catalog metadata.",

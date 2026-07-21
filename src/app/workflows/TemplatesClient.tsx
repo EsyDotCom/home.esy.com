@@ -75,12 +75,15 @@ export default function TemplatesClient() {
   // catalog (build-time fetch of GET /v1/catalog/workflows). No static mock data.
   const platformWorkflows = getWorkflowCatalog();
 
-  // esy.com only statically renders detail pages for templates declared in
-  // data.ts; use that set to decide internal link vs. run-on-app fallback (e.g.
-  // research-report has no marketing detail page yet, so it deep-links to the app).
+  // Every catalog entry now has a snapshot-driven landing at /workflows/<id>
+  // (2026-07-21): cards route internally; the landing carries the run-on-app
+  // CTA and the contract link. The curated set still gets its richer pages.
   const detailSlugs = useMemo(
-    () => new Set(getWorkflowTemplates().map((t) => t.slug)),
-    [],
+    () => new Set([
+      ...getWorkflowTemplates().map((t) => t.slug),
+      ...platformWorkflows.map((e) => e.id),
+    ]),
+    [platformWorkflows],
   );
 
   // Featured template surfaced as the hero stage's right-side feature — uses the

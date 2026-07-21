@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "generatedAt": "2026-07-21T16:01:50.095829Z",
   "id": "generate-character-set",
   "name": "Generate Character Reference Set",
   "description": "Render the practitioner-standard labeled character reference sheet (front view, full-body, three-quarter view, expression grid — name written on the sheet, plain neutral background) from a character bible. The sheet is the visual anchor for reference-consistent generation: pass its URL to generate-clip-art-asset-ref and generate-pack-cover. Product-agnostic — storyboard/scene pipelines can consume the same character-set artifact.",
