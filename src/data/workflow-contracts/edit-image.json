@@ -1,0 +1,111 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "edit-image",
+  "name": "Edit Image (Instruction)",
+  "description": "Edit a platform-stored image with a natural-language instruction (OpenAI images/edits), with optional background re-removal for transparent assets.",
+  "shortDescription": "Instruction-based image edit (img2img).",
+  "artifactClass": "visual",
+  "outputType": "visual",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.07.18",
+  "stages": [
+    {
+      "name": "Edit",
+      "description": "Apply the instruction to the source image.",
+      "stepCount": 1
+    },
+    {
+      "name": "Post-process",
+      "description": "Re-remove the background when transparency is requested.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "sourceUrl",
+        "type": "string",
+        "required": true,
+        "description": "Platform artifact URL of the image to edit"
+      },
+      {
+        "name": "instruction",
+        "type": "string",
+        "required": true,
+        "description": "Natural-language edit instruction"
+      },
+      {
+        "name": "backgroundRemovalEnabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Re-remove the background after editing",
+        "default": false
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Edit image",
+      "kind": "tool",
+      "role": "imageEditor",
+      "inputPath": "intake.sourceUrl"
+    },
+    {
+      "id": "step-2",
+      "name": "Remove background",
+      "kind": "tool",
+      "role": "backgroundRemover",
+      "inputPath": "step-1.url"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-edit",
+      "name": "Provider execution",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "edited-image"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "visual",
+    "artifactType": "edited-image",
+    "files": [
+      "image/webp"
+    ],
+    "metadata": {
+      "sourceUrl": "string",
+      "backgroundRemoved": "boolean"
+    }
+  },
+  "providers": {
+    "imageEditor": "redacted",
+    "backgroundRemover": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.07.04",
+      "revision": 1,
+      "contentHash": "sha256:ac3ff62f337d8128ccc560530a71f27419f24d9296d0c58fd436945864aa31a9",
+      "createdAt": "2026-07-04T21:49:03.494747Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 14,
+      "contentHash": "sha256:1dd2881787195c2b138aae96709830efafdc6acd0af984cb1473d496109aeef7",
+      "createdAt": "2026-07-18T19:19:08.575944Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:45:29.081106Z"
+}

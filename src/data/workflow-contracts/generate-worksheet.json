@@ -1,0 +1,185 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-worksheet",
+  "name": "Generate Worksheet",
+  "description": "Generate a printable children's practice worksheet (grade/subject/topic-driven) with the kid-safety contract baked into the prompt, plus classifier-produced catalog metadata.",
+  "shortDescription": "Printable kid-safe educational worksheet.",
+  "artifactClass": "visual",
+  "outputType": "visual",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.07.04",
+  "stages": [
+    {
+      "name": "Render",
+      "description": "Compose the worksheet prompt (safety preamble included) and call the image model.",
+      "stepCount": 1
+    },
+    {
+      "name": "Classify",
+      "description": "Produce catalog metadata.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "grade",
+        "type": "string",
+        "required": true,
+        "description": "Grade level (e.g. kindergarten, 2nd grade)"
+      },
+      {
+        "name": "subject",
+        "type": "string",
+        "required": true,
+        "description": "Subject (e.g. math, reading)"
+      },
+      {
+        "name": "topic",
+        "type": "string",
+        "required": true,
+        "description": "Specific skill/topic (e.g. addition to 10)"
+      },
+      {
+        "name": "theme",
+        "type": "string",
+        "required": false,
+        "description": "Visual theme (e.g. dinosaurs, space)"
+      },
+      {
+        "name": "prompt",
+        "type": "string",
+        "required": false,
+        "description": "Extra direction for the layout/content"
+      },
+      {
+        "name": "style",
+        "type": "enum",
+        "required": false,
+        "description": "Worksheet style",
+        "default": "cartoon",
+        "options": [
+          "cartoon"
+        ]
+      },
+      {
+        "name": "quality",
+        "type": "enum",
+        "required": false,
+        "description": "Render quality tier",
+        "default": "medium",
+        "options": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      {
+        "name": "categories",
+        "type": "string",
+        "required": false,
+        "description": "Comma-separated category slugs the classifier may choose from"
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Render worksheet",
+      "kind": "image",
+      "role": "imageGenerator",
+      "promptTemplate": "redacted"
+    },
+    {
+      "id": "step-2",
+      "name": "Classify asset",
+      "kind": "llm",
+      "capability": "text",
+      "role": "classifier",
+      "jsonSchema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Catalog-ready title, <= 60 chars"
+          },
+          "slug": {
+            "type": "string",
+            "description": "kebab-case URL slug"
+          },
+          "description": {
+            "type": "string",
+            "description": "1-2 sentence SEO-friendly description"
+          },
+          "category": {
+            "type": "string",
+            "description": "One of the provided categories, or 'uncategorized'"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "3-8 search tags"
+          }
+        },
+        "required": [
+          "title",
+          "slug",
+          "description",
+          "category"
+        ],
+        "additionalProperties": false
+      },
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-render",
+      "name": "Provider execution",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "worksheet"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "visual",
+    "artifactType": "worksheet",
+    "files": [
+      "image/webp"
+    ],
+    "metadata": {
+      "grade": "string",
+      "subject": "string",
+      "topic": "string",
+      "quality": "enum [low, medium, high]",
+      "classification": "object"
+    }
+  },
+  "providers": {
+    "imageGenerator": "redacted",
+    "classifier": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.07.04",
+      "revision": 1,
+      "contentHash": "sha256:c7285869732603bc35662cc2455ea9b1340d5404aae11f843caf439e2b9ff36a",
+      "createdAt": "2026-07-04T21:49:03.394572Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:45:28.208827Z"
+}

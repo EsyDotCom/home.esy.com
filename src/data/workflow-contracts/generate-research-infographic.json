@@ -1,0 +1,150 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-research-infographic",
+  "name": "Generate Research Infographic",
+  "description": "Produce a vertical infographic that visualizes a research report. Invokes the Generate Research Report workflow as a sub-workflow, then renders its findings as an image with gpt-image-2.",
+  "shortDescription": "Turn a research report into a vertical infographic.",
+  "artifactClass": "visual",
+  "outputType": "visual",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.06.01",
+  "stages": [
+    {
+      "name": "Research",
+      "description": "Run the research report sub-workflow.",
+      "stepCount": 1
+    },
+    {
+      "name": "Compose",
+      "description": "Compose the infographic image prompt.",
+      "stepCount": 1
+    },
+    {
+      "name": "Render",
+      "description": "Generate the infographic image.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "topic",
+        "type": "string",
+        "required": false,
+        "description": "Research topic to visualize (used when no source report is supplied)"
+      },
+      {
+        "name": "audience",
+        "type": "string",
+        "required": false,
+        "description": "Intended audience (passed to the research report)"
+      },
+      {
+        "name": "aspectRatio",
+        "type": "enum",
+        "required": false,
+        "description": "Aspect ratio",
+        "default": "3:4"
+      },
+      {
+        "name": "sourceReport",
+        "type": "artifactReference",
+        "required": false,
+        "description": "An existing research report to visualize (optional — leave empty to generate one)",
+        "artifactClass": "research",
+        "artifactType": "research-report"
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Research report",
+      "kind": "subWorkflow",
+      "satisfiedBy": "inputs.sourceReport"
+    },
+    {
+      "id": "step-2",
+      "name": "Compose infographic prompt",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-3",
+      "name": "Render infographic",
+      "kind": "image",
+      "capability": "image"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-research",
+      "name": "Research",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "report"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "gate-prompt",
+      "name": "Prompt",
+      "type": "quality",
+      "inputs": [
+        "report"
+      ],
+      "outputs": [
+        "image-prompt"
+      ],
+      "unlocks": [
+        "step-3"
+      ]
+    },
+    {
+      "id": "gate-image",
+      "name": "Image",
+      "type": "quality",
+      "inputs": [
+        "image-prompt"
+      ],
+      "outputs": [
+        "infographic"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "visual",
+    "artifactType": "infographic",
+    "files": [
+      "image/webp"
+    ],
+    "metadata": {
+      "sourceReportArtifactId": "string",
+      "aspectRatio": "enum [1:1, 3:4, 4:3]"
+    }
+  },
+  "providers": {
+    "text": "redacted",
+    "image": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.06.01",
+      "revision": 2,
+      "contentHash": "sha256:a2a5572f71f6023bdd21c517da325849796f294658378c79706531f9e41fc944",
+      "createdAt": "2026-06-04T23:03:39.410895Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:44:30.041423Z"
+}

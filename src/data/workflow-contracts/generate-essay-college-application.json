@@ -1,0 +1,151 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-essay-college-application",
+  "name": "Generate College Application Essay",
+  "description": "Draft a personal college application essay: find a distinctive angle from the applicant's background, structure a focused story, then draft a voice-driven essay that answers the prompt within the word limit.",
+  "shortDescription": "Draft a distinctive personal college application essay.",
+  "artifactClass": "research",
+  "outputType": "writing",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.06.04",
+  "stages": [
+    {
+      "name": "Angle",
+      "description": "Find a distinctive angle from the background.",
+      "stepCount": 1
+    },
+    {
+      "name": "Outline",
+      "description": "Structure a focused personal story.",
+      "stepCount": 1
+    },
+    {
+      "name": "Draft",
+      "description": "Compose a voice-driven essay.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "prompt",
+        "type": "string",
+        "required": true,
+        "description": "The application essay prompt"
+      },
+      {
+        "name": "background",
+        "type": "string",
+        "required": true,
+        "description": "Applicant's experiences, values, and details to draw from"
+      },
+      {
+        "name": "program",
+        "type": "string",
+        "required": false,
+        "description": "Target school or program"
+      },
+      {
+        "name": "wordLimit",
+        "type": "number",
+        "required": false,
+        "description": "Word limit",
+        "default": 650
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Develop",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-2",
+      "name": "Outline",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-3",
+      "name": "Draft",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-develop",
+      "name": "Develop",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "material"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "gate-outline",
+      "name": "Outline",
+      "type": "quality",
+      "inputs": [
+        "material"
+      ],
+      "outputs": [
+        "outline"
+      ],
+      "unlocks": [
+        "step-3"
+      ]
+    },
+    {
+      "id": "gate-draft",
+      "name": "Draft",
+      "type": "quality",
+      "inputs": [
+        "outline"
+      ],
+      "outputs": [
+        "draft"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "research",
+    "artifactType": "essay",
+    "files": [],
+    "metadata": {
+      "sections": "array",
+      "sources": "array"
+    }
+  },
+  "providers": {
+    "text": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.06.04",
+      "revision": 1,
+      "contentHash": "sha256:64260240d83d76484b7ba4fdaa14da045e61205c8c11b401f46bdd486c566002",
+      "createdAt": "2026-06-04T23:03:41.537179Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:44:50.059657Z"
+}

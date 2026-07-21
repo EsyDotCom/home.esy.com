@@ -1,0 +1,82 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "remove-image-background",
+  "name": "Remove Image Background",
+  "description": "Remove the background from a platform-stored image. The removal model (BiRefNet variants / BRIA) is selectable per run via the backgroundRemover role.",
+  "shortDescription": "Background removal as a standalone run.",
+  "artifactClass": "visual",
+  "outputType": "visual",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.07.18",
+  "stages": [
+    {
+      "name": "Post-process",
+      "description": "Remove the background and store the transparent image.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "sourceUrl",
+        "type": "string",
+        "required": true,
+        "description": "Platform artifact URL of the image to process"
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Remove background",
+      "kind": "tool",
+      "role": "backgroundRemover",
+      "inputPath": "intake.sourceUrl"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-bg",
+      "name": "Background removal",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "processed-image"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "visual",
+    "artifactType": "edited-image",
+    "files": [
+      "image/webp"
+    ],
+    "metadata": {
+      "sourceUrl": "string",
+      "backgroundRemoved": "boolean"
+    }
+  },
+  "providers": {
+    "backgroundRemover": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.07.04",
+      "revision": 1,
+      "contentHash": "sha256:0eadb2abccc153ea3116a2606c7d23d8fd159d46a71d4ad84aa778671a1d8838",
+      "createdAt": "2026-07-04T21:49:03.618357Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 14,
+      "contentHash": "sha256:39b54a0a5611a08a8aba7c5866c58162dc2b74f56018cb27ef104c693cfdf64d",
+      "createdAt": "2026-07-18T19:19:08.996700Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:45:31.110246Z"
+}

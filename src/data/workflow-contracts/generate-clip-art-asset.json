@@ -1,0 +1,140 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-clip-art-asset",
+  "name": "Generate Clip Art Asset",
+  "description": "Generate an internal ESY visual artifact using the clip.art prompt/style contract, provider runtime policy, ESY R2 storage, and review-ready metadata.",
+  "shortDescription": "Generate a reviewable internal clip-art asset.",
+  "artifactClass": "visual",
+  "outputType": "visual",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.05.16",
+  "stages": [
+    {
+      "name": "Generate image",
+      "description": "Compose the clip-art prompt and call the still-image provider.",
+      "stepCount": 1
+    },
+    {
+      "name": "Remove background",
+      "description": "Remove background with fal.ai when enabled, then store in ESY R2.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "prompt",
+        "type": "string",
+        "required": true,
+        "description": "Subject prompt for the isolated object or character"
+      },
+      {
+        "name": "style",
+        "type": "enum",
+        "required": true,
+        "description": "Clip-art style",
+        "default": "flat",
+        "options": [
+          "flat",
+          "outline",
+          "cartoon",
+          "sticker",
+          "vintage",
+          "watercolor",
+          "chibi",
+          "pixel",
+          "kawaii",
+          "3d",
+          "doodle"
+        ]
+      },
+      {
+        "name": "aspectRatio",
+        "type": "enum",
+        "required": true,
+        "description": "Aspect ratio",
+        "default": "1:1",
+        "options": [
+          "1:1",
+          "3:4",
+          "4:3"
+        ]
+      },
+      {
+        "name": "backgroundRemovalEnabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Remove background with fal.ai",
+        "default": true
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Generate image",
+      "kind": "image",
+      "promptTemplate": "redacted"
+    },
+    {
+      "id": "step-2",
+      "name": "Remove background",
+      "kind": "tool",
+      "inputPath": "step-1.url"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-exec",
+      "name": "Provider execution",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "raw-image"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "gate-bg",
+      "name": "Background removal",
+      "type": "quality",
+      "inputs": [
+        "raw-image"
+      ],
+      "outputs": [
+        "processed-image"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "visual",
+    "artifactType": "clip-art",
+    "files": [
+      "image/webp"
+    ],
+    "metadata": {
+      "style": "string",
+      "aspectRatio": "enum [1:1, 3:4, 4:3]",
+      "backgroundRemoved": "boolean"
+    }
+  },
+  "providers": {
+    "image": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.05.16",
+      "revision": 2,
+      "contentHash": "sha256:94f58c34849559bcf503b27175f531d2905f98b5a21cfe226ef3674112f4d352",
+      "createdAt": "2026-06-04T23:03:39.995717Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:44:41.201665Z"
+}

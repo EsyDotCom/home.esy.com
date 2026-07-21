@@ -1,0 +1,149 @@
+{
+  "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
+  "generatedAt": "2026-07-21T15:48:15.667276Z",
+  "id": "generate-essay-narrative",
+  "name": "Generate Narrative Essay",
+  "description": "Tell a true, reflective story: shape a premise and narrative arc, structure the scenes, then draft a narrative essay with vivid detail and a clear reflective takeaway.",
+  "shortDescription": "Shape a reflective story into a narrative essay.",
+  "artifactClass": "research",
+  "outputType": "writing",
+  "status": "active",
+  "supersededById": null,
+  "version": "2026.06.04",
+  "stages": [
+    {
+      "name": "Premise",
+      "description": "Shape the premise and narrative arc.",
+      "stepCount": 1
+    },
+    {
+      "name": "Outline",
+      "description": "Sequence the scenes and turning point.",
+      "stepCount": 1
+    },
+    {
+      "name": "Draft",
+      "description": "Compose the story with reflection.",
+      "stepCount": 1
+    }
+  ],
+  "intakeSchema": {
+    "fields": [
+      {
+        "name": "prompt",
+        "type": "string",
+        "required": true,
+        "description": "Story prompt, experience, or theme to write about"
+      },
+      {
+        "name": "perspective",
+        "type": "enum",
+        "required": false,
+        "description": "Narrative perspective",
+        "default": "first",
+        "options": [
+          "first",
+          "third"
+        ]
+      },
+      {
+        "name": "tone",
+        "type": "string",
+        "required": false,
+        "description": "Tone (e.g. reflective, humorous, somber)"
+      }
+    ]
+  },
+  "runtimeSteps": [
+    {
+      "id": "step-1",
+      "name": "Develop",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-2",
+      "name": "Outline",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    },
+    {
+      "id": "step-3",
+      "name": "Draft",
+      "kind": "llm",
+      "capability": "text",
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-develop",
+      "name": "Develop",
+      "type": "quality",
+      "inputs": [
+        "intake"
+      ],
+      "outputs": [
+        "material"
+      ],
+      "unlocks": [
+        "step-2"
+      ]
+    },
+    {
+      "id": "gate-outline",
+      "name": "Outline",
+      "type": "quality",
+      "inputs": [
+        "material"
+      ],
+      "outputs": [
+        "outline"
+      ],
+      "unlocks": [
+        "step-3"
+      ]
+    },
+    {
+      "id": "gate-draft",
+      "name": "Draft",
+      "type": "quality",
+      "inputs": [
+        "outline"
+      ],
+      "outputs": [
+        "draft"
+      ]
+    }
+  ],
+  "artifactSchema": {
+    "artifactClass": "research",
+    "artifactType": "essay",
+    "files": [],
+    "metadata": {
+      "sections": "array",
+      "sources": "array"
+    }
+  },
+  "providers": {
+    "text": "redacted"
+  },
+  "budgetPolicy": "redacted",
+  "versions": [
+    {
+      "version": "2026.06.04",
+      "revision": 1,
+      "contentHash": "sha256:1994dd4328966b25da13631349e2e11975ec107d2672cde255935119cd12f496",
+      "createdAt": "2026-06-04T23:03:41.182662Z"
+    }
+  ],
+  "updatedAt": "2026-07-21T15:44:46.341955Z"
+}
