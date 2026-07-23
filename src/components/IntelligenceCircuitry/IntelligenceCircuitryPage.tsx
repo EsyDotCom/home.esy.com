@@ -642,8 +642,8 @@ const IntelligenceCircuitryPage: React.FC = () => {
               <span>Browse Workflow Templates</span>
               <ArrowRight size={18} />
             </Link>
-            <Link href="/research" className="ic-final-cta-btn ic-final-cta-btn--secondary">
-              <span>Follow the Research</span>
+            <Link href="/agentic" className="ic-final-cta-btn ic-final-cta-btn--secondary">
+              <span>Read The Agentic Engineer</span>
             </Link>
           </div>
 

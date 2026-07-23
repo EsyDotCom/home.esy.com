@@ -37,8 +37,8 @@ export const ctaMapping: CTAMapping = {
     isNewsletter: true
   },
   
-  // Learn pages (formerly /school)
-  '/learn': {
+  // The Agentic Engineer hub (formerly /learn + /research)
+  '/agentic': {
     ctaText: 'App',
     ctaHref: 'https://app.esy.com',
     isProduct: true
@@ -54,7 +54,7 @@ export const ctaMapping: CTAMapping = {
   // Individual essay pages (bonus feature)
   '/essays/': {
     ctaText: 'Learn How We Wrote This',
-    ctaHref: '/learn', // Link to related tutorial
+    ctaHref: '/agentic', // Link to the tutorials/deep-dives hub
     isNewsletter: false
   }
 };

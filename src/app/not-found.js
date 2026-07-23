@@ -60,10 +60,10 @@ const pathways = [
     id: 'school',
     icon: GraduationCap,
     label: 'Start Learning',
-    title: 'Esy Learn',
-    description: 'Learn how to use AI research tools effectively. Guides, workflows, and best practices for researchers at every level.',
-    cta: 'Explore Learn',
-    href: '/learn',
+    title: 'The Agentic Engineer',
+    description: 'Demo-first deep dives on agentic workflows — the output, the system design, and the business behind it.',
+    cta: 'Explore The Agentic Engineer',
+    href: '/agentic',
   },
 ];
 

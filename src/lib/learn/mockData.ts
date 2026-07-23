@@ -332,7 +332,7 @@ Think of ChatGPT in research as a **research assistant**, not an **author**:
   resources: [
     { title: 'AI Research Ethics Guidelines', url: '#', type: 'paper', description: 'Framework for responsible AI use in academia' },
     { title: 'Prompt Templates for Research', url: '#', type: 'download', description: '50+ research-specific prompt templates' },
-    { title: 'Esy Research Workflows', url: '/research', type: 'link', description: 'Explore Esy\'s citation-first research tools' },
+    { title: 'The Agentic Engineer', url: '/agentic', type: 'link', description: 'Demo-first deep dives on agentic workflows' },
   ],
 };
 

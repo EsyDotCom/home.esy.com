@@ -5,15 +5,13 @@ import { CheckCircle2 } from "lucide-react";
 import { EsyLoader } from "@/components/EsyLoader";
 import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 
-// Compact newsletter capture for the dark .esy-stage hero panel on /research.
-// Posts to the same Beehiiv-backed endpoint as the article pages
-// (ResearchNewsletterBar / SidebarNewsletter).
-export function ResearchHeroSignup() {
+// Compact newsletter capture for the dark .esy-stage hero panel on /agentic.
+// Posts to the default Beehiiv-backed endpoint (the surviving publication for
+// The Agentic Engineer) — same list the detail-page bar and sidebar use.
+export function AgenticHeroSignup() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [buttonHover, setButtonHover] = useState(false);
-  const { subscribe, status, errorMessage, reset } = useNewsletterSubscribe({
-    endpoint: "/api/newsletter/research/subscribe",
-  });
+  const { subscribe, status, errorMessage, reset } = useNewsletterSubscribe();
 
   const isLoading = status === "loading";
 
@@ -46,19 +44,9 @@ export function ResearchHeroSignup() {
   }
 
   return (
-    <div style={{ marginTop: "1.75rem", maxWidth: 480 }}>
-      <p
-        style={{
-          margin: "0 0 0.65rem",
-          fontSize: "0.8125rem",
-          fontWeight: 600,
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          color: "#2dd4bf",
-        }}
-      >
-        Esy Research Newsletter
-      </p>
+    // No label here — the hero h1 already names the newsletter; repeating it
+    // made the fold feel stuffed.
+    <div style={{ marginTop: "2rem", maxWidth: 480 }}>
       <form
         onSubmit={handleSubmit}
         style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}
@@ -128,7 +116,7 @@ export function ResearchHeroSignup() {
       >
         {status === "error" && errorMessage
           ? errorMessage
-          : "One deep dive per week. Free, no spam, unsubscribe anytime."}
+          : "One issue per week · video + full transcript"}
       </p>
     </div>
   );

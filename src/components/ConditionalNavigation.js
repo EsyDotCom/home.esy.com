@@ -29,10 +29,10 @@ const ConditionalNavigation = () => {
   const isGlossaryIndex = normalizedPath === '/glossary';
   const isGlossaryViewPage = isGlossaryPage && !isGlossaryIndex;
   
-  // Learn pages (formerly /school)
-  const isLearnPage = normalizedPath?.startsWith('/learn');
-  const isLearnIndex = normalizedPath === '/learn';
-  const isLearnArticlePage = normalizedPath?.startsWith('/learn/articles/');
+  // Agentic pages (The Agentic Engineer — merged /learn + /research, Jul 2026).
+  // Strict match so /agentic-workflows (separate SEO page) doesn't count.
+  const isLearnPage = normalizedPath === '/agentic' || normalizedPath?.startsWith('/agentic/');
+  const isLearnIndex = normalizedPath === '/agentic';
   
   // Check if we're on course lesson pages (focused learning experience)
   const isCourseLessonPage = normalizedPath?.match(/^\/courses\/[^/]+\/[^/]+$/);

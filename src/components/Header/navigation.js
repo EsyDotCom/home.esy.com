@@ -16,7 +16,7 @@ const Navigation = () => {
         {/* Product links */}
         <div className="flex items-center space-x-6">
           <Link href="/essays/" className="text-gray-300 hover:text-white transition text-sm">Essays</Link>
-          <a href="/learn/" className="text-gray-300 hover:text-white transition text-sm">Learn</a>
+          <a href="/agentic/" className="text-gray-300 hover:text-white transition text-sm">Agentic</a>
         </div>
         
         {/* CTA Button */}

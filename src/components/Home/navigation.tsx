@@ -25,10 +25,10 @@ import { lightTheme } from "@/lib/lightTheme";
 // Shared suffix logic
 export const getPageSuffix = (pathname) => {
   if (pathname?.startsWith('/essays')) return 'Essays';
-  if (pathname?.startsWith('/learn')) return 'Learn';
+  // Strict match: /agentic-workflows is a separate SEO page, not the hub.
+  if (pathname === '/agentic' || pathname?.startsWith('/agentic/')) return 'Agentic';
   if (pathname?.startsWith('/glossary')) return 'Glossary';
   if (pathname?.startsWith('/blog')) return 'Blog';
-  if (pathname?.startsWith('/research')) return 'Research';
   return '';
 };
 
@@ -122,7 +122,8 @@ export default function Navigation({
         const isHomepage = normalizedPath === '/' || normalizedPath === '';
         const isEssaysPage = normalizedPath === '/essays' || normalizedPath.startsWith('/essays/');
         const isAboutPage = normalizedPath === '/about';
-        const isLearnPage = normalizedPath === '/learn' || normalizedPath.startsWith('/learn/');
+        // /agentic is the merged Learn + Research hub (The Agentic Engineer).
+        const isAgenticPage = normalizedPath === '/agentic' || normalizedPath.startsWith('/agentic/');
         const isLearnArticle = normalizedPath.includes('/learn/articles/');
         const isCoursesPage = normalizedPath === '/courses' || normalizedPath.startsWith('/courses/');
         const isBlogArticle = normalizedPath.includes('/blog/') && normalizedPath !== '/blog';
@@ -134,7 +135,6 @@ export default function Navigation({
         const isTermsPage = normalizedPath === '/terms';
         const isPrivacyPage = normalizedPath === '/privacy';
         const isGlossaryPage = normalizedPath === '/glossary' || normalizedPath.startsWith('/glossary/');
-        const isResearchPage = normalizedPath === '/research' || normalizedPath.startsWith('/research/');
         const isInfographicsPage = normalizedPath === '/infographics' || normalizedPath.startsWith('/infographics/');
         const isClipArtPage = normalizedPath === '/clip-art' || normalizedPath.startsWith('/clip-art/');
         const isArtifactsPage = normalizedPath === '/artifacts' || normalizedPath.startsWith('/artifacts/');
@@ -152,7 +152,7 @@ export default function Navigation({
         const isLearnOrCoursesSection = isLearnArticle || isCoursesPage;
         
         // Pages that always use light theme (Navy Calm)
-        const isAlwaysLightPage = isEssaysPage || isAboutPage || isLearnPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isResearchPage || isInfographicsPage || isClipArtPage || isArtifactsPage;
+        const isAlwaysLightPage = isEssaysPage || isAboutPage || isAgenticPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isInfographicsPage || isClipArtPage || isArtifactsPage;
         
         // Check for homepage themes
         if (isHomepage) {
@@ -556,17 +556,17 @@ export default function Navigation({
               </Link>
             )}
 
-            {/* Learn — /learn hub (Research lives in the footer) */}
+            {/* Agentic — /agentic hub (The Agentic Engineer, merged Learn + Research) */}
             {!isMobile && (
               <Link
-                href="/learn/"
-                className={`nav-link nav-link-learn ${pathname?.startsWith('/learn') ? 'active' : ''}`}
+                href="/agentic/"
+                className={`nav-link nav-link-learn ${pathname === '/agentic' || pathname?.startsWith('/agentic/') ? 'active' : ''}`}
                 style={{
                   color: !navOnDark ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
                   textShadow: 'none',
                 }}
               >
-                Learn
+                Agentic
               </Link>
             )}
 
@@ -698,13 +698,13 @@ export default function Navigation({
             </Link>
 
             <Link
-              href="/learn/"
-              className={`mnav-item ${normalizedPathForNav.startsWith('/learn') ? 'mnav-item--active' : ''}`}
+              href="/agentic/"
+              className={`mnav-item ${normalizedPathForNav === '/agentic' || normalizedPathForNav.startsWith('/agentic/') ? 'mnav-item--active' : ''}`}
               onClick={() => setIsMobileMenuOpen(false)}
               style={{ animationDelay: '0.16s' }}
             >
-              <span className="mnav-item__label">Learn</span>
-              <span className="mnav-item__desc">Tutorials on research workflows &amp; AI tools</span>
+              <span className="mnav-item__label">Agentic</span>
+              <span className="mnav-item__desc">The Agentic Engineer — workflows, demos &amp; system design</span>
             </Link>
           </nav>
 

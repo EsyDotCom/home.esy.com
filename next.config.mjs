@@ -466,15 +466,50 @@ const nextConfig = {
         destination: '/glossary',
         permanent: true,
       },
-      // School renamed to Learn (June 2026)
+      // School renamed to Learn (June 2026), then Learn + Research merged into
+      // The Agentic Engineer at /agentic (Jul 2026). Chain both so pre-rename
+      // /school URLs still land: /school -> /learn -> /agentic collapses here.
       {
         source: '/school',
-        destination: '/learn',
+        destination: '/agentic',
         permanent: true,
       },
       {
         source: '/school/:path*',
-        destination: '/learn/:path*',
+        destination: '/agentic/:path*',
+        permanent: true,
+      },
+      // Learn + Research merged into /agentic (Jul 2026). The retired
+      // /learn/articles subtree has no /agentic equivalent, so fold it into the
+      // hub with specific rules BEFORE the catch-all slug mapping.
+      {
+        source: '/learn',
+        destination: '/agentic',
+        permanent: true,
+      },
+      {
+        source: '/learn/articles',
+        destination: '/agentic',
+        permanent: true,
+      },
+      {
+        source: '/learn/articles/:path*',
+        destination: '/agentic',
+        permanent: true,
+      },
+      {
+        source: '/learn/:slug*',
+        destination: '/agentic/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/research',
+        destination: '/agentic',
+        permanent: true,
+      },
+      {
+        source: '/research/:slug*',
+        destination: '/agentic/:slug*',
         permanent: true,
       },
       ...netlifyRedirectsFromFile(),

@@ -183,7 +183,8 @@ export const modelPages: ModelPage[] = [
     researchLinks: [
       {
         label: 'Model Performance Analysis',
-        href: '/research/models/claude-opus-performance',
+        // No dedicated performance article exists; send readers to the hub.
+        href: '/agentic',
       },
     ],
   },

@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
-import { getPublishedResearchVideos } from "@/data/research-videos";
+import { getPublishedAgenticVideos } from "@/data/agentic-videos";
 import {
-  findResearchArticle,
-  getAllResearchArticles,
+  findAgenticArticle,
+  getAllAgenticArticles,
   relatedFrom,
 } from "@/lib/published-articles";
 import { loadTranscriptSegments } from "@/lib/transcript-loader";
 import { transcriptToPlainText, toIsoDuration } from "@/lib/transcripts";
-import ResearchVideoPageClient from "./client";
+import AgenticVideoPageClient from "./client";
 import type { Metadata } from "next";
 
 type Props = {
@@ -23,12 +23,12 @@ export const revalidate = 3600;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  return getPublishedResearchVideos().map((v) => ({ slug: v.slug }));
+  return getPublishedAgenticVideos().map((v) => ({ slug: v.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const video = await findResearchArticle(slug);
+  const video = await findAgenticArticle(slug);
 
   if (!video) return {};
 
@@ -37,16 +37,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : undefined;
 
   return {
-    title: `${video.title} — Esy Research`,
+    title: `${video.title} — The Agentic Engineer`,
     description: video.description.slice(0, 160),
     alternates: {
-      canonical: `${BASE_URL}/research/${video.slug}/`,
+      canonical: `${BASE_URL}/agentic/${video.slug}/`,
     },
     openGraph: {
       title: video.title,
       description: video.description.slice(0, 160),
       type: "video.other",
-      url: `${BASE_URL}/research/${video.slug}/`,
+      url: `${BASE_URL}/agentic/${video.slug}/`,
       images: ogImage ? [ogImage] : [],
     },
     twitter: {
@@ -58,15 +58,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ResearchVideoPage({ params }: Props) {
+export default async function AgenticVideoPage({ params }: Props) {
   const { slug } = await params;
-  const video = await findResearchArticle(slug);
+  const video = await findAgenticArticle(slug);
 
   if (!video) notFound();
 
   // Related resolves against the merged list so API and registry articles
   // can cross-reference each other.
-  const related = relatedFrom(await getAllResearchArticles(), video.slug, video.relatedSlugs);
+  const related = relatedFrom(await getAllAgenticArticles(), video.slug, video.relatedSlugs);
   // Build-time SRT load — segments ship in the static HTML for SEO and power
   // the click-to-seek transcript UI. Null when no SRT exists for the slug.
   const transcriptSegments = loadTranscriptSegments(video.slug);
@@ -86,7 +86,7 @@ export default async function ResearchVideoPage({ params }: Props) {
     contentUrl: video.muxPlaybackId
       ? `https://stream.mux.com/${video.muxPlaybackId}.m3u8`
       : undefined,
-    embedUrl: `${BASE_URL}/research/${video.slug}/`,
+    embedUrl: `${BASE_URL}/agentic/${video.slug}/`,
     transcript: transcriptSegments
       ? transcriptToPlainText(transcriptSegments)
       : undefined,
@@ -109,7 +109,7 @@ export default async function ResearchVideoPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ResearchVideoPageClient
+      <AgenticVideoPageClient
         video={video}
         related={related}
         transcriptSegments={transcriptSegments}
