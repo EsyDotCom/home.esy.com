@@ -3,15 +3,18 @@
 import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { ResearchVideoCard } from "@/components/Research/ResearchVideoCard";
-import ResearchNewsletter from "@/components/Research/ResearchNewsletter";
-import { ResearchHeroSignup } from "@/components/Research/ResearchHeroSignup";
+import { AgenticVideoCard } from "@/components/Agentic/AgenticVideoCard";
+import AgenticNewsletter from "@/components/Agentic/AgenticNewsletter";
+import { AgenticHero } from "@/components/Agentic/AgenticHero";
 import { CoursesPromoSection } from "@/components/School/CoursesPromoSection";
 import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 import { navyCalmLightTheme as theme } from "@/lib/theme";
-import LibraryHero from "@/components/LibraryHero/LibraryHero";
-import HeroCarousel, { type HeroCarouselItem } from "@/components/LibraryHero/HeroCarousel";
-import { type ResearchVideo } from "@/data/research-videos";
+import { type AgenticVideo } from "@/data/agentic-videos";
+
+// The three research categories that get their own shelf. Anything else
+// (tutorials published from esy-learn with free-form categories) collects into
+// the "Tutorials & Guides" shelf so no merged article is orphaned.
+const SHELF_CATEGORIES = new Set(["workflows", "models", "ai-tools"]);
 
 type Breakpoint = "mobile" | "tablet" | "desktop";
 
@@ -32,7 +35,7 @@ function useBreakpoint(): Breakpoint {
 }
 
 // Shared shelf layout (header + responsive card grid) so the index sections
-// don't quadruplicate the same markup.
+// don't duplicate the same markup. Renders nothing when the shelf is empty.
 function VideoGridSection({
   title,
   description,
@@ -42,10 +45,12 @@ function VideoGridSection({
 }: {
   title: string;
   description: string;
-  videos: ResearchVideo[];
+  videos: AgenticVideo[];
   isMobile: boolean;
   isTablet: boolean;
 }) {
+  if (videos.length === 0) return null;
+
   return (
     <section
       style={{
@@ -98,8 +103,8 @@ function VideoGridSection({
           gap: isMobile ? "1.25rem" : "1.5rem",
         }}
       >
-        {videos.map((video: ResearchVideo) => (
-          <ResearchVideoCard
+        {videos.map((video: AgenticVideo) => (
+          <AgenticVideoCard
             key={video.slug}
             title={video.title}
             slug={video.slug}
@@ -117,9 +122,10 @@ function VideoGridSection({
   );
 }
 
-// Videos arrive from the server component: static registry merged with
-// articles published live from Compose (api.esy.com).
-export default function ResearchClient({ videos }: { videos: ResearchVideo[] }) {
+// Videos arrive from the server component: static registry merged with articles
+// published live from Compose (api.esy.com) across both the esy-research and
+// esy-learn publications.
+export default function AgenticClient({ videos }: { videos: AgenticVideo[] }) {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const bp = useBreakpoint();
   const isMobile = bp === "mobile";
@@ -130,7 +136,7 @@ export default function ResearchClient({ videos }: { videos: ResearchVideo[] }) 
     status: newsletterStatus,
     errorMessage: newsletterError,
     reset: resetNewsletter,
-  } = useNewsletterSubscribe({ endpoint: '/api/newsletter/research/subscribe' });
+  } = useNewsletterSubscribe();
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -144,19 +150,8 @@ export default function ResearchClient({ videos }: { videos: ResearchVideo[] }) 
   const modelVideos = allVideos.filter((v) => v.category === "models");
   const aiToolsVideos = allVideos.filter((v) => v.category === "ai-tools");
   const workflowVideos = allVideos.filter((v) => v.category === "workflows");
-
-  // Spotlight recent videos in the stage carousel (mux thumbnail as fallback).
-  const featuredCarousel: HeroCarouselItem[] = allVideos.slice(0, 6).map((v) => ({
-    id: v.slug,
-    href: `/research/${v.slug}`,
-    imageSrc:
-      v.thumbnailUrl ||
-      (v.muxPlaybackId
-        ? `https://image.mux.com/${v.muxPlaybackId}/thumbnail.jpg?time=0`
-        : ""),
-    label: v.categoryLabel,
-    title: v.title,
-  }));
+  // Catch-all so merged tutorial content (arbitrary categories) always shows.
+  const tutorialVideos = allVideos.filter((v) => !SHELF_CATEGORIES.has(v.category));
 
   return (
     <div
@@ -170,37 +165,17 @@ export default function ResearchClient({ videos }: { videos: ResearchVideo[] }) 
         width: "100%",
       }}
     >
-      {/* ═══ Library stage hero (shared with the artifact catalog pages) ═══ */}
-      <LibraryHero
-        breadcrumb={[{ label: "Home", href: "/" }, { label: "Research" }]}
-        title="Research"
-        subhead="Research on how to design, develop, and deploy agentic workflows — with breakdowns of frontier models and their tradeoffs, and the AI coding tools we build with."
-        meta={
-          <>
-            <span>
-              <strong>{allVideos.length}</strong> deep dives
-            </span>
-            <span className="esy-stage__meta-dot">·</span>
-            <span>video + full transcript</span>
-          </>
-        }
-        action={<ResearchHeroSignup />}
-        feature={
-          <HeroCarousel
-            items={featuredCarousel}
-            ariaLabel="Featured research videos"
-          />
-        }
-      />
+      {/* ═══ Studio stage hero — featured screening + capture ═══ */}
+      <AgenticHero videos={allVideos} isMobile={isMobile} isTablet={isTablet} />
 
       {/* Section order: Latest leads with the newest drops across all
           categories, Workflow Research is the flagship shelf, then the
-          remaining category shelves. */}
+          remaining category shelves, then merged tutorials. */}
 
       {/* ═══ Latest ═══ */}
       <VideoGridSection
         title="Latest"
-        description="The newest research drops — frontier model releases, tool breakdowns, and workflow engineering."
+        description="The newest issues — agentic workflows, frontier model releases, tool breakdowns, and the business behind them."
         videos={latestVideos}
         isMobile={isMobile}
         isTablet={isTablet}
@@ -209,7 +184,7 @@ export default function ResearchClient({ videos }: { videos: ResearchVideo[] }) 
       {/* ═══ Workflow Research ═══ */}
       <VideoGridSection
         title="Workflow Research"
-        description="Architecture decisions, pipeline design, and the engineering behind Esy's agentic workflow engine."
+        description="Architecture decisions, pipeline design, and the engineering behind Esy's agentic workflow engine — plus how each workflow earns its keep."
         videos={workflowVideos}
         isMobile={isMobile}
         isTablet={isTablet}
@@ -229,6 +204,15 @@ export default function ResearchClient({ videos }: { videos: ResearchVideo[] }) 
         title="AI Coding Tools"
         description="Hands-on breakdowns of Claude Code, Cursor, and the AI tools used to build Esy."
         videos={aiToolsVideos}
+        isMobile={isMobile}
+        isTablet={isTablet}
+      />
+
+      {/* ═══ Tutorials & Guides (merged from esy-learn) ═══ */}
+      <VideoGridSection
+        title="Tutorials & Guides"
+        description="Step-by-step walkthroughs — selecting, running, and reviewing Esy's agentic workflow templates."
+        videos={tutorialVideos}
         isMobile={isMobile}
         isTablet={isTablet}
       />
@@ -263,7 +247,7 @@ export default function ResearchClient({ videos }: { videos: ResearchVideo[] }) 
               color: "#fff",
             }}
           >
-            Research anything. No prompt engineering required.
+            Build the workflow. Ship the product.
           </h2>
 
           <p
@@ -276,8 +260,7 @@ export default function ResearchClient({ videos }: { videos: ResearchVideo[] }) 
             }}
           >
             Esy turns structured workflows into cited, publishable artifacts.
-            Select a template, complete an intake, and receive your research
-            output.
+            Select a template, complete an intake, and receive your output.
           </p>
 
           <Link
@@ -305,7 +288,7 @@ export default function ResearchClient({ videos }: { videos: ResearchVideo[] }) 
       </section>
 
       {/* ═══ Newsletter ═══ */}
-      <ResearchNewsletter
+      <AgenticNewsletter
         emailInputRef={emailInputRef}
         handleNewsletterSubmit={handleNewsletterSubmit}
         onInputChange={resetNewsletter}

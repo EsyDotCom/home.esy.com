@@ -6,7 +6,9 @@ import { navyCalmLightTheme as theme } from "@/lib/theme";
 
 type Status = "idle" | "loading" | "success" | "error" | "invalid";
 
-export function SchoolNewsletterBar() {
+// Sticky capture bar on /agentic detail pages. Posts to the default (surviving)
+// newsletter endpoint so every Agentic surface feeds one Beehiiv list.
+export function AgenticNewsletterBar() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
@@ -96,10 +98,10 @@ export function SchoolNewsletterBar() {
               fontFamily: "var(--font-inter)",
             }}
           >
-            Master Esy Workflows
+            The Agentic Engineer
           </h3>
           <p style={{ fontSize: "0.75rem", color: theme.muted, margin: "2px 0 0" }}>
-            New tutorials and tips straight to your inbox
+            One agentic workflow per week — output, system design, and the business behind it
           </p>
         </div>
 

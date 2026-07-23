@@ -1,8 +1,7 @@
 import {
-  researchVideos,
-  type ResearchVideo,
-} from "@/data/research-videos";
-import { schoolVideos, type SchoolVideo } from "@/data/school-videos";
+  agenticVideos,
+  type AgenticVideo,
+} from "@/data/agentic-videos";
 
 // Published articles = static registry (checked into git) + live entries
 // published from Compose via api.esy.com. The API serves the exact registry
@@ -20,7 +19,7 @@ const API_URL = process.env.ESY_API_URL ?? "https://api.esy.com";
 // Backstop only; on-demand tag revalidation is the real trigger.
 const REVALIDATE_SECONDS = 3600;
 
-type ApiArticle = ResearchVideo; // the public API response mirrors this shape
+type ApiArticle = AgenticVideo; // the public API response mirrors this shape
 
 // Static builds and local dev can fall back to the git registry when the API is
 // down. Production ISR must still throw so Next keeps the last-good cache
@@ -82,33 +81,38 @@ function mergeBySlug<T extends { slug: string; publishedAt: string }>(
   registry: T[],
   api: T[],
 ): T[] {
+  // Registry wins; the seen set also dedupes API-vs-API collisions, which can
+  // happen now that /agentic reads two publications into one list.
   const seen = new Set(registry.map((v) => v.slug));
-  const merged = [...registry, ...api.filter((a) => !seen.has(a.slug))];
+  const merged = [...registry];
+  for (const a of api) {
+    if (seen.has(a.slug)) continue;
+    seen.add(a.slug);
+    merged.push(a);
+  }
   return merged.sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
 }
 
-// esy.com sections map to Publications: /research -> esy-research, /learn -> esy-learn.
-const RESEARCH_PUBLICATION = "esy-research";
-const LEARN_PUBLICATION = "esy-learn";
+// The Agentic Engineer (/agentic) merges the two former sections, so it reads
+// from BOTH publications: esy-research (deep dives, model + tool research) and
+// esy-learn (tutorials). The static registry is curated research; net-new
+// articles from either publication merge in by publish date.
+const AGENTIC_PUBLICATIONS = ["esy-research", "esy-learn"];
 
-export async function getAllResearchArticles(): Promise<ResearchVideo[]> {
-  const api = await fetchPublishedSafe(RESEARCH_PUBLICATION);
-  return mergeBySlug(researchVideos, api as ResearchVideo[]);
+export async function getAllAgenticArticles(): Promise<AgenticVideo[]> {
+  // Fetch both publications in parallel; a failure in either degrades to the
+  // registry (build/dev) or throws (prod ISR) per fetchPublishedSafe.
+  const perPublication = await Promise.all(
+    AGENTIC_PUBLICATIONS.map((slug) => fetchPublishedSafe(slug)),
+  );
+  const api = perPublication.flat() as AgenticVideo[];
+  return mergeBySlug(agenticVideos, api);
 }
 
-export async function getAllSchoolArticles(): Promise<SchoolVideo[]> {
-  const api = await fetchPublishedSafe(LEARN_PUBLICATION);
-  return mergeBySlug(schoolVideos, api as SchoolVideo[]);
-}
-
-export async function findResearchArticle(slug: string): Promise<ResearchVideo | undefined> {
-  return (await getAllResearchArticles()).find((v) => v.slug === slug);
-}
-
-export async function findSchoolArticle(slug: string): Promise<SchoolVideo | undefined> {
-  return (await getAllSchoolArticles()).find((v) => v.slug === slug);
+export async function findAgenticArticle(slug: string): Promise<AgenticVideo | undefined> {
+  return (await getAllAgenticArticles()).find((v) => v.slug === slug);
 }
 
 // Related resolution against the merged list (registry helpers only see

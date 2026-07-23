@@ -49,7 +49,7 @@ export default function Footer () {
         const isHomepage = normalizedPath === '/' || normalizedPath === '';
         const isEssaysPage = normalizedPath === '/essays' || normalizedPath.startsWith('/essays/');
         const isAboutPage = normalizedPath === '/about';
-        const isLearnPage = normalizedPath === '/learn' || normalizedPath.startsWith('/learn/');
+        const isAgenticPage = normalizedPath === '/agentic' || normalizedPath.startsWith('/agentic/');
         const isLearnArticle = normalizedPath.includes('/learn/articles/');
         const isCoursesPage = normalizedPath === '/courses' || normalizedPath.startsWith('/courses/');
         const isTemplatesPage = normalizedPath === '/workflows' || normalizedPath.startsWith('/workflows/');
@@ -60,7 +60,6 @@ export default function Footer () {
         const isTermsPage = normalizedPath === '/terms';
         const isPrivacyPage = normalizedPath === '/privacy';
         const isGlossaryPage = normalizedPath === '/glossary' || normalizedPath.startsWith('/glossary/');
-        const isResearchPage = normalizedPath === '/research' || normalizedPath.startsWith('/research/');
         const isInfographicsPage = normalizedPath === '/infographics' || normalizedPath.startsWith('/infographics/');
         // Check for 404 page - Next.js uses various paths
         // Also check body classes as fallback since pathname might not be reliable
@@ -79,7 +78,7 @@ export default function Footer () {
         // NOTE: the homepage intentionally falls through to the default Navy Dark
         // footer even when the IC page itself is in light/navy-calm mode — the
         // user wants a single, consistent footer treatment across the site.
-        void (isHomepage || isEssaysPage || isAboutPage || isLearnPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isResearchPage || isInfographicsPage);
+        void (isHomepage || isEssaysPage || isAboutPage || isAgenticPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isInfographicsPage);
 
         if (isModelsPage) {
           // Check localStorage for models page theme
@@ -280,9 +279,8 @@ export default function Footer () {
             title="Resources"
             links={[
               { href: "/docs", text: "Docs" },
-              { href: "/learn/", text: "Learn" },
+              { href: "/agentic/", text: "The Agentic Engineer" },
               { href: "/courses/", text: "AI Courses" },
-              { href: "/research/", text: "Research" },
             ]}
           />
           

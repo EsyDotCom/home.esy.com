@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Clock, ArrowRight, Play } from "lucide-react";
-import { type SchoolVideo, formatDuration } from "@/data/school-videos";
+import { type AgenticVideo, formatDuration } from "@/data/agentic-videos";
 import { navyCalmLightTheme as theme } from "@/lib/theme";
 
-export interface RelatedVideosProps {
-  videos: SchoolVideo[];
+export interface AgenticRelatedVideosProps {
+  videos: AgenticVideo[];
 }
 
-export function RelatedVideos({ videos }: RelatedVideosProps) {
+export function AgenticRelatedVideos({ videos }: AgenticRelatedVideosProps) {
   if (!videos || videos.length === 0) return null;
 
   return (
@@ -29,10 +29,10 @@ export function RelatedVideos({ videos }: RelatedVideosProps) {
             color: theme.muted,
           }}
         >
-          More videos
+          More from The Agentic Engineer
         </span>
         <Link
-          href="/learn"
+          href="/agentic"
           style={{
             display: "flex",
             alignItems: "center",
@@ -56,7 +56,7 @@ export function RelatedVideos({ videos }: RelatedVideosProps) {
           return (
             <Link
               key={video.slug}
-              href={`/learn/${video.slug}`}
+              href={`/agentic/${video.slug}`}
               style={{
                 display: "flex",
                 gap: 12,
@@ -146,6 +146,7 @@ export function RelatedVideos({ videos }: RelatedVideosProps) {
                     year: "numeric",
                     month: "short",
                     day: "numeric",
+                    timeZone: "UTC",
                   })}
                 </p>
               </div>

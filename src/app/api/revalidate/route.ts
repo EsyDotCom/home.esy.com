@@ -15,12 +15,12 @@ type RevalidateBody = {
   categories?: string[];
 };
 
-// Publication slug -> esy.com URL prefix. The Publication is the destination;
-// there is no `kind` axis anymore (school collapsed into the esy-learn publication
-// served at /learn since Jun 2026).
+// Publication slug -> esy.com URL prefix. Both publications now feed the merged
+// /agentic hub (The Agentic Engineer, Jul 2026), so a publish/unpublish on either
+// revalidates the same routes.
 const PUBLICATION_TO_PATH: Record<string, string> = {
-  "esy-research": "research",
-  "esy-learn": "learn",
+  "esy-research": "agentic",
+  "esy-learn": "agentic",
 };
 
 /**

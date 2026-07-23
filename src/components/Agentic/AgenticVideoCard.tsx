@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Play, Clock } from "lucide-react";
-import { formatDuration } from "@/data/research-videos";
+import { formatDuration } from "@/data/agentic-videos";
 import { navyCalmLightTheme as theme } from "@/lib/theme";
 
-export interface ResearchVideoCardProps {
+export interface AgenticVideoCardProps {
   title: string;
   slug: string;
   thumbnailUrl?: string;
@@ -15,7 +15,7 @@ export interface ResearchVideoCardProps {
   publishedAt?: string;
 }
 
-export function ResearchVideoCard({
+export function AgenticVideoCard({
   title,
   slug,
   thumbnailUrl,
@@ -24,7 +24,7 @@ export function ResearchVideoCard({
   categoryLabel,
   tags,
   publishedAt,
-}: ResearchVideoCardProps) {
+}: AgenticVideoCardProps) {
   const thumbnailSrc =
     thumbnailUrl ||
     (muxPlaybackId
@@ -43,7 +43,7 @@ export function ResearchVideoCard({
     : null;
 
   return (
-    <Link href={`/research/${slug}`} style={{ textDecoration: "none", color: "inherit", minWidth: 0 }}>
+    <Link href={`/agentic/${slug}`} style={{ textDecoration: "none", color: "inherit", minWidth: 0 }}>
       <div
         style={{
           borderRadius: "16px",

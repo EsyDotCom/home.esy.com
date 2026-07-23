@@ -3,12 +3,16 @@ export interface WorkflowStage {
   sublabel: string;
 }
 
-export interface ResearchVideo {
+// The Agentic Engineer merges the former /research and /learn registries. The
+// three research categories remain the primary shelves, but category is a plain
+// string so tutorials published from the esy-learn publication (which use
+// free-form categories) interleave without a type change.
+export interface AgenticVideo {
   slug: string;
   title: string;
   description: string;
-  category: "ai-tools" | "workflows" | "models";
-  categoryLabel: "AI Coding Tools" | "Workflow Research" | "Model Research";
+  category: string;
+  categoryLabel: string;
   durationSeconds: number;
   publishedAt: string;
   muxPlaybackId: string;
@@ -21,7 +25,7 @@ export interface ResearchVideo {
   stages?: WorkflowStage[];
 }
 
-export const researchVideos: ResearchVideo[] = [
+export const agenticVideos: AgenticVideo[] = [
   // First entry in the models category — fast take on launch day; the deep-dive
   // evaluation is a separate, later video.
   {
@@ -269,41 +273,17 @@ The overarching pattern: AI coding tools amplify your engineering judgment, they
   },
 ];
 
-export function getPublishedResearchVideos(): ResearchVideo[] {
-  return [...researchVideos].sort(
+export function getPublishedAgenticVideos(): AgenticVideo[] {
+  return [...agenticVideos].sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
 }
 
-export function getResearchVideoBySlug(
+export function getAgenticVideoBySlug(
   slug: string
-): ResearchVideo | undefined {
-  return researchVideos.find((v) => v.slug === slug);
-}
-
-export function getRelatedResearchVideos(
-  currentSlug: string,
-  relatedSlugs: string[],
-  limit = 4
-): ResearchVideo[] {
-  const related = relatedSlugs
-    .map((slug) => researchVideos.find((v) => v.slug === slug))
-    .filter((v): v is ResearchVideo => v !== undefined);
-
-  if (related.length >= limit) return related.slice(0, limit);
-
-  const remaining = getPublishedResearchVideos()
-    .filter((v) => v.slug !== currentSlug && !relatedSlugs.includes(v.slug))
-    .slice(0, limit - related.length);
-
-  return [...related, ...remaining].slice(0, limit);
-}
-
-export function getResearchVideosByCategory(
-  category: ResearchVideo["category"]
-): ResearchVideo[] {
-  return getPublishedResearchVideos().filter((v) => v.category === category);
+): AgenticVideo | undefined {
+  return agenticVideos.find((v) => v.slug === slug);
 }
 
 export function formatDuration(seconds: number): string {

@@ -7,23 +7,23 @@ import { Calendar, Clock, ArrowRight, Mail } from "lucide-react";
 import type { MuxPlayerElement } from "@mux/mux-player-react";
 import { EsyLoader } from "@/components/EsyLoader";
 import {
-  type ResearchVideo,
+  type AgenticVideo,
   type WorkflowStage,
   formatDuration,
-} from "@/data/research-videos";
+} from "@/data/agentic-videos";
 import type { TranscriptSegment } from "@/lib/transcripts";
 import { VideoPlayer } from "@/components/School/VideoPlayer";
 import { TranscriptToggle } from "@/components/School/TranscriptToggle";
 import { VideoTranscript } from "@/components/Research/VideoTranscript";
-import { ResearchNewsletterBar } from "@/components/Research/ResearchNewsletterBar";
-import { ResearchRelatedVideos } from "@/components/Research/ResearchRelatedVideos";
+import { AgenticNewsletterBar } from "@/components/Agentic/AgenticNewsletterBar";
+import { AgenticRelatedVideos } from "@/components/Agentic/AgenticRelatedVideos";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import EnhancedMarkdownRenderer from "@/components/SchoolArticle/EnhancedMarkdownRenderer";
 import { navyCalmLightTheme as theme } from "@/lib/theme";
 
-interface ResearchVideoPageClientProps {
-  video: ResearchVideo;
-  related: ResearchVideo[];
+interface AgenticVideoPageClientProps {
+  video: AgenticVideo;
+  related: AgenticVideo[];
   /** Build-time parsed SRT segments; null when no transcript file exists. */
   transcriptSegments?: TranscriptSegment[] | null;
 }
@@ -46,6 +46,8 @@ function useBreakpoint(): Breakpoint {
   return bp;
 }
 
+// Sidebar capture posts to the surviving (default) newsletter list, matching
+// the hero and the sticky bar.
 function SidebarNewsletter() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<
@@ -63,7 +65,7 @@ function SidebarNewsletter() {
     }
     setStatus("loading");
     try {
-      const res = await fetch("/api/newsletter/research/subscribe", {
+      const res = await fetch("/api/newsletter/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: trimmed }),
@@ -105,7 +107,7 @@ function SidebarNewsletter() {
             margin: 0,
           }}
         >
-          Esy Research
+          The Agentic Engineer
         </h4>
       </div>
       <p
@@ -115,7 +117,7 @@ function SidebarNewsletter() {
           margin: "0 0 12px",
         }}
       >
-        Engineering deep dives and AI tool breakdowns weekly.
+        One agentic workflow per week — the output, the system design, and the business behind it.
       </p>
 
       {status === "success" ? (
@@ -315,11 +317,11 @@ function WorkflowPipeline({
   );
 }
 
-export default function ResearchVideoPageClient({
+export default function AgenticVideoPageClient({
   video,
   related,
   transcriptSegments,
-}: ResearchVideoPageClientProps) {
+}: AgenticVideoPageClientProps) {
   const bp = useBreakpoint();
   const isMobile = bp === "mobile";
   const isTablet = bp === "tablet";
@@ -362,7 +364,7 @@ export default function ResearchVideoPageClient({
           <Breadcrumbs
             items={[
               { label: "Home", href: "/" },
-              { label: "Research", href: "/research" },
+              { label: "The Agentic Engineer", href: "/agentic" },
               {
                 label:
                   isMobile && video.title.length > 30
@@ -418,7 +420,7 @@ export default function ResearchVideoPageClient({
       )}
 
       {/* Newsletter bar */}
-      <ResearchNewsletterBar />
+      <AgenticNewsletterBar />
 
       {/* Content area */}
       <div
@@ -747,7 +749,7 @@ export default function ResearchVideoPageClient({
               }}
             >
               {related.length > 0 && (
-                <ResearchRelatedVideos videos={related} />
+                <AgenticRelatedVideos videos={related} />
               )}
 
               <div

@@ -3,7 +3,7 @@
 import React from "react";
 import { CheckCircle2 } from "lucide-react";
 
-interface ResearchNewsletterProps {
+interface AgenticNewsletterProps {
   emailInputRef: React.RefObject<HTMLInputElement | null>;
   handleNewsletterSubmit: (e: React.FormEvent) => void;
   onInputChange: () => void;
@@ -13,7 +13,7 @@ interface ResearchNewsletterProps {
   errorMessage?: string | null;
 }
 
-export default function ResearchNewsletter({
+export default function AgenticNewsletter({
   emailInputRef,
   handleNewsletterSubmit,
   onInputChange,
@@ -21,7 +21,7 @@ export default function ResearchNewsletter({
   isTablet,
   subscribeStatus = "idle",
   errorMessage = null,
-}: ResearchNewsletterProps) {
+}: AgenticNewsletterProps) {
   const isError = subscribeStatus === "error";
   const isSuccess = subscribeStatus === "success";
   const isLoading = subscribeStatus === "loading";
@@ -140,7 +140,7 @@ export default function ResearchNewsletter({
                     color: "#0f172a",
                   }}
                 >
-                  {isSuccess ? "You\u2019re in!" : "Esy Research"}
+                  {isSuccess ? "You\u2019re in!" : "The Agentic Engineer"}
                 </h3>
 
                 {/* Subtitle */}
@@ -149,13 +149,13 @@ export default function ResearchNewsletter({
                     fontSize: isMobile ? "0.875rem" : "0.9375rem",
                     color: "rgba(15, 23, 42, 0.7)",
                     margin: "0 auto 1.5rem auto",
-                    maxWidth: isMobile ? "100%" : "480px",
+                    maxWidth: isMobile ? "100%" : "520px",
                     lineHeight: "1.6",
                   }}
                 >
                   {isSuccess
                     ? "Check your inbox for a welcome email. If you don\u2019t see it, check your spam or promotions folder and mark us as safe."
-                    : "Engineering deep dives, AI coding tool breakdowns, and workflow architecture \u2014 delivered weekly."}
+                    : "One agentic workflow per week: the output first, then the system design behind it, the business it serves, and the engineering depth to build it yourself."}
                 </p>
 
                 {/* Trust indicators */}
@@ -288,9 +288,7 @@ export default function ResearchNewsletter({
                         target.style.transform = "translateY(0)";
                       }}
                     >
-                      {isLoading
-                        ? "Subscribing..."
-                        : "Subscribe to Esy Research"}
+                      {isLoading ? "Subscribing..." : "Subscribe"}
                     </button>
                   </div>
 

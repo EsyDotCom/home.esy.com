@@ -103,7 +103,8 @@ export const getSearchContextConfig = (context: SearchContext): SearchContextCon
 export const getSearchContextFromPath = (pathname: string): SearchContext => {
   if (pathname?.startsWith('/workflows')) return 'templates';
   if (pathname?.startsWith('/glossary')) return 'glossary';
-  if (pathname?.startsWith('/learn')) return 'school';
+  // Strict match: /agentic-workflows is an info page, handled below.
+  if (pathname === '/agentic' || pathname?.startsWith('/agentic/')) return 'school';
   if (pathname?.startsWith('/scrollytelling')) return 'scrollytelling';
   if (pathname?.startsWith('/essays')) return 'essays';
   if (pathname?.startsWith('/blog')) return 'blog';

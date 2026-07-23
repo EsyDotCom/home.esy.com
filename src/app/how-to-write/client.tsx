@@ -616,9 +616,8 @@ const HowToWriteHub = () => {
           </Link>
           
           <div style={styles.navLinks}>
-            <Link href="/research" style={styles.navLink}>Research</Link>
             <Link href="/essays/" style={styles.navLink}>Essays</Link>
-            <Link href="/learn/" style={styles.navLink}>Learn</Link>
+            <Link href="/agentic/" style={styles.navLink}>Agentic</Link>
             <button 
               style={styles.ctaButton}
               onMouseEnter={(e) => {

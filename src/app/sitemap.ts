@@ -5,8 +5,7 @@ import { getClipArtSlugs } from '@/data/clip-art-artifacts'
 import { getAllTemplates } from '@/lib/templates'
 import { courses } from '@/lib/learn/mockData'
 import {
-  getAllResearchArticles,
-  getAllSchoolArticles,
+  getAllAgenticArticles,
 } from '@/lib/published-articles'
 import {
   getAllPatternSlugs,
@@ -161,22 +160,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // their content in TS data registries (not content directories), so each
   // must be enumerated explicitly. prompt-library is intentionally excluded.
 
-  // Research video pages (lastModified from real publish dates)
-  const researchVideos = await getAllResearchArticles()
-  researchVideos.forEach(video => {
+  // Agentic Engineer video pages — the merged /research + /learn hub. Slugs
+  // come from both publications via the merged getter (lastModified from real
+  // publish dates).
+  const agenticVideos = await getAllAgenticArticles()
+  agenticVideos.forEach(video => {
     sitemap.push({
-      url: `${baseUrl}/research/${video.slug}/`,
-      lastModified: new Date(video.publishedAt),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    })
-  })
-
-  // School video pages (articles are covered via the content dir above)
-  const schoolVideos = await getAllSchoolArticles()
-  schoolVideos.forEach(video => {
-    sitemap.push({
-      url: `${baseUrl}/learn/${video.slug}/`,
+      url: `${baseUrl}/agentic/${video.slug}/`,
       lastModified: new Date(video.publishedAt),
       changeFrequency: 'monthly',
       priority: 0.7,
@@ -261,8 +251,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   console.log(`- ${essays.length} essay routes`)
   console.log(`- ${glossaryTerms.length} glossary routes`)
   console.log(`- ${infographicSlugs.length} infographic routes`)
-  console.log(`- ${researchVideos.length} research video routes`)
-  console.log(`- ${schoolVideos.length} learn video routes`)
+  console.log(`- ${agenticVideos.length} agentic video routes`)
   console.log(`- ${workflowTemplates.length} workflow template routes`)
   console.log(`- ${clipArtSlugs.length} clip art routes`)
   console.log(`- ${courseRouteCount} course routes`)
