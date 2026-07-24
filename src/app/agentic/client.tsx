@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { AgenticVideoCard } from "@/components/Agentic/AgenticVideoCard";
 import AgenticNewsletter from "@/components/Agentic/AgenticNewsletter";
 import { AgenticHero } from "@/components/Agentic/AgenticHero";
+import { AgenticOperator } from "@/components/Agentic/AgenticOperator";
 import { CoursesPromoSection } from "@/components/School/CoursesPromoSection";
 import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 import { navyCalmLightTheme as theme } from "@/lib/theme";
@@ -216,6 +217,9 @@ export default function AgenticClient({ videos }: { videos: AgenticVideo[] }) {
         isMobile={isMobile}
         isTablet={isTablet}
       />
+
+      {/* ═══ Operator band — who's behind this, for readers and recruiters ═══ */}
+      <AgenticOperator isMobile={isMobile} isTablet={isTablet} />
 
       <CoursesPromoSection isMobile={isMobile} isTablet={isTablet} />
 
