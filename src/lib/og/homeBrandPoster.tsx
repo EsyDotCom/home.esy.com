@@ -112,7 +112,7 @@ export async function renderHomeBrandPoster() {
                 fontSize: 38,
               }}
             >
-              Agentic workflows for the AI solopreneur.
+              Agentic workflows for the agentic engineer.
             </div>
           </div>
         </div>

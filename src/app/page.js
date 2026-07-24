@@ -6,14 +6,14 @@ import IntelligenceCircuitryPage from "../components/IntelligenceCircuitry/Intel
 //   "Automate research, verify citations, and produce publishable artifacts — all through agentic workflow templates. Structured, auditable output by default."
 
 const HOME_META_DESCRIPTION =
-  "Agentic workflow templates for the AI solopreneur. Run batch generations, track token costs, manage budgets, review output, and audit every run.";
+  "Agentic workflow templates for the agentic engineer. Run batch generations, track token costs, manage budgets, review output, and audit every run.";
 
 export const metadata = {
-  title: "Esy — Agentic Workflows for the AI Solopreneur",
+  title: "Esy — Agentic Workflows for the Agentic Engineer",
   description: HOME_META_DESCRIPTION,
   keywords: [
     "agentic workflow templates",
-    "AI solopreneur",
+    "agentic engineer",
     "workflow templates",
     "token cost tracking",
     "AI budget management",
@@ -26,7 +26,7 @@ export const metadata = {
   // og:image / twitter:image come from src/app/opengraph-image.tsx —
   // don't pin images here or they override the generated card.
   openGraph: {
-    title: "Esy — Agentic Workflows for the AI Solopreneur",
+    title: "Esy — Agentic Workflows for the Agentic Engineer",
     description: HOME_META_DESCRIPTION,
     type: "website",
     url: "https://esy.com",
@@ -35,7 +35,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Esy — Agentic Workflows for the AI Solopreneur",
+    title: "Esy — Agentic Workflows for the Agentic Engineer",
     description: HOME_META_DESCRIPTION,
     site: "@EsyDotCom",
   },
