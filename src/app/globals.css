@@ -28,6 +28,27 @@ img[src*="zev-uhuru"] {
   --zev-avatar-y: 12%;
 }
 
+.agentic-author-social-link {
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.agentic-author-social-link:hover {
+  color: #00a896;
+  border-color: rgba(0, 168, 150, 0.25);
+  background-color: rgba(0, 168, 150, 0.08);
+}
+
+/* Dark-surface variant for the /agentic operator band */
+.agentic-operator-social-link {
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.agentic-operator-social-link:hover {
+  color: #2dd4bf;
+  border-color: rgba(0, 212, 170, 0.4);
+  background-color: rgba(0, 212, 170, 0.1);
+}
+
 .zev-about-avatar {
   --zev-avatar-scale: 1.28;
   --zev-avatar-x: 5%;

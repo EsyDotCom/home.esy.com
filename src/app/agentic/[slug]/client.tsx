@@ -19,6 +19,7 @@ import { AgenticNewsletterBar } from "@/components/Agentic/AgenticNewsletterBar"
 import { AgenticRelatedVideos } from "@/components/Agentic/AgenticRelatedVideos";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import EnhancedMarkdownRenderer from "@/components/SchoolArticle/EnhancedMarkdownRenderer";
+import { AUTHOR_SOCIALS } from "@/components/Agentic/authorSocials";
 import { navyCalmLightTheme as theme } from "@/lib/theme";
 
 interface AgenticVideoPageClientProps {
@@ -29,6 +30,209 @@ interface AgenticVideoPageClientProps {
 }
 
 type Breakpoint = "mobile" | "tablet" | "desktop";
+
+// End-of-post author card — bio condensed from /about so readers landing from
+// YouTube or search can confirm who's behind the work without leaving the post.
+function AuthorCard({ isMobile }: { isMobile: boolean }) {
+  return (
+    <aside
+      aria-label="About the author"
+      style={{
+        marginTop: "2.5rem",
+        borderTop: `1px solid ${theme.border}`,
+        paddingTop: "2rem",
+      }}
+    >
+      <div
+        style={{
+          position: "relative",
+          borderRadius: 14,
+          border: `1px solid ${theme.border}`,
+          backgroundColor: theme.surfaceElevated,
+          padding: isMobile ? "1.5rem 1.25rem" : "1.75rem 2rem",
+          overflow: "hidden",
+        }}
+      >
+        {/* Soft accent glow, echoing the description panel treatment */}
+        <span
+          aria-hidden
+          style={{
+            position: "absolute",
+            top: -30,
+            right: -30,
+            width: 120,
+            height: 120,
+            borderRadius: "50%",
+            background: `radial-gradient(circle, ${theme.accentGlow} 0%, rgba(0, 168, 150, 0) 70%)`,
+            pointerEvents: "none",
+          }}
+        />
+
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: isMobile ? "flex-start" : "center",
+            gap: isMobile ? "1.25rem" : "1.75rem",
+          }}
+        >
+          {/* Portrait with accent ring */}
+          <div
+            style={{
+              flexShrink: 0,
+              padding: 3,
+              borderRadius: "50%",
+              border: `2px solid ${theme.accentBorder}`,
+            }}
+          >
+            <div
+              className="zev-about-avatar"
+              style={{
+                width: isMobile ? 72 : 88,
+                height: isMobile ? 72 : 88,
+                borderRadius: "50%",
+                overflow: "hidden",
+              }}
+            >
+              <Image
+                src="/images/zev-uhuru.png"
+                alt="Zev Uhuru"
+                width={88}
+                height={88}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
+            </div>
+          </div>
+
+          <div style={{ minWidth: 0 }}>
+            <span
+              style={{
+                display: "block",
+                fontSize: "0.6875rem",
+                fontWeight: 600,
+                textTransform: "uppercase" as const,
+                letterSpacing: "0.08em",
+                color: theme.accent,
+                marginBottom: 6,
+              }}
+            >
+              Written by
+            </span>
+            <h3
+              style={{
+                fontFamily: "var(--font-literata)",
+                fontSize: isMobile ? "1.125rem" : "1.25rem",
+                fontWeight: 500,
+                color: theme.text,
+                margin: 0,
+              }}
+            >
+              Zev Uhuru
+            </h3>
+            <span
+              style={{
+                display: "block",
+                fontSize: "0.8125rem",
+                color: theme.muted,
+                marginTop: 2,
+              }}
+            >
+              Agentic Engineer — NYC &amp; Miami
+            </span>
+            <p
+              style={{
+                fontSize: isMobile ? "0.875rem" : "0.9375rem",
+                lineHeight: 1.6,
+                color: theme.textSecondary,
+                margin: "0.75rem 0 0",
+              }}
+            >
+              I built Esy to understand how AI agents and agentic workflows
+              could automate the production of digital educational assets,
+              reliably and at scale. The first real test was{" "}
+              <a
+                href="https://clip.art"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: theme.accent,
+                  textDecoration: "none",
+                  borderBottom: `1px solid ${theme.accentBorder}`,
+                }}
+              >
+                clip.art
+              </a>{" "}
+              — a pipeline producing 250–1,000 reviewed assets a day.
+            </p>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: 8,
+                marginTop: "1rem",
+              }}
+            >
+              <div
+                role="group"
+                aria-label="Author social links"
+                style={{ display: "flex", alignItems: "center", gap: 8 }}
+              >
+                {AUTHOR_SOCIALS.map(({ href, label, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="agentic-author-social-link"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 32,
+                      height: 32,
+                      borderRadius: 8,
+                      border: `1px solid ${theme.border}`,
+                      color: theme.muted,
+                      backgroundColor: theme.surface,
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Icon size={16} />
+                  </a>
+                ))}
+              </div>
+              <Link
+                href="/about"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  marginLeft: 4,
+                  fontSize: "0.8125rem",
+                  fontWeight: 600,
+                  color: theme.accent,
+                  textDecoration: "none",
+                }}
+              >
+                More about me
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  );
+}
 
 function useBreakpoint(): Breakpoint {
   const [bp, setBp] = useState<Breakpoint>("desktop");
@@ -471,57 +675,105 @@ export default function AgenticVideoPageClient({
                 display: "flex",
                 alignItems: "center",
                 gap: 12,
+                flexWrap: "wrap",
               }}
             >
               <div
-                className="zev-byline-avatar"
                 style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: "50%",
-                  overflow: "hidden",
-                  flexShrink: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  flex: "1 1 auto",
+                  minWidth: 0,
                 }}
               >
-                <Image
-                  src="/images/zev-uhuru.png"
-                  alt="Zev Uhuru"
-                  width={40}
-                  height={40}
+                <div
+                  className="zev-byline-avatar"
                   style={{
                     width: 40,
                     height: 40,
-                    objectFit: "cover",
-                    display: "block",
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                    flexShrink: 0,
                   }}
-                />
+                >
+                  <Image
+                    src="/images/zev-uhuru.png"
+                    alt="Zev Uhuru"
+                    width={40}
+                    height={40}
+                    style={{
+                      width: 40,
+                      height: 40,
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 1,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "0.875rem",
+                      fontWeight: 600,
+                      color: theme.text,
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    Zev Uhuru
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "0.75rem",
+                      color: theme.muted,
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    Agentic Engineer
+                  </span>
+                </div>
               </div>
+
               <div
+                role="group"
+                aria-label="Author social links"
                 style={{
                   display: "flex",
-                  flexDirection: "column",
-                  gap: 1,
+                  alignItems: "center",
+                  gap: 8,
+                  marginLeft: "auto",
+                  flexShrink: 0,
                 }}
               >
-                <span
-                  style={{
-                    fontSize: "0.875rem",
-                    fontWeight: 600,
-                    color: theme.text,
-                    lineHeight: 1.3,
-                  }}
-                >
-                  Zev Uhuru
-                </span>
-                <span
-                  style={{
-                    fontSize: "0.75rem",
-                    color: theme.muted,
-                    lineHeight: 1.3,
-                  }}
-                >
-                  Agentic Engineer
-                </span>
+                {AUTHOR_SOCIALS.map(({ href, label, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="agentic-author-social-link"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 32,
+                      height: 32,
+                      borderRadius: 8,
+                      border: `1px solid ${theme.border}`,
+                      color: theme.muted,
+                      backgroundColor: theme.surfaceElevated,
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Icon size={16} />
+                  </a>
+                ))}
               </div>
             </div>
 
@@ -734,6 +986,8 @@ export default function AgenticVideoPageClient({
                 </div>
               </div>
             )}
+
+            <AuthorCard isMobile={isMobile} />
           </div>
 
           {/* Sidebar */}

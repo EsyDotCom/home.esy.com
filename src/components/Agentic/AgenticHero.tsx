@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Play, Clock } from "lucide-react";
 import { AgenticHeroSignup } from "./AgenticHeroSignup";
 import { type AgenticVideo, formatDuration } from "@/data/agentic-videos";
@@ -375,6 +376,51 @@ export function AgenticHero({
             Agentic workflows that ship real products — the demo first, then
             the system design and the business behind it.
           </p>
+
+          {/* Personhood signal above the fold — a quiet byline, not a portrait,
+              so the featured poster stays the focal point. */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              marginTop: "1.25rem",
+            }}
+          >
+            <div
+              className="zev-byline-avatar"
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: "50%",
+                overflow: "hidden",
+                flexShrink: 0,
+                border: "1px solid rgba(0, 212, 170, 0.35)",
+              }}
+            >
+              <Image
+                src="/images/zev-uhuru.png"
+                alt="Zev Uhuru"
+                width={36}
+                height={36}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
+            </div>
+            <p style={{ margin: 0, fontSize: "0.8125rem", lineHeight: 1.4 }}>
+              <span style={{ color: "rgba(255,255,255,0.9)", fontWeight: 600 }}>
+                by Zev Uhuru
+              </span>
+              <span style={{ color: "rgba(255,255,255,0.5)" }}>
+                {" "}
+                — Agentic Engineer, building Esy
+              </span>
+            </p>
+          </div>
 
           {/* Capture — its helper line carries the cadence, so nothing else
               competes below it */}
