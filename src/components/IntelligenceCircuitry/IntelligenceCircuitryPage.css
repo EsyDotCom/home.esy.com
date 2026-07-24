@@ -617,14 +617,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   width: 100%;
   max-width: 1060px;
   margin: 0 auto;
 }
 .ic-hero-copy {
   text-align: center;
-  max-width: 790px;
+  /* Wide enough that "Agentic Workflows for the" holds one line at the
+     capped 3.8rem size in Cormorant's true 700 cut. */
+  max-width: 880px;
 }
 .ic-hero-stack .ic-hero-ctas {
   justify-content: center;
@@ -653,6 +655,63 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+/* Proof badge above the headline — live dot + the clip.art volume claim. */
+.ic-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px;
+  margin-bottom: 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 212, 170, 0.3);
+  background: rgba(0, 212, 170, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.ic-hero-badge strong {
+  color: #5eead4;
+  font-weight: 600;
+}
+
+.ic-hero-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00d4aa;
+  flex-shrink: 0;
+  animation: icHeroBadgePulse 2.4s ease-out infinite;
+}
+
+@keyframes icHeroBadgePulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 212, 170, 0.5); }
+  70% { box-shadow: 0 0 0 7px rgba(0, 212, 170, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 212, 170, 0); }
+}
+
+/* Ghost secondary CTA — anchors down to the live runner demo. */
+.ic-hero-cta-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.ic-hero-cta-ghost:hover {
+  border-color: rgba(0, 212, 170, 0.45);
+  background: rgba(0, 212, 170, 0.08);
+  color: #ffffff;
+}
+
 .ic-hero-visual-band {
   width: 100%;
   display: flex;
@@ -667,6 +726,35 @@
   width: 100%;
   max-width: 960px;
   margin: 0 auto;
+}
+
+/* Floating live run card — anchored over the mockup's lower-right edge
+   with a gentle drift; the card itself owns its look (RunChecklistCard). */
+.ic-mockup-runcard {
+  position: absolute;
+  z-index: 2;
+  right: -36px;
+  bottom: 12%;
+  animation: icMockupFloat 6s ease-in-out infinite;
+}
+
+@keyframes icMockupFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ic-mockup-runcard { animation: none; }
+  .ic-hero-badge-dot { animation: none; }
+}
+
+/* Tuck the card inside the frame on smaller screens so nothing clips. */
+@media (max-width: 1100px) {
+  .ic-mockup-runcard { right: 12px; }
+}
+
+@media (max-width: 640px) {
+  .ic-mockup-runcard { display: none; }
 }
 
 /* Radial glow behind the frame — reinforces the dark hero palette. */
@@ -1288,98 +1376,63 @@
   z-index: 1;
 }
 
-.ic-shape-story-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--ic-space-lg);
+/* ── Run console section ──────────────────────────────────────
+   Navy band hosting the RunConsole (intake → live trace →
+   artifact). Deliberately mirrors the hero's palette so the page
+   alternates navy → light → navy with strong contrast. */
+.ic-runconsole-section {
   position: relative;
-  z-index: 1;
+  overflow: hidden;
+  padding: var(--ic-space-4xl) var(--ic-space-lg);
+  background: linear-gradient(172deg, #0a2540 0%, #0b2844 48%, #071a30 100%);
+  border-top: 1px solid rgba(0, 212, 170, 0.12);
+  border-bottom: 1px solid rgba(0, 212, 170, 0.12);
 }
 
-.ic-shape-story-card {
+/* Soft teal key light behind the console */
+.ic-runconsole-glow {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(ellipse at 50% 8%, rgba(0, 212, 170, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.ic-runconsole-header {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 32px 28px;
-  background: var(--ic-card-bg);
-  border: 1px solid var(--ic-card-border);
-  border-radius: 24px;
-  box-shadow: var(--ic-shadow-card);
-  transition: transform 0.35s var(--ic-ease), box-shadow 0.35s var(--ic-ease), border-color 0.35s var(--ic-ease);
+  max-width: 720px;
+  margin: 0 auto var(--ic-space-2xl);
+  text-align: center;
 }
 
-.ic-page--navy-calm .ic-shape-story-card,
-.ic-page--light .ic-shape-story-card {
-  background: #ffffff;
-}
-
-.ic-shape-story-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--ic-shadow-lg);
-  border-color: color-mix(in srgb, var(--ic-accent) 35%, transparent);
-}
-
-/* Step 2 (the template) is the key beat — give it a subtle accent frame. */
-.ic-shape-story-card--accent {
-  border-color: color-mix(in srgb, var(--ic-accent) 30%, transparent);
-  background:
-    linear-gradient(180deg, var(--ic-accent-tint) 0%, transparent 38%),
-    var(--ic-card-bg);
-}
-.ic-page--navy-calm .ic-shape-story-card--accent,
-.ic-page--light .ic-shape-story-card--accent {
-  background:
-    linear-gradient(180deg, var(--ic-accent-tint) 0%, transparent 42%),
-    #ffffff;
-}
-
-/* The glyph sits in a soft, rounded "stage" so all three line up cleanly. */
-.ic-shape-card-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 184px;
-  margin-bottom: 24px;
-  border-radius: 18px;
-  background: var(--ic-bg-alternate);
-  border: 1px solid var(--ic-border-subtle);
-}
-.ic-page--navy-calm .ic-shape-card-visual,
-.ic-page--light .ic-shape-card-visual {
-  background: var(--ic-bg-alternate);
-}
-
-.ic-shape-card-glyph {
-  height: 150px;
-  width: auto;
-  max-width: 86%;
-}
-
-.ic-shape-card-step {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  margin-bottom: 16px;
-  border-radius: 999px;
-  background: var(--ic-accent-tint);
-  color: var(--ic-accent);
-  font-family: var(--ic-font-mono);
+.ic-runconsole-eyebrow {
+  display: inline-block;
   font-size: 0.75rem;
   font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #2dd4bf;
+  margin-bottom: var(--ic-space-sm);
 }
 
-.ic-shape-story-card h3 {
-  margin-bottom: 10px;
-  font-size: 1.35rem;
-  font-weight: 650;
-  color: var(--ic-text);
+.ic-runconsole-title {
+  font-family: var(--ic-font-display);
+  font-size: clamp(1.875rem, 4.2vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0 0 var(--ic-space-md);
 }
 
-.ic-shape-story-card p {
-  color: var(--ic-text-secondary);
+.ic-runconsole-description {
+  font-size: 1rem;
   line-height: 1.65;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+}
+
+.ic-runconsole-section .ic-section-container {
+  position: relative;
 }
 
 /* ============================================
@@ -1599,7 +1652,6 @@
 }
 
 @media (max-width: 1024px) {
-  .ic-shape-story-grid,
   .ic-automation-container {
     grid-template-columns: 1fr;
   }
@@ -1610,7 +1662,6 @@
 }
 
 @media (max-width: 640px) {
-  .ic-shape-card-glyph { height: 132px; }
   .ic-automation-panel { min-height: 280px; }
 }
 
@@ -3914,6 +3965,45 @@
   border-bottom: 1px solid var(--ic-border-subtle);
 }
 
+/* Library link row under the showcase — replaces the inline essay grid.
+   One quiet line pointing at the full artifact libraries. */
+.ic-gallery-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: var(--ic-space-2xl);
+  padding-top: var(--ic-space-lg);
+  border-top: 1px solid var(--ic-border-subtle);
+}
+
+.ic-gallery-more-label {
+  font-size: 0.875rem;
+  color: var(--ic-text-secondary);
+}
+
+.ic-gallery-more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ic-accent);
+  text-decoration: none;
+}
+
+.ic-gallery-more-link:hover {
+  text-decoration: underline;
+}
+
+.ic-gallery-more-divider {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ic-border-subtle);
+}
+
 .ic-artifact-type-label {
   font-family: var(--ic-font-mono);
   font-size: 0.6875rem;
@@ -4641,6 +4731,222 @@
   color: #fafafa;
   border-color: rgba(255, 255, 255, 0.25);
   background: rgba(255, 255, 255, 0.02);
+}
+
+
+/* ─── Founder section ─────────────────────────────────────────
+   Letter-style founder note between the case study and the
+   final CTA: portrait, serif statement, signature block with
+   socials. Theme tokens only, so it adapts to all four themes.
+   ───────────────────────────────────────────────────────────── */
+/* Pinned to the navy/teal dark palette regardless of page theme, like the
+   hero: dark navy + blueprint grid is Esy's identity register, and the
+   founder statement belongs in it. Gives light themes a dark bookend
+   between the case study and the final CTA. */
+.ic-founder-section {
+  position: relative;
+  overflow: hidden;
+  padding: var(--ic-space-3xl) var(--ic-space-lg);
+  background: linear-gradient(168deg, #08203A 0%, #0A2540 52%, #051221 100%);
+  border-top: 1px solid rgba(0, 212, 170, 0.12);
+  border-bottom: 1px solid rgba(0, 212, 170, 0.12);
+}
+
+@media (min-width: 768px) {
+  .ic-founder-section {
+    padding: var(--ic-space-4xl) var(--ic-space-2xl);
+  }
+}
+
+/* Teal key light behind the portrait side, cool fill opposite */
+/* Very subtle key light behind the statement text on the right, kept off
+   the portrait so the face reads clean. */
+.ic-founder-bg-glow {
+  position: absolute;
+  inset: -25%;
+  background:
+    radial-gradient(ellipse at 72% 28%, rgba(0, 212, 170, 0.055) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.ic-founder-container {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.ic-founder-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ic-space-xl);
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .ic-founder-grid {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--ic-space-2xl);
+  }
+}
+
+/* Portrait — circular, soft accent ring, quiet caption */
+.ic-founder-portrait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ic-space-sm);
+}
+
+/* Clean solid ring only — no colored wash bleeding onto the face.
+   Neutral drop shadow gives depth without tinting the portrait. */
+.ic-founder-portrait-ring {
+  padding: 6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 212, 170, 0.45);
+  box-shadow: 0 18px 40px rgba(3, 12, 24, 0.55);
+}
+
+.ic-founder-portrait-frame {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .ic-founder-portrait-frame {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+.ic-founder-portrait-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Quiet, human caption — sentence case in the body font (not tracked mono),
+   so the portrait doesn't read like a spec label. */
+.ic-founder-portrait-caption {
+  font-family: var(--ic-font-body);
+  font-size: 0.8125rem;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Eyebrow — a soft, sentence-case label instead of an uppercase mono chip,
+   so the section opens like a personal note rather than a product callout. */
+.ic-founder-eyebrow {
+  display: inline-block;
+  font-family: var(--ic-font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: #2dd4bf;
+  margin-bottom: var(--ic-space-sm);
+}
+
+/* Statement — friendly serif set at a relaxed reading size and generous
+   line-height, no tight negative tracking, so it feels warm and easy to
+   read rather than a compressed commercial headline. */
+.ic-founder-statement {
+  font-family: var(--ic-font-display);
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.94);
+  margin: 0 0 var(--ic-space-lg);
+  max-width: 36rem;
+}
+
+/* Signature row — identity left, socials + about link right */
+.ic-founder-signature {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--ic-space-md);
+  padding-top: var(--ic-space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.ic-founder-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ic-founder-name {
+  font-family: var(--ic-font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.ic-founder-role {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.ic-founder-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--ic-space-sm);
+}
+
+.ic-founder-socials {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Scoped under .ic-founder-section and with an explicit svg color to
+   beat the theme's global link color (which was resolving currentColor
+   to #333 and making the icons invisible on the navy panel). */
+.ic-founder-section .ic-founder-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  border: 1px solid rgba(0, 212, 170, 0.28);
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.06);
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Keep currentColor inheritance intact so the icons follow the link
+   color. Lucide (LinkedIn/GitHub) are stroke-only; the X glyph fills.
+   Do not force fill here or the outline icons turn into solid blobs. */
+.ic-founder-section .ic-founder-social-link svg {
+  color: inherit;
+}
+
+.ic-founder-section .ic-founder-social-link:hover {
+  color: #7defd6;
+  border-color: rgba(0, 212, 170, 0.55);
+  background: rgba(0, 212, 170, 0.14);
+}
+
+.ic-founder-section .ic-founder-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #2dd4bf;
+  text-decoration: none;
+}
+
+.ic-founder-section .ic-founder-more:hover {
+  color: #7defd6;
+  text-decoration: underline;
 }
 
 
