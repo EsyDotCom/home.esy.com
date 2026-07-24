@@ -3,17 +3,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Clock } from 'lucide-react';
-// Hero now shows the real product shot; the synthesis canvas only supplies the
-// step glyphs reused under "How it works", so import just those named exports.
-import {
-  ShapeMessGlyph,
-  ShapeTemplateGlyph,
-  ShapeArtifactGlyph,
-} from './ShapeSynthesisCanvas';
+import { ArrowRight } from 'lucide-react';
 import ClipArtWordmark from './ClipArtWordmark';
-import { publishedVisualEssays, CATEGORY_COLORS, isNewEssay, type VisualEssay } from '@/data/visualEssays';
+// "How it works" is now the real Generate Clip Art Asset runner, not abstract glyphs.
+import RunChecklistCard from '@/components/WorkflowRunner/RunChecklistCard';
+import RunConsole from '@/components/WorkflowRunner/RunConsole';
 import { publishedInfographics, CLUSTER_LABELS, INFOGRAPHIC_CATEGORY_COLORS } from '@/data/infographics';
+// Same social set (LinkedIn, X, GitHub) used across the /agentic surfaces.
+import { AUTHOR_SOCIALS as FOUNDER_SOCIALS } from '@/components/Agentic/authorSocials';
 import './IntelligenceCircuitryPage.css';
 
 /**
@@ -29,20 +26,6 @@ import './IntelligenceCircuitryPage.css';
  * - Quality gates (logic gate glyphs)
  */
 
-
-// Featured artifacts for gallery - using essay data with source counts
-const FEATURED_ESSAY_IDS = ['the-manhattan-project', 'the-complete-history-of-soda', 'the-word-robot'];
-
-// Source counts for trust metadata (per artifact)
-const ARTIFACT_SOURCE_COUNTS: Record<string, number> = {
-  'the-manhattan-project': 7,
-  'the-complete-history-of-soda': 12,
-  'the-word-robot': 9,
-};
-
-const featuredArtifacts = FEATURED_ESSAY_IDS
-  .map(id => publishedVisualEssays.find(e => e.id === id))
-  .filter((e): e is VisualEssay => e !== undefined);
 
 // clip.art's actual catalog style vocabulary (sourced from clip.art's
 // generation form). Rendered as visual pills in the case study to convey
@@ -79,19 +62,6 @@ const CLIPART_SHOWCASE: Array<{
   { url: 'https://images.clip.art/free/lady-gardener-with-vegetables-jyy951.webp', alt: 'Lady Gardener with Vegetables', category: 'free' },
   { url: 'https://images.clip.art/free/the-letter-a-large-colorful-with-red-apples-surrounding-it-gsg2sj.webp', alt: 'Letter A with Apples', category: 'free' },
 ];
-
-/**
- * Get the hero image for an essay with fallback chain:
- * 1. heroImage (if defined in data)
- * 2. OG image at /og/[slug].png
- */
-const getEssayImage = (essay: VisualEssay): string => {
-  if (essay.heroImage) return essay.heroImage;
-  const slug = essay.href.split('/').pop();
-  if (slug) return `/og/${slug}.png`;
-  return '/og/default.png';
-};
-
 
 const INFOGRAPHIC_SHOWCASE_COUNT = 5;
 
@@ -256,20 +226,37 @@ const IntelligenceCircuitryPage: React.FC = () => {
           <div className="ic-hero-grid" />
         </div>
 
-        <div className="ic-hero-container flex items-start justify-center px-4 lg:px-8 pt-28 lg:pt-32 pb-16">
+        {/* Tightened vertical rhythm so the product shot (and its live run
+            card) crests above the fold on a typical laptop viewport. */}
+        <div className="ic-hero-container flex items-start justify-center px-4 lg:px-8 pt-20 lg:pt-24 pb-12">
           <div className="ic-hero-stack">
             <div className="ic-hero-copy text-white">
+              {/* Proof-first badge: the platform already ships real volume for
+                  a real product before the visitor reads a single claim. */}
+              <div className="ic-hero-badge">
+                <span className="ic-hero-badge-dot" aria-hidden="true" />
+                <span>
+                  Powering <strong>clip.art</strong> — 2,000+ assets shipped a week
+                </span>
+              </div>
+
               {/* Keep the hero friendly: messy material goes into an easy
                   template intake and comes back as finished work. */}
               {/* Alt headline — may return for A/B or seasonal rotation:
                   "Simple workflows for the" / "AI Solopreneur" (teal on line 2) */}
               <h1 style={{ 
                 fontFamily: 'Cormorant Garamond, Georgia, serif', 
-                fontSize: 'clamp(2.5rem, 6vw, 4rem)', 
-                fontWeight: 900, 
+                /* Cap at 3.8rem: at 4rem "Agentic Workflows for the" overflows
+                   the 790px copy column and widows "the" onto its own line. */
+                /* 5.2vw (not 6) keeps "Agentic Workflows for the" on one line
+                   down to ~1000px viewports; below that it wraps cleanly. */
+                fontSize: 'clamp(2.5rem, 5.2vw, 3.8rem)', 
+                /* Cormorant's true bold — 900 forces a synthesized weight that
+                   renders blocky/wonky, so pin the real 700 cut. */
+                fontWeight: 700, 
                 lineHeight: 1.1, 
                 letterSpacing: '-0.03em', 
-                marginBottom: '24px', 
+                marginBottom: '18px', 
                 color: '#FFFFFF',
                 maxWidth: '100%',
                 overflow: 'hidden'
@@ -280,7 +267,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                   background: 'linear-gradient(135deg, #00D4AA 0%, #5EEAD4 100%)', 
                   WebkitBackgroundClip: 'text', 
                   WebkitTextFillColor: 'transparent' 
-                }}>AI Solopreneur</span>
+                }}>Agentic Engineer</span>
               </h1>
 
               {/* Subheadline — plain language for non-dev visitors: templates
@@ -289,12 +276,14 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 fontSize: '1.125rem', 
                 lineHeight: 1.7, 
                 color: 'rgba(255, 255, 255, 0.72)', 
-                marginBottom: '32px' 
+                marginBottom: '24px' 
               }}>
                 Generate content at scale, manage quality with human-in-the-loop review, and keep a full record of every run. Esy is the workflow infrastructure for building vertical products on top.
               </p>
 
-              {/* CTAs — fixed to the navy-dark hero palette. */}
+              {/* CTAs — fixed to the navy-dark hero palette. Secondary CTA
+                  jumps to the live runner demo so skeptics see it working
+                  before reading anything else. */}
               <div className="ic-hero-ctas">
                 <Link 
                   href="/workflows"
@@ -314,6 +303,10 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 >
                   <span>Browse Workflow Templates</span>
                 </Link>
+                <a href="#how-it-works" className="ic-hero-cta-ghost">
+                  <span>Watch a workflow run</span>
+                  <ArrowRight size={15} />
+                </a>
               </div>
             </div>
 
@@ -360,6 +353,12 @@ const IntelligenceCircuitryPage: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Floating live run — a small checklist ticks off in green,
+                    then resolves into the shipped flower asset with its cost.
+                    One glance carries the whole pitch: real workflow, real
+                    artifact, known cost. */}
+                <RunChecklistCard className="ic-mockup-runcard" />
+
                 {/* Caption ties the product shot to the value prop — this is
                     the dashboard the headline is selling. */}
                 <p className="ic-app-mockup-caption">
@@ -377,153 +376,41 @@ const IntelligenceCircuitryPage: React.FC = () => {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          SHAPE STORY — carry the hero language into the page
-          Shapes are not decoration here: they are the product metaphor.
-          Messy pieces become one structured, reusable, finished piece of work.
+          HOW IT WORKS — the run console
+          A navy execution console where a real catalog workflow runs
+          itself: intake card → live step trace with per-step timing and
+          cost → the shipped artifact materializing with the run total.
+          The observability-style trace (steps, states, figures) is the
+          product demonstrating itself; cost-per-step is the Esy
+          differentiator so it gets its own column.
           ══════════════════════════════════════════════════════════════ */}
-      <section className="ic-shape-story-section">
+      <section id="how-it-works" className="ic-runconsole-section">
+        <div className="ic-runconsole-glow" aria-hidden="true" />
         <div className="ic-section-container">
-          <div className="ic-shape-story-header">
-            <span className="ic-section-eyebrow">How it works</span>
-            <h2 className="ic-section-title">
-              Messy pieces in. <span className="ic-gradient-text">Finished work out.</span>
+          <div className="ic-runconsole-header">
+            <span className="ic-runconsole-eyebrow">How it works</span>
+            <h2 className="ic-runconsole-title">
+                    Watch a real run, <span className="ic-gradient-text">start to finish.</span>
             </h2>
-            <p className="ic-section-description">
-              Start with whatever you have — notes, links, half-formed ideas.
-              A template does the hard part and hands you something polished.
-              Three steps, no prompt-wrangling.
+            <p className="ic-runconsole-description">
+              This is a real workflow from the catalog — the one clip.art runs
+              thousands of times a week. A short intake goes in, every step is
+              tracked as it runs, and the finished asset comes out with its
+              exact cost.
             </p>
           </div>
 
-          {/* Each step reuses the exact glyph the hero introduced, so the shape
-              language reads as one continuous story down the page. */}
-          <div className="ic-shape-story-grid">
-            <div className="ic-shape-story-card">
-              <div className="ic-shape-card-visual" aria-hidden="true">
-                <ShapeMessGlyph theme={theme} className="ic-shape-card-glyph" />
-              </div>
-              <span className="ic-shape-card-step">01</span>
-              <h3>Your messy pieces</h3>
-              <p>
-                Notes, links, goals, a few examples, a half-written prompt —
-                drop in whatever you have. No clean-up required.
-              </p>
-            </div>
-
-            <div className="ic-shape-story-card ic-shape-story-card--accent">
-              <div className="ic-shape-card-visual" aria-hidden="true">
-                <ShapeTemplateGlyph theme={theme} className="ic-shape-card-glyph" />
-              </div>
-              <span className="ic-shape-card-step">02</span>
-              <h3>Pick a template</h3>
-              <p>
-                Templates make it easy: answer a few simple questions, and Esy
-                handles the prompting, the steps, and the checks for you.
-              </p>
-            </div>
-
-            <div className="ic-shape-story-card">
-              <div className="ic-shape-card-visual" aria-hidden="true">
-                <ShapeArtifactGlyph theme={theme} className="ic-shape-card-glyph" />
-              </div>
-              <span className="ic-shape-card-step">03</span>
-              <h3>Get finished work</h3>
-              <p>
-                Out comes polished work — a report, a visual essay, an image
-                pack — with a clear record of how it was made.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          ARTIFACTS — Unified section: Infographics + Visual Essays
-          ══════════════════════════════════════════════════════════════ */}
-      <section className="ic-gallery-section">
-        <div className="ic-section-container">
-          <div className="ic-section-header">
-            <span className="ic-section-eyebrow">Workflow Output</span>
-            <h2 className="ic-section-title">
-              Finished work from <span className="ic-gradient-text">these workflows</span>
-            </h2>
-            <p className="ic-section-description">
-              Every piece below was produced by an Esy workflow. Each run captures full provenance — sources, prompts, models, processing, and cost.
-            </p>
-          </div>
-
-          {/* ── Infographics subsection ── */}
-          <InfographicShowcaseInline />
-
-          {/* ── Visual Essays subsection ── */}
-          <div className="ic-artifact-type-divider">
-            <span className="ic-artifact-type-label">Visual Essays</span>
-            <Link href="/essays/" className="ic-artifact-type-link">
-              View all <ArrowRight size={12} />
-            </Link>
-          </div>
-
-          <div className="ic-gallery-grid">
-            {featuredArtifacts.map((essay) => (
-              <Link
-                key={essay.id}
-                href={essay.href}
-                className="ic-artifact-card"
-              >
-                <div className="ic-artifact-image">
-                  <Image
-                    src={getEssayImage(essay)}
-                    alt={essay.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    style={{ objectFit: 'cover' }}
-                    unoptimized
-                  />
-                  <div className="ic-artifact-overlay" />
-                </div>
-                <div className="ic-artifact-content">
-                  <div className="ic-artifact-header">
-                    <span 
-                      className="ic-artifact-category"
-                      style={{ color: CATEGORY_COLORS[essay.category] }}
-                    >
-                      {essay.category}
-                    </span>
-                    <span className="ic-artifact-badge">Finished work</span>
-                    {isNewEssay(essay) && <span className="ic-artifact-new">New</span>}
-                  </div>
-                  <h3 className="ic-artifact-title">{essay.title}</h3>
-                  <p className="ic-artifact-subtitle">{essay.subtitle}</p>
-                  <div className="ic-artifact-meta">
-                    <Clock size={12} />
-                    <span>{essay.readTime}</span>
-                    <ArrowRight size={12} className="ic-artifact-arrow" />
-                  </div>
-                  <div className="ic-artifact-trust">
-                    <span className="ic-trust-sources">
-                      <span className="ic-trust-count">{ARTIFACT_SOURCE_COUNTS[essay.id] || 0}</span>
-                      <span className="ic-trust-label">sources</span>
-                    </span>
-                    <span className="ic-trust-divider" />
-                    <span className="ic-trust-qa">
-                      <span className="ic-trust-check">✓</span>
-                      <span className="ic-trust-label">QA passed</span>
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <RunConsole />
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
           CASE STUDY — clip.art runs on Esy
-          Immersive two-column treatment: story on the left (live
-          indicator, headline, body, style pill row, CTAs), 4×3
-          catalog grid on the right pulled directly from clip.art's
-          live CDN. Repeatable template for future case studies
-          (micro.film, lazy.dev, etc.).
+          Placed directly after "How it works" so the proof follows the
+          pitch: the workflow the visitor just watched is the one shipping
+          this catalog. Immersive two-column treatment: story on the left,
+          4×3 catalog grid on the right pulled from clip.art's live CDN.
+          Repeatable template for future case studies (micro.film, etc.).
           ══════════════════════════════════════════════════════════════ */}
       {CLIPART_SHOWCASE.length > 0 && (
         <section className="ic-casestudy-section">
@@ -532,12 +419,14 @@ const IntelligenceCircuitryPage: React.FC = () => {
             <div className="ic-casestudy-grid">
               {/* ── Story column ── */}
               <div className="ic-casestudy-story">
+                {/* "Case Study" leads the meta row — the user wants the
+                    section unmistakably labeled as one. */}
                 <div className="ic-casestudy-meta-row">
+                  <span className="ic-casestudy-tag">Case Study</span>
                   <span className="ic-casestudy-live">
                     <span className="ic-casestudy-live-dot" aria-hidden="true" />
                     Live · In Production
                   </span>
-                  <span className="ic-casestudy-tag">Case Study</span>
                 </div>
 
               <h2 className="ic-casestudy-title">
@@ -550,7 +439,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 <p className="ic-casestudy-description">
                   Consumer marketplace for clip art, coloring pages, and
                   illustrations. Esy workflows generate, post-process, and
-                  store every asset — provenance per run on prompt, model,
+                  store every asset — each run recorded on prompt, model,
                   processing, storage, and cost.
                 </p>
 
@@ -614,6 +503,120 @@ const IntelligenceCircuitryPage: React.FC = () => {
       )}
 
       {/* ══════════════════════════════════════════════════════════════
+          ARTIFACTS — finished work showcase
+          Slimmed to the infographic coverflow (the strongest visual);
+          the visual essay library moved off the homepage and is reachable
+          via the link row below the showcase.
+          ══════════════════════════════════════════════════════════════ */}
+      <section className="ic-gallery-section">
+        <div className="ic-section-container">
+          <div className="ic-section-header">
+            <span className="ic-section-eyebrow">Workflow Output</span>
+            <h2 className="ic-section-title">
+              Finished work from <span className="ic-gradient-text">these workflows</span>
+            </h2>
+            <p className="ic-section-description">
+              Every piece below was produced by an Esy workflow. Each run records exactly how it was made — sources, prompts, models, processing, and cost.
+            </p>
+          </div>
+
+          {/* ── Infographics showcase ── */}
+          <InfographicShowcaseInline />
+
+          {/* ── More finished work — library links instead of inline grids ── */}
+          <div className="ic-gallery-more">
+            <span className="ic-gallery-more-label">More from the workflows:</span>
+            <Link href="/essays/" className="ic-gallery-more-link">
+              Visual essay library <ArrowRight size={13} />
+            </Link>
+            <span className="ic-gallery-more-divider" aria-hidden="true" />
+            <Link href="/infographics" className="ic-gallery-more-link">
+              All infographics <ArrowRight size={13} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          FOUNDER — the person behind the platform
+          Letter-style first-person note between the proof (case study
+          above) and the close (final CTA below): people buy from real
+          people. Portrait + serif statement + signature block with
+          socials. Styled entirely with theme tokens so it adapts to
+          all four page themes.
+          ══════════════════════════════════════════════════════════════ */}
+      <section className="ic-founder-section" aria-label="From the founder">
+        <div className="ic-founder-bg-glow" aria-hidden="true" />
+        <div className="ic-founder-container">
+          <div className="ic-founder-grid">
+            {/* ── Portrait ── */}
+            <div className="ic-founder-portrait">
+              <div className="ic-founder-portrait-ring">
+                <div className="zev-about-avatar ic-founder-portrait-frame">
+                  <Image
+                    src="/images/zev-uhuru.png"
+                    alt="Zev Uhuru, founder of Esy"
+                    width={220}
+                    height={220}
+                    className="ic-founder-portrait-photo"
+                  />
+                </div>
+              </div>
+              <span className="ic-founder-portrait-caption">
+                Building in NYC &amp; Miami
+              </span>
+            </div>
+
+            {/* ── Letter ── */}
+            <div className="ic-founder-letter">
+              <span className="ic-founder-eyebrow">A note from the founder</span>
+
+              <p className="ic-founder-statement">
+                I built Esy to run my own products. Every asset clip.art
+                ships, 2,000+ a week, comes out of these workflows. Each one is
+                tracked, reviewed, and I know exactly what it cost to make. If I
+                can&apos;t see how a run happened, it doesn&apos;t ship.
+              </p>
+
+              <div className="ic-founder-signature">
+                <div className="ic-founder-identity">
+                  <span className="ic-founder-name">Zev Uhuru</span>
+                  <span className="ic-founder-role">
+                    Founder &amp; Agentic Engineer
+                  </span>
+                </div>
+
+                <div className="ic-founder-links">
+                  <div
+                    className="ic-founder-socials"
+                    role="group"
+                    aria-label="Founder social links"
+                  >
+                    {FOUNDER_SOCIALS.map(({ href, label, Icon }) => (
+                      <a
+                        key={label}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={label}
+                        className="ic-founder-social-link"
+                      >
+                        <Icon size={15} />
+                      </a>
+                    ))}
+                  </div>
+                  <Link href="/about" className="ic-founder-more">
+                    More about me
+                    <ArrowRight size={13} />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
           FINAL CTA — Engineer-first close
           Elevated cream surface (in navy-calm) sits between the case
           study above and the dark navy footer below, giving the page
@@ -630,7 +633,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
 
           <p className="ic-final-cta-description">
             Pick a workflow template. Let agents run the pipeline. Get back
-            publishable, finished work with full provenance — sources, prompts,
+            publishable, finished work with a full record — sources, prompts,
             models, processing, and cost.
           </p>
 

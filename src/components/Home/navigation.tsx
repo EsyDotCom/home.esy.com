@@ -4,10 +4,11 @@ import { useEffect, useState, useRef } from "react";
 import { usePathname } from 'next/navigation';
 import Logo from "@/components/Logo";
 import Link from "next/link";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight, Play, Clock } from "lucide-react";
 import HeaderSearch from "@/components/HeaderSearch/HeaderSearch";
 import NewsletterModal from "@/components/NewsletterModal/NewsletterModal";
 import { getAllTemplates } from "@/lib/templates";
+import { agenticVideos } from "@/data/agentic-videos";
 import { getCTAConfig, getResponsiveCTAText } from "@/lib/ctaMapping";
 import { lightTheme } from "@/lib/lightTheme";
 
@@ -31,6 +32,24 @@ export const getPageSuffix = (pathname) => {
   if (pathname?.startsWith('/blog')) return 'Blog';
   return '';
 };
+
+// Latest three episodes for the Agentic nav preview — resolved at module scope
+// since the registry is static. Falls back to the Mux poster frame when a video
+// has no curated thumbnail.
+const AGENTIC_NAV_EPISODES = [...agenticVideos]
+  .sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1))
+  .slice(0, 3)
+  .map((v) => ({
+    slug: v.slug,
+    title: v.title,
+    categoryLabel: v.categoryLabel,
+    minutes: Math.max(1, Math.round(v.durationSeconds / 60)),
+    thumb:
+      v.thumbnailUrl ||
+      (v.muxPlaybackId
+        ? `https://image.mux.com/${v.muxPlaybackId}/thumbnail.jpg?time=0&width=320`
+        : ""),
+  }));
 
 interface NavigationProps {
   showHeaderSearch?: boolean;
@@ -58,6 +77,20 @@ export default function Navigation({
   const [isArtifactsOpen, setIsArtifactsOpen] = useState(false);
   const [mobileArtifactsExpanded, setMobileArtifactsExpanded] = useState(false);
   const artifactsDropdownRef = useRef<HTMLDivElement>(null);
+  const [isAgenticOpen, setIsAgenticOpen] = useState(false);
+  const agenticDropdownRef = useRef<HTMLDivElement>(null);
+  // Short close delay so the panel survives the pointer crossing the gap
+  // between trigger and panel (NN/g hover-tolerance guidance).
+  const agenticCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const openAgentic = () => {
+    if (agenticCloseTimer.current) clearTimeout(agenticCloseTimer.current);
+    setIsAgenticOpen(true);
+  };
+  const closeAgentic = (immediate = false) => {
+    if (agenticCloseTimer.current) clearTimeout(agenticCloseTimer.current);
+    if (immediate) { setIsAgenticOpen(false); return; }
+    agenticCloseTimer.current = setTimeout(() => setIsAgenticOpen(false), 160);
+  };
     
   // Normalize pathname
     const normalizedPathForNav = pathname?.endsWith('/') && pathname.length > 1
@@ -556,18 +589,109 @@ export default function Navigation({
               </Link>
             )}
 
-            {/* Agentic — /agentic hub (The Agentic Engineer, merged Learn + Research) */}
+            {/* Agentic — content-rich preview panel for the /agentic hub.
+                The trigger still navigates; hovering opens a mega-dropdown that
+                shows the series identity and the latest episodes with real
+                thumbnails, so users see the page's content before clicking. */}
             {!isMobile && (
-              <Link
-                href="/agentic/"
-                className={`nav-link nav-link-learn ${pathname === '/agentic' || pathname?.startsWith('/agentic/') ? 'active' : ''}`}
-                style={{
-                  color: !navOnDark ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
-                  textShadow: 'none',
+              <div
+                className="nav-dropdown-container"
+                ref={agenticDropdownRef}
+                onMouseEnter={openAgentic}
+                onMouseLeave={() => closeAgentic()}
+                onBlur={(e) => {
+                  // Close when keyboard focus leaves the whole subtree.
+                  if (!agenticDropdownRef.current?.contains(e.relatedTarget as Node)) {
+                    closeAgentic(true);
+                  }
                 }}
               >
-                Agentic
-              </Link>
+                <Link
+                  href="/agentic/"
+                  className={`nav-dropdown-trigger ${isAgenticOpen ? 'active' : ''} ${pathname === '/agentic' || pathname?.startsWith('/agentic/') ? 'active' : ''}`}
+                  aria-expanded={isAgenticOpen}
+                  aria-haspopup="true"
+                  onFocus={openAgentic}
+                  onClick={() => closeAgentic(true)}
+                  style={{
+                    color: !navOnDark ? '#475569' : 'rgba(255, 255, 255, 0.85)',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <span>Agentic</span>
+                </Link>
+
+                <div
+                  className={`nav-agentic-dropdown ${isAgenticOpen ? 'open' : ''}`}
+                  role="menu"
+                >
+                  {/* Left rail — who/what the hub is */}
+                  <div className="nav-agentic-rail">
+                    <span className="nav-agentic-eyebrow">The Agentic Engineer</span>
+                    <p className="nav-agentic-tagline">
+                      Workflow demos, model research, and system design — from
+                      the engineer running Esy in production.
+                    </p>
+                    <div className="nav-agentic-byline">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src="/images/zev-uhuru.png" alt="" className="nav-agentic-avatar" />
+                      <div className="nav-agentic-byline-text">
+                        <span className="nav-agentic-byline-name">Zev Uhuru</span>
+                        <span className="nav-agentic-byline-role">Agentic Engineer</span>
+                      </div>
+                    </div>
+                    <Link
+                      href="/agentic/"
+                      className="nav-agentic-rail-cta"
+                      onClick={() => closeAgentic(true)}
+                    >
+                      Visit the hub
+                      <ArrowRight size={13} aria-hidden="true" />
+                    </Link>
+                  </div>
+
+                  {/* Right — latest episodes with live thumbnails */}
+                  <div className="nav-agentic-episodes">
+                    <span className="nav-agentic-episodes-label">Latest episodes</span>
+                    {AGENTIC_NAV_EPISODES.map((ep, i) => (
+                      <Link
+                        key={ep.slug}
+                        href={`/agentic/${ep.slug}/`}
+                        className="nav-agentic-episode"
+                        style={{ transitionDelay: isAgenticOpen ? `${60 + i * 45}ms` : '0ms' }}
+                        onClick={() => closeAgentic(true)}
+                      >
+                        <span className="nav-agentic-thumb">
+                          {ep.thumb && (
+                            /* eslint-disable-next-line @next/next/no-img-element */
+                            <img src={ep.thumb} alt="" loading="lazy" />
+                          )}
+                          <span className="nav-agentic-thumb-play">
+                            <Play size={11} fill="currentColor" aria-hidden="true" />
+                          </span>
+                        </span>
+                        <span className="nav-agentic-episode-body">
+                          <span className="nav-agentic-episode-title">{ep.title}</span>
+                          <span className="nav-agentic-episode-meta">
+                            <span className="nav-agentic-episode-cat">{ep.categoryLabel}</span>
+                            <span className="nav-agentic-episode-dot" aria-hidden="true" />
+                            <Clock size={11} aria-hidden="true" />
+                            {ep.minutes} min
+                          </span>
+                        </span>
+                      </Link>
+                    ))}
+                    <Link
+                      href="/agentic/"
+                      className="nav-agentic-all"
+                      onClick={() => closeAgentic(true)}
+                    >
+                      All episodes
+                      <ArrowRight size={13} aria-hidden="true" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
             )}
 
             {/* App CTA (hidden on mobile, available in hamburger menu) */}
