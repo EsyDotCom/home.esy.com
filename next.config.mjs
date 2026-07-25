@@ -122,6 +122,21 @@ const nextConfig = {
         destination: '/workflows/:path*',
         permanent: true,
       },
+      // /contact retired (Jul 2026). The page was orphaned pre-launch marketing
+      // — a waitlist, a "launching Q2 2025" promise, founding-member pricing —
+      // and its form's submit handler only console.logged, so anything sent
+      // through it was silently discarded. /about carries the real contact
+      // paths: email and a booking link.
+      {
+        source: '/contact',
+        destination: '/about',
+        permanent: true,
+      },
+      {
+        source: '/contact/:path*',
+        destination: '/about',
+        permanent: true,
+      },
       // Redirect spam traffic from /cities/* to root. This was a Netlify-only
       // production redirect, so keep it explicit for the Vercel cutover.
       {
