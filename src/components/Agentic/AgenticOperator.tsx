@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { AUTHOR_SOCIALS } from "./authorSocials";
-import { BookACallButton } from "./BookACallButton";
+import { BookACallButton } from "@/components/BookACallButton";
 
 // Operator band for the /agentic index — the recruiter-grade "who's behind
 // this" surface. Dark and bold to match the hero, with hard proof points from

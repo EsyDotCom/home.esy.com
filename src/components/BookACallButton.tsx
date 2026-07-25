@@ -4,12 +4,14 @@ import { useState } from "react";
 import { ArrowRight, CalendarDays } from "lucide-react";
 import { CAL_BOOKING_URL, isBookingEnabled } from "@/lib/booking";
 
-// The "Let's talk" CTA for the /agentic operator band.
+// The "Let's talk" CTA. Used in two places, both of which frame the ask as a
+// professional conversation: the /agentic operator band (after the résumé
+// proof points) and the /about sign-off (after the whole story).
 //
-// It lives only there, below the proof points, and deliberately not in the
-// hero: the fold's one job is the newsletter field, and a second unexplained
-// option there costs more subscribers than it wins conversations. Here the
-// case has already been made, so booking earns the filled-primary treatment.
+// Deliberately absent from the /agentic hero and the end-of-post author card.
+// The button's meaning comes from what surrounds it — under "WRITTEN BY" on a
+// tutorial it reads as "ask me about this post," which spends the calendar on
+// support requests rather than the conversations this is for.
 //
 // Rendered as a real anchor rather than a button so cmd-click, middle-click,
 // and "copy link" all behave. A cal.com popup embed can be layered on later as

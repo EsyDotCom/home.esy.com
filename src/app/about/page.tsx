@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Linkedin, Youtube } from 'lucide-react';
+import { BookACallButton } from '@/components/BookACallButton';
 
 export default function AboutPage() {
   const theme = {
@@ -233,6 +234,14 @@ export default function AboutPage() {
           </a>
           .
         </p>
+
+        {/* Booking lives here rather than on post pages: a reader who reaches
+            the end of the letter has the full picture of who I am, so the ask
+            arrives already framed as a professional conversation. Email stays
+            the low-commitment option above it. */}
+        <div style={{ marginTop: '1.75rem' }}>
+          <BookACallButton />
+        </div>
       </section>
     </div>
   );
