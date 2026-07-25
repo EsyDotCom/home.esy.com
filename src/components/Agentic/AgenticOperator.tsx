@@ -15,9 +15,12 @@ const PROOF_POINTS = [
     stat: "10+ yrs",
     label: "Shipping production web products — fuboTV, Vroom, Esy",
   },
+  // Counts the consolidation, not the providers: naming a number of providers
+  // caps a set that keeps growing and reads as a limit rather than the
+  // achievement. Don't reintroduce a provider or model count here.
   {
-    stat: "3 providers",
-    label: "Anthropic, OpenAI & Google behind one governed, cost-tracked gateway",
+    stat: "1 gateway",
+    label: "Open-weight and proprietary models, governed and cost-tracked per run",
   },
   {
     stat: "2,000+/wk",
