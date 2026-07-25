@@ -9,6 +9,7 @@ import HeaderSearch from "@/components/HeaderSearch/HeaderSearch";
 import NewsletterModal from "@/components/NewsletterModal/NewsletterModal";
 import { getAllTemplates } from "@/lib/templates";
 import { agenticVideos } from "@/data/agentic-videos";
+import { ARTIFACT_NAV_KINDS, ARTIFACT_NAV_TOTAL } from "@/lib/nav/artifactNav";
 import { getCTAConfig, getResponsiveCTAText } from "@/lib/ctaMapping";
 import { lightTheme } from "@/lib/lightTheme";
 
@@ -51,6 +52,17 @@ const AGENTIC_NAV_EPISODES = [...agenticVideos]
         : ""),
   }));
 
+// The nav's hover panels share one open slot (see openNavPanel below).
+// 'workflows' is retained for the parked WorkflowsNavPanel.
+type NavPanelId = 'artifacts' | 'workflows' | 'agentic';
+
+// Hover-intent timings. The open delay is what stops a pointer sweeping across
+// the nav from flickering all three panels open in sequence; it sits under the
+// ~200ms where a deliberate hover starts to feel laggy. The close delay is the
+// exit tolerance that lets the pointer cross the gap down into the panel.
+const PANEL_OPEN_DELAY_MS = 150;
+const PANEL_CLOSE_DELAY_MS = 250;
+
 interface NavigationProps {
   showHeaderSearch?: boolean;
   searchContext?: 'templates' | 'glossary' | 'school' | 'essays' | 'scrollytelling' | 'blog' | 'general';
@@ -74,22 +86,41 @@ export default function Navigation({
     // True while the nav overlaps the homepage's navy hero band — used to keep
     // links/logo light over the dark hero even though the page body is light.
     const [overHero, setOverHero] = useState(false);
-  const [isArtifactsOpen, setIsArtifactsOpen] = useState(false);
-  const [mobileArtifactsExpanded, setMobileArtifactsExpanded] = useState(false);
+  // Exactly one panel is open at a time, so a fast pointer sweep across the nav
+  // can never leave two panels stacked on screen mid-close.
+  const [openPanel, setOpenPanel] = useState<NavPanelId | null>(null);
   const artifactsDropdownRef = useRef<HTMLDivElement>(null);
-  const [isAgenticOpen, setIsAgenticOpen] = useState(false);
   const agenticDropdownRef = useRef<HTMLDivElement>(null);
-  // Short close delay so the panel survives the pointer crossing the gap
-  // between trigger and panel (NN/g hover-tolerance guidance).
-  const agenticCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const openAgentic = () => {
-    if (agenticCloseTimer.current) clearTimeout(agenticCloseTimer.current);
-    setIsAgenticOpen(true);
+  const panelOpenTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const panelCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clearPanelTimers = () => {
+    if (panelOpenTimer.current) clearTimeout(panelOpenTimer.current);
+    if (panelCloseTimer.current) clearTimeout(panelCloseTimer.current);
   };
-  const closeAgentic = (immediate = false) => {
-    if (agenticCloseTimer.current) clearTimeout(agenticCloseTimer.current);
-    if (immediate) { setIsAgenticOpen(false); return; }
-    agenticCloseTimer.current = setTimeout(() => setIsAgenticOpen(false), 160);
+  // Cold opens wait out the hover-intent delay; once a panel is up (or still
+  // inside its close delay) switching to a sibling trigger is instant, the way
+  // an OS menu bar behaves. `immediate` covers keyboard focus, always deliberate.
+  const openNavPanel = (id: NavPanelId, immediate = false) => {
+    clearPanelTimers();
+    if (immediate || openPanel !== null) {
+      setOpenPanel(id);
+      return;
+    }
+    panelOpenTimer.current = setTimeout(() => setOpenPanel(id), PANEL_OPEN_DELAY_MS);
+  };
+  // Also cancels a pending open, so a pointer that leaves before the delay
+  // elapses never opens anything at all.
+  const closeNavPanel = (immediate = false) => {
+    clearPanelTimers();
+    if (immediate) { setOpenPanel(null); return; }
+    panelCloseTimer.current = setTimeout(() => setOpenPanel(null), PANEL_CLOSE_DELAY_MS);
+  };
+  // Close when keyboard focus leaves a panel's whole subtree.
+  const handlePanelBlur = (
+    ref: React.RefObject<HTMLDivElement | null>,
+    e: React.FocusEvent,
+  ) => {
+    if (!ref.current?.contains(e.relatedTarget as Node)) closeNavPanel(true);
   };
     
   // Normalize pathname
@@ -455,19 +486,35 @@ export default function Navigation({
     return () => window.removeEventListener('scroll', handleScroll);
     }, [pathname, isLightMode, isNavyDark]);
 
-  // Close Artifacts dropdown on click outside
+  // Dismiss the open panel on an outside press (touch/click users never fire
+  // mouseleave) and on Escape, which the hover-only version never handled.
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        artifactsDropdownRef.current &&
-        !artifactsDropdownRef.current.contains(e.target as Node)
-      ) {
-        setIsArtifactsOpen(false);
+    if (!openPanel) return;
+    const containers = [artifactsDropdownRef, agenticDropdownRef];
+    const handlePressOutside = (e: MouseEvent) => {
+      if (containers.every((ref) => !ref.current?.contains(e.target as Node))) {
+        closeNavPanel(true);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeNavPanel(true);
+    };
+    document.addEventListener('mousedown', handlePressOutside);
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('mousedown', handlePressOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [openPanel]);
+
+  // Don't leave pending open/close timers behind on unmount.
+  useEffect(
+    () => () => {
+      if (panelOpenTimer.current) clearTimeout(panelOpenTimer.current);
+      if (panelCloseTimer.current) clearTimeout(panelCloseTimer.current);
+    },
+    [],
+  );
   
     // Over the navy hero (or any non-light page), the nav shows light links and
     // the light logo; over the light body it reverts to dark-on-light.
@@ -503,21 +550,22 @@ export default function Navigation({
           
           {/* Desktop Navigation */}
           <div className="nav-links">
-            {/* Artifacts Dropdown */}
+            {/* Artifacts — preview panel for the gallery. Rows carry a real
+                thumbnail and live count per artifact kind, so the panel shows
+                the work instead of describing it. */}
             <div 
               className="nav-dropdown-container"
               ref={artifactsDropdownRef}
-              onMouseEnter={() => {
-                setIsArtifactsOpen(true);
-              }}
-              onMouseLeave={() => setIsArtifactsOpen(false)}
+              onMouseEnter={() => openNavPanel('artifacts')}
+              onMouseLeave={() => closeNavPanel()}
+              onBlur={(e) => handlePanelBlur(artifactsDropdownRef, e)}
               >
               <Link
                 href="/artifacts/"
-                className={`nav-dropdown-trigger ${isArtifactsOpen ? 'active' : ''} ${pathname === '/artifacts' || pathname?.startsWith('/artifacts/') ? 'active' : ''}`}
-                aria-expanded={isArtifactsOpen}
-                aria-haspopup="true"
-                onClick={() => setIsArtifactsOpen(false)}
+                className={`nav-dropdown-trigger ${openPanel === 'artifacts' ? 'active' : ''} ${pathname === '/artifacts' || pathname?.startsWith('/artifacts/') ? 'active' : ''}`}
+                aria-expanded={openPanel === 'artifacts'}
+                onFocus={() => openNavPanel('artifacts', true)}
+                onClick={() => closeNavPanel(true)}
                 style={{
                   color: !navOnDark ? '#475569' : 'rgba(255, 255, 255, 0.85)',
                   textDecoration: 'none',
@@ -526,56 +574,70 @@ export default function Navigation({
                 <span>Artifacts</span>
               </Link>
 
-                <div 
-                className={`nav-artifacts-dropdown ${isArtifactsOpen ? 'open' : ''}`}
-                  role="menu"
-                >
-                  <div className="nav-artifacts-list">
-                    <Link 
-                      href="/essays/" 
-                      className="nav-artifact-item"
-                      onClick={() => setIsArtifactsOpen(false)}
-                    >
-                      <div className="nav-artifact-content">
-                        <span className="nav-artifact-title">Essays</span>
-                        <span className="nav-artifact-desc">Visual research narratives</span>
-                      </div>
-                    </Link>
-                    <Link 
-                      href="/infographics/" 
-                      className="nav-artifact-item"
-                      onClick={() => setIsArtifactsOpen(false)}
-                    >
-                      <div className="nav-artifact-content">
-                        <span className="nav-artifact-title">Infographics</span>
-                        <span className="nav-artifact-desc">Citation-verified visual data</span>
-                      </div>
-                    </Link>
-                    <Link
-                      href="/clip-art/"
-                      className="nav-artifact-item"
-                      onClick={() => setIsArtifactsOpen(false)}
-                    >
-                      <div className="nav-artifact-content">
-                        <span className="nav-artifact-title">Clip Art</span>
-                        <span className="nav-artifact-desc">Isolated visual assets, generated &amp; reviewed</span>
-                      </div>
-                    </Link>
-                  </div>
-                  <div className="nav-artifacts-footer">
-                    <Link
-                      href="/artifacts/"
-                      className="nav-artifacts-footer-link"
-                      onClick={() => setIsArtifactsOpen(false)}
-                    >
-                      All artifacts
-                      <ArrowRight size={14} aria-hidden="true" />
-                    </Link>
-                  </div>
+              <div
+                className={`nav-panel nav-artifacts-dropdown ${openPanel === 'artifacts' ? 'open' : ''}`}
+                aria-label="Artifacts"
+              >
+                {/* Left rail — what the gallery is, plus the live total */}
+                <div className="nav-panel-rail">
+                  <span className="nav-panel-eyebrow">Artifact Gallery</span>
+                  <p className="nav-panel-tagline">
+                    Finished work from Esy workflows. Every piece shows exactly
+                    how it was made.
+                  </p>
+                  <span className="nav-panel-stat">
+                    <strong>{ARTIFACT_NAV_TOTAL}</strong> published pieces
+                  </span>
+                  <Link
+                    href="/artifacts/"
+                    className="nav-panel-cta"
+                    onClick={() => closeNavPanel(true)}
+                  >
+                    Browse the gallery
+                    <ArrowRight size={13} aria-hidden="true" />
+                  </Link>
                 </div>
+
+                {/* Right — one row per artifact kind, thumbnail + live count */}
+                <div className="nav-panel-column">
+                  <span className="nav-panel-label">By form</span>
+                  {ARTIFACT_NAV_KINDS.map((kind, i) => (
+                    <Link
+                      key={kind.id}
+                      href={kind.href}
+                      className="nav-panel-row nav-artifact-row"
+                      style={{ transitionDelay: openPanel === 'artifacts' ? `${60 + i * 45}ms` : '0ms' }}
+                      onClick={() => closeNavPanel(true)}
+                    >
+                      <span className="nav-artifact-row__thumb">
+                        {kind.thumb && (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={kind.thumb} alt="" loading="lazy" />
+                        )}
+                      </span>
+                      <span className="nav-artifact-row__body">
+                        <span className="nav-artifact-row__title">{kind.label}</span>
+                        <span className="nav-artifact-row__desc">{kind.desc}</span>
+                      </span>
+                      <span className="nav-artifact-row__count">{kind.count}</span>
+                    </Link>
+                  ))}
+                  <Link
+                    href="/artifacts/"
+                    className="nav-panel-all"
+                    onClick={() => closeNavPanel(true)}
+                  >
+                    All artifacts
+                    <ArrowRight size={13} aria-hidden="true" />
+                  </Link>
+                </div>
+              </div>
             </div>
 
-            {/* Templates (hidden on mobile, available in hamburger menu) */}
+            {/* Workflows stays a direct link, not a panel: /workflows is the
+                site's primary destination and its own browse surface, and the
+                category taxonomy a panel would show is thinner than the live
+                catalog behind it. Parked panel: Home/WorkflowsNavPanel.tsx. */}
             {!isMobile && (
               <Link
                 href="/workflows/"
@@ -597,22 +659,16 @@ export default function Navigation({
               <div
                 className="nav-dropdown-container"
                 ref={agenticDropdownRef}
-                onMouseEnter={openAgentic}
-                onMouseLeave={() => closeAgentic()}
-                onBlur={(e) => {
-                  // Close when keyboard focus leaves the whole subtree.
-                  if (!agenticDropdownRef.current?.contains(e.relatedTarget as Node)) {
-                    closeAgentic(true);
-                  }
-                }}
+                onMouseEnter={() => openNavPanel('agentic')}
+                onMouseLeave={() => closeNavPanel()}
+                onBlur={(e) => handlePanelBlur(agenticDropdownRef, e)}
               >
                 <Link
                   href="/agentic/"
-                  className={`nav-dropdown-trigger ${isAgenticOpen ? 'active' : ''} ${pathname === '/agentic' || pathname?.startsWith('/agentic/') ? 'active' : ''}`}
-                  aria-expanded={isAgenticOpen}
-                  aria-haspopup="true"
-                  onFocus={openAgentic}
-                  onClick={() => closeAgentic(true)}
+                  className={`nav-dropdown-trigger ${openPanel === 'agentic' ? 'active' : ''} ${pathname === '/agentic' || pathname?.startsWith('/agentic/') ? 'active' : ''}`}
+                  aria-expanded={openPanel === 'agentic'}
+                  onFocus={() => openNavPanel('agentic', true)}
+                  onClick={() => closeNavPanel(true)}
                   style={{
                     color: !navOnDark ? '#475569' : 'rgba(255, 255, 255, 0.85)',
                     textDecoration: 'none',
@@ -622,8 +678,8 @@ export default function Navigation({
                 </Link>
 
                 <div
-                  className={`nav-agentic-dropdown ${isAgenticOpen ? 'open' : ''}`}
-                  role="menu"
+                  className={`nav-panel nav-agentic-dropdown ${openPanel === 'agentic' ? 'open' : ''}`}
+                  aria-label="Agentic"
                 >
                   {/* Left rail — who/what the hub is */}
                   <div className="nav-agentic-rail">
@@ -643,7 +699,7 @@ export default function Navigation({
                     <Link
                       href="/agentic/"
                       className="nav-agentic-rail-cta"
-                      onClick={() => closeAgentic(true)}
+                      onClick={() => closeNavPanel(true)}
                     >
                       Visit the hub
                       <ArrowRight size={13} aria-hidden="true" />
@@ -658,8 +714,8 @@ export default function Navigation({
                         key={ep.slug}
                         href={`/agentic/${ep.slug}/`}
                         className="nav-agentic-episode"
-                        style={{ transitionDelay: isAgenticOpen ? `${60 + i * 45}ms` : '0ms' }}
-                        onClick={() => closeAgentic(true)}
+                        style={{ transitionDelay: openPanel === 'agentic' ? `${60 + i * 45}ms` : '0ms' }}
+                        onClick={() => closeNavPanel(true)}
                       >
                         <span className="nav-agentic-thumb">
                           {ep.thumb && (
@@ -684,7 +740,7 @@ export default function Navigation({
                     <Link
                       href="/agentic/"
                       className="nav-agentic-all"
-                      onClick={() => closeAgentic(true)}
+                      onClick={() => closeNavPanel(true)}
                     >
                       All episodes
                       <ArrowRight size={13} aria-hidden="true" />

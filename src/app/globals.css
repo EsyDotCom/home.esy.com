@@ -387,7 +387,8 @@ html {
   width: 100%;
 }
 
-/* Templates link - elegant teal underline */
+/* Workflows link - elegant teal underline. Workflows is a direct link rather
+   than a hover panel, so it keeps its own hover indicator. */
 .nav-link-templates {
   position: relative;
 }
@@ -412,7 +413,7 @@ html {
   width: 70%;
 }
 
-/* School link - elegant teal underline (mirrors Templates) */
+/* School link - elegant teal underline (mirrors Workflows) */
 .nav-link-school {
   position: relative;
 }
@@ -542,495 +543,22 @@ html {
   outline-offset: 2px;
 }
 
-/* Dropdown Menu - Always rendered, CSS-driven visibility */
-.nav-artifacts-dropdown {
+/* ============================================
+   NAV PANELS — shared chrome
+   The nav dropdowns (Artifacts, Agentic) are navy preview panels rather than
+   white menus, so adjacent triggers read as one system. This block owns the
+   surface and the motion; each panel below sets only its own width, columns,
+   and content density.
+   ============================================ */
+.nav-panel {
   position: absolute;
   top: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 240px;
-  max-width: 300px;
-  width: max-content;
-  /* Light panel in every nav theme — a white menu reads cleanly over both the
-     homepage's dark hero and the light content pages. */
-  background: rgba(255, 255, 255, 0.98);
-  border: 1px solid rgba(10, 37, 64, 0.1);
-  border-radius: 12px;
-  z-index: 1000;
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  box-shadow:
-    0 8px 32px rgba(10, 37, 64, 0.12),
-    0 2px 8px rgba(10, 37, 64, 0.08),
-    0 0 0 1px rgba(10, 37, 64, 0.04) inset;
-
-  /* Closed state */
-    opacity: 0;
-  visibility: hidden;
-  max-height: 0;
-  overflow: hidden;
-  transform: translateX(-50%) translateY(-4px);
-  transition: 
-    opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-    max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-  }
-
-/* Open state */
-.nav-artifacts-dropdown.open {
-    opacity: 1;
-  visibility: visible;
-  max-height: 400px;
-  overflow: visible;
-  transform: translateX(-50%) translateY(0);
-  pointer-events: auto;
-}
-
-/* Transparent hover bridge — the menu sits 6px below the trigger, leaving a dead
-   zone that fired mouseleave and closed it mid-move. This spans the gap so the
-   pointer stays within the dropdown's subtree the whole way down. */
-.nav-artifacts-dropdown::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: 0;
-  right: 0;
-  height: 10px;
-}
-
-/* Artifact Items List */
-.nav-artifacts-list {
-  padding: 0.375rem;
-}
-
-.nav-artifact-item {
-  display: block;
-  padding: 0.625rem 0.875rem;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.15s ease, color 0.15s ease;
-  color: rgba(10, 37, 64, 0.9);
-  position: relative;
-}
-
-.nav-artifact-item:hover {
-  background: rgba(0, 168, 150, 0.08);
-}
-
-.nav-artifact-item:active {
-  background: rgba(0, 168, 150, 0.14);
-}
-
-.nav-artifact-content {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.nav-artifact-title {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #0A2540;
-  line-height: 1.3;
-  transition: color 0.15s ease;
-}
-
-.nav-artifact-desc {
-  font-size: 0.75rem;
-  color: rgba(10, 37, 64, 0.6);
-  line-height: 1.4;
-  transition: color 0.15s ease;
-}
-
-.nav-artifact-item:hover .nav-artifact-title {
-  color: #00A896;
-}
-
-.nav-artifact-item:hover .nav-artifact-desc {
-  color: rgba(10, 37, 64, 0.75);
-}
-
-/* Dropdown Footer */
-.nav-artifacts-footer {
-  padding: 0.75rem 1.25rem;
-  border-top: 1px solid rgba(10, 37, 64, 0.08);
-  margin-top: 0.25rem;
-}
-
-.nav-artifacts-footer-link {
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: rgba(10, 37, 64, 0.6);
-  text-decoration: none;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.nav-artifacts-footer-link:hover {
-  color: #00A896;
-  transform: translateX(2px);
-}
-
-/* ============================================
-   AGENTIC MEGA-DROPDOWN
-   A content preview of /agentic: series identity on a navy rail, latest
-   episodes with real thumbnails on the right. Contained panel (Stripe-style),
-   ~200ms open, staggered episode reveal.
-   ============================================ */
-.nav-agentic-dropdown {
-  position: absolute;
-  top: calc(100% + 6px);
-  /* Right-anchored: the trigger sits near the viewport edge, so a centered
-     560px panel would clip. Aligning to the trigger's right keeps it on-screen. */
-  right: -8px;
-  display: flex;
-  width: 560px;
-  background: rgba(255, 255, 255, 0.98);
-  border: 1px solid rgba(10, 37, 64, 0.1);
-  border-radius: 14px;
-  overflow: hidden;
-  z-index: 1000;
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  box-shadow:
-    0 24px 64px rgba(10, 37, 64, 0.18),
-    0 4px 16px rgba(10, 37, 64, 0.1),
-    0 0 0 1px rgba(10, 37, 64, 0.04) inset;
-
-  /* Closed state */
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-6px) scale(0.98);
-  transform-origin: top right;
-  transition:
-    opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-}
-
-.nav-agentic-dropdown.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0) scale(1);
-  pointer-events: auto;
-}
-
-/* Hover bridge over the 6px gap between trigger and panel */
-.nav-agentic-dropdown::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: 0;
-  right: 0;
-  height: 10px;
-}
-
-/* Left rail — navy identity block, echoes the /agentic hero */
-.nav-agentic-rail {
-  display: flex;
-  flex-direction: column;
-  width: 208px;
-  flex-shrink: 0;
-  padding: 1.125rem 1.125rem 1rem;
-  background:
-    radial-gradient(120% 80% at 20% 0%, rgba(0, 212, 170, 0.14) 0%, transparent 55%),
-    linear-gradient(160deg, #0a2540 0%, #071a30 100%);
-  border-right: 1px solid rgba(10, 37, 64, 0.08);
-}
-
-.nav-agentic-eyebrow {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: #00D4AA;
-  margin-bottom: 0.5rem;
-}
-
-.nav-agentic-tagline {
-  font-size: 0.78rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.72);
-  margin: 0 0 0.875rem;
-}
-
-.nav-agentic-byline {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.875rem;
-}
-
-.nav-agentic-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid rgba(0, 212, 170, 0.4);
-}
-
-.nav-agentic-byline-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.25;
-}
-
-.nav-agentic-byline-name {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.92);
-}
-
-.nav-agentic-byline-role {
-  font-size: 0.6875rem;
-  color: rgba(255, 255, 255, 0.55);
-}
-
-.nav-agentic-rail-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: auto;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #00D4AA;
-  text-decoration: none;
-  transition: gap 0.15s ease, color 0.15s ease;
-}
-
-.nav-agentic-rail-cta:hover {
-  color: #5EEAD4;
-  gap: 7px;
-}
-
-/* Right column — latest episodes */
-.nav-agentic-episodes {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0;
-  padding: 0.875rem 0.625rem 0.625rem;
-}
-
-.nav-agentic-episodes-label {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(10, 37, 64, 0.45);
-  padding: 0 0.5rem;
-  margin-bottom: 0.375rem;
-}
-
-/* Episode rows fade/slide in with a stagger (delay set inline) once open */
-.nav-agentic-episode {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  padding: 0.4375rem 0.5rem;
-  border-radius: 10px;
-  text-decoration: none;
-  opacity: 0;
-  transform: translateY(4px);
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease,
-    background 0.15s ease;
-}
-
-.nav-agentic-dropdown.open .nav-agentic-episode {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.nav-agentic-episode:hover {
-  background: rgba(0, 168, 150, 0.08);
-}
-
-.nav-agentic-thumb {
-  position: relative;
-  width: 84px;
-  height: 47px;
-  flex-shrink: 0;
-  border-radius: 7px;
-  overflow: hidden;
-  background: #0a2540;
-}
-
-.nav-agentic-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Play affordance appears on row hover */
-.nav-agentic-thumb-play {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  background: rgba(7, 26, 48, 0.45);
-  opacity: 0;
-  transition: opacity 0.15s ease;
-}
-
-.nav-agentic-episode:hover .nav-agentic-thumb-play {
-  opacity: 1;
-}
-
-.nav-agentic-episode-body {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-}
-
-.nav-agentic-episode-title {
-  font-size: 0.8125rem;
-  font-weight: 500;
-  line-height: 1.35;
-  color: #0A2540;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  transition: color 0.15s ease;
-}
-
-.nav-agentic-episode:hover .nav-agentic-episode-title {
-  color: #00A896;
-}
-
-.nav-agentic-episode-meta {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.6875rem;
-  color: rgba(10, 37, 64, 0.55);
-}
-
-.nav-agentic-episode-cat {
-  color: #00A896;
-  font-weight: 500;
-}
-
-.nav-agentic-episode-dot {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: rgba(10, 37, 64, 0.3);
-}
-
-.nav-agentic-all {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin: 0.375rem 0.5rem 0.25rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid rgba(10, 37, 64, 0.08);
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: rgba(10, 37, 64, 0.6);
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.nav-agentic-all:hover {
-  color: #00A896;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nav-agentic-dropdown,
-  .nav-agentic-episode {
-    transition: none;
-  }
-}
-
-/* ============================================
-   NAVIGATION DROPDOWN - Light Mode
-   ============================================ */
-.nav--light .nav-artifacts-dropdown {
-  background: rgba(255, 255, 255, 0.98);
-  border: 1px solid rgba(10, 37, 64, 0.1);
-  box-shadow: 
-    0 8px 32px rgba(10, 37, 64, 0.12),
-    0 2px 8px rgba(10, 37, 64, 0.08),
-    0 0 0 1px rgba(10, 37, 64, 0.04) inset;
-}
-
-.nav--light .nav-artifacts-label {
-  color: rgba(10, 37, 64, 0.5);
-}
-
-.nav--light .nav-artifact-item {
-  color: rgba(10, 37, 64, 0.9);
-}
-
-.nav--light .nav-artifact-item:hover {
-  background: rgba(0, 168, 150, 0.08);
-}
-
-.nav--light .nav-artifact-title {
-  color: #0A2540;
-}
-
-.nav--light .nav-artifact-desc {
-  color: rgba(10, 37, 64, 0.6);
-}
-
-.nav--light .nav-artifact-item:hover .nav-artifact-title {
-  color: #00A896;
-}
-
-.nav--light .nav-artifact-item:hover .nav-artifact-desc {
-  color: rgba(10, 37, 64, 0.75);
-}
-
-.nav--light .nav-artifacts-footer {
-  border-top: 1px solid rgba(10, 37, 64, 0.08);
-}
-
-.nav--light .nav-artifacts-footer-link {
-  color: rgba(10, 37, 64, 0.6);
-}
-
-.nav--light .nav-artifacts-footer-link:hover {
-  color: #00A896;
-}
-
-.nav--light .nav-dropdown-trigger:hover,
-.nav--light .nav-dropdown-trigger.active {
-  color: #00A896 !important;
-}
-
-/* ============================================
-   AGENTIC MEGA-DROPDOWN — content preview panel
-   A navy "window into /agentic": series identity on the left rail, the three
-   latest episodes with live thumbnails on the right. Deliberately dark in both
-   nav themes — it's a branded showcase, not a menu.
-   ============================================ */
-.nav-agentic-dropdown {
-  position: absolute;
-  top: calc(100% + 6px);
-  /* Anchor toward the right edge so the wide panel never overflows the
-     viewport (the Agentic trigger sits near the end of the nav). */
-  right: -120px;
-  width: 580px;
   display: grid;
-  grid-template-columns: 208px 1fr;
+  z-index: 1000;
+  overflow: hidden;
   background: linear-gradient(160deg, rgba(11, 40, 68, 0.99) 0%, rgba(7, 26, 48, 0.99) 100%);
   border: 1px solid rgba(0, 212, 170, 0.22);
   border-radius: 16px;
-  z-index: 1000;
-  overflow: hidden;
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   box-shadow:
@@ -1039,7 +567,7 @@ html {
     0 0 0 1px rgba(0, 212, 170, 0.06) inset,
     0 0 48px rgba(0, 212, 170, 0.07);
 
-  /* Closed state — short lift + settle on open, per 150–200ms motion budget */
+  /* Closed — short lift + settle on open, per the 150–200ms motion budget */
   opacity: 0;
   visibility: hidden;
   transform: translateY(-8px) scale(0.98);
@@ -1051,15 +579,17 @@ html {
   pointer-events: none;
 }
 
-.nav-agentic-dropdown.open {
+.nav-panel.open {
   opacity: 1;
   visibility: visible;
   transform: translateY(0) scale(1);
   pointer-events: auto;
 }
 
-/* Hover bridge across the 6px gap between trigger and panel */
-.nav-agentic-dropdown::before {
+/* Transparent hover bridge — the panel sits 6px below the trigger, leaving a
+   dead zone that fires mouseleave and closes it mid-move. This spans the gap so
+   the pointer stays inside the panel's subtree the whole way down. */
+.nav-panel::before {
   content: '';
   position: absolute;
   top: -10px;
@@ -1068,7 +598,181 @@ html {
   height: 10px;
 }
 
-/* Left rail — series identity */
+/* Per-panel geometry. All right-anchored: the triggers sit near the end of the
+   nav, so a trigger-centred panel would clip on narrow desktops. */
+.nav-artifacts-dropdown {
+  right: -186px;
+  width: 512px;
+  grid-template-columns: 194px 1fr;
+}
+
+/* Parked with Home/WorkflowsNavPanel.tsx — see that file before reviving. */
+.nav-workflows-dropdown {
+  right: -132px;
+  width: 496px;
+  grid-template-columns: 190px 1fr;
+}
+
+/* Rail stat — the one number the Artifacts rail carries (live published total) */
+.nav-panel-stat {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 1rem;
+}
+
+.nav-panel-stat strong {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+/* Panel rows cascade in behind the panel; per-row delay is set inline */
+.nav-panel-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.15s ease;
+}
+
+.nav-panel.open .nav-panel-row {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-panel-row:hover {
+  background: rgba(0, 212, 170, 0.09);
+}
+
+/* Trailing count on a row — the live total behind that link */
+.nav-artifact-row__count,
+.nav-workflow-row__count {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  padding: 2px 7px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.nav-panel-row:hover .nav-artifact-row__count,
+.nav-panel-row:hover .nav-workflow-row__count {
+  color: rgba(94, 234, 212, 0.9);
+  background: rgba(0, 212, 170, 0.14);
+}
+
+.nav-artifact-row__body,
+.nav-workflow-row__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.nav-artifact-row__title,
+.nav-workflow-row__title {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.9);
+  transition: color 0.15s ease;
+}
+
+.nav-panel-row:hover .nav-artifact-row__title,
+.nav-panel-row:hover .nav-workflow-row__title {
+  color: #5EEAD4;
+}
+
+.nav-artifact-row__desc,
+.nav-workflow-row__desc {
+  font-size: 0.6875rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Artifact rows carry a real thumbnail — the gallery's own imagery, cropped to
+   a consistent tile so mixed aspect ratios (16:10, tall, square) stay aligned. */
+.nav-artifact-row__thumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 68px;
+  height: 44px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(4, 18, 34, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-artifact-row__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.nav-panel-row:hover .nav-artifact-row__thumb img {
+  transform: scale(1.06);
+}
+
+/* Workflow rows get an icon tile instead: the catalog has no artwork, and a
+   placeholder image would be padding pretending to be content. */
+.nav-workflow-row__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  color: #00D4AA;
+  background: rgba(0, 212, 170, 0.1);
+  border: 1px solid rgba(0, 212, 170, 0.18);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-panel-row:hover .nav-workflow-row__icon {
+  color: #5EEAD4;
+  background: rgba(0, 212, 170, 0.18);
+}
+
+/* ============================================
+   NAVIGATION DROPDOWN - Light Mode
+   The panels themselves stay navy in both nav themes — they're branded preview
+   surfaces, not menus — so only the trigger needs a light-mode treatment.
+   ============================================ */
+.nav--light .nav-dropdown-trigger:hover,
+.nav--light .nav-dropdown-trigger.active {
+  color: #00A896 !important;
+}
+
+/* ============================================
+   AGENTIC MEGA-DROPDOWN — content preview panel
+   A navy "window into /agentic": series identity on the left rail, the three
+   latest episodes with live thumbnails on the right. The widest and richest of
+   the three panels — it's a branded showcase, not a menu.
+   Chrome and motion come from .nav-panel; this block owns geometry + content.
+   ============================================ */
+.nav-agentic-dropdown {
+  /* Anchor toward the right edge so the wide panel never overflows the
+     viewport (the Agentic trigger sits near the end of the nav). */
+  right: -120px;
+  width: 580px;
+  grid-template-columns: 208px 1fr;
+}
+
+/* Left rail — identity block, shared by all three panels */
+.nav-panel-rail,
 .nav-agentic-rail {
   display: flex;
   flex-direction: column;
@@ -1079,6 +783,7 @@ html {
   border-right: 1px solid rgba(0, 212, 170, 0.12);
 }
 
+.nav-panel-eyebrow,
 .nav-agentic-eyebrow {
   font-size: 0.6875rem;
   font-weight: 700;
@@ -1088,6 +793,7 @@ html {
   margin-bottom: 0.625rem;
 }
 
+.nav-panel-tagline,
 .nav-agentic-tagline {
   font-size: 0.8125rem;
   line-height: 1.55;
@@ -1127,6 +833,7 @@ html {
   color: rgba(94, 234, 212, 0.75);
 }
 
+.nav-panel-cta,
 .nav-agentic-rail-cta {
   margin-top: auto;
   display: inline-flex;
@@ -1139,18 +846,22 @@ html {
   transition: gap 0.15s ease, color 0.15s ease;
 }
 
+.nav-panel-cta:hover,
 .nav-agentic-rail-cta:hover {
   color: #5EEAD4;
   gap: 8px;
 }
 
-/* Right — latest episodes */
+/* Right column — the panel's content list (episodes, artifact kinds, categories) */
+.nav-panel-column,
 .nav-agentic-episodes {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   padding: 1rem 0.875rem 0.875rem;
 }
 
+.nav-panel-label,
 .nav-agentic-episodes-label {
   font-size: 0.6875rem;
   font-weight: 600;
@@ -1269,6 +980,7 @@ html {
   background: rgba(255, 255, 255, 0.35);
 }
 
+.nav-panel-all,
 .nav-agentic-all {
   display: inline-flex;
   align-items: center;
@@ -1283,6 +995,7 @@ html {
   transition: color 0.15s ease, gap 0.15s ease;
 }
 
+.nav-panel-all:hover,
 .nav-agentic-all:hover {
   color: #00D4AA;
   gap: 8px;
@@ -1290,18 +1003,28 @@ html {
 
 /* Reduced motion: instant show/hide, no cascade */
 @media (prefers-reduced-motion: reduce) {
-  .nav-agentic-dropdown,
+  .nav-panel,
+  .nav-panel-row,
   .nav-agentic-episode,
-  .nav-agentic-thumb img {
+  .nav-agentic-thumb img,
+  .nav-artifact-row__thumb img {
     transition: none;
   }
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments — narrow desktops need tighter panels and a shorter
+   right offset so nothing runs past the viewport edge. */
 @media (max-width: 1024px) {
   .nav-artifacts-dropdown {
-    min-width: 260px;
-    max-width: 300px;
+    width: 452px;
+    right: -150px;
+    grid-template-columns: 170px 1fr;
+  }
+
+  .nav-workflows-dropdown {
+    width: 440px;
+    right: -110px;
+    grid-template-columns: 168px 1fr;
   }
 
   .nav-agentic-dropdown {
