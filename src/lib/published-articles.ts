@@ -95,14 +95,16 @@ function mergeBySlug<T extends { slug: string; publishedAt: string }>(
   );
 }
 
-// The Agentic Engineer (/agentic) merges the two former sections, so it reads
-// from BOTH publications: esy-research (deep dives, model + tool research) and
-// esy-learn (tutorials). The static registry is curated research; net-new
-// articles from either publication merge in by publish date.
-const AGENTIC_PUBLICATIONS = ["esy-research", "esy-learn"];
+// The Agentic Engineer (/agentic) reads every publication that feeds the hub:
+// `agentic` (the publication authored against going forward) plus the two
+// pre-merge sections, esy-research (deep dives, model + tool research) and
+// esy-learn (tutorials), whose already-published articles must keep rendering.
+// The static registry is curated research; net-new articles from any publication
+// merge in by publish date.
+const AGENTIC_PUBLICATIONS = ["agentic", "esy-research", "esy-learn"];
 
 export async function getAllAgenticArticles(): Promise<AgenticVideo[]> {
-  // Fetch both publications in parallel; a failure in either degrades to the
+  // Fetch every publication in parallel; a failure in any one degrades to the
   // registry (build/dev) or throws (prod ISR) per fetchPublishedSafe.
   const perPublication = await Promise.all(
     AGENTIC_PUBLICATIONS.map((slug) => fetchPublishedSafe(slug)),
