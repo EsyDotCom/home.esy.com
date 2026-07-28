@@ -15,10 +15,13 @@ type RevalidateBody = {
   categories?: string[];
 };
 
-// Publication slug -> esy.com URL prefix. Both publications now feed the merged
-// /agentic hub (The Agentic Engineer, Jul 2026), so a publish/unpublish on either
-// revalidates the same routes.
+// Publication slug -> esy.com URL prefix. All three publications feed the merged
+// /agentic hub (The Agentic Engineer, Jul 2026), so a publish/unpublish on any of
+// them revalidates the same routes. `agentic` is the publication going forward;
+// `esy-research` / `esy-learn` are the pre-merge sections, kept so their existing
+// articles and Connect wiring keep working.
 const PUBLICATION_TO_PATH: Record<string, string> = {
+  agentic: "agentic",
   "esy-research": "agentic",
   "esy-learn": "agentic",
 };
@@ -79,11 +82,13 @@ export async function POST(request: NextRequest) {
   const slug = body.slug?.trim();
   const pathPrefix = publication ? PUBLICATION_TO_PATH[publication] : undefined;
   if (!pathPrefix || !slug) {
+    // Derive the list from the map so a newly wired publication never leaves a
+    // stale name in the error a Connect panel shows the operator.
+    const known = Object.keys(PUBLICATION_TO_PATH)
+      .map((s) => `"${s}"`)
+      .join(" | ");
     return NextResponse.json(
-      {
-        error:
-          'Expected body with slug and a known publication ("esy-research" | "esy-learn").',
-      },
+      { error: `Expected body with slug and a known publication (${known}).` },
       { status: 400 },
     );
   }

@@ -200,7 +200,8 @@ export default function ConnectConsumerGuidePage() {
         then just a new variable — no risk to the existing ones.
       </p>
       <CodeBlock title="environment" language="bash">
-        {`ESY_REVALIDATE_SECRET_ESY_RESEARCH=…
+        {`ESY_REVALIDATE_SECRET_AGENTIC=…
+ESY_REVALIDATE_SECRET_ESY_RESEARCH=…
 ESY_REVALIDATE_SECRET_ESY_LEARN=…`}
       </CodeBlock>
 
