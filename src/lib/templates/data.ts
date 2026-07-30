@@ -3651,6 +3651,127 @@ Develop master argument framework:
       },
     ],
   },
+
+  // ─── Character Reference → Animation ────────────────────────
+  {
+    id: 'wf-9',
+    slug: 'character-reference-to-animation',
+    title: 'Character Reference to Animation',
+    shortDescription:
+      'Animate a character from its reference sheet — identity anchored to the image, motion directed from a plain-words brief.',
+    description:
+      'Provide a character reference sheet and describe what happens. Esy screens the brief for protected characters and real-person likenesses, then a motion director composes the structured video prompt — identity bound to your sheet, the style line matched to the sheet\u2019s declared style, camera moves drawn from a proven vocabulary — and Seedance 2.0 renders the animation with synchronized audio. The character stays the same character because consistency comes from the reference image, not from prompt wording.',
+    category: 'template',
+    subcategory: 'clip-art',
+    tags: [
+      'animation',
+      'character animation',
+      'reference sheet',
+      'character consistency',
+      'video artifact',
+      'seedance',
+      'image to video',
+      'workflow',
+    ],
+    difficulty: 'intermediate',
+    isNew: true,
+    isFeatured: true,
+    content: '',
+    variables: [],
+    expectedOutput:
+      'An MP4 animation (4\u201315 seconds, up to 1080p, optional synchronized audio) with full provenance: the reference sheet, the composed video prompt, safety verdict, and per-step cost ledger.',
+    useCases: [
+      'Bringing character pack mascots to life',
+      'Short character animations for social content',
+      'Product and brand mascot motion tests',
+      'Storyboard-free animated character studies',
+      'Consistent-character video series from one sheet',
+    ],
+    relatedSlugs: ['generate-character-set', 'generate-clip-art-asset'],
+    model: null,
+    pricing: { type: 'premium' },
+    isWorkflow: true,
+    engine: 'Seedance 2.0',
+    estimatedTime: '2\u201310 min',
+    outputFormats: ['MP4'],
+    inputRequirements: [
+      'Character reference sheet URL (a master-tier sheet from Generate Character Set works best)',
+      'Motion brief \u2014 what happens, in plain words',
+      'Style key matching the sheet',
+      'Duration, aspect ratio, resolution, audio preference',
+    ],
+    workflowStages: [
+      { id: 'intake', label: 'Intake', sublabel: 'Reference sheet + motion brief' },
+      { id: 'screen', label: 'Screen', sublabel: 'IP & likeness safety check' },
+      { id: 'direct', label: 'Direct', sublabel: 'Compose the structured video prompt' },
+      { id: 'animate', label: 'Animate', sublabel: 'Seedance 2.0 reference-to-video' },
+      { id: 'artifact', label: 'Artifact', sublabel: 'MP4, prompt, and run history', isFinal: true },
+    ],
+    workflowDetails: [
+      {
+        id: 'intake',
+        title: 'Intake',
+        description:
+          'Hand Esy a character reference sheet and say what happens. No camera language or prompt engineering required \u2014 the brief can be one plain sentence.',
+        examples: [
+          { label: 'Sheet', value: 'Master reference board: turnaround, expressions, palette' },
+          { label: 'Brief', value: 'The fox wakes up, stretches, and trots toward the camera' },
+        ],
+      },
+      {
+        id: 'screen',
+        title: 'Screen',
+        description:
+          'Before any video spend, the brief is screened for protected characters and real-person likenesses. A rejected brief fails the run immediately \u2014 nothing is billed for the render.',
+        examples: [
+          { label: 'Checks', value: 'Franchise IP, celebrity likeness, unsafe content' },
+          { label: 'On failure', value: 'Run stops before the video step' },
+        ],
+      },
+      {
+        id: 'direct',
+        title: 'Direct',
+        description:
+          'A motion director expands the brief into the full structured video prompt: identity bound to the reference image, the style line forced to the sheet\u2019s declared style, camera moves chosen from a whitelisted vocabulary.',
+        examples: [
+          { label: 'Binds', value: 'Character identity \u2192 the reference sheet' },
+          { label: 'Composes', value: 'Intent, style, world, references, constraints, scenes' },
+        ],
+      },
+      {
+        id: 'animate',
+        title: 'Animate',
+        description:
+          'Seedance 2.0 renders the animation against the reference sheet \u2014 4 to 15 seconds, up to 1080p, with optional synchronized audio.',
+        examples: [
+          { label: 'Engine', value: 'Seedance 2.0 reference-to-video' },
+          { label: 'Output', value: 'Rendered MP4 with audio' },
+        ],
+      },
+      {
+        id: 'artifact',
+        title: 'Artifact',
+        description:
+          'The delivered artifact carries the video plus everything needed to reproduce or audit it: the composed prompt, the reference sheet, the safety verdict, and the per-step cost ledger.',
+        examples: [
+          { label: 'Format', value: 'MP4 (up to 1080p)' },
+          { label: 'Provenance', value: 'Sheet, composed prompt, safety verdict, cost ledger' },
+        ],
+      },
+    ],
+    sampleArtifacts: [
+      {
+        title: 'Fox Wakes in the Clearing',
+        description:
+          'A storybook fox from a master reference sheet wakes, stretches, and trots toward camera \u2014 one identity across every frame.',
+      },
+      {
+        title: 'Mascot Victory Hop',
+        description:
+          'A brand mascot lands a two-beat celebration loop \u2014 flat vector style preserved from the sheet\u2019s declared style line.',
+      },
+    ],
+  },
 ];
 
 // Utility functions for data access
