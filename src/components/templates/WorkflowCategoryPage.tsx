@@ -32,11 +32,22 @@ interface WorkflowTemplate {
   tags: string[];
 }
 
+interface CategoryGuide {
+  href: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+}
+
 interface WorkflowCategoryPageProps {
   title: string;
   subtitle: string;
   breadcrumbLabel: string;
   templates: WorkflowTemplate[];
+  // Optional long-form documentation card rendered after the template grid —
+  // the category's "engineering notebook" (first use: clip-art's cutout
+  // quality system page).
+  guide?: CategoryGuide;
 }
 
 export default function WorkflowCategoryPage({
@@ -44,6 +55,7 @@ export default function WorkflowCategoryPage({
   subtitle,
   breadcrumbLabel,
   templates,
+  guide,
 }: WorkflowCategoryPageProps) {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
@@ -291,6 +303,64 @@ export default function WorkflowCategoryPage({
               );
             })}
           </div>
+        )}
+
+        {/* Category guide — the engineering notebook card. */}
+        {guide && (
+          <Link href={guide.href} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <section
+              style={{
+                marginTop: 'clamp(3rem, 6vh, 4rem)',
+                padding: 'clamp(2rem, 4vh, 2.75rem)',
+                background: theme.accentLight,
+                borderRadius: '24px',
+                border: `1px solid ${theme.accentBorder}`,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.75rem',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  color: theme.accent,
+                }}
+              >
+                {guide.eyebrow}
+              </span>
+              <h2
+                style={{
+                  fontFamily: 'var(--font-literata)',
+                  fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+                  fontWeight: 300,
+                  letterSpacing: '-0.02em',
+                  margin: 0,
+                  color: theme.text,
+                }}
+              >
+                {guide.title}
+              </h2>
+              <p style={{ fontSize: '1.05rem', lineHeight: 1.7, color: theme.muted, margin: 0, maxWidth: '760px' }}>
+                {guide.description}
+              </p>
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  color: theme.accent,
+                  fontWeight: 600,
+                  fontSize: '0.95rem',
+                }}
+              >
+                Read the system documentation
+                <ArrowRight size={16} />
+              </span>
+            </section>
+          </Link>
         )}
 
         {/* CTA */}
