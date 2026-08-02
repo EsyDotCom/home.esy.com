@@ -276,6 +276,12 @@ export const navigation: NavSection[] = [
         icon: 'workflow',
       },
       {
+        title: 'Publish packs with a worker team',
+        href: '/docs/guides/publish-packs-with-a-worker-team',
+        description: 'A crew that plans a themed pack daily, generates every asset, composes a cover, and publishes to your site.',
+        icon: 'users',
+      },
+      {
         title: 'Connect a consumer site',
         href: '/docs/guides/connect-a-consumer-site',
         description: 'Render a public publication and verify Esy’s revalidation webhooks with HMAC.',
