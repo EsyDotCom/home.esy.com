@@ -34,6 +34,17 @@ const jobShape = `{
   }
 }`;
 
+const messagingShape = `"messaging": {
+  "cadence": "every-shift",
+  "voice": "plain English, first person",
+  "requirements": [
+    "how many images you created, and their categories",
+    "for each pack: its title and the address it published to",
+    "any pack that did NOT publish, and why it was staged instead",
+    "the total spend, and the per-item cost"
+  ]
+}`;
+
 export default function WorkersPage() {
   return (
     <DocsPageShell>
@@ -88,6 +99,87 @@ export default function WorkersPage() {
         worker’s assignment, never in the job (and never on a goal).
       </p>
 
+      <h3>Every field a content type takes</h3>
+      <p>
+        A <code>contentType</code> is one thing the worker makes. Each is planned, executed, capped, and published
+        independently — a worker with six of them runs six small production lines every shift.
+      </p>
+      <Table
+        head={['Field', 'Meaning']}
+        rows={[
+          [
+            <code key="pt">planTemplate</code>,
+            'The template that decides WHAT to make. It emits a plan artifact — the auditable record of what the worker knew and chose — and nothing is generated until it settles.',
+          ],
+          [
+            <code key="tt">targetTemplate</code>,
+            'The template that MAKES each item. Every planned item becomes one child run of this template, under a single order.',
+          ],
+          [
+            <code key="c">count</code>,
+            <>
+              Items per shift. <strong>A count of 0 skips the content type entirely</strong> — no plan, no order, no
+              cost. That is how you park a category until you want it.
+            </>,
+          ],
+          [
+            <code key="b">budgetUsd</code>,
+            'Hard cap for this content type, per shift, enforced against the recorded cost ledger. Reaching it stops the line and settles what completed.',
+          ],
+          [
+            <code key="if">itemFields</code>,
+            'Which fields of a planned item are passed through as the child run’s intake.',
+          ],
+          [
+            <code key="rf">requiredFields</code>,
+            'Fields an item must carry to run at all. The planner is instructed, not trusted — an item missing one is dropped, not guessed at.',
+          ],
+          [
+            <code key="sw">styleWhitelist</code>,
+            'The worker’s style specialty. One knob, two jobs: it tells the planner which styles to choose among, and clamps anything off-list afterward.',
+          ],
+          [
+            <code key="ib">intakeBase</code>,
+            'Intake defaults every item inherits — quality tier, aspect ratio, the classifier’s category vocabulary.',
+          ],
+          [
+            <code key="pie">planIntakeExtra</code>,
+            'Extra intake passed to the PLAN template only: audience, pack goal, a pack-wide base style.',
+          ],
+          [
+            <code key="pp">publishPolicy</code>,
+            <>
+              An object here (<code>{'{ "mode": "auto" | "hitl" }'}</code>), governing whether a finished{' '}
+              <em>pack</em> is pushed to its ingest endpoint or staged for review. Not to be confused with the
+              worker-level string of the same name.
+            </>,
+          ],
+        ]}
+      />
+
+      <Callout title="Two fields named publishPolicy">
+        <code>job.publishPolicy</code> is a <em>string</em> deciding whether individual artifacts publish to the
+        outlet. <code>job.contentTypes[].publishPolicy</code> is an <em>object</em> deciding whether a finished pack
+        is pushed to its ingest endpoint. They are independent, and both default to publishing nothing — a worker can
+        cheerfully publish every asset while never shipping a single pack.
+      </Callout>
+
+      <h2>Composite output: the publish leg</h2>
+      <p>
+        Some work is bigger than one artifact. A themed pack is a plan, dozens of assets, product mockups, and a
+        cover — and it is worthless delivered in pieces. After an order settles cleanly, the shift runs a{' '}
+        <strong>publish leg</strong>: it composes the cover from the pack’s own hero assets, assembles one payload,
+        and delivers it signed to the outlet’s ingest URL. Everything is idempotent on the order id, so re-publishing
+        is always safe.
+      </p>
+      <p>
+        A pack that is not clean is never pushed. Failed items, a cover that could not be generated or categorized, or
+        a missing outlet each leave the pack <em>staged</em> — and the reason is recorded in the shift report rather
+        than swallowed. See{' '}
+        <a href="/docs/guides/publish-packs-with-a-worker-team">Publish packs with a worker team</a> for the full
+        build.
+      </p>
+
       <h2>Teams, designations, and where work ships</h2>
       <p>
         One law governs distribution: <strong>designations and sections decide where work ships.</strong> Demand
@@ -131,6 +223,22 @@ export default function WorkersPage() {
         plain (the voice layer falls back to the mechanical summary on any failure) — but it may never be lost,
         and it may never omit assigned work.
       </Callout>
+
+      <h2>What a report must contain</h2>
+      <p>
+        The prose is short on purpose, so the record rides with it rather than inside it. Every report carries a{' '}
+        <strong>manifest</strong> behind a disclosure: each image with its URL and category, each pack with the
+        address it published to, its cover, tags and facts — and, for anything that did not ship, the reason it was
+        staged instead.
+      </p>
+      <p>
+        You can make specific facts contractual with <code>messaging.requirements</code>. Each entry becomes a
+        &ldquo;must include&rdquo; instruction, so a pack worker can be required to name the address it published to
+        every single shift:
+      </p>
+      <CodeBlock title="job.messaging" language="json">
+        {messagingShape}
+      </CodeBlock>
 
       <h2>Steering a worker</h2>
       <p>

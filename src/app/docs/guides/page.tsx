@@ -22,6 +22,12 @@ const guides = [
     desc: 'Let a workflow accept an existing artifact as input — supply a report you already have, or let the workflow generate one.',
   },
   {
+    href: '/docs/guides/publish-packs-with-a-worker-team',
+    label: 'workers',
+    title: 'Publish packs with a worker team',
+    desc: 'Build a crew that plans a themed pack every day, generates every asset, composes a cover, and publishes the finished pack to your own site.',
+  },
+  {
     href: '/docs/guides/connect-a-consumer-site',
     label: 'publishing',
     title: 'Connect a consumer site',
