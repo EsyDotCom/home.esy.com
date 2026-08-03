@@ -240,15 +240,15 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 </span>
               </div>
 
-              {/* Keep the hero friendly: messy material goes into an easy
-                  template intake and comes back as finished work. */}
+              {/* Outcome-first headline: digital products up front, agentic
+                  workflows as the how. Line 2 stays the teal accent. */}
               {/* Alt headline — may return for A/B or seasonal rotation:
-                  "Simple workflows for the" / "AI Solopreneur" (teal on line 2) */}
+                  "Agentic Workflows for the" / "Agentic Engineer" (teal on line 2) */}
               <h1 style={{ 
                 fontFamily: 'Cormorant Garamond, Georgia, serif', 
-                /* Cap at 3.8rem: at 4rem "Agentic Workflows for the" overflows
-                   the 790px copy column and widows "the" onto its own line. */
-                /* 5.2vw (not 6) keeps "Agentic Workflows for the" on one line
+                /* Cap at 3.8rem so both lines stay inside the copy column
+                   without widows on typical laptop widths. */
+                /* 5.2vw (not 6) keeps "Build Digital Products" on one line
                    down to ~1000px viewports; below that it wraps cleanly. */
                 fontSize: 'clamp(2.5rem, 5.2vw, 3.8rem)', 
                 /* Cormorant's true bold — 900 forces a synthesized weight that
@@ -261,13 +261,13 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 maxWidth: '100%',
                 overflow: 'hidden'
               }}>
-                <span style={{ display: 'block' }}>Agentic Workflows for the</span>
+                <span style={{ display: 'block' }}>Build Digital Products</span>
                 <span style={{ 
                   display: 'block', 
                   background: 'linear-gradient(135deg, #00D4AA 0%, #5EEAD4 100%)', 
                   WebkitBackgroundClip: 'text', 
                   WebkitTextFillColor: 'transparent' 
-                }}>Agentic Engineer</span>
+                }}>with Agentic Workflows</span>
               </h1>
 
               {/* Subheadline — plain language for non-dev visitors: templates

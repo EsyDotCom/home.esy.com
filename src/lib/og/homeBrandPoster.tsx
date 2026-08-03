@@ -112,7 +112,7 @@ export async function renderHomeBrandPoster() {
                 fontSize: 38,
               }}
             >
-              Agentic workflows for the agentic engineer.
+              Build digital products with agentic workflows.
             </div>
           </div>
         </div>
