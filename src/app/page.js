@@ -6,10 +6,10 @@ import IntelligenceCircuitryPage from "../components/IntelligenceCircuitry/Intel
 //   "Automate research, verify citations, and produce publishable artifacts — all through agentic workflow templates. Structured, auditable output by default."
 
 const HOME_META_DESCRIPTION =
-  "Create digital products with agentic workflows. Run batch generations, track token costs, manage budgets, review output, and audit every run.";
+  "Build digital products with agentic workflows. Run batch generations, track token costs, manage budgets, review output, and audit every run.";
 
 export const metadata = {
-  title: "Esy — Create Digital Products with Agentic Workflows",
+  title: "Esy — Build Digital Products with Agentic Workflows",
   description: HOME_META_DESCRIPTION,
   keywords: [
     "agentic workflow templates",
@@ -27,7 +27,7 @@ export const metadata = {
   // og:image / twitter:image come from src/app/opengraph-image.tsx —
   // don't pin images here or they override the generated card.
   openGraph: {
-    title: "Esy — Create Digital Products with Agentic Workflows",
+    title: "Esy — Build Digital Products with Agentic Workflows",
     description: HOME_META_DESCRIPTION,
     type: "website",
     url: "https://esy.com",
@@ -36,7 +36,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Esy — Create Digital Products with Agentic Workflows",
+    title: "Esy — Build Digital Products with Agentic Workflows",
     description: HOME_META_DESCRIPTION,
     site: "@EsyDotCom",
   },

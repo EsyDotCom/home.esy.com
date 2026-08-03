@@ -235,7 +235,7 @@ export async function renderHomeShapeStory() {
                 fontSize: 42,
               }}
             >
-              Create digital products with agentic workflows.
+              Build digital products with agentic workflows.
             </div>
           </div>
 

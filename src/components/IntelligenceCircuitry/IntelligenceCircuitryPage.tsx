@@ -248,7 +248,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 fontFamily: 'Cormorant Garamond, Georgia, serif', 
                 /* Cap at 3.8rem so both lines stay inside the copy column
                    without widows on typical laptop widths. */
-                /* 5.2vw (not 6) keeps "Create Digital Products" on one line
+                /* 5.2vw (not 6) keeps "Build Digital Products" on one line
                    down to ~1000px viewports; below that it wraps cleanly. */
                 fontSize: 'clamp(2.5rem, 5.2vw, 3.8rem)', 
                 /* Cormorant's true bold — 900 forces a synthesized weight that
@@ -261,7 +261,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 maxWidth: '100%',
                 overflow: 'hidden'
               }}>
-                <span style={{ display: 'block' }}>Create Digital Products</span>
+                <span style={{ display: 'block' }}>Build Digital Products</span>
                 <span style={{ 
                   display: 'block', 
                   background: 'linear-gradient(135deg, #00D4AA 0%, #5EEAD4 100%)', 

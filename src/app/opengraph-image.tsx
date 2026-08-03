@@ -7,7 +7,7 @@ import { renderHomeBrandPoster } from "@/lib/og/homeBrandPoster";
 // the section-card layout; a shape-story alternative (messy pieces ->
 // template -> finished work) lives in @/lib/og/homeShapeStory.
 
-export const alt = "Esy — Create Digital Products with Agentic Workflows";
+export const alt = "Esy — Build Digital Products with Agentic Workflows";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 
