@@ -5318,3 +5318,332 @@
 .ic-page--navy-calm .ic-hero--dark p {
   color: rgba(255, 255, 255, 0.72) !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   ARTIFACT SPOTLIGHT + WORKERS
+   Two sections that show the product rather than describe it. Both
+   are built from tokens so they follow the page's three themes, and
+   both stay deliberately flat: hairline rules, one accent, no glow
+   washes. The product shot and the two app screenshots are the only
+   loud elements.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Teal to match the app UI in the screenshots, not the page's violet.
+   Darkened on the light themes so the small caps clear contrast. */
+.ic-artifact-section,
+.ic-workers-section {
+  --ic-shot-accent: #00d4aa;
+}
+.ic-page--light .ic-artifact-section,
+.ic-page--light .ic-workers-section,
+.ic-page--navy-calm .ic-artifact-section,
+.ic-page--navy-calm .ic-workers-section {
+  --ic-shot-accent: #0f766e;
+}
+
+.ic-artifact-section {
+  padding: var(--ic-space-3xl) 0;
+  background: var(--ic-bg-alternate);
+  border-top: 1px solid var(--ic-border-subtle);
+  border-bottom: 1px solid var(--ic-border-subtle);
+}
+
+/* Product shot left, the record right. The shot column is capped rather
+   than fractional so the mockup never renders above its native 488px. */
+.ic-artifact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+  gap: var(--ic-space-2xl);
+  align-items: center;
+  max-width: var(--ic-content-width);
+  margin: 0 auto;
+}
+
+.ic-artifact-shot {
+  margin: 0;
+}
+
+.ic-artifact-shot-frame {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--ic-card-border);
+  background: var(--ic-surface);
+  box-shadow: var(--ic-shadow-lg);
+}
+
+.ic-artifact-shot-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ic-artifact-shot-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: var(--ic-space-sm);
+}
+
+.ic-artifact-shot-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ic-text);
+}
+
+.ic-artifact-shot-spec {
+  font-family: var(--ic-font-mono);
+  font-size: 0.75rem;
+  color: var(--ic-text-subtle);
+}
+
+.ic-artifact-eyebrow,
+.ic-workers-eyebrow {
+  display: block;
+  font-family: var(--ic-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ic-shot-accent);
+  margin-bottom: var(--ic-space-md);
+}
+
+.ic-artifact-title,
+.ic-workers-title {
+  font-family: var(--ic-font-display);
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ic-text);
+  margin: 0 0 var(--ic-space-md);
+}
+
+.ic-artifact-lede,
+.ic-workers-lede {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--ic-text-secondary);
+  margin: 0;
+  max-width: 48ch;
+}
+
+/* The record itself. Fixed term column keeps the values on a single
+   left edge so the list reads as a data sheet, not prose. */
+.ic-artifact-provenance {
+  margin: var(--ic-space-lg) 0 0;
+  border-top: 1px solid var(--ic-border-subtle);
+}
+
+.ic-artifact-provenance-row {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: var(--ic-space-sm);
+  align-items: baseline;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid var(--ic-border-subtle);
+}
+
+.ic-artifact-provenance-term {
+  font-family: var(--ic-font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ic-text-subtle);
+}
+
+.ic-artifact-provenance-detail {
+  margin: 0;
+  font-family: var(--ic-font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ic-text);
+  overflow-wrap: anywhere;
+}
+
+.ic-artifact-note {
+  margin: var(--ic-space-md) 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--ic-text-muted);
+}
+
+.ic-artifact-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--ic-space-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ic-shot-accent);
+  text-decoration: none;
+  transition: gap 0.2s var(--ic-ease-out);
+}
+
+.ic-artifact-cta:hover {
+  gap: 10px;
+}
+
+/* The app screenshot sits below the story as corroboration, so it is
+   sized as a document rather than a hero image. */
+.ic-artifact-browser {
+  max-width: 1200px;
+  margin: var(--ic-space-2xl) auto 0;
+}
+
+.ic-artifact-browser-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid var(--ic-card-border);
+  box-shadow: var(--ic-shadow-lg);
+}
+
+.ic-artifact-browser-caption,
+.ic-workers-shot-caption {
+  margin-top: 0.875rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--ic-text-subtle);
+}
+
+/* ── Workers ── */
+
+.ic-workers-section {
+  padding: var(--ic-space-3xl) 0;
+  background: var(--ic-bg);
+}
+
+.ic-workers-header {
+  max-width: 720px;
+  margin: 0 auto var(--ic-space-xl);
+  text-align: center;
+}
+
+.ic-workers-header .ic-workers-lede {
+  margin: 0 auto;
+}
+
+/* Roster reads as a staffing table: name in mono, beat underneath. */
+.ic-workers-roster {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--ic-space-sm);
+  max-width: var(--ic-content-width);
+  margin: 0 auto var(--ic-space-xl);
+  padding: 0;
+}
+
+.ic-worker-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--ic-card-border);
+  border-radius: 12px;
+  background: var(--ic-card-bg);
+}
+
+.ic-worker-name {
+  font-family: var(--ic-font-mono);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ic-text);
+}
+
+.ic-worker-beat {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ic-text-muted);
+}
+
+.ic-workers-shot {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Second shot sits under the first, separated enough that the two read as
+   two claims rather than one filmstrip. */
+.ic-workers-shot--assignment {
+  margin-top: var(--ic-space-xl);
+}
+
+.ic-workers-shot-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid var(--ic-card-border);
+  box-shadow: var(--ic-shadow-lg);
+}
+
+/* Output and cost as one row of figures, divided by hairlines. */
+.ic-workers-ledger {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 860px;
+  margin: var(--ic-space-xl) auto 0;
+  padding: 0;
+  border-top: 1px solid var(--ic-border-subtle);
+}
+
+.ic-workers-ledger-item {
+  padding: var(--ic-space-md) var(--ic-space-sm);
+  text-align: center;
+  border-left: 1px solid var(--ic-border-subtle);
+}
+
+.ic-workers-ledger-item:first-child {
+  border-left: none;
+}
+
+.ic-workers-ledger-label {
+  font-family: var(--ic-font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ic-text-subtle);
+}
+
+.ic-workers-ledger-figure {
+  margin: 0.5rem 0 0;
+  font-family: var(--ic-font-mono);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ic-text);
+}
+
+.ic-workers-ledger-note {
+  margin: var(--ic-space-sm) 0 0;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--ic-text-subtle);
+}
+
+@media (max-width: 900px) {
+  .ic-artifact-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--ic-space-xl);
+  }
+
+  /* Story before the shot on narrow screens: the headline should be the
+     first thing read, and the mockup is tall enough to bury it. */
+  .ic-artifact-story {
+    order: -1;
+  }
+
+  .ic-workers-ledger {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ic-workers-ledger-item:nth-child(3) {
+    border-left: none;
+  }
+
+  .ic-workers-ledger-item:nth-child(n + 3) {
+    border-top: 1px solid var(--ic-border-subtle);
+  }
+}

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image, { getImageProps } from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import ClipArtWordmark from './ClipArtWordmark';
 // "How it works" is now the real Generate Clip Art Asset runner, not abstract glyphs.
@@ -35,6 +35,73 @@ const CLIPART_CATALOG_STYLES = [
   'Mascot', 'Sticker', 'Emoji', 'Vintage', 'Watercolor',
   'Storybook', 'Isometric', 'Clay', 'Chibi', 'Pixel',
   'Kawaii', '3D', 'Doodle',
+];
+
+// Art-directed app screenshot: the full frame on desktop, a crop of the key
+// region on phones. A 2600px dashboard scaled into a 375px column turns its
+// type into noise, so each shot declares its own mobile crop. getImageProps +
+// <picture> is the Next-endorsed pattern for this — both sources keep their
+// optimized srcsets, and the media query (not JS) picks the crop.
+const ArtDirectedShot: React.FC<{
+  desktop: { src: string; width: number; height: number };
+  mobile: { src: string; width: number; height: number };
+  alt: string;
+  className?: string;
+}> = ({ desktop, mobile, alt, className }) => {
+  const sizes = '(max-width: 767px) 100vw, 1200px';
+  const {
+    props: { srcSet: desktopSrcSet },
+  } = getImageProps({ alt, sizes, ...desktop });
+  const { props: mobileProps } = getImageProps({ alt, sizes, ...mobile });
+  return (
+    <picture>
+      {/* width/height on the source so the browser reserves the desktop
+          aspect ratio when this branch wins — without them it falls back to
+          the img's mobile ratio and the swap causes layout shift. */}
+      <source
+        media="(min-width: 768px)"
+        srcSet={desktopSrcSet}
+        sizes={sizes}
+        width={desktop.width}
+        height={desktop.height}
+      />
+      {/* eslint-disable-next-line jsx-a11y/alt-text -- alt is in mobileProps */}
+      <img {...mobileProps} className={className} />
+    </picture>
+  );
+};
+
+// Provenance for the print-on-demand artifact in the spotlight below. These
+// are the real field values from the artifact's record in app.esy.com, kept
+// verbatim so the section shows the product rather than a dressed-up version
+// of it. If the screenshot is ever regenerated, refresh these to match.
+const ARTIFACT_PROVENANCE = [
+  { term: 'Workflow', detail: 'Map Clip Art to Print-on-Demand' },
+  { term: 'Run', detail: 'run-450db13f' },
+  { term: 'Project', detail: 'clip.art' },
+  { term: 'Storage', detail: 'artifacts/tool/run-450db13f/step-1.webp' },
+  { term: 'Version', detail: 'v1' },
+];
+
+// Six of the seventeen workers on ESY LLC's roster. Names and beats are real.
+// Vista leads because it is the worker on shift in the screenshot below.
+const WORKER_ROSTER = [
+  { name: 'Vista', beat: 'Scene packs: centered miniature worlds, cut transparent' },
+  { name: 'Axle', beat: 'Cars, trucks, motorcycles, garages' },
+  { name: 'Holly', beat: 'Clip art packs for every American holiday' },
+  { name: 'Chalk', beat: 'Classroom art, kindergarten through twelfth grade' },
+  { name: 'Bizzy', beat: 'Office, finance, teams, productivity' },
+  { name: 'Fete', beat: 'Weddings, birthdays, showers, milestones' },
+];
+
+// Vista's ledger, straight off the worker's panel. The per-item ceiling is the
+// figure that lands: it is derived from the job's own numbers (150 items at a
+// $9.60 cap), not an estimate, so it is a promise rather than a forecast.
+const WORKER_LEDGER = [
+  { figure: '11', label: 'Shifts run' },
+  { figure: '66', label: 'Artifacts filed' },
+  { figure: '$26.76', label: 'Spend, all time' },
+  { figure: '$0.064', label: 'Per item, at most' },
 ];
 
 // Real catalog assets pulled directly from clip.art's homepage CDN
@@ -343,10 +410,10 @@ const IntelligenceCircuitryPage: React.FC = () => {
                   {/* The screenshot — fills the frame */}
                   <div className="ic-app-mockup-screen">
                     <Image
-                      src="/images/app-dashboard-screenshot.png"
-                      alt="Esy dashboard at app.esy.com — organization overview showing the review queue, active runs, artifacts, and spend across ESY LLC"
-                      width={1024}
-                      height={502}
+                      src="/images/app-dashboard-overview.webp"
+                      alt="Esy dashboard at app.esy.com: the ESY LLC overview showing 7,728 artifacts produced this month, spend against the monthly cap, 222 artifacts awaiting review, five runs in flight, and per-project spend for clip.art and SEOPage.com"
+                      width={2048}
+                      height={1188}
                       className="ic-app-mockup-image"
                       priority
                       unoptimized
@@ -504,11 +571,191 @@ const IntelligenceCircuitryPage: React.FC = () => {
       )}
 
       {/* ══════════════════════════════════════════════════════════════
+          ARTIFACT SPOTLIGHT — one artifact, start to finish
+          Follows the clip.art case study because it answers the question
+          that case study raises: what does a finished artifact actually
+          look like, and what does Esy keep about it? A single print-on-
+          demand mockup carries the whole idea — the art was drawn once,
+          a workflow put it on a garment, and the result is filed with the
+          run that made it. Flat surfaces and hairline rules only; the
+          product shot is the only thing here allowed to be loud.
+          ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="ic-artifact-section"
+        aria-label="From clip art to a print-on-demand product photo"
+      >
+        <div className="ic-section-container">
+          <div className="ic-artifact-grid">
+            {/* ── The artifact itself ── */}
+            <figure className="ic-artifact-shot">
+              <div className="ic-artifact-shot-frame">
+                <Image
+                  src="/images/artifact-pod-tshirt-mockup.webp"
+                  alt="A woman wearing an olive green t-shirt printed with kawaii winter clip art: smiling evergreen branches, a snow-covered berry twig, and three snowflake characters"
+                  width={488}
+                  height={492}
+                  className="ic-artifact-shot-image"
+                  sizes="(max-width: 900px) 90vw, 440px"
+                />
+              </div>
+              <figcaption className="ic-artifact-shot-caption">
+                <span className="ic-artifact-shot-name">T Shirt Mockup</span>
+                <span className="ic-artifact-shot-spec">
+                  1024 × 1024 · 3.4 × 3.4 in at 300 dpi · WEBP
+                </span>
+              </figcaption>
+            </figure>
+
+            {/* ── The record behind it ── */}
+            <div className="ic-artifact-story">
+              <span className="ic-artifact-eyebrow">Artifacts</span>
+              <h2 className="ic-artifact-title">
+                From clip art to a product photo
+              </h2>
+              <p className="ic-artifact-lede">
+                clip.art draws a winter set once. A workflow places that art on
+                a real garment at print scale, then files the photo as its own
+                artifact beside the art it came from. The listing image is ready
+                before anyone opens a design tool.
+              </p>
+
+              {/* Provenance is the product, so it gets real type rather than a
+                  screenshot crop: a definition list, mono values, hairline
+                  rules between rows. */}
+              <dl className="ic-artifact-provenance">
+                {ARTIFACT_PROVENANCE.map(({ term, detail }) => (
+                  <div key={term} className="ic-artifact-provenance-row">
+                    <dt className="ic-artifact-provenance-term">{term}</dt>
+                    <dd className="ic-artifact-provenance-detail">{detail}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              <p className="ic-artifact-note">
+                Every artifact keeps this record. 14,889 filed so far, 227
+                waiting on someone to approve them.
+              </p>
+
+              <Link href="/artifacts/" className="ic-artifact-cta">
+                See what the workflows produce
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+
+          {/* ── Where it lands: the artifact browser in app.esy.com ── */}
+          <figure className="ic-artifact-browser">
+            {/* Phones get the inspector alone — the mockup with its
+                provenance panel — because the full three-pane browser
+                shrunk to 375px is unreadable. */}
+            <ArtDirectedShot
+              desktop={{ src: '/images/artifacts-browser.webp', width: 2048, height: 987 }}
+              mobile={{ src: '/images/artifacts-browser-mobile.webp', width: 1336, height: 1140 }}
+              alt="The artifacts browser in app.esy.com: a grid of clip.art assets on the left, the T Shirt Mockup open in the inspector on the right, and its provenance panel listing the workflow, run, project, storage path, and version"
+              className="ic-artifact-browser-image"
+            />
+            <figcaption className="ic-artifact-browser-caption">
+              The same artifact in the browser it lives in, filed next to the
+              14,889 others and one keystroke from the run that made it.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          WORKERS — standing jobs that run on a schedule
+          The case study proves volume and the artifact spotlight proves
+          provenance; this answers who is doing the work at 3am. A worker
+          is the unit of delegation: a name, a beat, a shift, and a ledger
+          that reads output and cost as one record.
+          ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="ic-workers-section"
+        aria-label="AI workers that run shifts"
+      >
+        <div className="ic-section-container">
+          <div className="ic-workers-header">
+            <span className="ic-workers-eyebrow">Workers</span>
+            <h2 className="ic-workers-title">Hire a worker. Give it a shift.</h2>
+            <p className="ic-workers-lede">
+              A worker is a standing job with a name, a beat, and a schedule.
+              Vista makes scene packs. Holly makes holiday packs. You write the
+              assignment once, the worker clocks in on its own schedule, and
+              every shift closes with what it made and what it cost.
+            </p>
+          </div>
+
+          {/* Roster — the beats read as a content calendar, which is the
+              point: this is staffing, not prompting. */}
+          <ul className="ic-workers-roster">
+            {WORKER_ROSTER.map(({ name, beat }) => (
+              <li key={name} className="ic-worker-card">
+                <span className="ic-worker-name">{name}</span>
+                <span className="ic-worker-beat">{beat}</span>
+              </li>
+            ))}
+          </ul>
+
+          <figure className="ic-workers-shot">
+            {/* Phones get Vista's panel — live shift banner plus the shift
+                ledger — instead of the full roster grid. */}
+            <ArtDirectedShot
+              desktop={{ src: '/images/workers-on-shift.webp', width: 2048, height: 1140 }}
+              mobile={{ src: '/images/workers-on-shift-mobile.webp', width: 1032, height: 914 }}
+              alt="The workers screen in app.esy.com: a banner reading On Shift Now, one worker, with Vista clocked in at one minute, and Vista's panel listing eleven shifts including the one currently running"
+              className="ic-workers-shot-image"
+            />
+            <figcaption className="ic-workers-shot-caption">
+              Vista, one minute into a shift. Every shift it has ever run is
+              listed underneath with what it produced and what it cost.
+            </figcaption>
+          </figure>
+
+          {/* The assignment is the argument: a worker is a job description with
+              a budget, not a prompt. Shown second because it only lands once
+              the reader has seen a worker actually clocked in. */}
+          <figure className="ic-workers-shot ic-workers-shot--assignment">
+            {/* Phones get the assignment column alone: title, specialty,
+                the six-content-type job table, and the stop conditions. */}
+            <ArtDirectedShot
+              desktop={{ src: '/images/worker-assignment.webp', width: 2048, height: 1131 }}
+              mobile={{ src: '/images/worker-assignment-mobile.webp', width: 1080, height: 1060 }}
+              alt="Vista's worker page in app.esy.com: the assignment naming its title, specialty, team, and the clip.art channel it publishes to; the job listing six content types at twenty-five items each with a budget per type; the rules for when it stops; and the full shift history with each shift's trigger, result, runs, filings, time, and cost"
+              className="ic-workers-shot-image"
+            />
+            <figcaption className="ic-workers-shot-caption">
+              The assignment behind it. Six content types, twenty-five items
+              each, a budget per type, where the work publishes, and the
+              conditions that stop the shift early.
+            </figcaption>
+          </figure>
+
+          {/* Vista's ledger — output and cost as a single row of figures. */}
+          <dl className="ic-workers-ledger">
+            {WORKER_LEDGER.map(({ figure, label }) => (
+              <div key={label} className="ic-workers-ledger-item">
+                <dt className="ic-workers-ledger-label">{label}</dt>
+                <dd className="ic-workers-ledger-figure">{figure}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="ic-workers-ledger-note">
+            Vista, after eleven shifts. One of seventeen workers on the roster.
+          </p>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
           ARTIFACTS — finished work showcase
           Slimmed to the infographic coverflow (the strongest visual);
           the visual essay library moved off the homepage and is reachable
           via the link row below the showcase.
+          OFF THE PAGE (2026-08-09): the artifact spotlight and workers
+          sections above now carry the finished-work story, so the
+          infographic coverflow is benched rather than deleted. Flip the
+          guard back to render it again.
           ══════════════════════════════════════════════════════════════ */}
+      {false && (
       <section className="ic-gallery-section">
         <div className="ic-section-container">
           <div className="ic-section-header">
@@ -537,6 +784,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* ══════════════════════════════════════════════════════════════
           FOUNDER — the person behind the platform
