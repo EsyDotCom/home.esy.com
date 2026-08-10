@@ -37,6 +37,38 @@ const CLIPART_CATALOG_STYLES = [
   'Kawaii', '3D', 'Doodle',
 ];
 
+// Provenance for the print-on-demand artifact in the spotlight below. These
+// are the real field values from the artifact's record in app.esy.com, kept
+// verbatim so the section shows the product rather than a dressed-up version
+// of it. If the screenshot is ever regenerated, refresh these to match.
+const ARTIFACT_PROVENANCE = [
+  { term: 'Workflow', detail: 'Map Clip Art to Print-on-Demand' },
+  { term: 'Run', detail: 'run-450db13f' },
+  { term: 'Project', detail: 'clip.art' },
+  { term: 'Storage', detail: 'artifacts/tool/run-450db13f/step-1.webp' },
+  { term: 'Version', detail: 'v1' },
+];
+
+// Six of the seventeen workers on ESY LLC's roster. Names and beats are real;
+// each worker is a standing job with its own niche and shift schedule.
+const WORKER_ROSTER = [
+  { name: 'Axle', beat: 'Cars, trucks, motorcycles, garages' },
+  { name: 'Holly', beat: 'Clip art packs for every American holiday' },
+  { name: 'Chalk', beat: 'Classroom art, kindergarten through twelfth grade' },
+  { name: 'Bizzy', beat: 'Office, finance, teams, productivity' },
+  { name: 'Fete', beat: 'Weddings, birthdays, showers, milestones' },
+  { name: 'Quad', beat: 'Campus life, academics, student services' },
+];
+
+// Axle's lifetime ledger, straight off the worker's panel. The point of the
+// row is that a worker's output and its cost are the same record.
+const WORKER_LEDGER = [
+  { figure: '13', label: 'Shifts run' },
+  { figure: '146', label: 'Artifacts filed' },
+  { figure: '150', label: 'Runs started' },
+  { figure: '$15.44', label: 'Total spend' },
+];
+
 // Real catalog assets pulled directly from clip.art's homepage CDN
 // (extracted via CDP from https://clip.art on 2026-05-25). URLs follow
 // the pattern: https://images.clip.art/{category}/{slug}.webp
@@ -343,10 +375,10 @@ const IntelligenceCircuitryPage: React.FC = () => {
                   {/* The screenshot — fills the frame */}
                   <div className="ic-app-mockup-screen">
                     <Image
-                      src="/images/app-dashboard-screenshot.png"
-                      alt="Esy dashboard at app.esy.com — organization overview showing the review queue, active runs, artifacts, and spend across ESY LLC"
-                      width={1024}
-                      height={502}
+                      src="/images/app-dashboard-overview.webp"
+                      alt="Esy dashboard at app.esy.com: the ESY LLC overview showing 7,661 artifacts produced this month, spend against the monthly cap, 222 artifacts awaiting review, failed runs, and per-project spend for clip.art and SEOPage.com"
+                      width={2048}
+                      height={1090}
                       className="ic-app-mockup-image"
                       priority
                       unoptimized
@@ -502,6 +534,161 @@ const IntelligenceCircuitryPage: React.FC = () => {
           </div>
         </section>
       )}
+
+      {/* ══════════════════════════════════════════════════════════════
+          ARTIFACT SPOTLIGHT — one artifact, start to finish
+          Follows the clip.art case study because it answers the question
+          that case study raises: what does a finished artifact actually
+          look like, and what does Esy keep about it? A single print-on-
+          demand mockup carries the whole idea — the art was drawn once,
+          a workflow put it on a garment, and the result is filed with the
+          run that made it. Flat surfaces and hairline rules only; the
+          product shot is the only thing here allowed to be loud.
+          ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="ic-artifact-section"
+        aria-label="From clip art to a print-on-demand product photo"
+      >
+        <div className="ic-section-container">
+          <div className="ic-artifact-grid">
+            {/* ── The artifact itself ── */}
+            <figure className="ic-artifact-shot">
+              <div className="ic-artifact-shot-frame">
+                <Image
+                  src="/images/artifact-pod-tshirt-mockup.webp"
+                  alt="A woman wearing an olive green t-shirt printed with kawaii winter clip art: smiling evergreen branches, a snow-covered berry twig, and three snowflake characters"
+                  width={488}
+                  height={492}
+                  className="ic-artifact-shot-image"
+                  sizes="(max-width: 900px) 90vw, 440px"
+                />
+              </div>
+              <figcaption className="ic-artifact-shot-caption">
+                <span className="ic-artifact-shot-name">T Shirt Mockup</span>
+                <span className="ic-artifact-shot-spec">
+                  1024 × 1024 · 3.4 × 3.4 in at 300 dpi · WEBP
+                </span>
+              </figcaption>
+            </figure>
+
+            {/* ── The record behind it ── */}
+            <div className="ic-artifact-story">
+              <span className="ic-artifact-eyebrow">Artifacts</span>
+              <h2 className="ic-artifact-title">
+                From clip art to a product photo
+              </h2>
+              <p className="ic-artifact-lede">
+                clip.art draws a winter set once. A workflow places that art on
+                a real garment at print scale, then files the photo as its own
+                artifact beside the art it came from. The listing image is ready
+                before anyone opens a design tool.
+              </p>
+
+              {/* Provenance is the product, so it gets real type rather than a
+                  screenshot crop: a definition list, mono values, hairline
+                  rules between rows. */}
+              <dl className="ic-artifact-provenance">
+                {ARTIFACT_PROVENANCE.map(({ term, detail }) => (
+                  <div key={term} className="ic-artifact-provenance-row">
+                    <dt className="ic-artifact-provenance-term">{term}</dt>
+                    <dd className="ic-artifact-provenance-detail">{detail}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              <p className="ic-artifact-note">
+                Every artifact keeps this record. 14,889 filed so far, 227
+                waiting on someone to approve them.
+              </p>
+
+              <Link href="/artifacts/" className="ic-artifact-cta">
+                See what the workflows produce
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+
+          {/* ── Where it lands: the artifact browser in app.esy.com ── */}
+          <figure className="ic-artifact-browser">
+            <Image
+              src="/images/artifacts-browser.webp"
+              alt="The artifacts browser in app.esy.com: a grid of clip.art assets on the left, the T Shirt Mockup open in the inspector on the right, and its provenance panel listing the workflow, run, project, storage path, and version"
+              width={2048}
+              height={987}
+              className="ic-artifact-browser-image"
+              sizes="(max-width: 1200px) 100vw, 1200px"
+            />
+            <figcaption className="ic-artifact-browser-caption">
+              The same artifact in the browser it lives in, filed next to the
+              14,889 others and one keystroke from the run that made it.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          WORKERS — standing jobs that run on a schedule
+          The case study proves volume and the artifact spotlight proves
+          provenance; this answers who is doing the work at 3am. A worker
+          is the unit of delegation: a name, a beat, a shift, and a ledger
+          that reads output and cost as one record.
+          ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="ic-workers-section"
+        aria-label="AI workers that run shifts"
+      >
+        <div className="ic-section-container">
+          <div className="ic-workers-header">
+            <span className="ic-workers-eyebrow">Workers</span>
+            <h2 className="ic-workers-title">Hire a worker. Give it a shift.</h2>
+            <p className="ic-workers-lede">
+              A worker is a standing job with a name, a beat, and a schedule.
+              Axle makes automobile clip art. Holly makes holiday packs. You set
+              the shift, the worker runs it without you, and every shift closes
+              with what it made and what it cost.
+            </p>
+          </div>
+
+          {/* Roster — the beats read as a content calendar, which is the
+              point: this is staffing, not prompting. */}
+          <ul className="ic-workers-roster">
+            {WORKER_ROSTER.map(({ name, beat }) => (
+              <li key={name} className="ic-worker-card">
+                <span className="ic-worker-name">{name}</span>
+                <span className="ic-worker-beat">{beat}</span>
+              </li>
+            ))}
+          </ul>
+
+          <figure className="ic-workers-shot">
+            <Image
+              src="/images/workers-shifts.webp"
+              alt="The workers screen in app.esy.com: a roster of named workers with their beats on the left, and Axle's panel on the right listing thirteen shifts with the runs, artifacts made, elapsed time, and cost of each"
+              width={2048}
+              height={1137}
+              className="ic-workers-shot-image"
+              sizes="(max-width: 1200px) 100vw, 1200px"
+            />
+            <figcaption className="ic-workers-shot-caption">
+              Every shift a worker has ever run, with what each one produced and
+              what it cost to run.
+            </figcaption>
+          </figure>
+
+          {/* Axle's ledger — output and cost as a single row of figures. */}
+          <dl className="ic-workers-ledger">
+            {WORKER_LEDGER.map(({ figure, label }) => (
+              <div key={label} className="ic-workers-ledger-item">
+                <dt className="ic-workers-ledger-label">{label}</dt>
+                <dd className="ic-workers-ledger-figure">{figure}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="ic-workers-ledger-note">
+            Axle, after thirteen shifts. One of seventeen workers on the roster.
+          </p>
+        </div>
+      </section>
 
       {/* ══════════════════════════════════════════════════════════════
           ARTIFACTS — finished work showcase
