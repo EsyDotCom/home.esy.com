@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image, { getImageProps } from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import ClipArtWordmark from './ClipArtWordmark';
 // "How it works" is now the real Generate Clip Art Asset runner, not abstract glyphs.
@@ -37,6 +37,40 @@ const CLIPART_CATALOG_STYLES = [
   'Kawaii', '3D', 'Doodle',
 ];
 
+// Art-directed app screenshot: the full frame on desktop, a crop of the key
+// region on phones. A 2600px dashboard scaled into a 375px column turns its
+// type into noise, so each shot declares its own mobile crop. getImageProps +
+// <picture> is the Next-endorsed pattern for this — both sources keep their
+// optimized srcsets, and the media query (not JS) picks the crop.
+const ArtDirectedShot: React.FC<{
+  desktop: { src: string; width: number; height: number };
+  mobile: { src: string; width: number; height: number };
+  alt: string;
+  className?: string;
+}> = ({ desktop, mobile, alt, className }) => {
+  const sizes = '(max-width: 767px) 100vw, 1200px';
+  const {
+    props: { srcSet: desktopSrcSet },
+  } = getImageProps({ alt, sizes, ...desktop });
+  const { props: mobileProps } = getImageProps({ alt, sizes, ...mobile });
+  return (
+    <picture>
+      {/* width/height on the source so the browser reserves the desktop
+          aspect ratio when this branch wins — without them it falls back to
+          the img's mobile ratio and the swap causes layout shift. */}
+      <source
+        media="(min-width: 768px)"
+        srcSet={desktopSrcSet}
+        sizes={sizes}
+        width={desktop.width}
+        height={desktop.height}
+      />
+      {/* eslint-disable-next-line jsx-a11y/alt-text -- alt is in mobileProps */}
+      <img {...mobileProps} className={className} />
+    </picture>
+  );
+};
+
 // Provenance for the print-on-demand artifact in the spotlight below. These
 // are the real field values from the artifact's record in app.esy.com, kept
 // verbatim so the section shows the product rather than a dressed-up version
@@ -49,24 +83,25 @@ const ARTIFACT_PROVENANCE = [
   { term: 'Version', detail: 'v1' },
 ];
 
-// Six of the seventeen workers on ESY LLC's roster. Names and beats are real;
-// each worker is a standing job with its own niche and shift schedule.
+// Six of the seventeen workers on ESY LLC's roster. Names and beats are real.
+// Vista leads because it is the worker on shift in the screenshot below.
 const WORKER_ROSTER = [
+  { name: 'Vista', beat: 'Scene packs: centered miniature worlds, cut transparent' },
   { name: 'Axle', beat: 'Cars, trucks, motorcycles, garages' },
   { name: 'Holly', beat: 'Clip art packs for every American holiday' },
   { name: 'Chalk', beat: 'Classroom art, kindergarten through twelfth grade' },
   { name: 'Bizzy', beat: 'Office, finance, teams, productivity' },
   { name: 'Fete', beat: 'Weddings, birthdays, showers, milestones' },
-  { name: 'Quad', beat: 'Campus life, academics, student services' },
 ];
 
-// Axle's lifetime ledger, straight off the worker's panel. The point of the
-// row is that a worker's output and its cost are the same record.
+// Vista's ledger, straight off the worker's panel. The per-item ceiling is the
+// figure that lands: it is derived from the job's own numbers (150 items at a
+// $9.60 cap), not an estimate, so it is a promise rather than a forecast.
 const WORKER_LEDGER = [
-  { figure: '13', label: 'Shifts run' },
-  { figure: '146', label: 'Artifacts filed' },
-  { figure: '150', label: 'Runs started' },
-  { figure: '$15.44', label: 'Total spend' },
+  { figure: '11', label: 'Shifts run' },
+  { figure: '66', label: 'Artifacts filed' },
+  { figure: '$26.76', label: 'Spend, all time' },
+  { figure: '$0.064', label: 'Per item, at most' },
 ];
 
 // Real catalog assets pulled directly from clip.art's homepage CDN
@@ -610,13 +645,14 @@ const IntelligenceCircuitryPage: React.FC = () => {
 
           {/* ── Where it lands: the artifact browser in app.esy.com ── */}
           <figure className="ic-artifact-browser">
-            <Image
-              src="/images/artifacts-browser.webp"
+            {/* Phones get the inspector alone — the mockup with its
+                provenance panel — because the full three-pane browser
+                shrunk to 375px is unreadable. */}
+            <ArtDirectedShot
+              desktop={{ src: '/images/artifacts-browser.webp', width: 2048, height: 987 }}
+              mobile={{ src: '/images/artifacts-browser-mobile.webp', width: 1336, height: 1140 }}
               alt="The artifacts browser in app.esy.com: a grid of clip.art assets on the left, the T Shirt Mockup open in the inspector on the right, and its provenance panel listing the workflow, run, project, storage path, and version"
-              width={2048}
-              height={987}
               className="ic-artifact-browser-image"
-              sizes="(max-width: 1200px) 100vw, 1200px"
             />
             <figcaption className="ic-artifact-browser-caption">
               The same artifact in the browser it lives in, filed next to the
@@ -643,9 +679,9 @@ const IntelligenceCircuitryPage: React.FC = () => {
             <h2 className="ic-workers-title">Hire a worker. Give it a shift.</h2>
             <p className="ic-workers-lede">
               A worker is a standing job with a name, a beat, and a schedule.
-              Axle makes automobile clip art. Holly makes holiday packs. You set
-              the shift, the worker runs it without you, and every shift closes
-              with what it made and what it cost.
+              Vista makes scene packs. Holly makes holiday packs. You write the
+              assignment once, the worker clocks in on its own schedule, and
+              every shift closes with what it made and what it cost.
             </p>
           </div>
 
@@ -661,21 +697,40 @@ const IntelligenceCircuitryPage: React.FC = () => {
           </ul>
 
           <figure className="ic-workers-shot">
-            <Image
-              src="/images/workers-shifts.webp"
-              alt="The workers screen in app.esy.com: a roster of named workers with their beats on the left, and Axle's panel on the right listing thirteen shifts with the runs, artifacts made, elapsed time, and cost of each"
-              width={2048}
-              height={1137}
+            {/* Phones get Vista's panel — live shift banner plus the shift
+                ledger — instead of the full roster grid. */}
+            <ArtDirectedShot
+              desktop={{ src: '/images/workers-on-shift.webp', width: 2048, height: 1140 }}
+              mobile={{ src: '/images/workers-on-shift-mobile.webp', width: 1032, height: 914 }}
+              alt="The workers screen in app.esy.com: a banner reading On Shift Now, one worker, with Vista clocked in at one minute, and Vista's panel listing eleven shifts including the one currently running"
               className="ic-workers-shot-image"
-              sizes="(max-width: 1200px) 100vw, 1200px"
             />
             <figcaption className="ic-workers-shot-caption">
-              Every shift a worker has ever run, with what each one produced and
-              what it cost to run.
+              Vista, one minute into a shift. Every shift it has ever run is
+              listed underneath with what it produced and what it cost.
             </figcaption>
           </figure>
 
-          {/* Axle's ledger — output and cost as a single row of figures. */}
+          {/* The assignment is the argument: a worker is a job description with
+              a budget, not a prompt. Shown second because it only lands once
+              the reader has seen a worker actually clocked in. */}
+          <figure className="ic-workers-shot ic-workers-shot--assignment">
+            {/* Phones get the assignment column alone: title, specialty,
+                the six-content-type job table, and the stop conditions. */}
+            <ArtDirectedShot
+              desktop={{ src: '/images/worker-assignment.webp', width: 2048, height: 1131 }}
+              mobile={{ src: '/images/worker-assignment-mobile.webp', width: 1080, height: 1060 }}
+              alt="Vista's worker page in app.esy.com: the assignment naming its title, specialty, team, and the clip.art channel it publishes to; the job listing six content types at twenty-five items each with a budget per type; the rules for when it stops; and the full shift history with each shift's trigger, result, runs, filings, time, and cost"
+              className="ic-workers-shot-image"
+            />
+            <figcaption className="ic-workers-shot-caption">
+              The assignment behind it. Six content types, twenty-five items
+              each, a budget per type, where the work publishes, and the
+              conditions that stop the shift early.
+            </figcaption>
+          </figure>
+
+          {/* Vista's ledger — output and cost as a single row of figures. */}
           <dl className="ic-workers-ledger">
             {WORKER_LEDGER.map(({ figure, label }) => (
               <div key={label} className="ic-workers-ledger-item">
@@ -685,7 +740,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
             ))}
           </dl>
           <p className="ic-workers-ledger-note">
-            Axle, after thirteen shifts. One of seventeen workers on the roster.
+            Vista, after eleven shifts. One of seventeen workers on the roster.
           </p>
         </div>
       </section>
@@ -695,7 +750,12 @@ const IntelligenceCircuitryPage: React.FC = () => {
           Slimmed to the infographic coverflow (the strongest visual);
           the visual essay library moved off the homepage and is reachable
           via the link row below the showcase.
+          OFF THE PAGE (2026-08-09): the artifact spotlight and workers
+          sections above now carry the finished-work story, so the
+          infographic coverflow is benched rather than deleted. Flip the
+          guard back to render it again.
           ══════════════════════════════════════════════════════════════ */}
+      {false && (
       <section className="ic-gallery-section">
         <div className="ic-section-container">
           <div className="ic-section-header">
@@ -724,6 +784,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* ══════════════════════════════════════════════════════════════
           FOUNDER — the person behind the platform

@@ -5565,6 +5565,12 @@
   margin: 0 auto;
 }
 
+/* Second shot sits under the first, separated enough that the two read as
+   two claims rather than one filmstrip. */
+.ic-workers-shot--assignment {
+  margin-top: var(--ic-space-xl);
+}
+
 .ic-workers-shot-image {
   display: block;
   width: 100%;
