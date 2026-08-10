@@ -140,7 +140,7 @@ export default function AgenticNewsletter({
                     color: "#0f172a",
                   }}
                 >
-                  {isSuccess ? "You\u2019re in!" : "The Agentic Engineer"}
+                  {isSuccess ? "You\u2019re in!" : "The Marketing Engineer"}
                 </h3>
 
                 {/* Subtitle */}

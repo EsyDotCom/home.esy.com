@@ -29,7 +29,7 @@ export function AgenticRelatedVideos({ videos }: AgenticRelatedVideosProps) {
             color: theme.muted,
           }}
         >
-          More from The Agentic Engineer
+          More from The Marketing Engineer
         </span>
         <Link
           href="/agentic"

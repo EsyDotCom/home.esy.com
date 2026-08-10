@@ -164,7 +164,7 @@ export default function AIAgentsPage() {
           {/* Author */}
           <AgentsAuthorSection
             name="Zev Uhuru"
-            role="Agentic Engineer"
+            role="Marketing Engineer"
             image="/images/zev-uhuru.png"
             socials={[
               {

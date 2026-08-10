@@ -186,7 +186,7 @@ export default function Navigation({
         const isHomepage = normalizedPath === '/' || normalizedPath === '';
         const isEssaysPage = normalizedPath === '/essays' || normalizedPath.startsWith('/essays/');
         const isAboutPage = normalizedPath === '/about';
-        // /agentic is the merged Learn + Research hub (The Agentic Engineer).
+        // /agentic is the merged Learn + Research hub (The Marketing Engineer).
         const isAgenticPage = normalizedPath === '/agentic' || normalizedPath.startsWith('/agentic/');
         const isLearnArticle = normalizedPath.includes('/learn/articles/');
         const isCoursesPage = normalizedPath === '/courses' || normalizedPath.startsWith('/courses/');
@@ -683,7 +683,7 @@ export default function Navigation({
                 >
                   {/* Left rail — who/what the hub is */}
                   <div className="nav-agentic-rail">
-                    <span className="nav-agentic-eyebrow">The Agentic Engineer</span>
+                    <span className="nav-agentic-eyebrow">The Marketing Engineer</span>
                     <p className="nav-agentic-tagline">
                       Workflow demos, model research, and system design — from
                       the engineer running Esy in production.
@@ -693,7 +693,7 @@ export default function Navigation({
                       <img src="/images/zev-uhuru.png" alt="" className="nav-agentic-avatar" />
                       <div className="nav-agentic-byline-text">
                         <span className="nav-agentic-byline-name">Zev Uhuru</span>
-                        <span className="nav-agentic-byline-role">Agentic Engineer</span>
+                        <span className="nav-agentic-byline-role">Marketing Engineer</span>
                       </div>
                     </div>
                     <Link
@@ -884,7 +884,7 @@ export default function Navigation({
               style={{ animationDelay: '0.16s' }}
             >
               <span className="mnav-item__label">Agentic</span>
-              <span className="mnav-item__desc">The Agentic Engineer — workflows, demos &amp; system design</span>
+              <span className="mnav-item__desc">The Marketing Engineer — workflows, demos &amp; system design</span>
             </Link>
           </nav>
 

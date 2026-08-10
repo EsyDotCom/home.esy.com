@@ -3,7 +3,7 @@ title: "5 Ways AI is Revolutionizing Academic Research"
 category: "Academic Writing"
 author:
   name: "Zev Uhuru"
-  title: "Agentic Engineer"
+  title: "Marketing Engineer"
   avatar: "/images/zev-uhuru.png"
   bio: "Explores the intersection of AI and academic research."
 date: "Mar 18, 2025"

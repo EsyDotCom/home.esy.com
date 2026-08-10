@@ -137,7 +137,7 @@ export function DocsLayout({ children }: { children: React.ReactNode }) {
               <FooterColumn
                 title="Resources"
                 links={[
-                  { href: 'https://esy.com/agentic/', text: 'The Agentic Engineer' },
+                  { href: 'https://esy.com/agentic/', text: 'The Marketing Engineer' },
                   { href: 'https://esy.com/courses/', text: 'AI Courses' },
                   { href: '/docs/api', text: 'API' },
                   { href: '/docs/guides', text: 'Guides' },

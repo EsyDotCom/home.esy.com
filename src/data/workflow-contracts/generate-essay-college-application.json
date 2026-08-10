@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:02:09.768721Z",
   "id": "generate-essay-college-application",
   "name": "Generate College Application Essay",
   "description": "Draft a personal college application essay: find a distinctive angle from the applicant's background, structure a focused story, then draft a voice-driven essay that answers the prompt within the word limit.",
@@ -145,7 +145,13 @@
       "revision": 1,
       "contentHash": "sha256:64260240d83d76484b7ba4fdaa14da045e61205c8c11b401f46bdd486c566002",
       "createdAt": "2026-06-04T23:03:41.537179Z"
+    },
+    {
+      "version": "2026.06.04",
+      "revision": 55,
+      "contentHash": "sha256:66d7020a120b15c86e63ee38b335524eaef67b57cdef9503a987be0da3ce49f8",
+      "createdAt": "2026-08-06T22:08:45.846485Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:44:50.059657Z"
+  "updatedAt": "2026-08-06T22:47:25.909649Z"
 }

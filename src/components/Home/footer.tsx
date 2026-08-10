@@ -279,7 +279,7 @@ export default function Footer () {
             title="Resources"
             links={[
               { href: "/docs", text: "Docs" },
-              { href: "/agentic/", text: "The Agentic Engineer" },
+              { href: "/agentic/", text: "The Marketing Engineer" },
               { href: "/courses/", text: "AI Courses" },
             ]}
           />

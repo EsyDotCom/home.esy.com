@@ -29,7 +29,7 @@ const ConditionalNavigation = () => {
   const isGlossaryIndex = normalizedPath === '/glossary';
   const isGlossaryViewPage = isGlossaryPage && !isGlossaryIndex;
   
-  // Agentic pages (The Agentic Engineer — merged /learn + /research, Jul 2026).
+  // Agentic pages (The Marketing Engineer — merged /learn + /research, Jul 2026).
   // Strict match so /agentic-workflows (separate SEO page) doesn't count.
   const isLearnPage = normalizedPath === '/agentic' || normalizedPath?.startsWith('/agentic/');
   const isLearnIndex = normalizedPath === '/agentic';

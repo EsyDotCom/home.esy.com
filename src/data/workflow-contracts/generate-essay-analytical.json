@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:02:09.768721Z",
   "id": "generate-essay-analytical",
   "name": "Generate Analytical Essay",
   "description": "Deconstruct a text, event, or concept through a critical lens: perform close reading, identify patterns and themes, then produce a structured analytical essay grounded in specific evidence from the source.",
@@ -144,7 +144,13 @@
       "revision": 1,
       "contentHash": "sha256:da167aa159c9b0278a764823a192ce596ddf30e5f0339f2c421b3a67c08f877e",
       "createdAt": "2026-06-04T23:03:40.602496Z"
+    },
+    {
+      "version": "2026.06.04",
+      "revision": 56,
+      "contentHash": "sha256:9f1af4b48b418931e2782250bce72f4fd021801f75682b6b39db8a3200806f12",
+      "createdAt": "2026-08-06T22:08:45.349779Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:44:43.709371Z"
+  "updatedAt": "2026-08-06T22:47:25.526051Z"
 }

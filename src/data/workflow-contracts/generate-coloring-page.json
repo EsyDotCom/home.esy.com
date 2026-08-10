@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:02:09.768721Z",
   "id": "generate-coloring-page",
   "name": "Generate Coloring Page",
   "description": "Generate a printable coloring page: clean black line art on a white background (no fills, no shading), plus classifier-produced catalog metadata.",
@@ -67,8 +67,8 @@
       {
         "name": "categories",
         "type": "string",
-        "required": false,
-        "description": "Comma-separated category slugs the classifier may choose from"
+        "required": true,
+        "description": "Comma-separated category slugs the classifier must choose from (empty fails the run in preflight)"
       }
     ]
   },
@@ -103,7 +103,7 @@
           },
           "category": {
             "type": "string",
-            "description": "One of the provided categories, or 'uncategorized'"
+            "description": "Exactly one of the provided category slugs"
           },
           "tags": {
             "type": "array",
@@ -165,7 +165,19 @@
       "revision": 1,
       "contentHash": "sha256:fde512a832e869e9e8f20b4e0be2d4e839f1d578961e99ce7f64fd9d09b45576",
       "createdAt": "2026-07-04T21:49:03.195883Z"
+    },
+    {
+      "version": "2026.07.04",
+      "revision": 26,
+      "contentHash": "sha256:10c84d7845b8f8639c3c94fe43273ef08568071e14202c2fafd0919463b6db45",
+      "createdAt": "2026-07-26T00:51:05.101830Z"
+    },
+    {
+      "version": "2026.07.04",
+      "revision": 52,
+      "contentHash": "sha256:e2361b169361fe6e0963846552a4ce645567b0d5340cbeb090da3f92194ffc81",
+      "createdAt": "2026-08-06T22:08:47.462572Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:45:23.933391Z"
+  "updatedAt": "2026-08-06T22:47:27.140741Z"
 }

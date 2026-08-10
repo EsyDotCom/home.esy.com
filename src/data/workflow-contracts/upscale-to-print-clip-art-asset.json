@@ -1,19 +1,19 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:02:09.768721Z",
   "id": "upscale-to-print-clip-art-asset",
   "name": "Upscale to Print — Clip Art Asset",
-  "description": "Produce the distribution-ready export of an ACCEPTED clip-art artifact: ESRGAN upscale to the ~3000px master, then local export normalization (alpha-trimmed bounding box + margin, stray-speck floor, sRGB by convention, 300-DPI transparent PNG). Quality is added HERE, on the image a human approved — never by re-rendering, which would be a new sample rather than a sharper version of the accepted one. This is the storefront's credit-gated draft->finalize step and the source of the export URLs the pack ingest ships verbatim.",
+  "description": "Produce the distribution-ready export of an ACCEPTED clip-art artifact: alpha-safe ESRGAN upscale to the print master (4096px default, 3000px option for marketplace ZIP caps), then local export normalization (alpha-trimmed bounding box + margin, stray-speck floor, sRGB by convention, 300-DPI transparent PNG). Quality is added HERE, on the image a human approved — never by re-rendering, which would be a new sample rather than a sharper version of the accepted one. This is the storefront's credit-gated draft->finalize step and the source of the export URLs the pack ingest ships verbatim.",
   "shortDescription": "Distribution-ready 300-DPI PNG export of an accepted asset.",
   "artifactClass": "visual",
   "outputType": "visual",
   "status": "active",
   "supersededById": null,
-  "version": "2026.07.18",
+  "version": "2026.07.21",
   "stages": [
     {
       "name": "Upscale",
-      "description": "ESRGAN 3x to the ~3000px export master.",
+      "description": "Alpha-safe ESRGAN to the print target (4096px default).",
       "stepCount": 1
     },
     {
@@ -31,6 +31,17 @@
         "description": "The accepted clip-art artifact to finalize.",
         "artifactClass": "visual",
         "artifactType": "clip-art"
+      },
+      {
+        "name": "printSize",
+        "type": "enum",
+        "required": false,
+        "default": "4096",
+        "description": "Print master target in pixels (longest side)",
+        "options": [
+          "4096",
+          "3000"
+        ]
       }
     ]
   },
@@ -101,7 +112,19 @@
       "revision": 1,
       "contentHash": "sha256:e7035d73c58d6fc907a72e362b589c48f530a60c33917cabbf17408f274ba6b5",
       "createdAt": "2026-07-21T15:45:45.663112Z"
+    },
+    {
+      "version": "2026.07.21",
+      "revision": 2,
+      "contentHash": "sha256:0113d5cb51aee614b33d0c639e850f16b021547ecae1e1c1d1e255ca5fc805bb",
+      "createdAt": "2026-07-26T00:51:30.984320Z"
+    },
+    {
+      "version": "2026.07.21",
+      "revision": 28,
+      "contentHash": "sha256:be7fc85c8f39410458c4fae1a2194e6d9787ac2de8c816b4ae79ac6ce27d505d",
+      "createdAt": "2026-08-06T22:08:49.832459Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:45:45.663112Z"
+  "updatedAt": "2026-08-06T22:47:29.195651Z"
 }

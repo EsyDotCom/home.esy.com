@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:02:09.768721Z",
   "id": "generate-essay-expository",
   "name": "Generate Expository Essay",
   "description": "Explain a topic clearly and objectively: organize the key facts and concepts into a logical structure, then draft a balanced expository essay that informs without arguing a side.",
@@ -144,7 +144,13 @@
       "revision": 1,
       "contentHash": "sha256:b179832d3d779d81aaa6e85a226ff4459b9cf1b92302a8a05eda253b14b4ce9c",
       "createdAt": "2026-06-04T23:03:40.931989Z"
+    },
+    {
+      "version": "2026.06.04",
+      "revision": 55,
+      "contentHash": "sha256:f490fe921421a0de001c41bf044bc05c3c5a805f2dd043aa8b2cd4303d81576f",
+      "createdAt": "2026-08-06T22:08:45.509292Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:44:45.600661Z"
+  "updatedAt": "2026-08-06T22:47:25.658723Z"
 }

@@ -160,7 +160,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // their content in TS data registries (not content directories), so each
   // must be enumerated explicitly. prompt-library is intentionally excluded.
 
-  // Agentic Engineer video pages — the merged /research + /learn hub. Slugs
+  // Marketing Engineer video pages — the merged /research + /learn hub. Slugs
   // come from both publications via the merged getter (lastModified from real
   // publish dates).
   const agenticVideos = await getAllAgenticArticles()
