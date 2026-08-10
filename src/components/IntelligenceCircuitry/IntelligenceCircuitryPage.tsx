@@ -411,9 +411,9 @@ const IntelligenceCircuitryPage: React.FC = () => {
                   <div className="ic-app-mockup-screen">
                     <Image
                       src="/images/app-dashboard-overview.webp"
-                      alt="Esy dashboard at app.esy.com: the ESY LLC overview showing 7,661 artifacts produced this month, spend against the monthly cap, 222 artifacts awaiting review, failed runs, and per-project spend for clip.art and SEOPage.com"
+                      alt="Esy dashboard at app.esy.com: the ESY LLC overview showing 7,728 artifacts produced this month, spend against the monthly cap, 222 artifacts awaiting review, five runs in flight, and per-project spend for clip.art and SEOPage.com"
                       width={2048}
-                      height={1090}
+                      height={1188}
                       className="ic-app-mockup-image"
                       priority
                       unoptimized
