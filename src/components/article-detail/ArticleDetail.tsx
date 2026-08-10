@@ -276,7 +276,7 @@ export function ArticleDetail({
                   Zev Uhuru
                 </span>
                 <span style={{ fontSize: "0.75rem", color: theme.muted, lineHeight: 1.3 }}>
-                  Agentic Engineer
+                  Marketing Engineer
                 </span>
               </div>
             </div>

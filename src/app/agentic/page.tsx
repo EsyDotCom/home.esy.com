@@ -2,16 +2,16 @@ import AgenticClient from "./client";
 import { getAllAgenticArticles } from "@/lib/published-articles";
 
 export const metadata = {
-  title: "The Agentic Engineer — Agentic Workflows That Ship Real Products",
+  title: "The Marketing Engineer — Agentic Workflows That Ship Real Products",
   description:
     "Demo-first deep dives on agentic workflows that ship real digital products. Every issue opens with the artifact, then the system design behind it, the business it serves, and the engineering depth to build it yourself.",
   keywords:
-    "The Agentic Engineer, agentic workflows, AI agents, frontier models, Claude Code, Cursor, multi-agent architecture, workflow engine, digital products, solopreneur",
+    "The Marketing Engineer, agentic workflows, AI agents, frontier models, Claude Code, Cursor, multi-agent architecture, workflow engine, digital products, solopreneur",
   alternates: {
     canonical: "/agentic/",
   },
   openGraph: {
-    title: "The Agentic Engineer",
+    title: "The Marketing Engineer",
     description:
       "Demo-first deep dives on agentic workflows that ship real digital products — the output, the system design, and the business behind it.",
     url: "https://esy.com/agentic/",
@@ -21,7 +21,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Agentic Engineer",
+    title: "The Marketing Engineer",
     description:
       "Demo-first deep dives on agentic workflows that ship real digital products — the output, the system design, and the business behind it.",
   },

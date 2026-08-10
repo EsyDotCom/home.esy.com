@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:13:11.147018Z",
   "id": "generate-worksheet",
   "name": "Generate Worksheet",
   "description": "Generate a printable children's practice worksheet (grade/subject/topic-driven) with the kid-safety contract baked into the prompt, plus classifier-produced catalog metadata.",
@@ -79,8 +79,8 @@
       {
         "name": "categories",
         "type": "string",
-        "required": false,
-        "description": "Comma-separated category slugs the classifier may choose from"
+        "required": true,
+        "description": "Comma-separated category slugs the classifier must choose from (empty fails the run in preflight)"
       }
     ]
   },
@@ -115,7 +115,7 @@
           },
           "category": {
             "type": "string",
-            "description": "One of the provided categories, or 'uncategorized'"
+            "description": "Exactly one of the provided category slugs"
           },
           "tags": {
             "type": "array",
@@ -179,7 +179,19 @@
       "revision": 1,
       "contentHash": "sha256:c7285869732603bc35662cc2455ea9b1340d5404aae11f843caf439e2b9ff36a",
       "createdAt": "2026-07-04T21:49:03.394572Z"
+    },
+    {
+      "version": "2026.07.04",
+      "revision": 26,
+      "contentHash": "sha256:cac2394edba0fae62f59e7e4cb67cdb48d83b1ce00fae4ef595cf0f6d3a72de8",
+      "createdAt": "2026-07-26T00:51:08.235190Z"
+    },
+    {
+      "version": "2026.07.04",
+      "revision": 52,
+      "contentHash": "sha256:ee84dccae3bc847a76a30c101ceb95baf77439cc97108c453dbee5617a55e4d7",
+      "createdAt": "2026-08-06T22:08:47.811788Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:45:28.208827Z"
+  "updatedAt": "2026-08-06T22:47:27.387109Z"
 }

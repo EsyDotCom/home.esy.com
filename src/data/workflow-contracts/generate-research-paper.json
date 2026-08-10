@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:13:11.147018Z",
   "id": "generate-research-paper",
   "name": "Generate Research Paper",
   "description": "Produce a multi-section academic research paper: synthesize the evidence around a research question, plan the standard sections, then draft a cited paper with an abstract, body sections, and references.",
@@ -150,7 +150,13 @@
       "revision": 1,
       "contentHash": "sha256:a270db1e4bb86c22d352632b8408b9125d7c31386d4eb86c2b728c5f30955ef9",
       "createdAt": "2026-06-04T23:03:41.800729Z"
+    },
+    {
+      "version": "2026.06.04",
+      "revision": 55,
+      "contentHash": "sha256:2561f7e79adebf88dac618a716aeb2bd89980bae797cdb60233aef3f1e18238d",
+      "createdAt": "2026-08-06T22:08:46.084292Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:44:50.910322Z"
+  "updatedAt": "2026-08-06T22:47:26.039396Z"
 }

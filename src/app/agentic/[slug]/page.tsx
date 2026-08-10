@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : undefined;
 
   return {
-    title: `${video.title} — The Agentic Engineer`,
+    title: `${video.title} — The Marketing Engineer`,
     description: video.description.slice(0, 160),
     alternates: {
       canonical: `${BASE_URL}/agentic/${video.slug}/`,

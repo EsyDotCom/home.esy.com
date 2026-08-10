@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:13:11.147018Z",
   "id": "plan-clipart-pack",
   "name": "Plan Clip Art Theme Pack",
   "description": "Plan a complete clip-art THEME PACK the way successful marketplace sellers do: theme/market research, a committed style recipe (with a character bible when the theme sells better around one recurring character), a fully-compiled asset manifest with deliberate element-type variety, and the full listing kit (count-bearing titles, answer-first summary, SEO copy, 13 tags, FAQ, plain-English license, per-asset alt text, cover concept). Emits objective packFacts — the consuming storefront maps facts to tier/price. Items feed a Generation Order over generate-clip-art-asset-ref (character packs) or generate-clip-art-asset-v2.",
@@ -9,7 +9,7 @@
   "outputType": "knowledge",
   "status": "active",
   "supersededById": null,
-  "version": "2026.07.18",
+  "version": "2026.08.01.2",
   "stages": [
     {
       "name": "Research",
@@ -37,8 +37,9 @@
       {
         "name": "theme",
         "type": "string",
-        "required": true,
-        "description": "Pack theme (e.g. 'vintage fox detective')"
+        "required": false,
+        "default": "auto",
+        "description": "Pack theme (e.g. 'vintage fox detective'); 'auto' = the planner chooses a fresh theme for the audience"
       },
       {
         "name": "count",
@@ -121,6 +122,25 @@
           "yes",
           "no"
         ]
+      },
+      {
+        "name": "demandBrief",
+        "type": "artifactReference",
+        "required": false,
+        "artifactClass": "knowledge",
+        "description": "An assigned pack brief (demand-brief artifact): the query this pack answers and what it must contain"
+      },
+      {
+        "name": "targetQuery",
+        "type": "string",
+        "required": false,
+        "description": "The search query this pack must answer (from the assigned brief)"
+      },
+      {
+        "name": "mustInclude",
+        "type": "string",
+        "required": false,
+        "description": "Composition constraints the manifest must satisfy to genuinely answer the query"
       }
     ]
   },
@@ -440,6 +460,11 @@
                     "high"
                   ],
                   "description": "Render tier: low only for isolated subject/pose/prop items; medium+ for patterns, scenes, borders, and any text-bearing item"
+                },
+                "matteColor": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$",
+                  "description": "Chroma-key color guaranteed absent from the subject's palette: '#FF00FF' default; '#00FF00' when the palette is pink/red-heavy"
                 }
               },
               "required": [
@@ -451,7 +476,8 @@
                 "textBearing",
                 "expectedText",
                 "textPolicy",
-                "quality"
+                "quality",
+                "matteColor"
               ]
             }
           },
@@ -697,7 +723,67 @@
       "revision": 12,
       "contentHash": "sha256:34812406734e93ef97c33c5e8631f13d25db5befc339c00a08f0763d03c28742",
       "createdAt": "2026-07-21T14:12:09.735480Z"
+    },
+    {
+      "version": "2026.07.29",
+      "revision": 17,
+      "contentHash": "sha256:713890eebc7f6821f5adcb00994dd932b24226b2915078b1159823971b10753a",
+      "createdAt": "2026-07-29T21:09:27.445391Z"
+    },
+    {
+      "version": "2026.07.29.1",
+      "revision": 19,
+      "contentHash": "sha256:37dbec98ee7754d0da40812c282d8b956bcd1ef3805c4b88a899b049ae549b5b",
+      "createdAt": "2026-07-29T22:54:15.810792Z"
+    },
+    {
+      "version": "2026.07.29.2",
+      "revision": 21,
+      "contentHash": "sha256:8ef2bbfc147c8648d881be2b56a62f695b656b1515e743b161b7b668245a495d",
+      "createdAt": "2026-07-30T00:05:52.988725Z"
+    },
+    {
+      "version": "2026.07.30",
+      "revision": 24,
+      "contentHash": "sha256:13acc8509f8267a126522551fb4e8b76d14dad5d8c0f334d5695683cd61a8dae",
+      "createdAt": "2026-07-30T21:21:44.380719Z"
+    },
+    {
+      "version": "2026.07.30",
+      "revision": 26,
+      "contentHash": "sha256:5ca776f5e7872d0bc1456324147b9d22b9c0b9eeb786128780047d638ae45bd3",
+      "createdAt": "2026-07-31T21:21:22.254929Z"
+    },
+    {
+      "version": "2026.07.31",
+      "revision": 28,
+      "contentHash": "sha256:afdea9cfd1102fcf2613d74d026c3d97d9af5b99c8396681c9ec88ca5160dbab",
+      "createdAt": "2026-08-01T00:18:00.832443Z"
+    },
+    {
+      "version": "2026.07.31.2",
+      "revision": 29,
+      "contentHash": "sha256:11d1b000a24f4f779fa17389ff9d2cad2d98b88d5bb185d52fcb0d8d123c83ad",
+      "createdAt": "2026-08-01T02:37:28.761723Z"
+    },
+    {
+      "version": "2026.08.01",
+      "revision": 33,
+      "contentHash": "sha256:0117a89f368eda6fcd61700d0d89d5da02a166789e1ea25c60e332792dc4b89f",
+      "createdAt": "2026-08-01T08:56:51.693390Z"
+    },
+    {
+      "version": "2026.08.01.2",
+      "revision": 35,
+      "contentHash": "sha256:a481b0413cfae1be86b38eb0ff8fd474222a699bd3d4a3c9d42ea899f762f0d5",
+      "createdAt": "2026-08-01T21:41:25.670613Z"
+    },
+    {
+      "version": "2026.08.01.2",
+      "revision": 40,
+      "contentHash": "sha256:aa96d021e5e0d64bb4d4fad450b3a0f2a1281a4771a266a485a466b935414406",
+      "createdAt": "2026-08-06T22:08:48.915644Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:45:40.036960Z"
+  "updatedAt": "2026-08-06T22:47:28.354450Z"
 }

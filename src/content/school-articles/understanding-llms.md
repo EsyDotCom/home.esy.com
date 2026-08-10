@@ -3,7 +3,7 @@ title: "Understanding Large Language Models: From Theory to Practice"
 category: "LLM Basics"
 author:
   name: "Zev Uhuru"
-  title: "Agentic Engineer"
+  title: "Marketing Engineer"
   avatar: "/images/zev-uhuru.png"
   bio: "Leading expert in natural language processing and deep learning."
 date: "Mar 20, 2025"

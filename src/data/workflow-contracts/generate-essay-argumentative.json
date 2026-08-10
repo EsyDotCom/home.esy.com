@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:13:11.147018Z",
   "id": "generate-essay-argumentative",
   "name": "Generate Argumentative Essay",
   "description": "Build a thesis-driven argumentative essay: develop supporting evidence and the strongest counterarguments, organize them under a clear thesis, then draft a fully structured essay with a counterargument section and conclusion.",
@@ -150,7 +150,13 @@
       "revision": 1,
       "contentHash": "sha256:b26c20aa3fde4b7b58b43e93b6877965779a1ec73e19b59cfccfe5d2ede9d476",
       "createdAt": "2026-06-04T23:03:40.258803Z"
+    },
+    {
+      "version": "2026.06.04",
+      "revision": 56,
+      "contentHash": "sha256:550d85110aee5c98ffc13ba90c3cd6cd9a0af63637f9d8f687f6b13c0c143f6d",
+      "createdAt": "2026-08-06T22:08:45.196693Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:44:41.917069Z"
+  "updatedAt": "2026-08-06T22:47:25.392808Z"
 }

@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:13:11.147018Z",
   "id": "generate-pack-cover",
   "name": "Generate Pack Cover",
   "description": "Compose the marketplace hero cover for a theme pack: a single composed scene rendered from the pack plan's cover instruction against MULTIPLE reference images (character sheet + hero assets — gpt-image-2 edits accept several inputs at high fidelity). Portrait 3:4, thumbnail-first composition. Contact-sheet preview grids remain the consumer's deterministic concern.",
@@ -9,7 +9,7 @@
   "outputType": "visual",
   "status": "active",
   "supersededById": null,
-  "version": "2026.07.14",
+  "version": "2026.08.06.1",
   "stages": [
     {
       "name": "Compose",
@@ -43,6 +43,12 @@
         "description": "Pack title (overlay text context)"
       },
       {
+        "name": "categories",
+        "type": "string",
+        "required": false,
+        "description": "Unused by this template; accepted so existing callers do not break"
+      },
+      {
         "name": "assetCount",
         "type": "number",
         "required": false,
@@ -55,7 +61,6 @@
       "id": "step-1",
       "name": "Compose cover",
       "kind": "tool",
-      "role": "imageEditor",
       "inputPath": "intake.referenceUrls"
     },
     {
@@ -131,7 +136,31 @@
       "revision": 1,
       "contentHash": "sha256:8ad47d7697224b7f6cc2d4acfb5e1d2e3b92efb57c08ba4b0eab5428ab9c0f96",
       "createdAt": "2026-07-15T15:18:56.341351Z"
+    },
+    {
+      "version": "2026.08.01",
+      "revision": 34,
+      "contentHash": "sha256:b149ffffb00516f3fb633b0bdf00b7d6ee0aad6ef92df4c1e28f378ed3069caf",
+      "createdAt": "2026-08-01T20:41:58.801568Z"
+    },
+    {
+      "version": "2026.08.01",
+      "revision": 36,
+      "contentHash": "sha256:fe8974ef390c48cc869d91a6d6a68b17dc3fef89c06ed01ae4dd47a2794d3572",
+      "createdAt": "2026-08-02T01:34:08.155995Z"
+    },
+    {
+      "version": "2026.08.01.1",
+      "revision": 39,
+      "contentHash": "sha256:1c019efaa508c6aeb568c8cd91977537af484f146475b0b0fe41d433acbdc0f5",
+      "createdAt": "2026-08-02T17:38:42.777841Z"
+    },
+    {
+      "version": "2026.08.06.1",
+      "revision": 40,
+      "contentHash": "sha256:23ac81c2e0629369933e56a53537ba97f68bf009b7eb8ebdd80c8110ea8cf2ac",
+      "createdAt": "2026-08-06T22:08:49.515685Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:45:44.569316Z"
+  "updatedAt": "2026-08-06T22:47:28.956667Z"
 }

@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:13:11.147018Z",
   "id": "edit-image",
   "name": "Edit Image (Instruction)",
   "description": "Edit a platform-stored image with a natural-language instruction (OpenAI images/edits), with optional background re-removal for transparent assets.",
@@ -9,7 +9,7 @@
   "outputType": "visual",
   "status": "active",
   "supersededById": null,
-  "version": "2026.07.18",
+  "version": "2026.07.18.1",
   "stages": [
     {
       "name": "Edit",
@@ -50,7 +50,6 @@
       "id": "step-1",
       "name": "Edit image",
       "kind": "tool",
-      "role": "imageEditor",
       "inputPath": "intake.sourceUrl"
     },
     {
@@ -105,7 +104,25 @@
       "revision": 14,
       "contentHash": "sha256:1dd2881787195c2b138aae96709830efafdc6acd0af984cb1473d496109aeef7",
       "createdAt": "2026-07-18T19:19:08.575944Z"
+    },
+    {
+      "version": "2026.07.18",
+      "revision": 48,
+      "contentHash": "sha256:63b749d03aaa4fe44f96ad29b1c38fb3d368fa64f1848632b2782566d14cebdb",
+      "createdAt": "2026-08-02T01:34:06.679672Z"
+    },
+    {
+      "version": "2026.07.18.1",
+      "revision": 51,
+      "contentHash": "sha256:d99a6fbf265d871db65be2bfd336fa4b51d4734f456aa9854c40a00587fed40d",
+      "createdAt": "2026-08-02T17:38:41.196478Z"
+    },
+    {
+      "version": "2026.07.18.1",
+      "revision": 52,
+      "contentHash": "sha256:293738f584503f2db34333fe200a1b0f83a271f033b936e6e78f3e1381556165",
+      "createdAt": "2026-08-06T22:08:47.950505Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:45:29.081106Z"
+  "updatedAt": "2026-08-06T22:47:27.515598Z"
 }

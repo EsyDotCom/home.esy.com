@@ -98,7 +98,7 @@ export function DocsLayout({ children }: { children: React.ReactNode }) {
                   <BrandMark />
                 </Link>
                 <p className="footer-desc">
-                  Agentic workflow templates for the agentic engineer — research, marketing, and deliverables that grow
+                  Agentic workflow templates for the marketing engineer — research, campaigns, and deliverables that grow
                   your business.
                   <br />
                   <strong>Automate &amp; audit.</strong>
@@ -137,7 +137,7 @@ export function DocsLayout({ children }: { children: React.ReactNode }) {
               <FooterColumn
                 title="Resources"
                 links={[
-                  { href: 'https://esy.com/agentic/', text: 'The Agentic Engineer' },
+                  { href: 'https://esy.com/agentic/', text: 'The Marketing Engineer' },
                   { href: 'https://esy.com/courses/', text: 'AI Courses' },
                   { href: '/docs/api', text: 'API' },
                   { href: '/docs/guides', text: 'Guides' },

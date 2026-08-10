@@ -243,7 +243,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
               {/* Outcome-first headline: digital products up front, agentic
                   workflows as the how. Line 2 stays the teal accent. */}
               {/* Alt headline — may return for A/B or seasonal rotation:
-                  "Agentic Workflows for the" / "Agentic Engineer" (teal on line 2) */}
+                  "Agentic Workflows for the" / "Marketing Engineer" (teal on line 2) */}
               <h1 style={{ 
                 fontFamily: 'Cormorant Garamond, Georgia, serif', 
                 /* Cap at 3.8rem so both lines stay inside the copy column
@@ -582,7 +582,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 <div className="ic-founder-identity">
                   <span className="ic-founder-name">Zev Uhuru</span>
                   <span className="ic-founder-role">
-                    Founder &amp; Agentic Engineer
+                    Founder &amp; Marketing Engineer
                   </span>
                 </div>
 
@@ -646,7 +646,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
               <ArrowRight size={18} />
             </Link>
             <Link href="/agentic" className="ic-final-cta-btn ic-final-cta-btn--secondary">
-              <span>Read The Agentic Engineer</span>
+              <span>Read The Marketing Engineer</span>
             </Link>
           </div>
 

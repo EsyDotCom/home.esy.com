@@ -1,15 +1,15 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:13:11.147018Z",
   "id": "generate-clip-art-asset-ref",
   "name": "Generate Clip Art (reference-consistent)",
-  "description": "Sibling of generate-clip-art-asset-v2 for CHARACTER PACKS: renders each asset AGAINST a character reference sheet (openai/image-edit) so the same character holds across a whole pack. The prompt must be fully compiled (compactBible + subject + styleFragment — plan-clipart-pack does this); the reference sheet URL is shared across an order's children via intake_base. Then background removal and catalog classification, exactly like v2.",
+  "description": "Sibling of generate-clip-art-asset-v2 for REFERENCE-ANCHORED PACKS: renders each asset AGAINST a reference image (esy/image-edit). anchorMode picks what the reference anchors — 'character' (default) reproduces the reference subject across a pack; 'style' copies only its palette/linework/rendering while each asset depicts its own subject (pack-studio Style Kits). The prompt must be fully compiled (compactBible + subject + styleFragment — plan-clipart-pack does this); the reference sheet URL is shared across an order's children via intake_base. Then background removal and catalog classification, exactly like v2.",
   "shortDescription": "Reference-consistent clip-art asset (character packs).",
   "artifactClass": "visual",
   "outputType": "visual",
   "status": "active",
   "supersededById": null,
-  "version": "2026.07.18",
+  "version": "2026.07.31.3",
   "stages": [
     {
       "name": "Render",
@@ -18,8 +18,8 @@
     },
     {
       "name": "Post-process",
-      "description": "Remove the background when transparency is requested.",
-      "stepCount": 1
+      "description": "Remove the background when transparency is requested, refine the cutout edge, then audit the result.",
+      "stepCount": 3
     },
     {
       "name": "Classify",
@@ -33,13 +33,24 @@
         "name": "prompt",
         "type": "string",
         "required": true,
-        "description": "FULLY compiled prompt (character bible + subject + style fragment)"
+        "description": "FULLY compiled prompt (character bible + subject + style fragment). Do NOT include background/transparency wording (issue #213); such phrases are scrubbed"
       },
       {
         "name": "referenceUrl",
         "type": "string",
         "required": true,
-        "description": "Character-set sheet URL (platform storage or trusted origin)"
+        "description": "Reference image URL: character sheet or style anchor (platform storage or trusted origin)"
+      },
+      {
+        "name": "anchorMode",
+        "type": "enum",
+        "required": false,
+        "default": "character",
+        "description": "What the reference anchors: 'character' reproduces the reference subject (character packs); 'style' copies only palette/linework/rendering (style kits)",
+        "options": [
+          "character",
+          "style"
+        ]
       },
       {
         "name": "style",
@@ -96,7 +107,7 @@
         "name": "backgroundRemovalEnabled",
         "type": "boolean",
         "required": false,
-        "description": "Remove the background for transparency",
+        "description": "Deliver the asset with a transparent background",
         "default": true
       },
       {
@@ -104,7 +115,7 @@
         "type": "enum",
         "required": false,
         "default": "",
-        "description": "Pack element type; 'pattern' ships full-bleed and skips background removal",
+        "description": "Pack element type; full-bleed types ('pattern', 'scene') skip background removal — compositions have no single subject to isolate",
         "options": [
           "",
           "subject",
@@ -117,10 +128,36 @@
         ]
       },
       {
-        "name": "categories",
+        "name": "alphaAuditMode",
+        "type": "enum",
+        "required": false,
+        "default": "enforce",
+        "description": "Cutout QA after background removal: 'enforce' (default) fails bad cutouts (holes/halos/spill) so they retry through the removal ladder, 'report' records metrics only, 'off' skips the audit",
+        "options": [
+          "enforce",
+          "report",
+          "off"
+        ]
+      },
+      {
+        "name": "removalEscalationEnabled",
+        "type": "boolean",
+        "required": false,
+        "default": true,
+        "description": "On an enforced cutout-audit failure, retry the same render through stronger background-removal models (Heavy/Matting at 2K, then BRIA) before re-rendering; off fails straight to re-render"
+      },
+      {
+        "name": "matteColor",
         "type": "string",
         "required": false,
-        "description": "Comma-separated category slugs the classifier may choose from"
+        "default": "",
+        "description": "Chroma-key backing color for the keyed render (single-primary hex, e.g. #00FF00); empty lets the engine choose"
+      },
+      {
+        "name": "categories",
+        "type": "string",
+        "required": true,
+        "description": "Comma-separated category slugs the classifier must choose from (empty fails the run in preflight)"
       },
       {
         "name": "textPolicy",
@@ -133,7 +170,7 @@
           "exact",
           "freeform"
         ],
-        "description": "Per-item text contract: none = text forbidden; exact = must match expectedText; freeform = text allowed, judged on legibility/spelling only. Empty derives from textBearing (true=exact, false=none)."
+        "description": "Per-item text contract: none = text forbidden; exact = must match expectedText; freeform = text allowed, judged on legibility/spelling only. Empty derives from textBearing (true=exact, false=freeform). Use 'none' deliberately, for assets that must carry no characters at all."
       },
       {
         "name": "textBearing",
@@ -156,7 +193,6 @@
       "id": "step-1",
       "name": "Render from reference",
       "kind": "tool",
-      "role": "imageEditor",
       "inputPath": "intake.referenceUrl"
     },
     {
@@ -165,6 +201,18 @@
       "kind": "tool",
       "role": "backgroundRemover",
       "inputPath": "step-1.url"
+    },
+    {
+      "id": "step-2a",
+      "name": "Refine edges",
+      "kind": "tool",
+      "inputPath": "step-2.url"
+    },
+    {
+      "id": "step-2b",
+      "name": "Audit cutout",
+      "kind": "tool",
+      "inputPath": "step-2a.url"
     },
     {
       "id": "step-3",
@@ -189,7 +237,7 @@
           },
           "category": {
             "type": "string",
-            "description": "One of the provided categories, or 'uncategorized'"
+            "description": "Exactly one of the provided category slugs"
           },
           "tags": {
             "type": "array",
@@ -275,6 +323,17 @@
       ]
     },
     {
+      "id": "gate-alpha",
+      "name": "Cutout alpha audit",
+      "type": "quality",
+      "inputs": [
+        "processed-image"
+      ],
+      "outputs": [
+        "audited-image"
+      ]
+    },
+    {
       "id": "gate-text",
       "name": "Text gate",
       "type": "quality",
@@ -336,7 +395,79 @@
       "revision": 9,
       "contentHash": "sha256:4536a4fef4e70e5e09d6955d7f4ddc156d2c1453f2c12f4a6db708797c6e50a3",
       "createdAt": "2026-07-20T21:59:54.012027Z"
+    },
+    {
+      "version": "2026.07.25",
+      "revision": 14,
+      "contentHash": "sha256:55ea814f861c3a306c25024b3f557da1174abc3d1e62e6bbebd8b380cd9ebdd2",
+      "createdAt": "2026-07-26T00:51:22.416018Z"
+    },
+    {
+      "version": "2026.07.29.1",
+      "revision": 15,
+      "contentHash": "sha256:0d224eeea4e85079380802c3b221de6c61d95014249760764fa5b44eea7e043c",
+      "createdAt": "2026-07-29T14:44:37.958669Z"
+    },
+    {
+      "version": "2026.07.29.2",
+      "revision": 16,
+      "contentHash": "sha256:953657b0ae6211cec1a08f7d9097a510feae8fd6b2f3f66896008e3348c55099",
+      "createdAt": "2026-07-29T18:03:03.662947Z"
+    },
+    {
+      "version": "2026.07.29.3",
+      "revision": 20,
+      "contentHash": "sha256:129859c2505b94fcd1fd9fc044129de204b741e7acb1a9c3c1ba54e1e577d9a2",
+      "createdAt": "2026-07-29T23:31:44.472187Z"
+    },
+    {
+      "version": "2026.07.29.4",
+      "revision": 21,
+      "contentHash": "sha256:71a13b63521586fb6c9e1009476f206654c92957cdf55de0f07921462611d497",
+      "createdAt": "2026-07-30T00:05:53.341157Z"
+    },
+    {
+      "version": "2026.07.30",
+      "revision": 24,
+      "contentHash": "sha256:ba69e5f90cfa6013bf37f143f81213c31f583400506dc8e71a671ec2daa79579",
+      "createdAt": "2026-07-30T21:21:44.675493Z"
+    },
+    {
+      "version": "2026.07.31",
+      "revision": 25,
+      "contentHash": "sha256:57d4ee6cfd53c3a81ebd1c7c610a02e8b5fd855422be20137f85b12f47aa61ac",
+      "createdAt": "2026-07-31T17:44:51.686624Z"
+    },
+    {
+      "version": "2026.07.31.2",
+      "revision": 27,
+      "contentHash": "sha256:1ea9109b00813e475efcf96679cd74bba906ce5c137e046069e20895409c8cbc",
+      "createdAt": "2026-07-31T23:05:50.407387Z"
+    },
+    {
+      "version": "2026.07.31.2",
+      "revision": 36,
+      "contentHash": "sha256:5803abe8d2858ec437d71e1c6f62cb58527ab73b5595bc96e4f1bb63bce42968",
+      "createdAt": "2026-08-02T01:34:07.765575Z"
+    },
+    {
+      "version": "2026.07.31.3",
+      "revision": 39,
+      "contentHash": "sha256:a79182e8d7e6cb8bcfa36b916ed2fd07e0433dee8fb142dcf0512927c8c99044",
+      "createdAt": "2026-08-02T17:38:42.426516Z"
+    },
+    {
+      "version": "2026.07.31.3",
+      "revision": 40,
+      "contentHash": "sha256:aea88590ca7d09f7aadc7c2b10ce18f23981106109bf98c16b5f2e3241c9e823",
+      "createdAt": "2026-08-06T22:08:49.212191Z"
+    },
+    {
+      "version": "2026.07.31.3",
+      "revision": 41,
+      "contentHash": "sha256:3b70fe28ebdd0039bc66f26d7c7aba4afe087e2fef8e10c307ba429ab31b36d0",
+      "createdAt": "2026-08-06T22:47:28.688241Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:45:42.584629Z"
+  "updatedAt": "2026-08-06T22:47:28.688241Z"
 }

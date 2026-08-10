@@ -73,7 +73,7 @@ export default function AboutPage() {
           <div className="about-hero__copy">
             <span className="about-hero__eyebrow">Built by</span>
             <h1 className="about-hero__name">Zev Uhuru</h1>
-            <span className="about-hero__role">Agentic Engineer, NYC &amp; Miami</span>
+            <span className="about-hero__role">Marketing Engineer, NYC &amp; Miami</span>
 
             <p className="about-hero__bio">
               I built Esy as a personal research project. I wanted to understand how

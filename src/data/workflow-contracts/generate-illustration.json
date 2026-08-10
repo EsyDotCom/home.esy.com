@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-07-24T17:38:31.519037Z",
+  "generatedAt": "2026-08-10T02:13:11.147018Z",
   "id": "generate-illustration",
   "name": "Generate Illustration",
   "description": "Generate a full-scene illustration (detailed background, environment, lighting) in one of 16 styles, plus classifier-produced catalog metadata.",
@@ -82,8 +82,8 @@
       {
         "name": "categories",
         "type": "string",
-        "required": false,
-        "description": "Comma-separated category slugs the classifier may choose from"
+        "required": true,
+        "description": "Comma-separated category slugs the classifier must choose from (empty fails the run in preflight)"
       }
     ]
   },
@@ -118,7 +118,7 @@
           },
           "category": {
             "type": "string",
-            "description": "One of the provided categories, or 'uncategorized'"
+            "description": "Exactly one of the provided category slugs"
           },
           "tags": {
             "type": "array",
@@ -181,7 +181,19 @@
       "revision": 1,
       "contentHash": "sha256:2323a12ce55302e72eddc3ba89db53af3ea5a8d443091fcd39cb5d1cbeae6c65",
       "createdAt": "2026-07-04T21:49:03.297839Z"
+    },
+    {
+      "version": "2026.07.04",
+      "revision": 26,
+      "contentHash": "sha256:5ed1aa5aad23c2b43db13e5c40c0af58db7f49cbbfb7f34b847410b5430b495b",
+      "createdAt": "2026-07-26T00:51:06.773051Z"
+    },
+    {
+      "version": "2026.07.04",
+      "revision": 52,
+      "contentHash": "sha256:76366421cec4ea973a76b1eb715b7bc9a598ed8bf836e6c4d0cc928ff09cb573",
+      "createdAt": "2026-08-06T22:08:47.634152Z"
     }
   ],
-  "updatedAt": "2026-07-21T15:45:25.987802Z"
+  "updatedAt": "2026-08-06T22:47:27.264493Z"
 }

@@ -139,7 +139,7 @@ export function AgenticOperator({
               color: "#2dd4bf",
             }}
           >
-            Agentic Engineer — workflows, evals, guardrails &amp;
+            Marketing Engineer — workflows, evals, guardrails &amp;
             multi-provider LLM infra
           </p>
 
