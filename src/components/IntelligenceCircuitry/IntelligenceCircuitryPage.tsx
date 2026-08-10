@@ -240,17 +240,18 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 </span>
               </div>
 
-              {/* Outcome-first headline: digital products up front, agentic
-                  workflows as the how. Line 2 stays the teal accent. */}
+              {/* Outcome-first headline: build AND market the product, agentic
+                  workflows as the how. "Market" (not "Sell") because Esy owns
+                  the making, not distribution or checkout. Line 2 stays teal. */}
               {/* Alt headline — may return for A/B or seasonal rotation:
                   "Agentic Workflows for the" / "Marketing Engineer" (teal on line 2) */}
               <h1 style={{ 
                 fontFamily: 'Cormorant Garamond, Georgia, serif', 
-                /* Cap at 3.8rem so both lines stay inside the copy column
-                   without widows on typical laptop widths. */
-                /* 5.2vw (not 6) keeps "Build Digital Products" on one line
-                   down to ~1000px viewports; below that it wraps cleanly. */
-                fontSize: 'clamp(2.5rem, 5.2vw, 3.8rem)', 
+                /* Cap at 3.4rem (was 3.8) — line 1 grew by "& Market", so the
+                   old cap pushed it past the 880px copy column. */
+                /* 4.4vw (was 5.2) keeps "Build & Market Digital Products" on
+                   one line down to ~1000px; below that it wraps cleanly. */
+                fontSize: 'clamp(2.25rem, 4.4vw, 3.4rem)',
                 /* Cormorant's true bold — 900 forces a synthesized weight that
                    renders blocky/wonky, so pin the real 700 cut. */
                 fontWeight: 700, 
@@ -261,7 +262,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 maxWidth: '100%',
                 overflow: 'hidden'
               }}>
-                <span style={{ display: 'block' }}>Build Digital Products</span>
+                <span style={{ display: 'block' }}>Build &amp; Market Digital Products</span>
                 <span style={{ 
                   display: 'block', 
                   background: 'linear-gradient(135deg, #00D4AA 0%, #5EEAD4 100%)', 
