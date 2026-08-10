@@ -98,7 +98,7 @@ export function DocsLayout({ children }: { children: React.ReactNode }) {
                   <BrandMark />
                 </Link>
                 <p className="footer-desc">
-                  Agentic workflow templates for the agentic engineer — research, marketing, and deliverables that grow
+                  Agentic workflow templates for the marketing engineer — research, campaigns, and deliverables that grow
                   your business.
                   <br />
                   <strong>Automate &amp; audit.</strong>
