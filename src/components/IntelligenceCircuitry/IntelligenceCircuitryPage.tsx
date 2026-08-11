@@ -769,12 +769,17 @@ const IntelligenceCircuitryPage: React.FC = () => {
             <h2 className="ic-promptlib-title">
               Where your prompts become workflows
             </h2>
+            {/* Mechanics verified against api.esy.com app/models/library.py:
+                immutable versions + a mutable live alias; templates follow
+                the alias or pin a version; runs record the resolved version. */}
             <p className="ic-promptlib-lede">
-              The library stores the system prompts that Esy workflows are
-              built from. When you assemble a workflow template, you pick the
-              prompt for each step from a dropdown. Each prompt keeps its
-              version history and a log of what went live and when, and a new
-              version changes nothing until you publish it.
+              The library stores the system prompts your workflows run on.
+              When you build a workflow template, you pick a prompt from a
+              dropdown, and the template either follows the prompt&apos;s live
+              version or pins an exact one. Publishing an edit stores a new
+              version and changes nothing. Making a version live updates every
+              workflow that follows it on their next run, and each run records
+              the exact version it used.
             </p>
           </div>
 
