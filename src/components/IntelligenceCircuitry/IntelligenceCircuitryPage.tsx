@@ -754,9 +754,10 @@ const IntelligenceCircuitryPage: React.FC = () => {
           the system prompts you pick from a dropdown when assembling a
           workflow template, versioned, with a deliberate publish step;
           (2) the on-ramp — store the prompts you compose by hand today,
-          convert them to reusable workflows when they prove out. Keep
-          the copy concrete: name the real prompt, name the dropdown,
-          no version-control poetry.
+          convert them to reusable workflows when they prove out. The
+          headline leads with claim 2 (the conversion promise); the lede
+          carries claim 1's mechanics. Keep the copy concrete: name the
+          real prompt, name the dropdown, no version-control poetry.
           ══════════════════════════════════════════════════════════════ */}
       <section
         className="ic-promptlib-section"
@@ -766,7 +767,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
           <div className="ic-promptlib-header">
             <span className="ic-promptlib-eyebrow">AI Prompt Library</span>
             <h2 className="ic-promptlib-title">
-              Every workflow starts as a prompt
+              Where your prompts become workflows
             </h2>
             <p className="ic-promptlib-lede">
               The library stores the system prompts that Esy workflows are
