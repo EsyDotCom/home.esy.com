@@ -758,7 +758,12 @@ const IntelligenceCircuitryPage: React.FC = () => {
           headline leads with claim 2 (the conversion promise); the lede
           carries claim 1's mechanics. Keep the copy concrete: name the
           real prompt, name the dropdown, no version-control poetry.
+          OFF THE PAGE (2026-08-11): benched as homepage bloat. It answers
+          an operator's question, not a buyer's, and the page already
+          carries four proof sections. Destined for a product/features
+          page; copy and assets are ready. Flip the guard to render.
           ══════════════════════════════════════════════════════════════ */}
+      {false && (
       <section
         className="ic-promptlib-section"
         aria-label="AI prompt library and management tool"
@@ -806,6 +811,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
           </p>
         </div>
       </section>
+      )}
 
       {/* ══════════════════════════════════════════════════════════════
           ARTIFACTS — finished work showcase
