@@ -747,14 +747,16 @@ const IntelligenceCircuitryPage: React.FC = () => {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          PROMPT LIBRARY — prompts as managed assets
+          AI PROMPT LIBRARY — the system prompts workflows are built from
           Follows AI Workers because it answers the natural next question:
-          the workers run on prompts, so where do the prompts live? The
-          argument is version control for prompts: drafts, published
-          versions, a live pointer, and a record of what went live when.
-          Closes on prompts converting to workflows, which hands the story
-          back to the workflow sections above. Same flat treatment as the
-          artifact and workers sections.
+          the workers run workflows, workflows run on prompts, so where do
+          the prompts live? Two claims, in order: (1) the library stores
+          the system prompts you pick from a dropdown when assembling a
+          workflow template, versioned, with a deliberate publish step;
+          (2) the on-ramp — store the prompts you compose by hand today,
+          convert them to reusable workflows when they prove out. Keep
+          the copy concrete: name the real prompt, name the dropdown,
+          no version-control poetry.
           ══════════════════════════════════════════════════════════════ */}
       <section
         className="ic-promptlib-section"
@@ -762,16 +764,16 @@ const IntelligenceCircuitryPage: React.FC = () => {
       >
         <div className="ic-section-container">
           <div className="ic-promptlib-header">
-            <span className="ic-promptlib-eyebrow">Prompt Library</span>
+            <span className="ic-promptlib-eyebrow">AI Prompt Library</span>
             <h2 className="ic-promptlib-title">
-              Your prompts, versioned like code
+              Every workflow starts as a prompt
             </h2>
             <p className="ic-promptlib-lede">
-              The prompts that run your business are assets, not chat scraps.
-              The library keeps each one with drafts, published versions, and a
-              record of exactly what went live and when. Nothing that runs
-              changes until you publish, so a prompt you tuned last month works
-              the same today.
+              The library stores the system prompts that Esy workflows are
+              built from. When you assemble a workflow template, you pick the
+              prompt for each step from a dropdown. Each prompt keeps its
+              version history and a log of what went live and when, and a new
+              version changes nothing until you publish it.
             </p>
           </div>
 
@@ -783,17 +785,18 @@ const IntelligenceCircuitryPage: React.FC = () => {
               className="ic-promptlib-shot-image"
             />
             <figcaption className="ic-promptlib-shot-caption">
-              Animate Director, one of the library&apos;s production prompts.
-              Version one is live; publishing a new version stores it without
-              changing what runs until you flip it.
+              Animate Director, the system prompt our animation workflows use
+              to write video directions. Version one is live. Publishing
+              stores a new version; what runs only changes when you make it
+              live.
             </figcaption>
           </figure>
 
           <p className="ic-promptlib-note">
-            And a prompt that earns its keep doesn&apos;t stay a prompt. Convert
-            it into a workflow, and the same instructions pick up intake,
-            review, budgets, and provenance. That&apos;s the path from a good
-            prompt to a system that runs without you.
+            If you compose prompts by hand today, store them here. When one
+            proves out, convert it into a workflow: the same instructions get
+            an intake form, quality review, a budget, and a record of every
+            run. That is the bridge from prompting to agentic workflows.
           </p>
         </div>
       </section>
