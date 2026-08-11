@@ -675,10 +675,11 @@ const IntelligenceCircuitryPage: React.FC = () => {
       >
         <div className="ic-section-container">
           <div className="ic-workers-header">
-            <span className="ic-workers-eyebrow">Workers</span>
+            <span className="ic-workers-eyebrow">AI Workers</span>
             <h2 className="ic-workers-title">Hire a worker. Give it a shift.</h2>
             <p className="ic-workers-lede">
-              A worker is a standing job with a name, a beat, and a schedule.
+              An AI worker is a standing job with a name, a beat, and a
+              schedule.
               Vista makes scene packs. Holly makes holiday packs. You write the
               assignment once, the worker clocks in on its own schedule, and
               every shift closes with what it made and what it cost.
@@ -741,6 +742,58 @@ const IntelligenceCircuitryPage: React.FC = () => {
           </dl>
           <p className="ic-workers-ledger-note">
             Vista, after eleven shifts. One of seventeen workers on the roster.
+          </p>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          PROMPT LIBRARY — prompts as managed assets
+          Follows AI Workers because it answers the natural next question:
+          the workers run on prompts, so where do the prompts live? The
+          argument is version control for prompts: drafts, published
+          versions, a live pointer, and a record of what went live when.
+          Closes on prompts converting to workflows, which hands the story
+          back to the workflow sections above. Same flat treatment as the
+          artifact and workers sections.
+          ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="ic-promptlib-section"
+        aria-label="AI prompt library and management tool"
+      >
+        <div className="ic-section-container">
+          <div className="ic-promptlib-header">
+            <span className="ic-promptlib-eyebrow">Prompt Library</span>
+            <h2 className="ic-promptlib-title">
+              Your prompts, versioned like code
+            </h2>
+            <p className="ic-promptlib-lede">
+              The prompts that run your business are assets, not chat scraps.
+              The library keeps each one with drafts, published versions, and a
+              record of exactly what went live and when. Nothing that runs
+              changes until you publish, so a prompt you tuned last month works
+              the same today.
+            </p>
+          </div>
+
+          <figure className="ic-promptlib-shot">
+            <ArtDirectedShot
+              desktop={{ src: '/images/prompt-library.webp', width: 2048, height: 1139 }}
+              mobile={{ src: '/images/prompt-library-mobile.webp', width: 1332, height: 1067 }}
+              alt="The prompt library in app.esy.com: the Animate Director prompt open with its full text, a version panel showing v1 marked live, and a log of what went live and when"
+              className="ic-promptlib-shot-image"
+            />
+            <figcaption className="ic-promptlib-shot-caption">
+              Animate Director, one of the library&apos;s production prompts.
+              Version one is live; publishing a new version stores it without
+              changing what runs until you flip it.
+            </figcaption>
+          </figure>
+
+          <p className="ic-promptlib-note">
+            And a prompt that earns its keep doesn&apos;t stay a prompt. Convert
+            it into a workflow, and the same instructions pick up intake,
+            review, budgets, and provenance. That&apos;s the path from a good
+            prompt to a system that runs without you.
           </p>
         </div>
       </section>
