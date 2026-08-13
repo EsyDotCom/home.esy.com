@@ -675,10 +675,11 @@ const IntelligenceCircuitryPage: React.FC = () => {
       >
         <div className="ic-section-container">
           <div className="ic-workers-header">
-            <span className="ic-workers-eyebrow">Workers</span>
+            <span className="ic-workers-eyebrow">AI Workers</span>
             <h2 className="ic-workers-title">Hire a worker. Give it a shift.</h2>
             <p className="ic-workers-lede">
-              A worker is a standing job with a name, a beat, and a schedule.
+              An AI worker is a standing job with a name, a beat, and a
+              schedule.
               Vista makes scene packs. Holly makes holiday packs. You write the
               assignment once, the worker clocks in on its own schedule, and
               every shift closes with what it made and what it cost.
@@ -744,6 +745,73 @@ const IntelligenceCircuitryPage: React.FC = () => {
           </p>
         </div>
       </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          AI PROMPT LIBRARY — the system prompts workflows are built from
+          Follows AI Workers because it answers the natural next question:
+          the workers run workflows, workflows run on prompts, so where do
+          the prompts live? Two claims, in order: (1) the library stores
+          the system prompts you pick from a dropdown when assembling a
+          workflow template, versioned, with a deliberate publish step;
+          (2) the on-ramp — store the prompts you compose by hand today,
+          convert them to reusable workflows when they prove out. The
+          headline leads with claim 2 (the conversion promise); the lede
+          carries claim 1's mechanics. Keep the copy concrete: name the
+          real prompt, name the dropdown, no version-control poetry.
+          OFF THE PAGE (2026-08-11): benched as homepage bloat. It answers
+          an operator's question, not a buyer's, and the page already
+          carries four proof sections. Destined for a product/features
+          page; copy and assets are ready. Flip the guard to render.
+          ══════════════════════════════════════════════════════════════ */}
+      {false && (
+      <section
+        className="ic-promptlib-section"
+        aria-label="AI prompt library and management tool"
+      >
+        <div className="ic-section-container">
+          <div className="ic-promptlib-header">
+            <span className="ic-promptlib-eyebrow">AI Prompt Library</span>
+            <h2 className="ic-promptlib-title">
+              Where your prompts become workflows
+            </h2>
+            {/* Mechanics verified against api.esy.com app/models/library.py:
+                immutable versions + a mutable live alias; templates follow
+                the alias or pin a version; runs record the resolved version. */}
+            <p className="ic-promptlib-lede">
+              The library stores the system prompts your workflows run on.
+              When you build a workflow template, you pick a prompt from a
+              dropdown, and the template either follows the prompt&apos;s live
+              version or pins an exact one. Publishing an edit stores a new
+              version and changes nothing. Making a version live updates every
+              workflow that follows it on their next run, and each run records
+              the exact version it used.
+            </p>
+          </div>
+
+          <figure className="ic-promptlib-shot">
+            <ArtDirectedShot
+              desktop={{ src: '/images/prompt-library.webp', width: 2048, height: 1139 }}
+              mobile={{ src: '/images/prompt-library-mobile.webp', width: 1332, height: 1067 }}
+              alt="The prompt library in app.esy.com: the Animate Director prompt open with its full text, a version panel showing v1 marked live, and a log of what went live and when"
+              className="ic-promptlib-shot-image"
+            />
+            <figcaption className="ic-promptlib-shot-caption">
+              Animate Director, the system prompt our animation workflows use
+              to write video directions. Version one is live. Publishing
+              stores a new version; what runs only changes when you make it
+              live.
+            </figcaption>
+          </figure>
+
+          <p className="ic-promptlib-note">
+            If you compose prompts by hand today, store them here. When one
+            proves out, convert it into a workflow: the same instructions get
+            an intake form, quality review, a budget, and a record of every
+            run. That is the bridge from prompting to agentic workflows.
+          </p>
+        </div>
+      </section>
+      )}
 
       {/* ══════════════════════════════════════════════════════════════
           ARTIFACTS — finished work showcase
