@@ -332,7 +332,7 @@ Think of ChatGPT in research as a **research assistant**, not an **author**:
   resources: [
     { title: 'AI Research Ethics Guidelines', url: '#', type: 'paper', description: 'Framework for responsible AI use in academia' },
     { title: 'Prompt Templates for Research', url: '#', type: 'download', description: '50+ research-specific prompt templates' },
-    { title: 'The Marketing Engineer', url: '/agentic', type: 'link', description: 'Demo-first deep dives on agentic workflows' },
+    { title: 'The Agentic Engineer', url: '/agentic', type: 'link', description: 'Demo-first deep dives on agentic workflows' },
   ],
 };
 
@@ -750,7 +750,7 @@ Every infographic must include:
 // ─── Assemble Courses ──────────────────────────────────────
 const author = {
   name: 'Zev Uhuru',
-  role: 'Marketing Engineer',
+  role: 'Agentic Engineer',
   avatar: '/images/zev-uhuru.png',
 };
 

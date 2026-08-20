@@ -3,7 +3,7 @@ export interface WorkflowStage {
   sublabel: string;
 }
 
-// The Marketing Engineer merges the former /research and /learn registries. The
+// The Agentic Engineer merges the former /research and /learn registries. The
 // three research categories remain the primary shelves, but category is a plain
 // string so tutorials published from the esy-learn publication (which use
 // free-form categories) interleave without a type change.

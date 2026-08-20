@@ -60,9 +60,9 @@ const pathways = [
     id: 'school',
     icon: GraduationCap,
     label: 'Start Learning',
-    title: 'The Marketing Engineer',
+    title: 'The Agentic Engineer',
     description: 'Demo-first deep dives on agentic workflows — the output, the system design, and the business behind it.',
-    cta: 'Explore The Marketing Engineer',
+    cta: 'Explore The Agentic Engineer',
     href: '/agentic',
   },
 ];

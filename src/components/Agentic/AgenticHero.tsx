@@ -358,7 +358,7 @@ export function AgenticHero({
               color: "#fff",
             }}
           >
-            The Marketing
+            The Agentic
             <br />
             Engineer
           </h1>
@@ -417,7 +417,7 @@ export function AgenticHero({
               </span>
               <span style={{ color: "rgba(255,255,255,0.5)" }}>
                 {" "}
-                — Marketing Engineer, building Esy
+                — Agentic Engineer, building Esy
               </span>
             </p>
           </div>

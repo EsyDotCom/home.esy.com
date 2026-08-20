@@ -171,7 +171,7 @@ export default function GlossaryTermPage({ term }: GlossaryTermPageProps) {
                 <div className={styles.authorInfo}>
                   <span className={styles.authorLabel}>Written by</span>
                   <h4 className={styles.authorName}>Zev Uhuru</h4>
-                  <p className={styles.authorRole}>Marketing Engineer</p>
+                  <p className={styles.authorRole}>Agentic Engineer</p>
                   <div className={styles.authorSocials}>
                     <a
                       href="https://www.linkedin.com/in/zevuhuru/"

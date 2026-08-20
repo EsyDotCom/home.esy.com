@@ -37,7 +37,7 @@ export const ctaMapping: CTAMapping = {
     isNewsletter: true
   },
   
-  // The Marketing Engineer hub (formerly /learn + /research)
+  // The Agentic Engineer hub (formerly /learn + /research)
   '/agentic': {
     ctaText: 'App',
     ctaHref: 'https://app.esy.com',

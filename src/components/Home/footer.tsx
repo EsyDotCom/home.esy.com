@@ -241,7 +241,7 @@ export default function Footer () {
               <Logo href="" wordmarkOnly wordmarkFont="blackops" theme={logoTheme} />
             </div>
             <p className="footer-desc" style={{ color: theme.muted }}>
-              Agentic workflow templates for the marketing engineer — research, campaigns, and deliverables that grow your business.
+              Agentic workflow templates for the agentic engineer — research, campaigns, and deliverables that grow your business.
               <br />
               <strong style={{ color: isLightMode || isNavyDark ? theme.text : 'inherit' }}>Automate &amp; audit.</strong>
             </p>
@@ -279,7 +279,7 @@ export default function Footer () {
             title="Resources"
             links={[
               { href: "/docs", text: "Docs" },
-              { href: "/agentic/", text: "The Marketing Engineer" },
+              { href: "/agentic/", text: "The Agentic Engineer" },
               { href: "/courses/", text: "AI Courses" },
             ]}
           />
