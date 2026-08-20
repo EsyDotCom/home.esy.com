@@ -750,7 +750,7 @@ Every infographic must include:
 // ─── Assemble Courses ──────────────────────────────────────
 const author = {
   name: 'Zev Uhuru',
-  role: 'Marketing Engineer',
+  role: 'Agentic Engineer',
   avatar: '/images/zev-uhuru.png',
 };
 

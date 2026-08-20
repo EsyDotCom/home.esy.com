@@ -693,7 +693,7 @@ export default function Navigation({
                       <img src="/images/zev-uhuru.png" alt="" className="nav-agentic-avatar" />
                       <div className="nav-agentic-byline-text">
                         <span className="nav-agentic-byline-name">Zev Uhuru</span>
-                        <span className="nav-agentic-byline-role">Marketing Engineer</span>
+                        <span className="nav-agentic-byline-role">Agentic Engineer</span>
                       </div>
                     </div>
                     <Link

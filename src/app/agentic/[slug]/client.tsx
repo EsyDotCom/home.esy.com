@@ -143,7 +143,7 @@ function AuthorCard({ isMobile }: { isMobile: boolean }) {
                 marginTop: 2,
               }}
             >
-              Marketing Engineer — NYC &amp; Miami
+              Agentic Engineer — NYC &amp; Miami
             </span>
             <p
               style={{
@@ -734,7 +734,7 @@ export default function AgenticVideoPageClient({
                       lineHeight: 1.3,
                     }}
                   >
-                    Marketing Engineer
+                    Agentic Engineer
                   </span>
                 </div>
               </div>

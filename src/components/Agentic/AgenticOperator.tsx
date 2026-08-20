@@ -136,7 +136,7 @@ export function AgenticOperator({
               color: "#2dd4bf",
             }}
           >
-            Marketing Engineer. Content pipelines, quality review, and cost
+            Agentic Engineer. Content pipelines, quality review, and cost
             control for teams that publish on a schedule.
           </p>
 
