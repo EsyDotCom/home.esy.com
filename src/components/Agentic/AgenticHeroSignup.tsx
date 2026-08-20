@@ -7,7 +7,7 @@ import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
 
 // Compact newsletter capture for the dark .esy-stage hero panel on /agentic.
 // Posts to the default Beehiiv-backed endpoint (the surviving publication for
-// The Marketing Engineer) — same list the detail-page bar and sidebar use.
+// The Agentic Engineer) — same list the detail-page bar and sidebar use.
 export function AgenticHeroSignup() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [buttonHover, setButtonHover] = useState(false);

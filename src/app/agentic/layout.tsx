@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "The Marketing Engineer — Agentic Workflows That Ship Real Products",
+  title: "The Agentic Engineer — Agentic Workflows That Ship Real Products",
   description:
     "Demo-first deep dives on agentic workflows that ship real digital products. Every issue opens with the artifact, then the system design behind it, the business it serves, and the engineering depth to build it yourself. Video-first with full transcripts.",
   keywords: [
     "agentic workflows",
-    "marketing engineer",
+    "agentic engineer",
     "AI agents",
     "frontier models",
     "Claude Fable 5",

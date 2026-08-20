@@ -16,7 +16,7 @@ type RevalidateBody = {
 };
 
 // Publication slug -> esy.com URL prefix. All three publications feed the merged
-// /agentic hub (The Marketing Engineer, Jul 2026), so a publish/unpublish on any of
+// /agentic hub (The Agentic Engineer, Jul 2026), so a publish/unpublish on any of
 // them revalidates the same routes. `agentic` is the publication going forward;
 // `esy-research` / `esy-learn` are the pre-merge sections, kept so their existing
 // articles and Connect wiring keep working.

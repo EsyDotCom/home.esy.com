@@ -963,7 +963,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
               <ArrowRight size={18} />
             </Link>
             <Link href="/agentic" className="ic-final-cta-btn ic-final-cta-btn--secondary">
-              <span>Read The Marketing Engineer</span>
+              <span>Read The Agentic Engineer</span>
             </Link>
           </div>
 

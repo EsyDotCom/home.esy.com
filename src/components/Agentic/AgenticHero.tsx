@@ -358,7 +358,7 @@ export function AgenticHero({
               color: "#fff",
             }}
           >
-            The Marketing
+            The Agentic
             <br />
             Engineer
           </h1>

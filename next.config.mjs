@@ -482,7 +482,7 @@ const nextConfig = {
         permanent: true,
       },
       // School renamed to Learn (June 2026), then Learn + Research merged into
-      // The Marketing Engineer at /agentic (Jul 2026). Chain both so pre-rename
+      // The Agentic Engineer at /agentic (Jul 2026). Chain both so pre-rename
       // /school URLs still land: /school -> /learn -> /agentic collapses here.
       {
         source: '/school',

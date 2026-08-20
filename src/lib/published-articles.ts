@@ -95,7 +95,7 @@ function mergeBySlug<T extends { slug: string; publishedAt: string }>(
   );
 }
 
-// The Marketing Engineer (/agentic) reads every publication that feeds the hub:
+// The Agentic Engineer (/agentic) reads every publication that feeds the hub:
 // `agentic` (the publication authored against going forward) plus the two
 // pre-merge sections, esy-research (deep dives, model + tool research) and
 // esy-learn (tutorials), whose already-published articles must keep rendering.

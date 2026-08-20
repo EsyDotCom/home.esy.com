@@ -98,7 +98,7 @@ export function AgenticNewsletterBar() {
               fontFamily: "var(--font-inter)",
             }}
           >
-            The Marketing Engineer
+            The Agentic Engineer
           </h3>
           <p style={{ fontSize: "0.75rem", color: theme.muted, margin: "2px 0 0" }}>
             One agentic workflow per week — output, system design, and the business behind it
