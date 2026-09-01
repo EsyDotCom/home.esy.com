@@ -269,6 +269,8 @@ export default function Footer () {
           <FooterColumn 
             title="Explore"
             links={[
+              { href: "/product/", text: "Product" },
+              { href: "/managed/", text: "Managed" },
               { href: "/workflows/", text: "Workflows" },
               { href: "/ai-agents/", text: "AI Agents" },
               { href: "/glossary/", text: "Glossary" },
@@ -278,6 +280,7 @@ export default function Footer () {
           <FooterColumn 
             title="Resources"
             links={[
+              { href: "/marketing-engineer/", text: "The Marketing Engineer" },
               { href: "/docs", text: "Docs" },
               { href: "/agentic/", text: "The Agentic Engineer" },
               { href: "/courses/", text: "AI Courses" },

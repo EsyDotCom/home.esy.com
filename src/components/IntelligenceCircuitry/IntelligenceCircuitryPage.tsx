@@ -329,13 +329,13 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 maxWidth: '100%',
                 overflow: 'hidden'
               }}>
-                <span style={{ display: 'block' }}>Build &amp; Market Digital Products</span>
+                <span style={{ display: 'block' }}>Put Marketing Production</span>
                 <span style={{ 
                   display: 'block', 
                   background: 'linear-gradient(135deg, #00D4AA 0%, #5EEAD4 100%)', 
                   WebkitBackgroundClip: 'text', 
                   WebkitTextFillColor: 'transparent' 
-                }}>with Agentic Workflows</span>
+                }}>on Autopilot</span>
               </h1>
 
               {/* Subheadline — plain language for non-dev visitors: templates
@@ -346,7 +346,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                 color: 'rgba(255, 255, 255, 0.72)', 
                 marginBottom: '24px' 
               }}>
-                Generate content at scale, manage quality with human-in-the-loop review, and keep a full record of every run. Esy is the workflow infrastructure for building vertical products on top.
+                One brief becomes a coordinated campaign — research, angles, creative, copy, a landing page — produced by Esy, reviewed by you. Approve it once, then keep it producing.
               </p>
 
               {/* CTAs — fixed to the navy-dark hero palette. Secondary CTA
@@ -354,7 +354,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                   before reading anything else. */}
               <div className="ic-hero-ctas">
                 <Link 
-                  href="/workflows"
+                  href="/managed/"
                   style={{ 
                     display: 'inline-flex', 
                     alignItems: 'center', 
@@ -369,10 +369,10 @@ const IntelligenceCircuitryPage: React.FC = () => {
                     boxShadow: '0 1px 2px rgba(0, 0, 0, 0.2)' 
                   }}
                 >
-                  <span>Browse Workflow Templates</span>
+                  <span>Start producing</span>
                 </Link>
                 <a href="#how-it-works" className="ic-hero-cta-ghost">
-                  <span>Watch a workflow run</span>
+                  <span>See how it works</span>
                   <ArrowRight size={15} />
                 </a>
               </div>

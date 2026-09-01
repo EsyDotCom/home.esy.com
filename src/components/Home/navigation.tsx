@@ -550,234 +550,59 @@ export default function Navigation({
           
           {/* Desktop Navigation */}
           <div className="nav-links">
-            {/* Artifacts — preview panel for the gallery. Rows carry a real
-                thumbnail and live count per artifact kind, so the panel shows
-                the work instead of describing it. */}
-            <div 
-              className="nav-dropdown-container"
-              ref={artifactsDropdownRef}
-              onMouseEnter={() => openNavPanel('artifacts')}
-              onMouseLeave={() => closeNavPanel()}
-              onBlur={(e) => handlePanelBlur(artifactsDropdownRef, e)}
-              >
-              <Link
-                href="/artifacts/"
-                className={`nav-dropdown-trigger ${openPanel === 'artifacts' ? 'active' : ''} ${pathname === '/artifacts' || pathname?.startsWith('/artifacts/') ? 'active' : ''}`}
-                aria-expanded={openPanel === 'artifacts'}
-                onFocus={() => openNavPanel('artifacts', true)}
-                onClick={() => closeNavPanel(true)}
-                style={{
-                  color: !navOnDark ? '#475569' : 'rgba(255, 255, 255, 0.85)',
-                  textDecoration: 'none',
-                }}
-              >
-                <span>Artifacts</span>
-              </Link>
-
-              <div
-                className={`nav-panel nav-artifacts-dropdown ${openPanel === 'artifacts' ? 'open' : ''}`}
-                aria-label="Artifacts"
-              >
-                {/* Left rail — what the gallery is, plus the live total */}
-                <div className="nav-panel-rail">
-                  <span className="nav-panel-eyebrow">Artifact Gallery</span>
-                  <p className="nav-panel-tagline">
-                    Finished work from Esy workflows. Every piece shows exactly
-                    how it was made.
-                  </p>
-                  <span className="nav-panel-stat">
-                    <strong>{ARTIFACT_NAV_TOTAL}</strong> published pieces
-                  </span>
-                  <Link
-                    href="/artifacts/"
-                    className="nav-panel-cta"
-                    onClick={() => closeNavPanel(true)}
-                  >
-                    Browse the gallery
-                    <ArrowRight size={13} aria-hidden="true" />
-                  </Link>
-                </div>
-
-                {/* Right — one row per artifact kind, thumbnail + live count */}
-                <div className="nav-panel-column">
-                  <span className="nav-panel-label">By form</span>
-                  {ARTIFACT_NAV_KINDS.map((kind, i) => (
-                    <Link
-                      key={kind.id}
-                      href={kind.href}
-                      className="nav-panel-row nav-artifact-row"
-                      style={{ transitionDelay: openPanel === 'artifacts' ? `${60 + i * 45}ms` : '0ms' }}
-                      onClick={() => closeNavPanel(true)}
-                    >
-                      <span className="nav-artifact-row__thumb">
-                        {kind.thumb && (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={kind.thumb} alt="" loading="lazy" />
-                        )}
-                      </span>
-                      <span className="nav-artifact-row__body">
-                        <span className="nav-artifact-row__title">{kind.label}</span>
-                        <span className="nav-artifact-row__desc">{kind.desc}</span>
-                      </span>
-                      <span className="nav-artifact-row__count">{kind.count}</span>
-                    </Link>
-                  ))}
-                  <Link
-                    href="/artifacts/"
-                    className="nav-panel-all"
-                    onClick={() => closeNavPanel(true)}
-                  >
-                    All artifacts
-                    <ArrowRight size={13} aria-hidden="true" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Workflows stays a direct link, not a panel: /workflows is the
-                site's primary destination and its own browse surface, and the
-                category taxonomy a panel would show is thinner than the live
-                catalog behind it. Parked panel: Home/WorkflowsNavPanel.tsx. */}
+            {/* The buying-path header (docs/make/13): the primary nav answers
+                only what a prospective customer needs — what is this (Product),
+                will you run it for me (Managed) — plus the one dominant CTA.
+                Artifacts/Workflows/Agentic moved to the footer's discovery
+                layer; Pricing joins the header only when real pricing ships.
+                "Start producing" points at /managed until make.esy.com
+                answers it — the interim decided 2026-09-01. */}
             {!isMobile && (
               <Link
-                href="/workflows/"
-                className={`nav-link nav-link-templates ${pathname?.startsWith('/workflows') ? 'active' : ''}`}
+                href="/product/"
+                className={`nav-link ${pathname?.startsWith('/product') ? 'active' : ''}`}
                 style={{
                   color: !navOnDark ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
                   textShadow: 'none',
                 }}
               >
-                Workflows
+                Product
+              </Link>
+            )}
+            {!isMobile && (
+              <Link
+                href="/managed/"
+                className={`nav-link ${pathname?.startsWith('/managed') ? 'active' : ''}`}
+                style={{
+                  color: !navOnDark ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
+                  textShadow: 'none',
+                }}
+              >
+                Managed
               </Link>
             )}
 
-            {/* Agentic — content-rich preview panel for the /agentic hub.
-                The trigger still navigates; hovering opens a mega-dropdown that
-                shows the series identity and the latest episodes with real
-                thumbnails, so users see the page's content before clicking. */}
+            {/* The single dominant CTA — reinforces the category verb. */}
             {!isMobile && (
-              <div
-                className="nav-dropdown-container"
-                ref={agenticDropdownRef}
-                onMouseEnter={() => openNavPanel('agentic')}
-                onMouseLeave={() => closeNavPanel()}
-                onBlur={(e) => handlePanelBlur(agenticDropdownRef, e)}
-              >
-                <Link
-                  href="/agentic/"
-                  className={`nav-dropdown-trigger ${openPanel === 'agentic' ? 'active' : ''} ${pathname === '/agentic' || pathname?.startsWith('/agentic/') ? 'active' : ''}`}
-                  aria-expanded={openPanel === 'agentic'}
-                  onFocus={() => openNavPanel('agentic', true)}
-                  onClick={() => closeNavPanel(true)}
-                  style={{
-                    color: !navOnDark ? '#475569' : 'rgba(255, 255, 255, 0.85)',
-                    textDecoration: 'none',
-                  }}
-                >
-                  <span>Agentic</span>
-                </Link>
-
-                <div
-                  className={`nav-panel nav-agentic-dropdown ${openPanel === 'agentic' ? 'open' : ''}`}
-                  aria-label="Agentic"
-                >
-                  {/* Left rail — who/what the hub is */}
-                  <div className="nav-agentic-rail">
-                    <span className="nav-agentic-eyebrow">The Agentic Engineer</span>
-                    <p className="nav-agentic-tagline">
-                      Workflow demos, model research, and system design — from
-                      the engineer running Esy in production.
-                    </p>
-                    <div className="nav-agentic-byline">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/images/zev-uhuru.png" alt="" className="nav-agentic-avatar" />
-                      <div className="nav-agentic-byline-text">
-                        <span className="nav-agentic-byline-name">Zev Uhuru</span>
-                        <span className="nav-agentic-byline-role">Agentic Engineer</span>
-                      </div>
-                    </div>
-                    <Link
-                      href="/agentic/"
-                      className="nav-agentic-rail-cta"
-                      onClick={() => closeNavPanel(true)}
-                    >
-                      Visit the hub
-                      <ArrowRight size={13} aria-hidden="true" />
-                    </Link>
-                  </div>
-
-                  {/* Right — latest episodes with live thumbnails */}
-                  <div className="nav-agentic-episodes">
-                    <span className="nav-agentic-episodes-label">Latest episodes</span>
-                    {AGENTIC_NAV_EPISODES.map((ep, i) => (
-                      <Link
-                        key={ep.slug}
-                        href={`/agentic/${ep.slug}/`}
-                        className="nav-agentic-episode"
-                        style={{ transitionDelay: openPanel === 'agentic' ? `${60 + i * 45}ms` : '0ms' }}
-                        onClick={() => closeNavPanel(true)}
-                      >
-                        <span className="nav-agentic-thumb">
-                          {ep.thumb && (
-                            /* eslint-disable-next-line @next/next/no-img-element */
-                            <img src={ep.thumb} alt="" loading="lazy" />
-                          )}
-                          <span className="nav-agentic-thumb-play">
-                            <Play size={11} fill="currentColor" aria-hidden="true" />
-                          </span>
-                        </span>
-                        <span className="nav-agentic-episode-body">
-                          <span className="nav-agentic-episode-title">{ep.title}</span>
-                          <span className="nav-agentic-episode-meta">
-                            <span className="nav-agentic-episode-cat">{ep.categoryLabel}</span>
-                            <span className="nav-agentic-episode-dot" aria-hidden="true" />
-                            <Clock size={11} aria-hidden="true" />
-                            {ep.minutes} min
-                          </span>
-                        </span>
-                      </Link>
-                    ))}
-                    <Link
-                      href="/agentic/"
-                      className="nav-agentic-all"
-                      onClick={() => closeNavPanel(true)}
-                    >
-                      All episodes
-                      <ArrowRight size={13} aria-hidden="true" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* App CTA (hidden on mobile, available in hamburger menu) */}
-            {!isMobile && (
-              <a 
-                href={ctaConfig.ctaHref}
-              target="_blank"
-              rel="noopener noreferrer"
-                className="nav-cta-muted"
+              <Link
+                href="/managed/"
+                className="nav-cta-start"
                 style={{
-                  padding: '8px 16px',
+                  padding: '9px 18px',
                   borderRadius: '8px',
                   fontSize: '14px',
-                  fontWeight: 500,
-                  color: !navOnDark ? '#6b7280' : 'rgba(255, 255, 255, 0.6)',
-                  background: 'transparent',
-                  border: !navOnDark ? '1px solid #e5e7eb' : '1px solid rgba(255, 255, 255, 0.15)',
-                  transition: 'all 0.2s ease',
+                  fontWeight: 600,
+                  color: '#fafafa',
+                  background: '#00A896',
+                  textDecoration: 'none',
+                  boxShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
+                  transition: 'background 0.2s ease',
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = !navOnDark ? '#374151' : 'rgba(255, 255, 255, 0.9)';
-                  e.currentTarget.style.borderColor = !navOnDark ? '#d1d5db' : 'rgba(255, 255, 255, 0.3)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = !navOnDark ? '#6b7280' : 'rgba(255, 255, 255, 0.6)';
-                  e.currentTarget.style.borderColor = !navOnDark ? '#e5e7eb' : 'rgba(255, 255, 255, 0.15)';
-                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = '#00D4AA'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = '#00A896'; }}
               >
-              App
-              </a>
+                Start producing
+              </Link>
             )}
 
             {/* Mobile Menu Button */}
@@ -825,8 +650,29 @@ export default function Navigation({
             </button>
           </div>
 
-          {/* Navigation links */}
+          {/* Navigation links — buying path first (docs/make/13), then the
+              explore/discovery layer. */}
           <nav className="mnav-body">
+            <Link
+              href="/product/"
+              className={`mnav-item ${normalizedPathForNav.startsWith('/product') ? 'mnav-item--active' : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{ animationDelay: '0.02s' }}
+            >
+              <span className="mnav-item__label">Product</span>
+              <span className="mnav-item__desc">Marketing production with Esy</span>
+            </Link>
+
+            <Link
+              href="/managed/"
+              className={`mnav-item ${normalizedPathForNav.startsWith('/managed') ? 'mnav-item--active' : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{ animationDelay: '0.03s' }}
+            >
+              <span className="mnav-item__label">Managed</span>
+              <span className="mnav-item__desc">We run the production for you</span>
+            </Link>
+
             <Link
               href="/artifacts/"
               className={`mnav-item ${normalizedPathForNav.startsWith('/artifacts') ? 'mnav-item--active' : ''}`}
@@ -890,15 +736,13 @@ export default function Navigation({
 
           {/* Footer — CTA */}
           <div className="mnav-footer" style={{ animationDelay: '0.26s' }}>
-            <a 
-              href={ctaConfig.ctaHref}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/managed/"
               className="mnav-cta"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Open App
-            </a>
+              Start producing
+            </Link>
           </div>
         </div>
       )}
