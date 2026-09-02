@@ -28,7 +28,7 @@ import { lightTheme } from "@/lib/lightTheme";
 export const getPageSuffix = (pathname) => {
   if (pathname?.startsWith('/essays')) return 'Essays';
   // Strict match: /agentic-workflows is a separate SEO page, not the hub.
-  if (pathname === '/agentic' || pathname?.startsWith('/agentic/')) return 'Agentic';
+  if (pathname === '/engineer' || pathname?.startsWith('/engineer/')) return 'Engineer';
   if (pathname?.startsWith('/glossary')) return 'Glossary';
   if (pathname?.startsWith('/blog')) return 'Blog';
   return '';
@@ -724,13 +724,13 @@ export default function Navigation({
             </Link>
 
             <Link
-              href="/agentic/"
-              className={`mnav-item ${normalizedPathForNav === '/agentic' || normalizedPathForNav.startsWith('/agentic/') ? 'mnav-item--active' : ''}`}
+              href="/engineer/"
+              className={`mnav-item ${normalizedPathForNav === '/engineer' || normalizedPathForNav.startsWith('/engineer/') ? 'mnav-item--active' : ''}`}
               onClick={() => setIsMobileMenuOpen(false)}
               style={{ animationDelay: '0.16s' }}
             >
-              <span className="mnav-item__label">Agentic</span>
-              <span className="mnav-item__desc">The Agentic Engineer — workflows, demos &amp; system design</span>
+              <span className="mnav-item__label">The Marketing Engineer</span>
+              <span className="mnav-item__desc">Engineering AI systems for modern marketing</span>
             </Link>
           </nav>
 

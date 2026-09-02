@@ -241,75 +241,62 @@ export default function Footer () {
               <Logo href="" wordmarkOnly wordmarkFont="blackops" theme={logoTheme} />
             </div>
             <p className="footer-desc" style={{ color: theme.muted }}>
-              Agentic workflow templates for the agentic engineer — research, campaigns, and deliverables that grow your business.
+              <strong style={{ color: isLightMode || isNavyDark ? theme.text : 'inherit' }}>Put marketing production on autopilot.</strong>
               <br />
-              <strong style={{ color: isLightMode || isNavyDark ? theme.text : 'inherit' }}>Automate &amp; audit.</strong>
+              Build, review and scale marketing with AI.
             </p>
             <div className="footer-socials">
-              <a href="https://synthesize.esy.com" target="_blank" className="social-link" aria-label="Substack">
+              <a href="https://www.youtube.com/@EsyDotCom" target="_blank" className="social-link" aria-label="YouTube">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style={{ color: theme.subtle }}>
-                  <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24l9.56-5.39 9.52 5.39V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/>
+                 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
               </a>
-              {/* <a href="https://www.linkedin.com/company/EsyDotCom" target="_blank" className="social-link">
+              <a href="https://www.linkedin.com/company/EsyDotCom" target="_blank" className="social-link" aria-label="LinkedIn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style={{ color: theme.subtle }}>
                   <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                   <rect x="2" y="9" width="4" height="12"></rect>
                   <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-              </a> */}
-              <a href="https://www.youtube.com/@EsyDotCom" target="_blank" className="social-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style={{ color: theme.subtle }}>
-                 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
               </a>
             </div>
           </div>
           
           <FooterColumn 
-            title="Explore"
+            title="Product"
             links={[
-              { href: "/product/", text: "Product" },
+              { href: "https://make.esy.com", text: "Make" },
               { href: "/managed/", text: "Managed" },
-              { href: "/workflows/", text: "Workflows" },
-              { href: "/ai-agents/", text: "AI Agents" },
-              { href: "/glossary/", text: "Glossary" },
+              { href: "/pricing/", text: "Pricing" },
             ]}
           />
 
           <FooterColumn 
-            title="Resources"
+            title="From ESY"
             links={[
-              { href: "/marketing-engineer/", text: "The Marketing Engineer" },
-              { href: "/docs", text: "Docs" },
-              { href: "/agentic/", text: "The Agentic Engineer" },
-              { href: "/courses/", text: "AI Courses" },
+              { href: "https://clip.art", text: "Clip.Art" },
+              { href: "https://seopage.com", text: "SEOPage" },
             ]}
           />
-          
+
+          <FooterColumn 
+            title="Learn"
+            links={[
+              { href: "/engineer/", text: "The Marketing Engineer" },
+              { href: "/docs", text: "Docs" },
+              { href: "/docs/guides/", text: "Guides" },
+              { href: "/essays/", text: "Research" },
+            ]}
+          />
+
           <FooterColumn 
             title="Company"
             links={[
               { href: "/about/", text: "About" },
+              { href: "mailto:zev@esy.com", text: "Contact" },
               { href: "/privacy/", text: "Privacy" },
               { href: "/terms/", text: "Terms" },
-              { href: "/roadmap/", text: "Roadmap" },
             ]}
           />
-        </div>
-
-        {/* Extended footer row — full-width band of internal links to the
-            artifact catalogs (SEO). A row rather than a fourth column so it
-            can grow as new artifact classes ship. */}
-        <div className="footer-extended">
-          <h4>Artifacts</h4>
-          <div className="footer-extended-links">
-            <Link href="/artifacts/" className="footer-link">Artifact Gallery</Link>
-            <Link href="/essays/" className="footer-link">Visual Essays</Link>
-            <Link href="/photo-essays/" className="footer-link">Photo Essays</Link>
-            <Link href="/infographics/" className="footer-link">Infographics</Link>
-            <Link href="/clip-art/" className="footer-link">Clip Art</Link>
-          </div>
         </div>
 
         <div className="footer-bottom" style={{ borderTopColor: theme.border }}>

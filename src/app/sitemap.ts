@@ -166,7 +166,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const agenticVideos = await getAllAgenticArticles()
   agenticVideos.forEach(video => {
     sitemap.push({
-      url: `${baseUrl}/agentic/${video.slug}/`,
+      url: `${baseUrl}/engineer/${video.slug}/`,
       lastModified: new Date(video.publishedAt),
       changeFrequency: 'monthly',
       priority: 0.7,

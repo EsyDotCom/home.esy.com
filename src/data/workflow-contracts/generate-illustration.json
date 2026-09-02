@@ -1,15 +1,15 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-08-10T03:54:45.224770Z",
+  "generatedAt": "2026-09-02T11:53:13.259375Z",
   "id": "generate-illustration",
   "name": "Generate Illustration",
-  "description": "Generate a full-scene illustration (detailed background, environment, lighting) in one of 16 styles, plus classifier-produced catalog metadata.",
+  "description": "Generate a full-scene illustration (detailed background, environment, lighting) in one of 25 styles, plus classifier-produced catalog metadata and an OCR text gate.",
   "shortDescription": "Full-scene styled illustration with classification.",
   "artifactClass": "visual",
   "outputType": "visual",
   "status": "active",
   "supersededById": null,
-  "version": "2026.07.04",
+  "version": "2026.08.22",
   "stages": [
     {
       "name": "Render",
@@ -18,8 +18,8 @@
     },
     {
       "name": "Classify",
-      "description": "Produce catalog metadata.",
-      "stepCount": 1
+      "description": "Produce catalog metadata, then run the OCR text gate.",
+      "stepCount": 2
     }
   ],
   "intakeSchema": {
@@ -52,7 +52,16 @@
           "gouache",
           "paper-art",
           "chalk-pastel",
-          "retro"
+          "retro",
+          "isometric",
+          "line-art",
+          "pencil-sketch",
+          "comic",
+          "pixel-art",
+          "pop-art",
+          "minimalist",
+          "botanical",
+          "cinematic"
         ]
       },
       {
@@ -64,7 +73,8 @@
         "options": [
           "4:3",
           "1:1",
-          "3:4"
+          "3:4",
+          "16:9"
         ]
       },
       {
@@ -84,6 +94,33 @@
         "type": "string",
         "required": true,
         "description": "Comma-separated category slugs the classifier must choose from (empty fails the run in preflight)"
+      },
+      {
+        "name": "textPolicy",
+        "type": "enum",
+        "required": false,
+        "default": "",
+        "options": [
+          "",
+          "none",
+          "exact",
+          "freeform"
+        ],
+        "description": "Per-item text contract: none = text forbidden; exact = must match expectedText; freeform = text allowed, judged on legibility/spelling only. Empty derives from textBearing (true=exact, false=freeform). Use 'none' deliberately, for assets that must carry no characters at all."
+      },
+      {
+        "name": "textBearing",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "description": "True when the asset must carry legible text (the OCR gate then checks it)"
+      },
+      {
+        "name": "expectedText",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The EXACT text the asset must carry; leave empty unless textPolicy is 'exact'"
       }
     ]
   },
@@ -139,6 +176,39 @@
       "system": "redacted",
       "promptTemplate": "redacted",
       "maxTokens": "redacted"
+    },
+    {
+      "id": "step-3",
+      "name": "Text gate",
+      "kind": "llm",
+      "capability": "text",
+      "role": "textGate",
+      "requireTrue": "pass",
+      "failMessage": "OCR text gate rejected the render",
+      "jsonSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "foundText": {
+            "type": "string",
+            "description": "All legible text read from the image; empty if none"
+          },
+          "pass": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "foundText",
+          "pass",
+          "reason"
+        ]
+      },
+      "system": "redacted",
+      "promptTemplate": "redacted",
+      "maxTokens": "redacted"
     }
   ],
   "gates": [
@@ -155,6 +225,17 @@
       "unlocks": [
         "step-2"
       ]
+    },
+    {
+      "id": "gate-text",
+      "name": "Text gate",
+      "type": "quality",
+      "inputs": [
+        "illustration"
+      ],
+      "outputs": [
+        "verified-image"
+      ]
     }
   ],
   "artifactSchema": {
@@ -165,14 +246,15 @@
     ],
     "metadata": {
       "style": "string",
-      "aspectRatio": "enum [4:3, 1:1, 3:4]",
+      "aspectRatio": "enum [4:3, 1:1, 3:4, 16:9]",
       "quality": "enum [low, medium, high]",
       "classification": "object"
     }
   },
   "providers": {
     "imageGenerator": "redacted",
-    "classifier": "redacted"
+    "classifier": "redacted",
+    "textGate": "redacted"
   },
   "budgetPolicy": "redacted",
   "versions": [
@@ -193,7 +275,13 @@
       "revision": 52,
       "contentHash": "sha256:76366421cec4ea973a76b1eb715b7bc9a598ed8bf836e6c4d0cc928ff09cb573",
       "createdAt": "2026-08-06T22:08:47.634152Z"
+    },
+    {
+      "version": "2026.08.22",
+      "revision": 67,
+      "contentHash": "sha256:787da6fca183754ea2ca7ae3aaba5aa55d10c29e8194e58b11644acf62595e65",
+      "createdAt": "2026-08-22T21:33:33.982946Z"
     }
   ],
-  "updatedAt": "2026-08-06T22:47:27.264493Z"
+  "updatedAt": "2026-09-01T14:46:00.293560Z"
 }

@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-08-10T03:54:45.224770Z",
+  "generatedAt": "2026-09-02T11:53:13.259375Z",
   "id": "edit-image",
   "name": "Edit Image (Instruction)",
   "description": "Edit a platform-stored image with a natural-language instruction (OpenAI images/edits), with optional background re-removal for transparent assets.",
@@ -9,17 +9,22 @@
   "outputType": "visual",
   "status": "active",
   "supersededById": null,
-  "version": "2026.07.18.1",
+  "version": "2026.08.25.1",
   "stages": [
     {
       "name": "Edit",
-      "description": "Apply the instruction to the source image.",
+      "description": "Apply the instruction to the source image, at the source's own dimensions and the requested tier.",
       "stepCount": 1
     },
     {
       "name": "Post-process",
       "description": "Re-remove the background when transparency is requested.",
       "stepCount": 1
+    },
+    {
+      "name": "Cutout QA",
+      "description": "Refine the cutout edges and audit the alpha, escalating the remover on failure.",
+      "stepCount": 2
     }
   ],
   "intakeSchema": {
@@ -42,6 +47,37 @@
         "required": false,
         "description": "Re-remove the background after editing",
         "default": false
+      },
+      {
+        "name": "quality",
+        "type": "enum",
+        "required": false,
+        "default": "low",
+        "description": "Render tier for the edit itself",
+        "options": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      {
+        "name": "alphaAuditMode",
+        "type": "enum",
+        "required": false,
+        "default": "report",
+        "description": "Cutout QA after background removal: 'enforce' (default) fails bad cutouts (holes/halos/spill) so they retry through the removal ladder, 'report' records metrics only, 'off' skips the audit",
+        "options": [
+          "enforce",
+          "report",
+          "off"
+        ]
+      },
+      {
+        "name": "removalEscalationEnabled",
+        "type": "boolean",
+        "required": false,
+        "default": true,
+        "description": "On an enforced cutout-audit failure, retry the same render through stronger background-removal models (Heavy/Matting at 2K, then BRIA) before re-rendering; off fails straight to re-render"
       }
     ]
   },
@@ -58,6 +94,18 @@
       "kind": "tool",
       "role": "backgroundRemover",
       "inputPath": "step-1.url"
+    },
+    {
+      "id": "step-2a",
+      "name": "Refine edges",
+      "kind": "tool",
+      "inputPath": "step-2.url"
+    },
+    {
+      "id": "step-2b",
+      "name": "Audit cutout",
+      "kind": "tool",
+      "inputPath": "step-2a.url"
     }
   ],
   "gates": [
@@ -73,6 +121,17 @@
       ],
       "unlocks": [
         "step-2"
+      ]
+    },
+    {
+      "id": "gate-alpha",
+      "name": "Cutout alpha audit",
+      "type": "quality",
+      "inputs": [
+        "edited-image"
+      ],
+      "outputs": [
+        "audited-image"
       ]
     }
   ],
@@ -122,7 +181,19 @@
       "revision": 52,
       "contentHash": "sha256:293738f584503f2db34333fe200a1b0f83a271f033b936e6e78f3e1381556165",
       "createdAt": "2026-08-06T22:08:47.950505Z"
+    },
+    {
+      "version": "2026.08.25",
+      "revision": 70,
+      "contentHash": "sha256:5fb327e015516fc1fc4a420aa23b67db2e81d83161997d5847ef28de97dffe9a",
+      "createdAt": "2026-08-25T10:45:22.232909Z"
+    },
+    {
+      "version": "2026.08.25.1",
+      "revision": 71,
+      "contentHash": "sha256:0c3ee25bfdbc3557dec9c9d6a1e3704d8da23a97e3530ba2218a01d43b83f26b",
+      "createdAt": "2026-08-25T16:37:42.276826Z"
     }
   ],
-  "updatedAt": "2026-08-06T22:47:27.515598Z"
+  "updatedAt": "2026-09-01T14:46:01.663391Z"
 }

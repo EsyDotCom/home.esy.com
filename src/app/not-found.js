@@ -63,7 +63,7 @@ const pathways = [
     title: 'The Agentic Engineer',
     description: 'Demo-first deep dives on agentic workflows — the output, the system design, and the business behind it.',
     cta: 'Explore The Agentic Engineer',
-    href: '/agentic',
+    href: '/engineer',
   },
 ];
 

@@ -43,7 +43,7 @@ export function AgenticVideoCard({
     : null;
 
   return (
-    <Link href={`/agentic/${slug}`} style={{ textDecoration: "none", color: "inherit", minWidth: 0 }}>
+    <Link href={`/engineer/${slug}`} style={{ textDecoration: "none", color: "inherit", minWidth: 0 }}>
       <div
         style={{
           borderRadius: "16px",
