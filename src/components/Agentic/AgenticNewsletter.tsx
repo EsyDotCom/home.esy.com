@@ -155,7 +155,7 @@ export default function AgenticNewsletter({
                 >
                   {isSuccess
                     ? "Check your inbox for a welcome email. If you don\u2019t see it, check your spam or promotions folder and mark us as safe."
-                    : "One agentic workflow per week: the output first, then the system design behind it, the business it serves, and the engineering depth to build it yourself."}
+                    : "One weekly breakdown of the AI, software, and systems behind modern marketing."}
                 </p>
 
                 {/* Trust indicators */}

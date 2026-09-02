@@ -321,7 +321,7 @@ function SidebarNewsletter() {
           margin: "0 0 12px",
         }}
       >
-        One agentic workflow per week — the output, the system design, and the business behind it.
+        One weekly breakdown of the AI, software, and systems behind modern marketing.
       </p>
 
       {status === "success" ? (
