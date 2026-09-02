@@ -373,8 +373,8 @@ export function AgenticHero({
               maxWidth: 440,
             }}
           >
-            Agentic workflows that ship real products — the demo first, then
-            the system design and the business behind it.
+            AI, automation, data, and software for modern marketing — built
+            on real products, then broken down step by step.
           </p>
 
           {/* Personhood signal above the fold — a quiet byline, not a portrait,

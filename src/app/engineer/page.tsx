@@ -4,7 +4,7 @@ import { getAllAgenticArticles } from "@/lib/published-articles";
 export const metadata = {
   title: "The Marketing Engineer — Engineering AI Systems for Modern Marketing",
   description:
-    "Demo-first deep dives on agentic workflows that ship real digital products. Every issue opens with the artifact, then the system design behind it, the business it serves, and the engineering depth to build it yourself.",
+    "AI, automation, data, and software for modern marketing — built on real products, then broken down step by step.",
   keywords:
     "The Marketing Engineer, marketing engineering, AI marketing production, AI agents, frontier models, Claude Code, Cursor, multi-agent architecture, workflow engine, digital products, solopreneur",
   alternates: {
@@ -13,7 +13,7 @@ export const metadata = {
   openGraph: {
     title: "The Marketing Engineer",
     description:
-      "Demo-first deep dives on AI production systems for modern marketing — the output, the system design, and the business behind it.",
+      "AI, automation, data, and software for modern marketing — built on real products, then broken down step by step.",
     url: "https://esy.com/engineer/",
     siteName: "Esy",
     locale: "en_US",
@@ -23,7 +23,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "The Marketing Engineer",
     description:
-      "Demo-first deep dives on AI production systems for modern marketing — the output, the system design, and the business behind it.",
+      "AI, automation, data, and software for modern marketing — built on real products, then broken down step by step.",
   },
 };
 
