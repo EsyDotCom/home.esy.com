@@ -29,7 +29,7 @@ function FeaturedPoster({ video }: { video: AgenticVideo }) {
 
   return (
     <Link
-      href={`/agentic/${video.slug}`}
+      href={`/engineer/${video.slug}`}
       aria-label={`Watch: ${video.title}`}
       style={{ textDecoration: "none", color: "inherit", display: "block" }}
       onMouseEnter={() => setHovered(true)}
@@ -221,7 +221,7 @@ function UpNextStrip({ videos }: { videos: AgenticVideo[] }) {
           return (
             <Link
               key={v.slug}
-              href={`/agentic/${v.slug}`}
+              href={`/engineer/${v.slug}`}
               style={{ textDecoration: "none", color: "inherit", minWidth: 0 }}
               onMouseEnter={() => setHoveredSlug(v.slug)}
               onMouseLeave={() => setHoveredSlug(null)}
@@ -358,7 +358,7 @@ export function AgenticHero({
               color: "#fff",
             }}
           >
-            The Agentic
+            The Marketing
             <br />
             Engineer
           </h1>
@@ -373,8 +373,8 @@ export function AgenticHero({
               maxWidth: 440,
             }}
           >
-            Agentic workflows that ship real products — the demo first, then
-            the system design and the business behind it.
+            AI, automation, data, and software for modern marketing — built
+            on real products, then broken down step by step.
           </p>
 
           {/* Personhood signal above the fold — a quiet byline, not a portrait,
@@ -417,7 +417,7 @@ export function AgenticHero({
               </span>
               <span style={{ color: "rgba(255,255,255,0.5)" }}>
                 {" "}
-                — Agentic Engineer, building Esy
+                — Marketing Engineer, building Esy
               </span>
             </p>
           </div>

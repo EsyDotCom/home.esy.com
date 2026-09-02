@@ -106,3 +106,8 @@
 /essays/fentanyl-crisis-timeline /essays/history/fentanyl-crisis-timeline 301
 /essays/fentanyl-crisis-timeline/ /essays/history/fentanyl-crisis-timeline/ 301
 
+# The Agentic Engineer became The Marketing Engineer (2026-09-02) — /agentic
+# carries months of shared links, so both hub and episode URLs live forever.
+/agentic /engineer 301
+/agentic/:slug* /engineer/:slug* 301
+/marketing-engineer /engineer 301

@@ -46,7 +46,7 @@ const Navigation = ({ scrolled }) => {
               }}>
                 Essays
               </Link>
-              <Link href="/agentic/" style={{
+              <Link href="/engineer/" style={{
                 color: 'rgba(255, 255, 255, 0.6)',
                 textDecoration: 'none',
                 fontSize: '0.875rem',

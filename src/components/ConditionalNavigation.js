@@ -31,7 +31,7 @@ const ConditionalNavigation = () => {
   
   // Agentic pages (The Agentic Engineer — merged /learn + /research, Jul 2026).
   // Strict match so /agentic-workflows (separate SEO page) doesn't count.
-  const isLearnPage = normalizedPath === '/agentic' || normalizedPath?.startsWith('/agentic/');
+  const isLearnPage = normalizedPath === '/agentic' || normalizedPath?.startsWith('/engineer/');
   const isLearnIndex = normalizedPath === '/agentic';
   
   // Check if we're on course lesson pages (focused learning experience)

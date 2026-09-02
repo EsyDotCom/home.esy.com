@@ -143,7 +143,7 @@ function AuthorCard({ isMobile }: { isMobile: boolean }) {
                 marginTop: 2,
               }}
             >
-              Agentic Engineer — NYC &amp; Miami
+              Marketing Engineer — NYC &amp; Miami
             </span>
             <p
               style={{
@@ -311,7 +311,7 @@ function SidebarNewsletter() {
             margin: 0,
           }}
         >
-          The Agentic Engineer
+          The Marketing Engineer
         </h4>
       </div>
       <p
@@ -568,7 +568,7 @@ export default function AgenticVideoPageClient({
           <Breadcrumbs
             items={[
               { label: "Home", href: "/" },
-              { label: "The Agentic Engineer", href: "/agentic" },
+              { label: "The Marketing Engineer", href: "/engineer" },
               {
                 label:
                   isMobile && video.title.length > 30
@@ -734,7 +734,7 @@ export default function AgenticVideoPageClient({
                       lineHeight: 1.3,
                     }}
                   >
-                    Agentic Engineer
+                    Marketing Engineer
                   </span>
                 </div>
               </div>

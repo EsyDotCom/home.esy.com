@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows). Mirrors the platform's published, versioned workflow templates.",
-  "generatedAt": "2026-08-10T03:54:45.224770Z",
+  "generatedAt": "2026-09-02T12:41:49.680071Z",
   "total": 21,
   "items": [
     {
@@ -16,13 +16,18 @@
       "stages": [
         {
           "name": "Edit",
-          "description": "Apply the instruction to the source image.",
+          "description": "Apply the instruction to the source image, at the source's own dimensions and the requested tier.",
           "stepCount": 1
         },
         {
           "name": "Post-process",
           "description": "Re-remove the background when transparency is requested.",
           "stepCount": 1
+        },
+        {
+          "name": "Cutout QA",
+          "description": "Refine the cutout edges and audit the alpha, escalating the remover on failure.",
+          "stepCount": 2
         }
       ],
       "whatYouProvide": [
@@ -33,11 +38,14 @@
       "whatYouGet": [
         "Edited image in ESY R2",
         "Source provenance",
+        "Cutout audit metrics",
         "Per-step cost ledger"
       ],
       "qaChecks": [
         "Instruction fidelity",
-        "Subject preservation"
+        "Subject preservation",
+        "Cutout edge quality",
+        "Dimensions match the source"
       ],
       "intakeSchema": {
         "fields": [
@@ -59,12 +67,43 @@
             "required": false,
             "description": "Re-remove the background after editing",
             "default": false
+          },
+          {
+            "name": "quality",
+            "type": "enum",
+            "required": false,
+            "default": "low",
+            "description": "Render tier for the edit itself",
+            "options": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          {
+            "name": "alphaAuditMode",
+            "type": "enum",
+            "required": false,
+            "default": "report",
+            "description": "Cutout QA after background removal: 'enforce' (default) fails bad cutouts (holes/halos/spill) so they retry through the removal ladder, 'report' records metrics only, 'off' skips the audit",
+            "options": [
+              "enforce",
+              "report",
+              "off"
+            ]
+          },
+          {
+            "name": "removalEscalationEnabled",
+            "type": "boolean",
+            "required": false,
+            "default": true,
+            "description": "On an enforced cutout-audit failure, retry the same render through stronger background-removal models (Heavy/Matting at 2K, then BRIA) before re-rendering; off fails straight to re-render"
           }
         ]
       },
-      "version": "2026.07.18.1",
+      "version": "2026.08.25.1",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:27.515598Z"
+      "updatedAt": "2026-09-01T14:46:01.663391Z"
     },
     {
       "id": "finalize-clip-art-asset",
@@ -121,7 +160,7 @@
       },
       "version": "2026.07.21",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:29.068019Z"
+      "updatedAt": "2026-09-01T14:46:07.084085Z"
     },
     {
       "id": "generate-essay-analytical",
@@ -195,7 +234,7 @@
       },
       "version": "2026.06.04",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:25.526051Z"
+      "updatedAt": "2026-09-01T14:45:54.328909Z"
     },
     {
       "id": "generate-essay-argumentative",
@@ -277,7 +316,7 @@
       },
       "version": "2026.06.04",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:25.392808Z"
+      "updatedAt": "2026-09-01T14:45:53.874467Z"
     },
     {
       "id": "generate-character-set",
@@ -385,7 +424,7 @@
       },
       "version": "2026.07.30",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:28.552717Z"
+      "updatedAt": "2026-09-01T14:46:05.273859Z"
     },
     {
       "id": "generate-clip-art-asset-ref",
@@ -596,7 +635,7 @@
       },
       "version": "2026.07.31.3",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:28.688241Z"
+      "updatedAt": "2026-09-01T14:46:05.724826Z"
     },
     {
       "id": "generate-clip-art-asset-v2",
@@ -791,7 +830,7 @@
       },
       "version": "2026.07.31.2",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:27.001404Z"
+      "updatedAt": "2026-09-01T14:45:59.372024Z"
     },
     {
       "id": "generate-clip-art-asset",
@@ -884,7 +923,7 @@
       },
       "version": "2026.05.16",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:25.255372Z"
+      "updatedAt": "2026-09-01T14:45:53.419838Z"
     },
     {
       "id": "generate-essay-college-application",
@@ -961,7 +1000,7 @@
       },
       "version": "2026.06.04",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:25.909649Z"
+      "updatedAt": "2026-09-01T14:45:55.669982Z"
     },
     {
       "id": "generate-coloring-page",
@@ -1053,7 +1092,7 @@
       },
       "version": "2026.07.04",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:27.140741Z"
+      "updatedAt": "2026-09-01T14:45:59.833515Z"
     },
     {
       "id": "generate-essay-expository",
@@ -1127,12 +1166,12 @@
       },
       "version": "2026.06.04",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:25.658723Z"
+      "updatedAt": "2026-09-01T14:45:54.780312Z"
     },
     {
       "id": "generate-illustration",
       "name": "Generate Illustration",
-      "description": "Generate a full-scene illustration (detailed background, environment, lighting) in one of 16 styles, plus classifier-produced catalog metadata.",
+      "description": "Generate a full-scene illustration (detailed background, environment, lighting) in one of 25 styles, plus classifier-produced catalog metadata and an OCR text gate.",
       "shortDescription": "Full-scene styled illustration with classification.",
       "artifactClass": "visual",
       "outputType": "visual",
@@ -1147,8 +1186,8 @@
         },
         {
           "name": "Classify",
-          "description": "Produce catalog metadata.",
-          "stepCount": 1
+          "description": "Produce catalog metadata, then run the OCR text gate.",
+          "stepCount": 2
         }
       ],
       "whatYouProvide": [
@@ -1156,7 +1195,8 @@
         "Style",
         "Aspect ratio",
         "Quality tier",
-        "Category list"
+        "Category list",
+        "Text contract (optional)"
       ],
       "whatYouGet": [
         "Illustration in ESY R2",
@@ -1166,7 +1206,8 @@
       ],
       "qaChecks": [
         "Visual quality",
-        "Prompt fit"
+        "Prompt fit",
+        "OCR text gate"
       ],
       "intakeSchema": {
         "fields": [
@@ -1198,7 +1239,16 @@
               "gouache",
               "paper-art",
               "chalk-pastel",
-              "retro"
+              "retro",
+              "isometric",
+              "line-art",
+              "pencil-sketch",
+              "comic",
+              "pixel-art",
+              "pop-art",
+              "minimalist",
+              "botanical",
+              "cinematic"
             ]
           },
           {
@@ -1210,7 +1260,8 @@
             "options": [
               "4:3",
               "1:1",
-              "3:4"
+              "3:4",
+              "16:9"
             ]
           },
           {
@@ -1230,12 +1281,39 @@
             "type": "string",
             "required": true,
             "description": "Comma-separated category slugs the classifier must choose from (empty fails the run in preflight)"
+          },
+          {
+            "name": "textPolicy",
+            "type": "enum",
+            "required": false,
+            "default": "",
+            "options": [
+              "",
+              "none",
+              "exact",
+              "freeform"
+            ],
+            "description": "Per-item text contract: none = text forbidden; exact = must match expectedText; freeform = text allowed, judged on legibility/spelling only. Empty derives from textBearing (true=exact, false=freeform). Use 'none' deliberately, for assets that must carry no characters at all."
+          },
+          {
+            "name": "textBearing",
+            "type": "boolean",
+            "required": false,
+            "default": false,
+            "description": "True when the asset must carry legible text (the OCR gate then checks it)"
+          },
+          {
+            "name": "expectedText",
+            "type": "string",
+            "required": false,
+            "default": "",
+            "description": "The EXACT text the asset must carry; leave empty unless textPolicy is 'exact'"
           }
         ]
       },
-      "version": "2026.07.04",
+      "version": "2026.08.22",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:27.264493Z"
+      "updatedAt": "2026-09-01T14:46:00.293560Z"
     },
     {
       "id": "generate-essay-narrative",
@@ -1307,7 +1385,7 @@
       },
       "version": "2026.06.04",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:25.784907Z"
+      "updatedAt": "2026-09-01T14:45:55.226059Z"
     },
     {
       "id": "generate-pack-cover",
@@ -1381,7 +1459,7 @@
       },
       "version": "2026.08.06.1",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:28.956667Z"
+      "updatedAt": "2026-09-01T14:46:06.631832Z"
     },
     {
       "id": "generate-research-infographic",
@@ -1457,7 +1535,7 @@
       },
       "version": "2026.06.01",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:24.288538Z"
+      "updatedAt": "2026-09-01T14:45:49.389115Z"
     },
     {
       "id": "generate-research-paper",
@@ -1539,7 +1617,7 @@
       },
       "version": "2026.06.04",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:26.039396Z"
+      "updatedAt": "2026-09-01T14:45:56.128076Z"
     },
     {
       "id": "generate-research-report",
@@ -1594,7 +1672,7 @@
       },
       "version": "2026.05.29",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:24.145335Z"
+      "updatedAt": "2026-09-01T14:45:48.925102Z"
     },
     {
       "id": "generate-worksheet",
@@ -1701,7 +1779,7 @@
       },
       "version": "2026.07.04",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:27.387109Z"
+      "updatedAt": "2026-09-01T14:46:01.200693Z"
     },
     {
       "id": "plan-clipart-pack",
@@ -1862,7 +1940,7 @@
       },
       "version": "2026.08.01.2",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:28.354450Z"
+      "updatedAt": "2026-09-01T14:46:04.329508Z"
     },
     {
       "id": "remove-image-background",
@@ -1905,7 +1983,7 @@
       },
       "version": "2026.07.18",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:27.656005Z"
+      "updatedAt": "2026-09-01T14:46:02.101164Z"
     },
     {
       "id": "upscale-to-print-clip-art-asset",
@@ -1962,7 +2040,7 @@
       },
       "version": "2026.07.21",
       "cadence": "On demand",
-      "updatedAt": "2026-08-06T22:47:29.195651Z"
+      "updatedAt": "2026-09-01T14:46:07.530595Z"
     }
   ]
 }
