@@ -296,10 +296,6 @@ export default function Footer () {
           <div className="footer-extended-links">
             <a href="https://clip.art" target="_blank" rel="noreferrer" className="footer-link">Clip.Art</a>
             <a href="https://seopage.com" target="_blank" rel="noreferrer" className="footer-link">SEOPage</a>
-            <Link href="/artifacts/" className="footer-link">Artifact Gallery</Link>
-            <Link href="/essays/" className="footer-link">Visual Essays</Link>
-            <Link href="/photo-essays/" className="footer-link">Photo Essays</Link>
-            <Link href="/infographics/" className="footer-link">Infographics</Link>
           </div>
         </div>
 
