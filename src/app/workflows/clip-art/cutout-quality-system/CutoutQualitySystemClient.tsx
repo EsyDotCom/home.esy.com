@@ -500,7 +500,7 @@ export default function CutoutQualitySystemClient() {
           engineering rules in <Code>docs/CUTOUT_STANDARDS.md</Code>, the record-keeping convention
           in <Code>docs/CLIPART_QUALITY_AUDITS.md</Code>, and the bench driver under{' '}
           <Code>scripts/bench/</Code>. The evaluation standard, the wave audit records, and the lab
-          notes live as knowledge artifacts in the ESY LLC organization context, where every
+          notes live as knowledge artifacts in the Esy LLC organization context, where every
           operator and agent inherits them. This page is the narrative map; those are the law.
         </P>
 

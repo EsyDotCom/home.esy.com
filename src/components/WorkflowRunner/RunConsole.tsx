@@ -30,7 +30,7 @@ const TRACE: TraceStep[] = [
   { label: 'Intake parsed', detail: 'Subject, style & format validated', time: '0.4s', cost: '$0.000' },
   { label: 'Prompt composed', detail: 'Catalog style rules applied', time: '1.1s', cost: '$0.001' },
   { label: 'gpt-image-2 render', detail: '1024×1024 · 1 candidate', time: '19s', cost: '$0.034' },
-  { label: 'Background removed', detail: 'fal.ai · stored in ESY R2', time: '4.8s', cost: '$0.004' },
+  { label: 'Background removed', detail: 'fal.ai · stored in Esy R2', time: '4.8s', cost: '$0.004' },
   { label: 'Review passed', detail: 'Human-in-the-loop approval', time: '—', cost: '$0.000', human: true },
 ];
 

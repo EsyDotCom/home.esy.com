@@ -293,7 +293,7 @@ export default function Footer () {
         {/* From ESY — the full-width band: standalone businesses ESY built,
             then the showcase catalogs its engine produced. */}
         <div className="footer-extended">
-          <h4>From ESY</h4>
+          <h4>From Esy</h4>
           <div className="footer-extended-links">
             <a href="https://clip.art" target="_blank" rel="noreferrer" className="footer-link">Clip.Art</a>
             <a href="https://seopage.com" target="_blank" rel="noreferrer" className="footer-link">SEOPage</a>
