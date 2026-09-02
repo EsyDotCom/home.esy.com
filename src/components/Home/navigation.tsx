@@ -555,8 +555,10 @@ export default function Navigation({
                 will you run it for me (Managed) — plus the one dominant CTA.
                 Artifacts/Workflows/Agentic moved to the footer's discovery
                 layer; Pricing joins the header only when real pricing ships.
-                "Start producing" points at /managed until make.esy.com
-                answers it — the interim decided 2026-09-01. */}
+                "Start producing" is the ACTION and goes to the product
+                (make.esy.com, live 2026-09-01); Product stays the explainer —
+                software vs. the Managed service is the contrast the header
+                teaches. */}
             {!isMobile && (
               <Link
                 href="/product/"
@@ -584,8 +586,8 @@ export default function Navigation({
 
             {/* The single dominant CTA — reinforces the category verb. */}
             {!isMobile && (
-              <Link
-                href="/managed/"
+              <a
+                href="https://make.esy.com"
                 className="nav-cta-start"
                 style={{
                   padding: '9px 18px',
@@ -602,7 +604,7 @@ export default function Navigation({
                 onMouseLeave={(e) => { e.currentTarget.style.background = '#00A896'; }}
               >
                 Start producing
-              </Link>
+              </a>
             )}
 
             {/* Mobile Menu Button */}
@@ -736,13 +738,13 @@ export default function Navigation({
 
           {/* Footer — CTA */}
           <div className="mnav-footer" style={{ animationDelay: '0.26s' }}>
-            <Link
-              href="/managed/"
+            <a
+              href="https://make.esy.com"
               className="mnav-cta"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Start producing
-            </Link>
+            </a>
           </div>
         </div>
       )}

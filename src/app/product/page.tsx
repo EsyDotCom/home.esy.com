@@ -86,7 +86,7 @@ export default function ProductPage() {
             Every piece shares the same research, the same positioning, the same brand.
           </p>
           <Link
-            href="/managed/"
+            href="https://make.esy.com"
             style={{
               display: 'inline-block',
               padding: '14px 28px',
@@ -213,7 +213,7 @@ export default function ProductPage() {
           </p>
           <div style={{ marginTop: 28 }}>
             <Link
-              href="/managed/"
+              href="https://make.esy.com"
               style={{
                 display: 'inline-block',
                 padding: '13px 26px',

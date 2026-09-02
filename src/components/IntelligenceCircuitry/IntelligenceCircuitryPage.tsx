@@ -354,7 +354,7 @@ const IntelligenceCircuitryPage: React.FC = () => {
                   before reading anything else. */}
               <div className="ic-hero-ctas">
                 <Link 
-                  href="/managed/"
+                  href="https://make.esy.com"
                   style={{ 
                     display: 'inline-flex', 
                     alignItems: 'center', 
