@@ -98,7 +98,7 @@ The claims that matter for Esy are the long-horizon ones: token efficiency at me
       { label: "Intake", sublabel: "Subject + style + aspect ratio" },
       { label: "Generate", sublabel: "OpenAI or Gemini image" },
       { label: "Clean Up", sublabel: "fal.ai background removal" },
-      { label: "Store", sublabel: "ESY R2 artifact" },
+      { label: "Store", sublabel: "Esy R2 artifact" },
       { label: "Review", sublabel: "Artifact detail + cost" },
     ],
     content: `Generate Clip Art Asset is the first real generation workflow in Esy — and it's the simplest place to see the whole platform loop in action. You give it a subject and a style, it produces a transparent-background clip art asset, and Esy keeps the full record: the prompt you wrote, the prompt it actually sent the provider, the model stack, the storage location, and the cost. This walkthrough shows you how to run it end to end in about three minutes.

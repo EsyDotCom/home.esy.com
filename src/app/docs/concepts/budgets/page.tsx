@@ -13,7 +13,7 @@ const budgetExample = `{
   "projectId": null,
   "workflowId": null,
   "scope": "workspace",
-  "name": "ESY LLC monthly cap",
+  "name": "Esy LLC monthly cap",
   "limitUsd": 50,
   "period": "monthly",
   "perRunCapUsd": 0.25,
