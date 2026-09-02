@@ -559,29 +559,28 @@ export default function Navigation({
                 (make.esy.com, live 2026-09-01); Product stays the explainer —
                 software vs. the Managed service is the contrast the header
                 teaches. */}
+
+            {/* The single dominant CTA — reinforces the category verb. */}
             {!isMobile && (
-              <Link
-                href="/product/"
-                className={`nav-link ${pathname?.startsWith('/product') ? 'active' : ''}`}
+              <a
+                href="https://make.esy.com"
+                className="nav-cta-start"
                 style={{
-                  color: !navOnDark ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
-                  textShadow: 'none',
+                  padding: '9px 18px',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  color: '#fafafa',
+                  background: '#00A896',
+                  textDecoration: 'none',
+                  boxShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
+                  transition: 'background 0.2s ease',
                 }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = '#00D4AA'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = '#00A896'; }}
               >
-                Product
-              </Link>
-            )}
-            {!isMobile && (
-              <Link
-                href="/managed/"
-                className={`nav-link ${pathname?.startsWith('/managed') ? 'active' : ''}`}
-                style={{
-                  color: !navOnDark ? 'rgba(10, 37, 64, 0.7)' : 'rgba(255, 255, 255, 0.85)',
-                  textShadow: 'none',
-                }}
-              >
-                Managed
-              </Link>
+                Start producing
+              </a>
             )}
 
             {/* Sign in stays visually secondary — the customer destination
@@ -614,28 +613,9 @@ export default function Navigation({
               </a>
             )}
 
-            {/* The single dominant CTA — reinforces the category verb. */}
-            {!isMobile && (
-              <a
-                href="https://make.esy.com"
-                className="nav-cta-start"
-                style={{
-                  padding: '9px 18px',
-                  borderRadius: '8px',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  color: '#fafafa',
-                  background: '#00A896',
-                  textDecoration: 'none',
-                  boxShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
-                  transition: 'background 0.2s ease',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = '#00D4AA'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = '#00A896'; }}
-              >
-                Start producing
-              </a>
-            )}
+            {/* Product and Managed are parked for launch (Zev 2026-09-02) —
+                restore from git history (commit 8651e784) when those pages
+                should carry header weight again. */}
 
             {/* Mobile Menu Button */}
               <button
@@ -685,25 +665,7 @@ export default function Navigation({
           {/* Navigation links — buying path first (docs/make/13), then the
               explore/discovery layer. */}
           <nav className="mnav-body">
-            <Link
-              href="/product/"
-              className={`mnav-item ${normalizedPathForNav.startsWith('/product') ? 'mnav-item--active' : ''}`}
-              onClick={() => setIsMobileMenuOpen(false)}
-              style={{ animationDelay: '0.02s' }}
-            >
-              <span className="mnav-item__label">Product</span>
-              <span className="mnav-item__desc">Marketing production with Esy</span>
-            </Link>
 
-            <Link
-              href="/managed/"
-              className={`mnav-item ${normalizedPathForNav.startsWith('/managed') ? 'mnav-item--active' : ''}`}
-              onClick={() => setIsMobileMenuOpen(false)}
-              style={{ animationDelay: '0.03s' }}
-            >
-              <span className="mnav-item__label">Managed</span>
-              <span className="mnav-item__desc">We run the production for you</span>
-            </Link>
 
             <Link
               href="/artifacts/"
