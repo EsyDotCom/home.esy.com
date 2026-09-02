@@ -584,6 +584,36 @@ export default function Navigation({
               </Link>
             )}
 
+            {/* Sign in stays visually secondary — the customer destination
+                is Make, never Workbench (docs/make/13). */}
+            {!isMobile && (
+              <a
+                href="https://make.esy.com/signin"
+                className="nav-cta-muted"
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  color: !navOnDark ? '#6b7280' : 'rgba(255, 255, 255, 0.6)',
+                  background: 'transparent',
+                  border: !navOnDark ? '1px solid #e5e7eb' : '1px solid rgba(255, 255, 255, 0.15)',
+                  transition: 'all 0.2s ease',
+                  textDecoration: 'none',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = !navOnDark ? '#374151' : 'rgba(255, 255, 255, 0.9)';
+                  e.currentTarget.style.borderColor = !navOnDark ? '#d1d5db' : 'rgba(255, 255, 255, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = !navOnDark ? '#6b7280' : 'rgba(255, 255, 255, 0.6)';
+                  e.currentTarget.style.borderColor = !navOnDark ? '#e5e7eb' : 'rgba(255, 255, 255, 0.15)';
+                }}
+              >
+                Sign in
+              </a>
+            )}
+
             {/* The single dominant CTA — reinforces the category verb. */}
             {!isMobile && (
               <a
@@ -738,6 +768,14 @@ export default function Navigation({
 
           {/* Footer — CTA */}
           <div className="mnav-footer" style={{ animationDelay: '0.26s' }}>
+            <a
+              href="https://make.esy.com/signin"
+              className="mnav-item"
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{ justifyContent: 'center' }}
+            >
+              <span className="mnav-item__label">Sign in</span>
+            </a>
             <a
               href="https://make.esy.com"
               className="mnav-cta"
