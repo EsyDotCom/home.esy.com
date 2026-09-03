@@ -1,201 +1,157 @@
-/* HomeV2 — the Assembly homepage: light-first, flat color, no grids.
+/* HomeV2 — the story homepage.
  *
- * The visual system is the wordmark's own stencil grammar (measured from the
- * Black Ops One letterforms: zero curves, 45° chamfers, pieces separated by
- * seams) extended into sixteen generated brand emblems in
- * /public/brand/clipart. Every decorative device on this page is one of:
- * an emblem, a 45° chamfered corner, or a hairline seam. Nothing glows.
+ * Visual system: org.esy brand/ESY_VISUAL_SYSTEM.md (LOCKED 2026-09-03).
+ * Clay cast tells the WHO, isometric machinery the HOW, jade approval the
+ * thread. The page is the story arc, problem-first: Monday → one brief →
+ * production → review → the calendar stays full. Copy speaks customer
+ * vocabulary only (Brief / Production / Review — never engine nouns).
  */
 
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import './HomeV2.css';
 
-/* Scattered "source" emblems for the hero: raw pieces drifting in, before
- * assembly. Offsets/rotations are hand-set, not random — restraint reads as
- * intent. */
-const HERO_PIECES = [
-  { src: 'page', dy: 8, r: -6 },
-  { src: 'chart', dy: -10, r: 4 },
-  { src: 'megaphone', dy: 14, r: -3 },
-  { src: 'envelope', dy: -4, r: 6 },
-  { src: 'spark', dy: 10, r: -5 },
-];
-
-const STEPS = [
+const BEATS = [
   {
-    emblem: 'page',
-    title: 'One brief goes in',
-    body: 'Describe the campaign once — audience, offer, tone. The intake asks for outcomes, never mechanisms.',
+    img: 'brief',
+    label: 'The brief',
+    title: 'Write it once',
+    body: 'Describe the campaign the way you would to a colleague — audience, offer, tone. That one brief is the last production document you write.',
   },
   {
-    emblem: 'gear',
-    title: 'Esy produces',
-    body: 'Research, angles, creative, copy, a landing page — every step tracked as it runs, with its exact cost.',
+    img: 'production',
+    label: 'Production',
+    title: 'The machine does the volume',
+    body: 'Research, angles, copy, creative — produced as tall pins for Pinterest, squares and stories for Meta, and a landing page, every step tracked with its exact cost.',
   },
   {
-    emblem: 'checkmark',
-    title: 'You review',
-    body: 'Approve, request changes, or reject. Nothing ships without your sign-off, and every decision is recorded.',
+    img: 'review',
+    label: 'Review',
+    title: 'Your stamp, on everything',
+    body: 'Nothing ships without your approval. Approve, request changes, or reject — every decision recorded on the work itself.',
+  },
+  {
+    img: 'calendar',
+    label: 'Keep producing',
+    title: 'The calendar stays full',
+    body: 'Approve it once and the production keeps running on schedule. Monday stops being an avalanche.',
   },
 ];
 
-const WORKERS = [
-  { emblem: 'calendar', name: 'Holly', beat: 'Holiday packs, on schedule' },
-  { emblem: 'megaphone', name: 'Vista', beat: 'Scene packs, every shift' },
-  { emblem: 'funnel', name: 'Zuri', beat: 'Story packs, ten characters' },
-];
+const CHANNELS = ['Pinterest', 'Landing Pages', 'Meta · Facebook & Instagram'];
 
 export default function HomeV2Page() {
   return (
     <div className="hv2">
-      {/* ── Hero: light ground, flat teal, the assembly composition ── */}
+      {/* ── The problem is the hero ── */}
       <section className="hv2-hero">
-        <div className="hv2-container">
-          <span className="hv2-eyebrow">Esy · Marketing production</span>
-          <h1 className="hv2-headline">
-            <span>Put Marketing Production</span>
-            <span className="hv2-headline-accent">on Autopilot</span>
-          </h1>
-          <p className="hv2-sub">
-            One brief becomes a coordinated campaign — research, angles,
-            creative, copy, a landing page — produced by Esy, reviewed by
-            you. Approve it once, then keep it producing.
-          </p>
-          <div className="hv2-ctas">
-            <Link href="https://make.esy.com" className="hv2-btn hv2-btn--primary">
-              <span>Start producing</span>
-              <ArrowRight size={18} />
-            </Link>
-            <a href="#how-it-works" className="hv2-btn hv2-btn--ghost">
-              See how it works
-            </a>
+        <div className="hv2-container hv2-hero-grid">
+          <div>
+            <span className="hv2-eyebrow">Esy · Marketing production</span>
+            <h1 className="hv2-headline">
+              <span>Put Marketing Production</span>
+              <span className="hv2-headline-accent">on Autopilot</span>
+            </h1>
+            <p className="hv2-sub">
+              One brief becomes a coordinated campaign — produced by Esy,
+              reviewed by you. Approve it once, then keep it producing.
+            </p>
+            <div className="hv2-ctas">
+              <Link href="https://make.esy.com" className="hv2-btn hv2-btn--primary">
+                <span>Start producing</span>
+                <ArrowRight size={18} />
+              </Link>
+              <a href="#story" className="hv2-btn hv2-btn--ghost">See how it works</a>
+            </div>
           </div>
-
-          {/* The brand story in one band: scattered pieces, a seam, one
-              approved thing. */}
-          <figure className="hv2-assembly" aria-label="Scattered campaign pieces assemble into one approved deliverable">
-            <div className="hv2-assembly-pieces">
-              {HERO_PIECES.map(({ src, dy, r }) => (
-                <img
-                  key={src}
-                  src={`/brand/clipart/${src}.webp`}
-                  alt=""
-                  className="hv2-piece"
-                  style={{ transform: `translateY(${dy}px) rotate(${r}deg)` }}
-                  width={72}
-                  height={72}
-                />
-              ))}
-            </div>
-            <span className="hv2-assembly-seam" aria-hidden="true" />
-            <div className="hv2-assembly-result">
-              <img src="/brand/clipart/checkmark.webp" alt="" width={128} height={128} />
-            </div>
-            <figcaption className="hv2-assembly-caption">
-              Pieces in. One approved thing out.
-            </figcaption>
+          <figure className="hv2-hero-art">
+            <img src="/brand/story/monday.webp" alt="A producer buried under a pile of ad requests, the wall calendar slipping" width={640} height={480} />
+            <figcaption>Monday. Three channels. One of you.</figcaption>
           </figure>
         </div>
       </section>
 
-      {/* ── How it works: three steps, three emblems ── */}
-      <section id="how-it-works" className="hv2-section hv2-section--alt">
+      {/* ── The story, beat by beat ── */}
+      <section id="story" className="hv2-section hv2-section--alt">
         <div className="hv2-container">
           <span className="hv2-eyebrow">How it works</span>
-          <h2 className="hv2-title">Brief. Production. Review.</h2>
-          <div className="hv2-steps">
-            {STEPS.map(({ emblem, title, body }, i) => (
-              <div key={title} className="hv2-card">
-                <span className="hv2-card-index">{String(i + 1).padStart(2, '0')}</span>
-                <img src={`/brand/clipart/${emblem}.webp`} alt="" width={64} height={64} />
-                <h3>{title}</h3>
-                <p>{body}</p>
+          <h2 className="hv2-title">From avalanche to autopilot</h2>
+          <div className="hv2-beats">
+            {BEATS.map(({ img, label, title, body }, i) => (
+              <div key={label} className={i % 2 ? 'hv2-beat hv2-beat--flip' : 'hv2-beat'}>
+                <figure>
+                  <img src={`/brand/story/${img}.webp`} alt="" loading="lazy" width={560} height={420} />
+                </figure>
+                <div className="hv2-beat-copy">
+                  <span className="hv2-beat-label">{label}</span>
+                  <h3>{title}</h3>
+                  <p>{body}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Proof: clip.art in production ── */}
+      {/* ── Where it ships first ── */}
       <section className="hv2-section">
-        <div className="hv2-container hv2-split">
+        <div className="hv2-container hv2-channels">
           <div>
-            <span className="hv2-eyebrow">
-              <span className="hv2-live-dot" aria-hidden="true" /> Live · In production
-            </span>
-            <h2 className="hv2-title">clip.art runs on Esy</h2>
+            <span className="hv2-eyebrow">Channels</span>
+            <h2 className="hv2-title">Where it ships first</h2>
             <p className="hv2-lede">
-              Consumer marketplace for clip art, coloring pages, and
-              illustrations. Esy workflows generate, post-process, and store
-              every asset — each run recorded on prompt, model, processing,
-              storage, and cost. Even the emblems on this page were produced
-              through the same engine.
+              The launch set covers the formats a small team actually feeds
+              every week — with more channels joining as they earn it.
             </p>
-            <Link href="/workflows" className="hv2-inline-link">
-              Browse workflow templates <ArrowRight size={15} />
-            </Link>
           </div>
-          <img
-            className="hv2-split-emblem"
-            src="/brand/clipart/stack.webp"
-            alt=""
-            width={200}
-            height={200}
-          />
+          <ul className="hv2-channel-list">
+            {CHANNELS.map((c) => (
+              <li key={c}><span className="hv2-check" aria-hidden="true">✓</span>{c}</li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* ── Workers ── */}
+      {/* ── Proof ── */}
       <section className="hv2-section hv2-section--alt">
         <div className="hv2-container">
-          <span className="hv2-eyebrow">AI Workers</span>
-          <h2 className="hv2-title">Hire a worker. Give it a shift.</h2>
+          <span className="hv2-eyebrow">
+            <span className="hv2-live-dot" aria-hidden="true" /> Live · In production
+          </span>
+          <h2 className="hv2-title">clip.art runs on Esy</h2>
           <p className="hv2-lede">
-            An AI worker is a standing job with a name, a beat, and a
-            schedule. You write the assignment once, the worker clocks in on
-            its own, and every shift closes with what it made and what it
-            cost.
+            Consumer marketplace for clip art, coloring pages, and
+            illustrations — thousands of Esy production runs a week, each
+            recorded on prompt, model, processing, storage, and cost. Every
+            illustration on this page was produced through the same engine.
           </p>
-          <div className="hv2-steps">
-            {WORKERS.map(({ emblem, name, beat }) => (
-              <div key={name} className="hv2-card hv2-card--worker">
-                <img src={`/brand/clipart/${emblem}.webp`} alt="" width={56} height={56} />
-                <h3>{name}</h3>
-                <p>{beat}</p>
-              </div>
-            ))}
-          </div>
+          <Link href="/workflows" className="hv2-inline-link">
+            Browse workflow templates <ArrowRight size={15} />
+          </Link>
         </div>
       </section>
 
-      {/* ── Navy bookend: flat, no grid, no glow ── */}
+      {/* ── Navy bookend ── */}
       <section className="hv2-final">
-        <div className="hv2-container">
-          <h2 className="hv2-final-headline">
-            Build something <span>auditable.</span>
-          </h2>
-          <p className="hv2-final-sub">
-            Pick a workflow template. Let agents run the pipeline. Get back
-            publishable, finished work with a full record — sources, prompts,
-            models, processing, and cost.
-          </p>
-          <div className="hv2-ctas">
-            <Link href="https://make.esy.com" className="hv2-btn hv2-btn--primary">
-              <span>Start producing</span>
-              <ArrowRight size={18} />
-            </Link>
-            <Link href="/workflows" className="hv2-btn hv2-btn--ghost hv2-btn--ghost-dark">
-              Browse workflow templates
-            </Link>
+        <div className="hv2-container hv2-final-grid">
+          <div>
+            <h2 className="hv2-final-headline">
+              Build something <span>auditable.</span>
+            </h2>
+            <p className="hv2-final-sub">
+              Publishable, finished work with a full record — sources,
+              prompts, models, processing, and cost.
+            </p>
+            <div className="hv2-ctas hv2-ctas--left">
+              <Link href="https://make.esy.com" className="hv2-btn hv2-btn--primary">
+                <span>Start producing</span>
+                <ArrowRight size={18} />
+              </Link>
+            </div>
           </div>
-          <div className="hv2-pipeline" aria-label="Esy operating model">
-            <span>Workflow Template</span>
-            <span className="hv2-pipeline-arrow" aria-hidden="true">→</span>
-            <span>Run</span>
-            <span className="hv2-pipeline-arrow" aria-hidden="true">→</span>
-            <span className="hv2-pipeline-accent">Artifact</span>
-          </div>
+          <figure className="hv2-final-art">
+            <img src="/brand/story/team.webp" alt="The three-person cast standing together" loading="lazy" width={520} height={390} />
+          </figure>
         </div>
       </section>
     </div>
