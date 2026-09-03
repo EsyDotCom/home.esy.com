@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-09-02T12:41:49.680071Z",
+  "generatedAt": "2026-09-03T13:08:18.516583Z",
   "id": "remove-image-background",
   "name": "Remove Image Background",
   "description": "Remove the background from a platform-stored image. The removal model (BiRefNet variants / BRIA) is selectable per run via the backgroundRemover role.",
