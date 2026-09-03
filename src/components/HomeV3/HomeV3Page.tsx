@@ -174,10 +174,10 @@ export default function HomeV3Page() {
       <section id="the-line" className="hv3-press">
         <div className="hv3-container hv3-press-copy">
           <span className="hv3-eyebrow">Production</span>
-          <h2 className="hv3-title">You&apos;re operating the line right now.</h2>
+          <h2 className="hv3-title">Then the line takes over.</h2>
           <p className="hv3-lede hv3-lede--center">
-            Scroll, and blank stock is printed, sealed, and stacked — every
-            format in parallel. Scroll up and the line runs in reverse.
+            Blank stock in — printed, sealed, and stacked. Pins, posts, and
+            pages, produced in parallel.
           </p>
         </div>
         <ProcessScrubber
