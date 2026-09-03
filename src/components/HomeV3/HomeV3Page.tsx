@@ -28,7 +28,6 @@ const cormorant = Cormorant_Garamond({
   variable: '--hv3-serif',
 });
 
-import SceneMedia from './SceneMedia';
 import ProcessScrubber from './ProcessScrubber';
 import CountUp from './CountUp';
 import './HomeV3.css';
@@ -93,18 +92,18 @@ export default function HomeV3Page() {
           scene's painted ground, so there is no seam and nothing "placed". */}
       <section className="hv3-hero">
         <div className="hv3-container hv3-hero-copy">
-          <span className="hv3-badge">
+          <span className="hv3-badge hv3-enter" style={{ animationDelay: '0ms' }}>
             <span className="hv3-badge-dot" aria-hidden="true" />
             Powering <strong>clip.art</strong> — 2,000+ assets shipped a week
           </span>
-          <h1 className="hv3-headline">
+          <h1 className="hv3-headline hv3-enter" style={{ animationDelay: '90ms' }}>
             Put marketing production <span className="hv3-headline-accent">on autopilot</span>
           </h1>
-          <p className="hv3-sub">
+          <p className="hv3-sub hv3-enter" style={{ animationDelay: '180ms' }}>
             Write one brief. Esy produces the campaign — pins, posts, and
             landing pages — and nothing ships until you approve it.
           </p>
-          <div className="hv3-ctas">
+          <div className="hv3-ctas hv3-enter" style={{ animationDelay: '270ms' }}>
             <Link href="https://make.esy.com" className="hv3-btn hv3-btn--primary">
               <span>Start producing</span>
               <ArrowRight size={18} />
@@ -112,7 +111,7 @@ export default function HomeV3Page() {
             <a href="#the-line" className="hv3-btn hv3-btn--ghost">Watch the line run</a>
           </div>
         </div>
-        <figure className="hv3-master">
+        <figure className="hv3-master hv3-enter" style={{ animationDelay: '380ms' }}>
           <img
             src="/brand/scenes/master.webp"
             alt="The producer directing an isometric production floor — three lines turning out finished, approved creatives"
@@ -198,11 +197,13 @@ export default function HomeV3Page() {
               recorded on the work itself, next to what it cost to make.
             </p>
           </div>
-          <figure className="hv3-figure">
-            <SceneMedia
-              name="review"
-              alt="A stamp pressing a jade approval seal onto a finished creative"
-              className="hv3-media"
+          <figure className="hv3-figure hv3-figure--review">
+            <img
+              src="/brand/scenes/clay-review.webp"
+              alt="The producer pressing a jade approval stamp onto one finished creative, a row of sealed work beside her"
+              loading="lazy"
+              width={1536}
+              height={1024}
             />
           </figure>
         </div>
@@ -281,58 +282,48 @@ export default function HomeV3Page() {
 
       {/* ══ Channels ══ */}
       <section className="hv3-channels-section">
-        <div className="hv3-bg hv3-bg--channels" aria-hidden="true" />
-        <div className="hv3-container">
-          <span className="hv3-eyebrow hv3-eyebrow--onDark">Channels</span>
-          <h2 className="hv3-title hv3-title--onDark">Where it ships first</h2>
-          <p className="hv3-lede hv3-lede--onDark">
-            The launch set covers what a small team actually feeds every week.
-            More join as they earn it.
-          </p>
-          <ul className="hv3-channel-list">
-            {CHANNELS.map(({ name, formats }) => (
-              <li key={name}>
-                <span className="hv3-check" aria-hidden="true">✓</span>
-                <span className="hv3-channel-name">{name}</span>
-                <span className="hv3-channel-formats">{formats}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ══ Founder ══ */}
-      <section className="hv3-founder">
-        <div className="hv3-bg hv3-bg--founder" aria-hidden="true" />
-        <div className="hv3-container hv3-founder-grid">
-          <figure className="hv3-portrait">
+        <div className="hv3-container hv3-split">
+          <div>
+            <span className="hv3-eyebrow hv3-eyebrow--onDark">Channels</span>
+            <h2 className="hv3-title hv3-title--onDark">Where it ships first</h2>
+            <p className="hv3-lede hv3-lede--onDark">
+              The launch set covers what a small team actually feeds every
+              week. More join as they earn it.
+            </p>
+            <ul className="hv3-channel-list">
+              {CHANNELS.map(({ name, formats }) => (
+                <li key={name}>
+                  <span className="hv3-check" aria-hidden="true">✓</span>
+                  <span className="hv3-channel-name">{name}</span>
+                  <span className="hv3-channel-formats">{formats}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <figure className="hv3-navy-scene">
             <img
-              src="/images/zev_uhuru.webp"
-              alt="Zev Uhuru"
-              width={220}
-              height={220}
+              src="/brand/scenes/docks.webp"
+              alt="Three shipping docks crating the three formats — tall pins, squares, and wide pages"
               loading="lazy"
+              width={1536}
+              height={1024}
             />
           </figure>
-          <div>
-            <span className="hv3-eyebrow hv3-eyebrow--onDark">A note from the founder</span>
-            <p className="hv3-statement">
-              I built Esy to run my own products. Every asset clip.art ships,
-              2,000+ a week, comes out of these workflows. Each one is tracked,
-              reviewed, and I know exactly what it cost to make. If I can&apos;t
-              see how a run happened, it doesn&apos;t ship.
-            </p>
-            <p className="hv3-signature">
-              <strong>Zev Uhuru</strong>
-              <span>Founder</span>
-            </p>
-          </div>
         </div>
       </section>
 
       {/* ══ The ask ══ */}
       <section className="hv3-final">
         <div className="hv3-container">
+          <figure className="hv3-navy-scene hv3-sendoff">
+            <img
+              src="/brand/scenes/sendoff.webp"
+              alt="A paper plane folded from a sealed creative, climbing with a trail of approved work behind it"
+              loading="lazy"
+              width={1536}
+              height={1024}
+            />
+          </figure>
           <h2 className="hv3-final-headline">
             Your line is ready.
           </h2>

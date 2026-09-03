@@ -88,6 +88,33 @@
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%);
 }
 
+/* ── Entrance — one orchestrated arrival, then stillness ──
+   The loader's own easing (the brand's "lock"), staggered down the hero
+   stack. `backwards` keeps each piece invisible until its turn; the global
+   reduced-motion block flattens all of it to instant. */
+.hv3-enter {
+  animation: hv3Enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+@keyframes hv3Enter {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── Story reveals — scroll-driven, compositor-only ──
+   Native CSS view timelines where supported (~90% of browsers, zero JS);
+   everyone else simply sees the figures in place. */
+@supports (animation-timeline: view()) {
+  .hv3-figure {
+    animation: hv3Rise both cubic-bezier(0.16, 1, 0.3, 1);
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+}
+@keyframes hv3Rise {
+  from { opacity: 0.2; transform: translateY(26px); }
+  to { opacity: 1; transform: none; }
+}
+
 /* ── CTAs ── */
 .hv3-ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 .hv3-ctas--center { justify-content: center; }
@@ -119,7 +146,7 @@
 .hv3-figure { margin: 0; }
 .hv3-figure img, .hv3-media { width: 100%; height: auto; display: block; }
 /* Machine scenes keep a soft card (their grounds vary); clay acts blend. */
-.hv3-figure:not(.hv3-figure--monday):not(.hv3-figure--friday) {
+.hv3-figure:not(.hv3-figure--monday):not(.hv3-figure--friday):not(.hv3-figure--review) {
   border-radius: 14px; overflow: hidden;
   background: #FEFCF9;
   box-shadow: 0 0 0 1px rgba(10, 37, 64, 0.07), 0 18px 44px -26px rgba(10, 37, 64, 0.3);
@@ -161,10 +188,32 @@
   font-variant-numeric: tabular-nums;
 }
 .hv3-scrub-track {
+  position: relative;
   width: 100%; height: 3px; border-radius: 2px;
-  background: rgba(10, 37, 64, 0.12); overflow: hidden;
+  background: rgba(10, 37, 64, 0.12);
 }
+/* Tick marks at the five stage boundaries, so the readout reads as stations
+   on a line rather than a loading bar. */
+.hv3-scrub-track::after {
+  content: '';
+  position: absolute; inset: -2px 0;
+  background:
+    linear-gradient(90deg, transparent calc(20% - 1px), rgba(10, 37, 64, 0.35) 20%, transparent calc(20% + 1px)),
+    linear-gradient(90deg, transparent calc(40% - 1px), rgba(10, 37, 64, 0.35) 40%, transparent calc(40% + 1px)),
+    linear-gradient(90deg, transparent calc(60% - 1px), rgba(10, 37, 64, 0.35) 60%, transparent calc(60% + 1px)),
+    linear-gradient(90deg, transparent calc(80% - 1px), rgba(10, 37, 64, 0.35) 80%, transparent calc(80% + 1px));
+}
+.hv3-scrub-bar { border-radius: 2px; }
 .hv3-scrub-bar { height: 100%; width: 0%; background: var(--hv3-jade); }
+
+/* Navy scenes: their painted navy is deeper than the band's, so any direct
+   placement draws a darker box. `lighten` ends the argument per-pixel — the
+   ground (darker than the band) becomes the band, the lit artwork (brighter)
+   survives untouched. The feathered edges then only smooth the shadows. */
+.hv3-navy-scene { margin: 0; }
+.hv3-navy-scene img { width: 100%; height: auto; display: block; }
+.hv3-sendoff { display: flex; justify-content: center; margin-bottom: -8px; }
+.hv3-sendoff img { width: min(430px, 70vw); }
 
 /* ══ Receipts ══ */
 .hv3-live-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--hv3-jade-bright); }
@@ -195,18 +244,10 @@
   background-size: cover; background-position: center;
   pointer-events: none;
 }
-.hv3-bg--channels { background-image: url('/brand/scenes/bg-channels.webp'); opacity: 0.4; }
-.hv3-bg--founder { background-image: url('/brand/scenes/bg-founder.webp'); opacity: 0.32; }
-.hv3-channels-section, .hv3-founder {
+.hv3-channels-section {
   position: relative; background: var(--hv3-navy); padding: 90px 0; overflow: hidden;
 }
-.hv3-channels-section::after, .hv3-founder::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(90deg, var(--hv3-navy) 14%, rgba(10, 37, 64, 0.7) 62%, rgba(10, 37, 64, 0.5) 100%);
-  pointer-events: none;
-}
-.hv3-channels-section .hv3-container, .hv3-founder .hv3-container { z-index: 2; }
+.hv3-channels-section .hv3-container { z-index: 2; }
 .hv3-channel-list { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 12px; max-width: 620px; }
 .hv3-channel-list li {
   display: flex; align-items: center; gap: 14px;
@@ -220,22 +261,6 @@
   display: grid; place-items: center; width: 24px; height: 24px; flex-shrink: 0;
   border-radius: 999px; background: var(--hv3-jade); color: #fff; font-size: 0.8rem;
 }
-
-/* ══ Founder ══ */
-.hv3-founder-grid { display: grid; grid-template-columns: 220px 1fr; gap: 44px; align-items: center; }
-.hv3-portrait { margin: 0; }
-.hv3-portrait img {
-  width: 100%; height: auto; border-radius: 999px; display: block;
-  box-shadow: 0 0 0 1px rgba(0, 212, 170, 0.35), 0 0 0 8px rgba(255, 255, 255, 0.04);
-}
-.hv3-statement {
-  font-family: var(--hv3-serif, 'Cormorant Garamond'), Georgia, serif;
-  font-size: clamp(1.3rem, 2.2vw, 1.7rem); line-height: 1.5;
-  color: #FFFFFF; margin: 0 0 20px; max-width: 52ch;
-}
-.hv3-signature { margin: 0; display: flex; flex-direction: column; gap: 2px; }
-.hv3-signature strong { color: #FFFFFF; font-size: 0.98rem; }
-.hv3-signature span { color: rgba(255, 255, 255, 0.6); font-size: 0.88rem; }
 
 /* ══ The ask ══ */
 .hv3-final { background: var(--hv3-navy); padding: 96px 0; text-align: center; border-top: 1px solid rgba(0, 212, 170, 0.25); }
@@ -255,13 +280,12 @@
 
 /* ══ Responsive ══ */
 @media (max-width: 900px) {
-  .hv3-split, .hv3-split--rev, .hv3-founder-grid { grid-template-columns: 1fr; }
+  .hv3-split, .hv3-split--rev { grid-template-columns: 1fr; }
   .hv3-split--rev figure { order: -1; }
   .hv3-section { padding: 60px 0; }
   .hv3-hero { padding-top: 52px; }
   .hv3-master { margin-top: 0; }
   .hv3-master img { width: 140vw; max-width: none; margin-left: -20vw; }
-  .hv3-portrait { width: 140px; }
   .hv3-scrub { height: 240vh; }
 }
 

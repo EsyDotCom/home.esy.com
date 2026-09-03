@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-09-03T23:19:33.748118Z",
+  "generatedAt": "2026-09-03T23:35:00.869869Z",
   "id": "generate-coloring-page",
   "name": "Generate Coloring Page",
   "description": "Generate a printable coloring page: clean black line art on a white background (no fills, no shading), plus classifier-produced catalog metadata.",
