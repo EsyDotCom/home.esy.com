@@ -2,10 +2,9 @@
  *
  * The rule that runs the whole sheet: a scene's painted ground and the
  * section behind it are the SAME colour, so the world sits on the page rather
- * than in boxes. Grounds (measured, not guessed):
- *   master scene  #FFF9F2   press frames  #F7F7F7
- *   clay monday   #FDF8EF   clay friday   #FEFEFE
- */
+ * than in boxes. The renders are white-balanced onto BRAND surfaces (white,
+ * #F8F9FA, navy) — cream is not an Esy colour, so the art moves to the brand,
+ * never the page to the art. */
 
 .hv3 {
   --hv3-navy: #0A2540;
@@ -32,7 +31,7 @@
 }
 .hv3-eyebrow--onDark { color: var(--hv3-jade-bright); }
 .hv3-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--hv3-serif, 'Cormorant Garamond'), Georgia, serif;
   font-weight: 700; font-size: clamp(1.9rem, 3.1vw, 2.5rem);
   letter-spacing: -0.02em; color: var(--hv3-navy); margin: 0 0 14px; text-wrap: balance;
 }
@@ -43,9 +42,10 @@
 
 /* ══ ACT I · Hero — vertical, and the scene IS the section ══ */
 .hv3-hero {
-  /* The master scene's own ground. Copy, sky and page are one surface. */
-  background: #FFF9F2;
-  padding-top: 48px;
+  /* The master scene is balanced to pure white; copy, sky and page are one
+     surface, and that surface is a brand one. */
+  background: var(--hv3-bg);
+  padding-top: 72px;
   text-align: center;
 }
 .hv3-hero-copy { display: flex; flex-direction: column; align-items: center; }
@@ -63,10 +63,10 @@
 }
 @keyframes hv3Pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.35 } }
 .hv3-headline {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--hv3-serif, 'Cormorant Garamond'), Georgia, serif;
   font-weight: 700; font-size: clamp(2.5rem, 5.2vw, 4.1rem);
   line-height: 1.06; letter-spacing: -0.03em; color: var(--hv3-navy);
-  margin: 0 0 18px; max-width: 17ch; text-wrap: balance;
+  margin: 0 0 18px; max-width: 24ch; text-wrap: balance;
 }
 .hv3-headline-accent { color: var(--hv3-jade); }
 .hv3-sub {
@@ -109,8 +109,8 @@
    background, and the figure loses its box: blend, don't frame. */
 .hv3-section { padding: 88px 0; position: relative; }
 .hv3-section--alt { background: var(--hv3-bg-alt); }
-.hv3-monday { background: #FDF8EF; }
-.hv3-friday { background: #FEFEFE; }
+.hv3-monday { background: var(--hv3-bg-alt); }
+.hv3-friday { background: var(--hv3-bg); }
 .hv3-split {
   display: grid; grid-template-columns: 1.02fr 0.98fr;
   gap: 56px; align-items: center;
@@ -127,8 +127,11 @@
 
 /* ══ ACT IV · The line ══ */
 .hv3-press {
-  /* The frames' exact ground: the machine floats on the page, boxless. */
-  background: #F7F7F7;
+  /* The 'Watch the line run' anchor lands here; keep the heading clear of
+     the fixed nav. */
+  scroll-margin-top: 76px;
+  /* The frames are balanced to the brand alt ground: boxless, on-theme. */
+  background: var(--hv3-bg-alt);
   padding-top: 84px;
 }
 .hv3-press-copy { text-align: center; }
@@ -170,7 +173,7 @@
   gap: 24px; margin: 36px 0; padding: 0;
 }
 .hv3-stats dt {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--hv3-serif, 'Cormorant Garamond'), Georgia, serif;
   font-size: clamp(2rem, 3.4vw, 2.8rem); font-weight: 700; color: var(--hv3-navy);
 }
 .hv3-stats dd { margin: 4px 0 0; font-size: 0.9rem; color: var(--hv3-ink-soft); }
@@ -226,7 +229,7 @@
   box-shadow: 0 0 0 1px rgba(0, 212, 170, 0.35), 0 0 0 8px rgba(255, 255, 255, 0.04);
 }
 .hv3-statement {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--hv3-serif, 'Cormorant Garamond'), Georgia, serif;
   font-size: clamp(1.3rem, 2.2vw, 1.7rem); line-height: 1.5;
   color: #FFFFFF; margin: 0 0 20px; max-width: 52ch;
 }
@@ -237,7 +240,7 @@
 /* ══ The ask ══ */
 .hv3-final { background: var(--hv3-navy); padding: 96px 0; text-align: center; border-top: 1px solid rgba(0, 212, 170, 0.25); }
 .hv3-final-headline {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--hv3-serif, 'Cormorant Garamond'), Georgia, serif;
   font-weight: 700; font-size: clamp(2.1rem, 3.6vw, 3rem);
   letter-spacing: -0.02em; color: #fff; margin: 0 0 14px;
 }

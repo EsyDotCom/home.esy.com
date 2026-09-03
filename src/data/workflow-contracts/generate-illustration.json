@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-09-03T22:50:38.626996Z",
+  "generatedAt": "2026-09-03T23:09:27.137221Z",
   "id": "generate-illustration",
   "name": "Generate Illustration",
   "description": "Generate a full-scene illustration (detailed background, environment, lighting) in one of 25 styles, plus classifier-produced catalog metadata and an OCR text gate.",

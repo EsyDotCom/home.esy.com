@@ -15,7 +15,18 @@
 
 import Link from 'next/link';
 import { getImageProps } from 'next/image';
+import { Cormorant_Garamond } from 'next/font/google';
 import { ArrowRight } from 'lucide-react';
+
+// The site's global stylesheet only pulls Cormorant at weight 400, so every
+// 700 headline was browser-synthesised faux bold — mushy strokes, wrong
+// weight rhythm. This loads the real cuts, scoped to this page.
+const cormorant = Cormorant_Garamond({
+  weight: ['600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--hv3-serif',
+});
 
 import SceneMedia from './SceneMedia';
 import ProcessScrubber from './ProcessScrubber';
@@ -75,7 +86,7 @@ const CHANNELS = [
 
 export default function HomeV3Page() {
   return (
-    <div className="hv3">
+    <div className={`hv3 ${cormorant.variable}`}>
       {/* ══ ACT I · The promise, with her on the floor ══
           Vertical: badge → headline → sub → CTAs, then the master scene
           spreading edge to edge underneath. The section's background IS the
