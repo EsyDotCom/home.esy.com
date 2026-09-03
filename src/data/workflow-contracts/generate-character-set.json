@@ -1,6 +1,6 @@
 {
   "_comment": "SYNCED SNAPSHOT — do not hand-edit. Regenerate with: node scripts/sync-workflow-catalog.mjs (pulls api.esy.com GET /v1/catalog/workflows/{id}).",
-  "generatedAt": "2026-09-03T22:23:08.100545Z",
+  "generatedAt": "2026-09-03T22:50:38.626996Z",
   "id": "generate-character-set",
   "name": "Generate Character Reference Set",
   "description": "Render the practitioner-standard labeled character reference sheet (front view, full-body, three-quarter view, expression grid — name written on the sheet, plain neutral background) from a character bible. The sheet is the visual anchor for reference-consistent generation: pass its URL to generate-clip-art-asset-ref and generate-pack-cover. Product-agnostic — storyboard/scene pipelines can consume the same character-set artifact. sheetComplexity picks the board tier and defaults to 'master' (the comprehensive identity board — turnaround with scale marks, expressions, head details, hero close-up, posture variations, wardrobe callouts, hand gestures), whose extra panels anchor character identity for downstream video generation (animate-character) and make the sheet a deliverable in its own right. 'standard' (turnaround + 8-expression grid + palette) and 'minimal' (the original bare turnaround anchor) remain available for cheap pack fan-out.",

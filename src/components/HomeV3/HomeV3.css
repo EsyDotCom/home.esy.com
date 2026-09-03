@@ -1,8 +1,11 @@
-/* HomeV3 — the isometric homepage.
-   Light-first, flat brand colour, no grid and no glow (org.esy
-   brand/ESY_VISUAL_SYSTEM.md). Backdrops are full-bleed images, which is a new
-   device for this site: they stay quiet, and every one carries a scrim so the
-   copy above it clears contrast. */
+/* HomeV3 — one continuous story, one continuous surface.
+ *
+ * The rule that runs the whole sheet: a scene's painted ground and the
+ * section behind it are the SAME colour, so the world sits on the page rather
+ * than in boxes. Grounds (measured, not guessed):
+ *   master scene  #FFF9F2   press frames  #F7F7F7
+ *   clay monday   #FDF8EF   clay friday   #FEFEFE
+ */
 
 .hv3 {
   --hv3-navy: #0A2540;
@@ -15,41 +18,11 @@
   --hv3-seam: rgba(10, 37, 64, 0.1);
   background: var(--hv3-bg);
   color: var(--hv3-ink);
-  /* clip, NOT hidden: `overflow: hidden` turns this into a scroll container,
-     which silently breaks `position: sticky` on the scrubber inside it. clip
-     contains the full-bleed backdrops without creating that container. */
+  /* clip, NOT hidden: `overflow: hidden` creates a scroll container and
+     silently breaks the scrubber's `position: sticky`. */
   overflow-x: clip;
 }
 .hv3-container { max-width: 1120px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-/* ── Backdrops ─────────────────────────────────────────────────────────────
-   Full-bleed on purpose: an opaque image inset inside a section would draw a
-   visible rectangle, the lesson the auth pages taught. The scrim is part of
-   the device, not an afterthought — body text over these must stay ≥ 4.5:1. */
-.hv3-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  pointer-events: none;
-}
-.hv3-bg--hero {
-  background-image: url('/brand/scenes/bg-hero.webp');
-  opacity: 0.5;
-  /* Fades out under the headline so the copy sits on near-white. */
-  mask-image: linear-gradient(180deg, transparent 0%, black 55%, black 100%);
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 55%, black 100%);
-}
-.hv3-bg--channels { background-image: url('/brand/scenes/bg-channels.webp'); opacity: 0.35; }
-.hv3-bg--founder { background-image: url('/brand/scenes/bg-founder.webp'); opacity: 0.3; }
-.hv3-channels-section::after,
-.hv3-founder::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, var(--hv3-navy) 12%, rgba(10, 37, 64, 0.72) 60%, rgba(10, 37, 64, 0.55) 100%);
-  pointer-events: none;
-}
 
 /* ── Type ── */
 .hv3-eyebrow {
@@ -60,44 +33,28 @@
 .hv3-eyebrow--onDark { color: var(--hv3-jade-bright); }
 .hv3-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 700; font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  font-weight: 700; font-size: clamp(1.9rem, 3.1vw, 2.5rem);
   letter-spacing: -0.02em; color: var(--hv3-navy); margin: 0 0 14px; text-wrap: balance;
 }
 .hv3-title--onDark { color: #FFFFFF; }
-.hv3-lede { font-size: 1.06rem; line-height: 1.7; color: var(--hv3-ink-soft); max-width: 58ch; margin: 0 0 20px; }
+.hv3-lede { font-size: 1.06rem; line-height: 1.7; color: var(--hv3-ink-soft); max-width: 54ch; margin: 0 0 20px; }
 .hv3-lede--onDark { color: rgba(255, 255, 255, 0.78); }
+.hv3-lede--center { margin-left: auto; margin-right: auto; }
 
-/* ── Media frame — the tilt-and-shadow device from the live homepage ── */
-.hv3-frame {
-  border-radius: 14px;
-  overflow: hidden;
-  background: #FEFCF9;
-  box-shadow:
-    0 0 0 1px rgba(10, 37, 64, 0.08),
-    0 2px 6px rgba(10, 37, 64, 0.06),
-    0 24px 60px -28px rgba(10, 37, 64, 0.35);
-  transform: perspective(1200px) rotateX(2deg);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+/* ══ ACT I · Hero — vertical, and the scene IS the section ══ */
+.hv3-hero {
+  /* The master scene's own ground. Copy, sky and page are one surface. */
+  background: #FFF9F2;
+  padding-top: 48px;
+  text-align: center;
 }
-.hv3-frame:hover { transform: perspective(1200px) rotateX(0deg); }
-.hv3-media, .hv3-figure img { width: 100%; height: auto; display: block; }
-.hv3-figure {
-  margin: 0;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #FEFCF9;
-  border: 1px solid var(--hv3-seam);
-}
-
-/* ── 1 · Hero ── */
-.hv3-hero { position: relative; padding: 84px 0 76px; }
-.hv3-hero-grid { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 56px; align-items: center; }
+.hv3-hero-copy { display: flex; flex-direction: column; align-items: center; }
 .hv3-badge {
   display: inline-flex; align-items: center; gap: 9px;
   font-size: 0.85rem; color: var(--hv3-ink-soft);
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.75);
   border: 1px solid var(--hv3-seam);
-  border-radius: 999px; padding: 7px 14px; margin-bottom: 22px;
+  border-radius: 999px; padding: 7px 15px; margin-bottom: 26px;
 }
 .hv3-badge strong { color: var(--hv3-navy); font-weight: 600; }
 .hv3-badge-dot {
@@ -107,67 +64,146 @@
 @keyframes hv3Pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.35 } }
 .hv3-headline {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 700; font-size: clamp(2.3rem, 4.2vw, 3.4rem);
-  line-height: 1.08; letter-spacing: -0.03em; color: var(--hv3-navy); margin: 0 0 18px;
+  font-weight: 700; font-size: clamp(2.5rem, 5.2vw, 4.1rem);
+  line-height: 1.06; letter-spacing: -0.03em; color: var(--hv3-navy);
+  margin: 0 0 18px; max-width: 17ch; text-wrap: balance;
 }
-.hv3-headline span { display: block; }
-/* Flat, not a gradient: committed colour is the brand's anti-slop rule. */
 .hv3-headline-accent { color: var(--hv3-jade); }
-.hv3-sub { font-size: 1.1rem; line-height: 1.7; color: var(--hv3-ink-soft); margin: 0 0 28px; max-width: 44ch; }
-.hv3-hero-art { margin: 0; }
+.hv3-sub {
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.65;
+  color: var(--hv3-ink-soft); margin: 0 0 30px; max-width: 52ch;
+}
+/* The scene runs edge to edge under the copy — no frame, no card, no seam.
+   Its top is empty sky in the same colour the section paints. */
+.hv3-master {
+  margin: 12px 0 0;
+  display: flex; justify-content: center;
+}
+.hv3-master img {
+  width: min(1500px, 100vw);
+  height: auto; display: block;
+  /* The render's ground vignettes slightly toward its edges; a soft
+     horizontal fade melts them into the section so no border can appear. */
+  mask-image: linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%);
+}
 
-.hv3-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+/* ── CTAs ── */
+.hv3-ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 .hv3-ctas--center { justify-content: center; }
 .hv3-btn {
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 13px 26px; font-size: 0.98rem; font-weight: 600;
+  padding: 14px 28px; font-size: 1rem; font-weight: 600;
   text-decoration: none; border-radius: 8px;
   transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 .hv3-btn--primary { background: var(--hv3-jade); color: #fff; }
 .hv3-btn--primary:hover { background: var(--hv3-jade-bright); }
-.hv3-btn--ghost { color: var(--hv3-navy); box-shadow: inset 0 0 0 1px var(--hv3-seam); }
+.hv3-btn--ghost { color: var(--hv3-navy); box-shadow: inset 0 0 0 1px rgba(10, 37, 64, 0.2); }
 .hv3-btn--ghost:hover { box-shadow: inset 0 0 0 1px var(--hv3-jade); color: var(--hv3-jade); }
 .hv3-btn--ghost-dark { color: #FFFFFF; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28); }
 .hv3-btn--ghost-dark:hover { box-shadow: inset 0 0 0 1px var(--hv3-jade-bright); color: var(--hv3-jade-bright); }
 
-/* ── Sections and beats ── */
-.hv3-section { padding: 84px 0; position: relative; }
+/* ══ Story sections ══
+   Each act that carries a clay scene takes that scene's ground as its own
+   background, and the figure loses its box: blend, don't frame. */
+.hv3-section { padding: 88px 0; position: relative; }
 .hv3-section--alt { background: var(--hv3-bg-alt); }
-.hv3-split { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 52px; align-items: center; }
-.hv3-beat { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: center; margin-top: 48px; }
-.hv3-beat--flip figure { order: 2; }
-.hv3-beat-label {
-  display: inline-block; font-size: 0.78rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--hv3-jade); margin-bottom: 10px;
+.hv3-monday { background: #FDF8EF; }
+.hv3-friday { background: #FEFEFE; }
+.hv3-split {
+  display: grid; grid-template-columns: 1.02fr 0.98fr;
+  gap: 56px; align-items: center;
 }
-.hv3-beat-copy h3, .hv3-press-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.7rem; font-weight: 700; color: var(--hv3-navy); margin: 0 0 10px;
+.hv3-split--rev { grid-template-columns: 0.98fr 1.02fr; }
+.hv3-figure { margin: 0; }
+.hv3-figure img, .hv3-media { width: 100%; height: auto; display: block; }
+/* Machine scenes keep a soft card (their grounds vary); clay acts blend. */
+.hv3-figure:not(.hv3-figure--monday):not(.hv3-figure--friday) {
+  border-radius: 14px; overflow: hidden;
+  background: #FEFCF9;
+  box-shadow: 0 0 0 1px rgba(10, 37, 64, 0.07), 0 18px 44px -26px rgba(10, 37, 64, 0.3);
 }
-.hv3-beat-copy p { font-size: 1rem; line-height: 1.7; color: var(--hv3-ink-soft); margin: 0; max-width: 46ch; }
 
-/* ── The scrubbed machine ──────────────────────────────────────────────────
-   The section is three viewports tall and the stage sticks inside it, so the
-   scroll distance IS the length of the production cycle. */
-.hv3-press { background: var(--hv3-bg-alt); padding-top: 72px; }
+/* ══ ACT IV · The line ══ */
+.hv3-press {
+  /* The frames' exact ground: the machine floats on the page, boxless. */
+  background: #F7F7F7;
+  padding-top: 84px;
+}
 .hv3-press-copy { text-align: center; }
-.hv3-press-copy p { font-size: 1rem; line-height: 1.7; color: var(--hv3-ink-soft); margin: 0 auto; max-width: 46ch; }
-.hv3-scrub { height: 300vh; position: relative; }
+.hv3-scrub { height: 320vh; position: relative; }
 .hv3-scrub-stage {
   position: sticky; top: 0; height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  padding: 24px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 22px; padding: 20px;
 }
 .hv3-scrub-canvas {
-  width: min(880px, 92vw); height: auto; display: block;
-  border-radius: 14px; background: #FEFCF9;
-  box-shadow: 0 0 0 1px rgba(10, 37, 64, 0.08), 0 24px 60px -30px rgba(10, 37, 64, 0.4);
+  /* Constrained on BOTH axes so the stage always leaves room for the readout;
+     the width/height attributes keep the aspect ratio honest. */
+  max-width: min(1240px, 96vw);
+  max-height: 72vh;
+  width: auto; height: auto; display: block;
 }
+/* The live readout: a hairline track, a jade fill, and one line naming what
+   the machine is doing right now. */
+.hv3-scrub-readout {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  width: min(420px, 80vw);
+}
+.hv3-scrub-label {
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--hv3-ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.hv3-scrub-track {
+  width: 100%; height: 3px; border-radius: 2px;
+  background: rgba(10, 37, 64, 0.12); overflow: hidden;
+}
+.hv3-scrub-bar { height: 100%; width: 0%; background: var(--hv3-jade); }
 
-/* ── Channels ── */
-.hv3-channels-section { position: relative; background: var(--hv3-navy); padding: 88px 0; overflow: hidden; }
-.hv3-channels-section .hv3-container { z-index: 2; }
+/* ══ Receipts ══ */
+.hv3-live-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--hv3-jade-bright); }
+.hv3-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px; margin: 36px 0; padding: 0;
+}
+.hv3-stats dt {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 3.4vw, 2.8rem); font-weight: 700; color: var(--hv3-navy);
+}
+.hv3-stats dd { margin: 4px 0 0; font-size: 0.9rem; color: var(--hv3-ink-soft); }
+.hv3-shot { margin: 12px 0 28px; }
+.hv3-shot-img {
+  width: 100%; height: auto; display: block; border-radius: 12px;
+  box-shadow: 0 0 0 1px rgba(10, 37, 64, 0.08), 0 20px 50px -30px rgba(10, 37, 64, 0.4);
+}
+.hv3-shot figcaption { font-size: 0.88rem; color: var(--hv3-ink-soft); margin-top: 12px; max-width: 62ch; }
+.hv3-inline-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 600; font-size: 0.98rem; color: var(--hv3-jade); text-decoration: none;
+}
+.hv3-inline-link:hover { color: var(--hv3-jade-bright); }
+
+/* ══ Navy bands ══ */
+.hv3-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  pointer-events: none;
+}
+.hv3-bg--channels { background-image: url('/brand/scenes/bg-channels.webp'); opacity: 0.4; }
+.hv3-bg--founder { background-image: url('/brand/scenes/bg-founder.webp'); opacity: 0.32; }
+.hv3-channels-section, .hv3-founder {
+  position: relative; background: var(--hv3-navy); padding: 90px 0; overflow: hidden;
+}
+.hv3-channels-section::after, .hv3-founder::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--hv3-navy) 14%, rgba(10, 37, 64, 0.7) 62%, rgba(10, 37, 64, 0.5) 100%);
+  pointer-events: none;
+}
+.hv3-channels-section .hv3-container, .hv3-founder .hv3-container { z-index: 2; }
 .hv3-channel-list { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 12px; max-width: 620px; }
 .hv3-channel-list li {
   display: flex; align-items: center; gap: 14px;
@@ -182,35 +218,7 @@
   border-radius: 999px; background: var(--hv3-jade); color: #fff; font-size: 0.8rem;
 }
 
-/* ── Proof + ledger ── */
-.hv3-live-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--hv3-jade-bright); }
-.hv3-stats, .hv3-ledger {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 24px; margin: 32px 0; padding: 0;
-}
-.hv3-stats dt, .hv3-ledger dt {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; color: var(--hv3-navy);
-}
-.hv3-stats dd, .hv3-ledger dd {
-  margin: 4px 0 0; font-size: 0.88rem; color: var(--hv3-ink-soft);
-  letter-spacing: 0.02em;
-}
-.hv3-shot { margin: 36px 0 0; }
-.hv3-shot-img {
-  width: 100%; height: auto; display: block; border-radius: 12px;
-  box-shadow: 0 0 0 1px rgba(10, 37, 64, 0.08), 0 20px 50px -30px rgba(10, 37, 64, 0.4);
-}
-.hv3-shot figcaption { font-size: 0.88rem; color: var(--hv3-ink-soft); margin-top: 12px; max-width: 60ch; }
-.hv3-inline-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-weight: 600; font-size: 0.98rem; color: var(--hv3-jade); text-decoration: none;
-}
-.hv3-inline-link:hover { color: var(--hv3-jade-bright); }
-
-/* ── Founder ── */
-.hv3-founder { position: relative; background: var(--hv3-navy); padding: 88px 0; overflow: hidden; }
-.hv3-founder .hv3-container { z-index: 2; }
+/* ══ Founder ══ */
 .hv3-founder-grid { display: grid; grid-template-columns: 220px 1fr; gap: 44px; align-items: center; }
 .hv3-portrait { margin: 0; }
 .hv3-portrait img {
@@ -226,15 +234,14 @@
 .hv3-signature strong { color: #FFFFFF; font-size: 0.98rem; }
 .hv3-signature span { color: rgba(255, 255, 255, 0.6); font-size: 0.88rem; }
 
-/* ── Final CTA ── */
-.hv3-final { background: var(--hv3-navy); padding: 92px 0; text-align: center; border-top: 1px solid rgba(0, 212, 170, 0.25); }
+/* ══ The ask ══ */
+.hv3-final { background: var(--hv3-navy); padding: 96px 0; text-align: center; border-top: 1px solid rgba(0, 212, 170, 0.25); }
 .hv3-final-headline {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 700; font-size: clamp(2rem, 3.4vw, 2.9rem);
+  font-weight: 700; font-size: clamp(2.1rem, 3.6vw, 3rem);
   letter-spacing: -0.02em; color: #fff; margin: 0 0 14px;
 }
-.hv3-final-headline span { color: var(--hv3-jade-bright); }
-.hv3-final-sub { font-size: 1.06rem; line-height: 1.7; color: rgba(255, 255, 255, 0.72); margin: 0 auto 28px; max-width: 52ch; }
+.hv3-final-sub { font-size: 1.06rem; line-height: 1.7; color: rgba(255, 255, 255, 0.72); margin: 0 auto 30px; max-width: 48ch; }
 .hv3-pipeline {
   display: flex; align-items: center; justify-content: center; gap: 14px;
   margin-top: 44px; font-size: 0.88rem; font-weight: 600; letter-spacing: 0.04em;
@@ -243,31 +250,26 @@
 .hv3-pipeline-arrow { color: rgba(255, 255, 255, 0.35); }
 .hv3-pipeline-accent { color: var(--hv3-jade-bright); }
 
-/* ── Responsive ── */
+/* ══ Responsive ══ */
 @media (max-width: 900px) {
-  .hv3-hero-grid, .hv3-beat, .hv3-split, .hv3-founder-grid { grid-template-columns: 1fr; }
-  .hv3-beat--flip figure { order: 0; }
-  .hv3-split figure { order: 2; }
-  .hv3-hero { padding: 56px 0 48px; }
+  .hv3-split, .hv3-split--rev, .hv3-founder-grid { grid-template-columns: 1fr; }
+  .hv3-split--rev figure { order: -1; }
   .hv3-section { padding: 60px 0; }
+  .hv3-hero { padding-top: 52px; }
+  .hv3-master { margin-top: 0; }
+  .hv3-master img { width: 140vw; max-width: none; margin-left: -20vw; }
   .hv3-portrait { width: 140px; }
-  /* Less scroll distance on a phone: the cycle should not take four thumb
-     swipes to finish. */
-  .hv3-scrub { height: 220vh; }
-  .hv3-frame { transform: none; }
+  .hv3-scrub { height: 240vh; }
 }
 
-/* ── Reduced motion ──
-   The page-wide block in the live stylesheet only flattens CSS animation; the
-   video and the scrubber opt out in JavaScript instead. This handles what is
-   left. */
+/* ══ Reduced motion ══
+   CSS animation flattens here; the video and scrubber opt out in JS. */
 @media (prefers-reduced-motion: reduce) {
   .hv3 *, .hv3 *::before, .hv3 *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  /* No sticky cycle: the section collapses to one still frame. */
   .hv3-scrub { height: auto; }
   .hv3-scrub-stage { position: static; height: auto; }
 }
