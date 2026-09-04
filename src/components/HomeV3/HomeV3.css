@@ -226,12 +226,22 @@
   font-size: clamp(2rem, 3.4vw, 2.8rem); font-weight: 700; color: var(--hv3-navy);
 }
 .hv3-stats dd { margin: 4px 0 0; font-size: 0.9rem; color: var(--hv3-ink-soft); }
-.hv3-shot { margin: 12px 0 28px; }
-.hv3-shot-img {
-  width: 100%; height: auto; display: block; border-radius: 12px;
-  box-shadow: 0 0 0 1px rgba(10, 37, 64, 0.08), 0 20px 50px -30px rgba(10, 37, 64, 0.4);
+/* Six finished assets on white tiles — the marketplace's own goods. */
+.hv3-catalog {
+  list-style: none; margin: 8px 0 28px; padding: 0;
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px;
 }
-.hv3-shot figcaption { font-size: 0.88rem; color: var(--hv3-ink-soft); margin-top: 12px; max-width: 62ch; }
+.hv3-catalog li {
+  background: #FFFFFF;
+  border: 1px solid var(--hv3-seam);
+  border-radius: 12px;
+  padding: 12px;
+}
+.hv3-catalog img { width: 100%; height: auto; display: block; }
+@media (max-width: 900px) {
+  .hv3-catalog { grid-template-columns: repeat(3, 1fr); }
+}
+
 .hv3-inline-link {
   display: inline-flex; align-items: center; gap: 6px;
   font-weight: 600; font-size: 0.98rem; color: var(--hv3-jade); text-decoration: none;

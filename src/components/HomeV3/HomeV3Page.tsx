@@ -14,7 +14,6 @@
  */
 
 import Link from 'next/link';
-import { getImageProps } from 'next/image';
 import { Cormorant_Garamond } from 'next/font/google';
 import { ArrowRight } from 'lucide-react';
 
@@ -32,50 +31,15 @@ import ProcessScrubber from './ProcessScrubber';
 import CountUp from './CountUp';
 import './HomeV3.css';
 
-function ArtDirectedShot({
-  desktopSrc,
-  mobileSrc,
-  alt,
-  className,
-  desktopWidth,
-  desktopHeight,
-  mobileWidth,
-  mobileHeight,
-}: {
-  desktopSrc: string;
-  mobileSrc: string;
-  alt: string;
-  className?: string;
-  desktopWidth: number;
-  desktopHeight: number;
-  mobileWidth: number;
-  mobileHeight: number;
-}) {
-  const common = { alt, sizes: '100vw', quality: 90 } as const;
-  const { props: desktop } = getImageProps({
-    ...common,
-    src: desktopSrc,
-    width: desktopWidth,
-    height: desktopHeight,
-  });
-  const { props: mobile } = getImageProps({
-    ...common,
-    src: mobileSrc,
-    width: mobileWidth,
-    height: mobileHeight,
-  });
-  return (
-    <picture>
-      <source
-        media="(min-width: 768px)"
-        srcSet={desktop.srcSet}
-        width={desktopWidth}
-        height={desktopHeight}
-      />
-      <img {...mobile} className={className} alt={alt} />
-    </picture>
-  );
-}
+// Real output, straight from the live catalog CDN — finished work, not UI.
+const CATALOG = [
+  { url: 'https://images.clip.art/christmas/decorated-christmas-tree-gifts-fxjmtg.webp', alt: 'Decorated Christmas tree clip art' },
+  { url: 'https://images.clip.art/halloween/grinning-jack-o-lantern-candle-r2avcr.webp', alt: "Jack-o'-lantern clip art" },
+  { url: 'https://images.clip.art/school/chemistry-set-bubbling-beakers-rd9f4o.webp', alt: 'Chemistry set clip art' },
+  { url: 'https://images.clip.art/flower/watercolor-lavender-flowers-bqkae5.webp', alt: 'Watercolor lavender clip art' },
+  { url: 'https://images.clip.art/cat/cozy-black-cat-on-pumpkin-1c6qun.webp', alt: 'Black cat on pumpkin clip art' },
+  { url: 'https://images.clip.art/school/friendly-yellow-school-bus-hjo5n2.webp', alt: 'School bus clip art' },
+];
 
 const CHANNELS = [
   { name: 'Pinterest', formats: 'Tall pins, 2:3' },
@@ -240,9 +204,9 @@ export default function HomeV3Page() {
           </span>
           <h2 className="hv3-title">This isn&apos;t a demo. clip.art runs on it.</h2>
           <p className="hv3-lede">
-            A consumer marketplace, fed entirely by Esy workflows — every asset
-            generated, processed, stored, and billed with a full record. The
-            illustrations on this page came out of the same engine.
+            A consumer marketplace, fed entirely by Esy workflows — every
+            asset generated, processed, stored, and billed with a full record.
+            Here are six, straight from the live catalog.
           </p>
           <dl className="hv3-stats">
             <div>
@@ -258,22 +222,13 @@ export default function HomeV3Page() {
               <dd>A worker&apos;s cost per item, at most</dd>
             </div>
           </dl>
-          <figure className="hv3-shot">
-            <ArtDirectedShot
-              desktopSrc="/images/workers-on-shift.webp"
-              mobileSrc="/images/workers-on-shift-mobile.webp"
-              alt="A worker one minute into a shift, with every previous shift listed underneath"
-              className="hv3-shot-img"
-              desktopWidth={2048}
-              desktopHeight={1140}
-              mobileWidth={1170}
-              mobileHeight={1300}
-            />
-            <figcaption>
-              Vista, one minute into a shift. Every shift it has ever run is
-              listed underneath — what it made, and what it cost.
-            </figcaption>
-          </figure>
+          <ul className="hv3-catalog" aria-label="Assets produced by these workflows, live on clip.art">
+            {CATALOG.map(({ url, alt }) => (
+              <li key={url}>
+                <img src={url} alt={alt} loading="lazy" width={280} height={280} />
+              </li>
+            ))}
+          </ul>
           <Link href="/workflows/generate-clip-art-asset/" className="hv3-inline-link">
             See the workflow behind it <ArrowRight size={15} />
           </Link>
