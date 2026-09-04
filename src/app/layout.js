@@ -61,7 +61,7 @@ export const metadata = {
     template: '%s | Esy',
     default: 'Esy — Automate & Audit. Agentic Workflows.',
   },
-  description: "Agentic workflow templates for the agentic engineer. Run batch generations, track token costs, manage budgets, review output, and audit every run.",
+  description: "Put marketing production on autopilot with ESY. Create campaigns, creative, SEO, and content with AI, quality control, and human review built in.",
   keywords: 'agentic workflow templates, agentic engineer, workflow automation, token cost tracking, AI budget management, batch generation, auditable workflows',
   metadataBase: new URL('https://esy.com'),
   alternates: {
@@ -69,7 +69,7 @@ export const metadata = {
   },
   openGraph: {
     title: 'Esy — Automate & Audit. Agentic Workflows.',
-    description: 'Agentic workflow templates for the agentic engineer. Run batch generations, track token costs, manage budgets, review output, and audit every run.',
+    description: 'Put marketing production on autopilot with ESY. Create campaigns, creative, SEO, and content with AI, quality control, and human review built in.',
     url: 'https://esy.com',
     siteName: 'Esy',
     locale: 'en_US',
