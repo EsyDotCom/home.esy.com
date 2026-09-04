@@ -29,7 +29,7 @@ const cormorant = Cormorant_Garamond({
 
 import ProcessScrubber from './ProcessScrubber';
 import SceneMedia from './SceneMedia';
-import HomeV3Header from './HomeV3Header';
+import LightHeader from '@/components/LightHeader/LightHeader';
 import CountUp from './CountUp';
 import './HomeV3.css';
 
@@ -52,7 +52,7 @@ const CHANNELS = [
 export default function HomeV3Page() {
   return (
     <div className={`hv3 ${cormorant.variable}`}>
-      <HomeV3Header />
+      <LightHeader />
       {/* ══ ACT I · The promise, with her on the floor ══
           Vertical: badge → headline → sub → CTAs, then the master scene
           spreading edge to edge underneath. The section's background IS the

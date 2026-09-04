@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { AgenticVideoCard } from "@/components/Agentic/AgenticVideoCard";
 import AgenticNewsletter from "@/components/Agentic/AgenticNewsletter";
 import { AgenticHero } from "@/components/Agentic/AgenticHero";
+import LightHeader from "@/components/LightHeader/LightHeader";
 import { AgenticOperator } from "@/components/Agentic/AgenticOperator";
 import { CoursesPromoSection } from "@/components/School/CoursesPromoSection";
 import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
@@ -167,6 +168,7 @@ export default function AgenticClient({ videos }: { videos: AgenticVideo[] }) {
       }}
     >
       {/* ═══ Studio stage hero — featured screening + capture ═══ */}
+      <LightHeader />
       <AgenticHero videos={allVideos} isMobile={isMobile} isTablet={isTablet} />
 
       {/* Section order: Latest leads with the newest drops across all

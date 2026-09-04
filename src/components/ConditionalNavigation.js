@@ -71,8 +71,9 @@ const ConditionalNavigation = () => {
   // Individual clip-art detail pages use their own artifact toolbar
   const isClipArtViewPage = normalizedPath?.startsWith('/clip-art/') && normalizedPath !== '/clip-art';
 
-  // The homepage is light-first and carries its own light header (the global
-  // bar is navy and would sit on a white hero).
+  // Light-first pages carry their own light header (the global bar is navy and
+  // would sit on a white hero): the homepage, and The Marketing Engineer index.
+  const isEngineerIndex = normalizedPath === '/engineer';
 
   // Don't render navigation on:
   // - Essay view pages (focused reading)
@@ -82,7 +83,7 @@ const ConditionalNavigation = () => {
   // - Agents pages (own sidebar navigation)
   // - Scrollytelling story pages (own header via ScrollytellingHeader)
   // - Photo essays landing page (immersive experience with own header)
-  if (isEssayViewPage || isInfographicViewPage || isClipArtViewPage || isDocsPage || isAgentsPage || isScrollytellingStoryPage || isPhotoEssaysPage || isHomepage) {
+  if (isEssayViewPage || isInfographicViewPage || isClipArtViewPage || isDocsPage || isAgentsPage || isScrollytellingStoryPage || isPhotoEssaysPage || isHomepage || isEngineerIndex) {
     return null;
   }
 
