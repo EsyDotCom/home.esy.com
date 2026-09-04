@@ -46,7 +46,7 @@ const CATALOG = [
 const CHANNELS = [
   { name: 'Pinterest', formats: 'Tall pins, 2:3' },
   { name: 'Landing Pages', formats: 'A page per angle' },
-  { name: 'Meta', formats: 'Feed squares and stories' },
+  { name: 'Instagram & Facebook', formats: 'Feed squares and stories' },
 ];
 
 export default function HomeV3Page() {
@@ -59,10 +59,6 @@ export default function HomeV3Page() {
           scene's painted ground, so there is no seam and nothing "placed". */}
       <section className="hv3-hero">
         <div className="hv3-container hv3-hero-copy">
-          <span className="hv3-badge hv3-enter" style={{ animationDelay: '0ms' }}>
-            <span className="hv3-badge-dot" aria-hidden="true" />
-            Powering <strong>clip.art</strong> — 2,000+ assets shipped a week
-          </span>
           <h1 className="hv3-headline hv3-enter" style={{ animationDelay: '90ms' }}>
             Put marketing production <span className="hv3-headline-accent">on autopilot</span>
           </h1>
@@ -81,9 +77,9 @@ export default function HomeV3Page() {
         <figure className="hv3-master hv3-enter" style={{ animationDelay: '380ms' }}>
           <img
             src="/brand/scenes/master.webp"
-            alt="One production floor, three zones: machines printing creatives, a sealing station stamping them, and a truck being loaded — the producer standing in command at the center"
+            alt="The producer holding one brief at the intake of a sorting machine, with three output slots stacking finished creatives — one stack for each outlet"
             width={1536}
-            height={922}
+            height={1016}
             fetchPriority="high"
           />
         </figure>
@@ -243,10 +239,10 @@ export default function HomeV3Page() {
         <div className="hv3-container hv3-split">
           <div>
             <span className="hv3-eyebrow hv3-eyebrow--onDark">Channels</span>
-            <h2 className="hv3-title hv3-title--onDark">Where it ships first</h2>
+            <h2 className="hv3-title hv3-title--onDark">One brief, every outlet</h2>
             <p className="hv3-lede hv3-lede--onDark">
-              The launch set covers what a small team actually feeds every
-              week. More join as they earn it.
+              The same campaign comes out sized and written for each one — no
+              resizing, no rewriting, no second brief.
             </p>
             <ul className="hv3-channel-list">
               {CHANNELS.map(({ name, formats }) => (
@@ -277,11 +273,12 @@ export default function HomeV3Page() {
       <section className="hv3-final">
         <div className="hv3-container">
           <h2 className="hv3-final-headline">
-            Your line is ready.
+            One campaign. Every outlet.
           </h2>
           <p className="hv3-final-sub">
-            One brief in. A campaign&apos;s worth of creatives out — with a
-            full record of how every one was made.
+            Pinterest pins, Instagram and Facebook posts, and the landing
+            pages they point to — all produced from a single brief, and none
+            of it live until you approve it.
           </p>
           <div className="hv3-ctas hv3-ctas--center">
             <Link href="https://make.esy.com" className="hv3-btn hv3-btn--primary">
@@ -305,9 +302,9 @@ export default function HomeV3Page() {
         <figure className="hv3-world">
           <SceneMedia
             name="world"
-            alt="The whole campus quietly running: cards gliding the conveyor path between the stations, the seal pressing, the dock loaded"
+            alt="One brief travels in on a single belt; finished creatives travel out on three — one belt for each outlet, each ending at its own truck"
             width={2400}
-            height={1319}
+            height={1600}
           />
         </figure>
       </section>
