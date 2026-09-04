@@ -1,4 +1,4 @@
-import IntelligenceCircuitryPage from "../components/IntelligenceCircuitry/IntelligenceCircuitryPage";
+import HomeV3Page from "../components/HomeV3/HomeV3Page";
 
 // Previous homepage metadata (Automate & Audit era):
 // title: "Esy — Automate & Audit. Agentic Workflows."
@@ -6,7 +6,7 @@ import IntelligenceCircuitryPage from "../components/IntelligenceCircuitry/Intel
 //   "Automate research, verify citations, and produce publishable artifacts — all through agentic workflow templates. Structured, auditable output by default."
 
 const HOME_META_DESCRIPTION =
-  "Put marketing production on autopilot. One brief becomes a coordinated campaign — research, angles, creative, copy, landing pages — produced by Esy, reviewed by you.";
+  "Write one brief. Esy produces the campaign — Pinterest pins, Instagram and Facebook posts, and landing pages — and nothing ships until you approve it.";
 
 export const metadata = {
   title: "Esy — Put Marketing Production on Autopilot",
@@ -45,4 +45,4 @@ export const metadata = {
   },
 };
 
-export default IntelligenceCircuitryPage;
+export default HomeV3Page;

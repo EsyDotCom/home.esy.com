@@ -71,19 +71,16 @@ export default function Footer () {
                                normalizedPath === '/404' || 
                                normalizedPath === '/not-found' ||
                                hasNotFoundBodyClass;
-        // The homepage-v3 candidate is light-first with a light header, so its
-        // footer uses the existing light theme (same footer, light skin).
-        const isHomepageV3 = normalizedPath === '/homepage-v3';
+
 
         // Reference unused page flags so future per-page overrides can re-attach
         // without re-discovering them. Navy Dark is the sitewide default footer;
         // pages opt out via explicit branches (models, 404, school articles, courses).
-        // NOTE: the homepage intentionally falls through to the default Navy Dark
-        // footer even when the IC page itself is in light/navy-calm mode — the
-        // user wants a single, consistent footer treatment across the site.
         void (isHomepage || isEssaysPage || isAboutPage || isAgenticPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isInfographicsPage);
 
-        if (isHomepageV3) {
+        if (isHomepage) {
+          // The homepage is light-first with its own light header, so the
+          // footer wears its light theme there (same footer, light skin).
           setIsLightMode(true);
           setIsNavyDark(false);
         } else if (isModelsPage) {
