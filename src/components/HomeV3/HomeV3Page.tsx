@@ -28,6 +28,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 import ProcessScrubber from './ProcessScrubber';
+import HomeV3Header from './HomeV3Header';
 import CountUp from './CountUp';
 import './HomeV3.css';
 
@@ -50,6 +51,7 @@ const CHANNELS = [
 export default function HomeV3Page() {
   return (
     <div className={`hv3 ${cormorant.variable}`}>
+      <HomeV3Header />
       {/* ══ ACT I · The promise, with her on the floor ══
           Vertical: badge → headline → sub → CTAs, then the master scene
           spreading edge to edge underneath. The section's background IS the
@@ -78,9 +80,9 @@ export default function HomeV3Page() {
         <figure className="hv3-master hv3-enter" style={{ animationDelay: '380ms' }}>
           <img
             src="/brand/scenes/master.webp"
-            alt="The producer directing an isometric production floor — three lines turning out finished, approved creatives"
+            alt="One production floor, three zones: machines printing creatives, a sealing station stamping them, and a truck being loaded — the producer standing in command at the center"
             width={1536}
-            height={1024}
+            height={922}
             fetchPriority="high"
           />
         </figure>
@@ -92,14 +94,14 @@ export default function HomeV3Page() {
           <figure className="hv3-figure hv3-figure--monday">
             <img
               src="/brand/scenes/clay-monday.webp"
-              alt="The producer buried under an avalanche of creative requests, the wall calendar slipping off its hook"
+              alt="Buried under an avalanche of creative requests, the wall calendar slipping off its hook"
               loading="lazy"
               width={1536}
               height={1024}
             />
           </figure>
           <div>
-            <span className="hv3-eyebrow">Monday</span>
+            <span className="hv3-eyebrow">Before — any given Monday</span>
             <h2 className="hv3-title">Requests arrive faster than anyone can make them.</h2>
             <p className="hv3-lede">
               In more sizes than anyone wants to resize, for more channels than
@@ -115,16 +117,16 @@ export default function HomeV3Page() {
         <div className="hv3-container hv3-split hv3-split--rev">
           <div>
             <span className="hv3-eyebrow">The brief</span>
-            <h2 className="hv3-title">So she writes one brief.</h2>
+            <h2 className="hv3-title">So you write one brief.</h2>
             <p className="hv3-lede">
               Audience, offer, tone — the way you&apos;d brief a colleague.
-              It&apos;s the last production document anyone writes.
+              It&apos;s the last production document you&apos;ll write.
             </p>
           </div>
           <figure className="hv3-figure">
             <img
               src="/brand/scenes/brief.webp"
-              alt="One brief card sliding into the machine's intake"
+              alt="Writing the one brief at a desk while the production floor waits beyond it"
               loading="lazy"
               width={1536}
               height={1024}
@@ -186,7 +188,7 @@ export default function HomeV3Page() {
             />
           </figure>
           <div>
-            <span className="hv3-eyebrow">Keep producing</span>
+            <span className="hv3-eyebrow">After — the same week</span>
             <h2 className="hv3-title">Monday, handled.</h2>
             <p className="hv3-lede">
               Approve the direction once and the line keeps running on
@@ -197,7 +199,7 @@ export default function HomeV3Page() {
       </section>
 
       {/* ══ The receipts ══ */}
-      <section className="hv3-section hv3-section--alt">
+      <section className="hv3-section">
         <div className="hv3-container">
           <span className="hv3-eyebrow">
             <span className="hv3-live-dot" aria-hidden="true" /> Live · In production
@@ -206,7 +208,7 @@ export default function HomeV3Page() {
           <p className="hv3-lede">
             A consumer marketplace, fed entirely by Esy workflows — every
             asset generated, processed, stored, and billed with a full record.
-            Here are six, straight from the live catalog.
+            This is what autopilot ships — six assets, straight from the live catalog.
           </p>
           <dl className="hv3-stats">
             <div>
@@ -269,6 +271,16 @@ export default function HomeV3Page() {
 
       {/* ══ The ask ══ */}
       <section className="hv3-final">
+        {/* The recurring moment: every ~14s the plane crosses the finale and
+            rests. One element, transform-only, gone under reduced motion. */}
+        <img
+          src="/brand/scenes/sendoff.webp"
+          alt=""
+          aria-hidden="true"
+          className="hv3-flyby"
+          width={768}
+          height={576}
+        />
         <div className="hv3-container">
           <figure className="hv3-navy-scene hv3-sendoff">
             <img

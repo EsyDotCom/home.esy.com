@@ -71,6 +71,10 @@ const ConditionalNavigation = () => {
   // Individual clip-art detail pages use their own artifact toolbar
   const isClipArtViewPage = normalizedPath?.startsWith('/clip-art/') && normalizedPath !== '/clip-art';
 
+  // The homepage-v3 candidate is light-first and carries its own light header
+  // (the global bar is navy and would sit on a white hero).
+  const isHomepageV3 = normalizedPath === '/homepage-v3';
+
   // Don't render navigation on:
   // - Essay view pages (focused reading)
   // - Infographic detail pages (artifact wrapper has own toolbar)
@@ -79,7 +83,7 @@ const ConditionalNavigation = () => {
   // - Agents pages (own sidebar navigation)
   // - Scrollytelling story pages (own header via ScrollytellingHeader)
   // - Photo essays landing page (immersive experience with own header)
-  if (isEssayViewPage || isInfographicViewPage || isClipArtViewPage || isDocsPage || isAgentsPage || isScrollytellingStoryPage || isPhotoEssaysPage) {
+  if (isEssayViewPage || isInfographicViewPage || isClipArtViewPage || isDocsPage || isAgentsPage || isScrollytellingStoryPage || isPhotoEssaysPage || isHomepageV3) {
     return null;
   }
 
