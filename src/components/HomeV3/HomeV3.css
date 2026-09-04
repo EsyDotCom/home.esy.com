@@ -384,5 +384,8 @@ body:has(.hv3) footer.footer {
     0 40px 90px -30px rgba(10, 37, 64, 0.35);
 }
 @media (max-width: 900px) {
-  body:has(.hv3) footer.footer { margin: -60px 16px 24px; }
+  /* auto, not a fixed inset: the base rule already narrows the card, so a
+     literal 16px left margin pinned it left and left the remainder on the
+     right — the off-centre card on phones. */
+  body:has(.hv3) footer.footer { width: calc(100% - 32px); margin: -60px auto 24px; }
 }

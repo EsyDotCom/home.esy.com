@@ -306,8 +306,8 @@ export default function HomeV3Page() {
           <SceneMedia
             name="world"
             alt="The whole campus quietly running: cards gliding the conveyor path between the stations, the seal pressing, the dock loaded"
-            width={1536}
-            height={799}
+            width={2400}
+            height={1319}
           />
         </figure>
       </section>
