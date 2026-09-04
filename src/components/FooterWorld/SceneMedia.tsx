@@ -8,6 +8,8 @@
  *    way RunConsole already decides it.
  * 2. A clip that is off-screen should not be decoding frames: it plays only
  *    while in view, via the site's observer idiom.
+ * 3. A scene can name a viewport floor below which it stays a still — phones
+ *    keep the picture and skip the download entirely.
  */
 
 import { useEffect, useRef, useState } from 'react';
@@ -20,6 +22,7 @@ export default function SceneMedia({
   height = 768,
   priority = false,
   motion = true,
+  minWidth = 0,
 }: {
   name: string;
   alt: string;
@@ -30,6 +33,8 @@ export default function SceneMedia({
   /* Set false while a scene has no clip yet: a <video> whose sources 404
      falls back to its raw attribute size and drags the layout with it. */
   motion?: boolean;
+  /* Viewport width (px) below which the still is served instead of the clip. */
+  minWidth?: number;
 }) {
   const [motionOk, setMotionOk] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -37,8 +42,11 @@ export default function SceneMedia({
   useEffect(() => {
     if (!motion) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Decided once at mount, like the scrubber's frame tier: a rotation
+    // mid-visit is not worth swapping media for.
+    if (minWidth && window.innerWidth < minWidth) return;
     setMotionOk(true);
-  }, [motion]);
+  }, [motion, minWidth]);
 
   useEffect(() => {
     const el = videoRef.current;

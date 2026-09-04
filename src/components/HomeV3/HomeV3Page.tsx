@@ -28,8 +28,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 import ProcessScrubber from './ProcessScrubber';
-import SceneMedia from './SceneMedia';
-import HomeV3Header from './HomeV3Header';
+import LightHeader from '@/components/LightHeader/LightHeader';
 import CountUp from './CountUp';
 import './HomeV3.css';
 
@@ -52,7 +51,7 @@ const CHANNELS = [
 export default function HomeV3Page() {
   return (
     <div className={`hv3 ${cormorant.variable}`}>
-      <HomeV3Header />
+      <LightHeader />
       {/* ══ ACT I · The promise, with her on the floor ══
           Vertical: badge → headline → sub → CTAs, then the master scene
           spreading edge to edge underneath. The section's background IS the
@@ -299,14 +298,6 @@ export default function HomeV3Page() {
             <span className="hv3-pipeline-accent">Shipped</span>
           </div>
         </div>
-        <figure className="hv3-world">
-          <SceneMedia
-            name="world"
-            alt="One brief travels in on a single belt; finished creatives travel out on three — one belt for each outlet, each ending at its own truck"
-            width={2400}
-            height={1600}
-          />
-        </figure>
       </section>
     </div>
   );

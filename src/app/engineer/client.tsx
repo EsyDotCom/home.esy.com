@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { AgenticVideoCard } from "@/components/Agentic/AgenticVideoCard";
 import AgenticNewsletter from "@/components/Agentic/AgenticNewsletter";
 import { AgenticHero } from "@/components/Agentic/AgenticHero";
+import LightHeader from "@/components/LightHeader/LightHeader";
 import { AgenticOperator } from "@/components/Agentic/AgenticOperator";
 import { CoursesPromoSection } from "@/components/School/CoursesPromoSection";
 import { useNewsletterSubscribe } from "@/hooks/useNewsletterSubscribe";
@@ -162,11 +163,14 @@ export default function AgenticClient({ videos }: { videos: AgenticVideo[] }) {
         color: theme.text,
         fontFamily: "var(--font-inter)",
         paddingTop: 0,
-        overflowX: "hidden",
+        // clip, not hidden: hidden makes this a scroll container and
+        // silently breaks the sticky header inside it.
+        overflowX: "clip",
         width: "100%",
       }}
     >
       {/* ═══ Studio stage hero — featured screening + capture ═══ */}
+      <LightHeader />
       <AgenticHero videos={allVideos} isMobile={isMobile} isTablet={isTablet} />
 
       {/* Section order: Latest leads with the newest drops across all

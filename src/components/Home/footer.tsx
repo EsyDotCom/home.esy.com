@@ -78,12 +78,7 @@ export default function Footer () {
         // pages opt out via explicit branches (models, 404, school articles, courses).
         void (isHomepage || isEssaysPage || isAboutPage || isAgenticPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isInfographicsPage);
 
-        if (isHomepage) {
-          // The homepage is light-first with its own light header, so the
-          // footer wears its light theme there (same footer, light skin).
-          setIsLightMode(true);
-          setIsNavyDark(false);
-        } else if (isModelsPage) {
+        if (isModelsPage) {
           // Check localStorage for models page theme
           const storedTheme = localStorage.getItem('theme-models');
           if (storedTheme === 'light') {
@@ -162,8 +157,10 @@ export default function Footer () {
             setIsNavyDark(true);
           }
         } else {
-          setIsLightMode(false);
-          setIsNavyDark(true);
+          // Light is the site standard (2026-09-04, set by the homepage). Dark
+          // footers are the exception and opt in above.
+          setIsLightMode(true);
+          setIsNavyDark(false);
         }
       };
 

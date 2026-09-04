@@ -30,13 +30,13 @@ export function AgenticHeroSignup() {
           marginTop: "1.75rem",
           padding: "0.875rem 1.125rem",
           borderRadius: 12,
-          border: "1px solid rgba(45, 212, 191, 0.35)",
-          background: "rgba(0, 168, 150, 0.12)",
+          border: "1px solid rgba(0, 168, 150, 0.35)",
+          background: "rgba(0, 168, 150, 0.08)",
           maxWidth: 480,
         }}
       >
         <CheckCircle2 size={18} color="#2dd4bf" aria-hidden="true" />
-        <p style={{ margin: 0, fontSize: "0.9rem", color: "rgba(255,255,255,0.9)" }}>
+        <p style={{ margin: 0, fontSize: "0.9rem", color: "#0A2540" }}>
           You&apos;re in — check your inbox to confirm.
         </p>
       </div>
@@ -67,12 +67,12 @@ export function AgenticHeroSignup() {
             padding: "0.75rem 1rem",
             fontSize: "0.9375rem",
             fontFamily: "inherit",
-            color: "#f8fafc",
-            background: "rgba(255, 255, 255, 0.07)",
+            color: "#102033",
+            background: "#F8F9FA",
             border: `1px solid ${
               status === "error"
                 ? "rgba(239, 68, 68, 0.6)"
-                : "rgba(255, 255, 255, 0.16)"
+                : "rgba(10, 37, 64, 0.14)"
             }`,
             borderRadius: 10,
             outline: "none",
@@ -110,8 +110,8 @@ export function AgenticHeroSignup() {
           fontSize: "0.75rem",
           color:
             status === "error" && errorMessage
-              ? "#f87171"
-              : "rgba(255, 255, 255, 0.45)",
+              ? "#B91C1C"
+              : "#6C757D",
         }}
       >
         {status === "error" && errorMessage

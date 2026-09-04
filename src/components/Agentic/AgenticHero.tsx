@@ -41,10 +41,10 @@ function FeaturedPoster({ video }: { video: AgenticVideo }) {
           aspectRatio: "16 / 9",
           borderRadius: 20,
           overflow: "hidden",
-          border: `1px solid ${hovered ? "rgba(0, 212, 170, 0.35)" : "rgba(255, 255, 255, 0.09)"}`,
+          border: `1px solid ${hovered ? "rgba(0, 168, 150, 0.45)" : "rgba(10, 37, 64, 0.1)"}`,
           boxShadow: hovered
-            ? "0 48px 90px -24px rgba(0, 0, 0, 0.7), 0 0 80px rgba(0, 212, 170, 0.14)"
-            : "0 40px 80px -24px rgba(0, 0, 0, 0.65), 0 0 60px rgba(0, 212, 170, 0.08)",
+            ? "0 36px 70px -28px rgba(10, 37, 64, 0.38)"
+            : "0 28px 60px -30px rgba(10, 37, 64, 0.3)",
           transform: hovered ? "translateY(-4px)" : "translateY(0)",
           transition: "all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           backgroundColor: "#06121F",
@@ -204,7 +204,7 @@ function UpNextStrip({ videos }: { videos: AgenticVideo[] }) {
           fontWeight: 700,
           letterSpacing: "0.14em",
           textTransform: "uppercase",
-          color: "rgba(255,255,255,0.4)",
+          color: "#6C757D",
         }}
       >
         Up next
@@ -232,8 +232,8 @@ function UpNextStrip({ videos }: { videos: AgenticVideo[] }) {
                   aspectRatio: "16 / 9",
                   borderRadius: 10,
                   overflow: "hidden",
-                  border: `1px solid ${hovered ? "rgba(0, 212, 170, 0.4)" : "rgba(255,255,255,0.08)"}`,
-                  opacity: hovered ? 1 : 0.82,
+                  border: `1px solid ${hovered ? "rgba(0, 168, 150, 0.45)" : "rgba(10, 37, 64, 0.1)"}`,
+                  opacity: hovered ? 1 : 0.9,
                   transition: "all 0.25s ease",
                   backgroundColor: "#06121F",
                 }}
@@ -252,7 +252,7 @@ function UpNextStrip({ videos }: { videos: AgenticVideo[] }) {
                   margin: "0.5rem 0 0",
                   fontSize: "0.75rem",
                   lineHeight: 1.4,
-                  color: hovered ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.6)",
+                  color: hovered ? "#0A2540" : "#41566D",
                   display: "-webkit-box",
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: "vertical",
@@ -289,32 +289,12 @@ export function AgenticHero({
       style={{
         position: "relative",
         overflow: "hidden",
-        // Layered stage lighting: teal key light behind the poster, cool fill
-        // bottom-left, deep navy base — plus a faint grid for texture.
-        background: [
-          "radial-gradient(1100px 560px at 78% 18%, rgba(0, 212, 170, 0.13), transparent 62%)",
-          "radial-gradient(900px 520px at 8% 92%, rgba(0, 120, 170, 0.12), transparent 60%)",
-          "linear-gradient(168deg, #08203A 0%, #0A2540 48%, #051221 100%)",
-        ].join(", "),
-        borderBottom: "1px solid rgba(0, 212, 170, 0.12)",
+        // Light-first, like the homepage: flat white, no grid, no glow. The
+        // poster is the only rich object on the stage.
+        background: "#FFFFFF",
+        borderBottom: "1px solid rgba(10, 37, 64, 0.08)",
       }}
     >
-      {/* Faint blueprint grid overlay */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-          maskImage:
-            "radial-gradient(ellipse 90% 80% at 50% 30%, black 30%, transparent 100%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 90% 80% at 50% 30%, black 30%, transparent 100%)",
-          pointerEvents: "none",
-        }}
-      />
 
       <div
         style={{
@@ -322,10 +302,10 @@ export function AgenticHero({
           maxWidth: 1200,
           margin: "0 auto",
           padding: isMobile
-            ? "7rem 1rem 3.5rem"
+            ? "3rem 1rem 3rem"
             : isTablet
-              ? "8rem 1.5rem 4rem"
-              : "9rem 2rem 5.5rem",
+              ? "4rem 1.5rem 4rem"
+              : "5.5rem 2rem 5.5rem",
           display: "grid",
           gridTemplateColumns: isCompact ? "1fr" : "minmax(0, 10fr) minmax(0, 11fr)",
           gap: isCompact ? "3rem" : "4.5rem",
@@ -341,7 +321,7 @@ export function AgenticHero({
               fontWeight: 600,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "#2dd4bf",
+              color: "#00A896",
             }}
           >
             Esy Presents
@@ -355,7 +335,7 @@ export function AgenticHero({
               fontWeight: 300,
               lineHeight: 1.08,
               letterSpacing: "-0.015em",
-              color: "#fff",
+              color: "#0A2540",
             }}
           >
             The Marketing
@@ -369,7 +349,7 @@ export function AgenticHero({
               margin: "1.5rem 0 0",
               fontSize: isMobile ? "1rem" : "1.0625rem",
               lineHeight: 1.7,
-              color: "rgba(255, 255, 255, 0.7)",
+              color: "#41566D",
               maxWidth: 440,
             }}
           >
@@ -412,10 +392,10 @@ export function AgenticHero({
               />
             </div>
             <p style={{ margin: 0, fontSize: "0.8125rem", lineHeight: 1.4 }}>
-              <span style={{ color: "rgba(255,255,255,0.9)", fontWeight: 600 }}>
+              <span style={{ color: "#0A2540", fontWeight: 600 }}>
                 by Zev Uhuru
               </span>
-              <span style={{ color: "rgba(255,255,255,0.5)" }}>
+              <span style={{ color: "#6C757D" }}>
                 {" "}
                 — Marketing Engineer, building Esy
               </span>

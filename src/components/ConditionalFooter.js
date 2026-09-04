@@ -1,6 +1,7 @@
 "use client"
 import { usePathname } from 'next/navigation';
 import Footer from "@/components/Home/footer";
+import FooterWorld from "@/components/FooterWorld/FooterWorld";
 import CopyrightFooter from "@/components/CopyrightFooter";
 
 const ConditionalFooter = () => {
@@ -63,8 +64,17 @@ const ConditionalFooter = () => {
     return null;
   }
   
-  // Render the common footer on all other pages (including homepage)
-  return <Footer />;
+  // Render the common footer on all other pages (including homepage). The
+  // world rides with it: the footer is a card floating over the factory
+  // scene, sitewide. Pages that return null above (docs, agents, essays,
+  // artifact detail, scrollytelling, photo essays, course lessons) get
+  // neither, which is what "no footer" has always meant here.
+  return (
+    <>
+      <FooterWorld />
+      <Footer />
+    </>
+  );
 };
 
 export default ConditionalFooter; 
