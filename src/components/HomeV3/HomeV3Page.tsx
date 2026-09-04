@@ -28,6 +28,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 import ProcessScrubber from './ProcessScrubber';
+import SceneMedia from './SceneMedia';
 import HomeV3Header from './HomeV3Header';
 import CountUp from './CountUp';
 import './HomeV3.css';
@@ -269,28 +270,12 @@ export default function HomeV3Page() {
         </div>
       </section>
 
-      {/* ══ The ask ══ */}
+      {/* ══ The ask — the story's world, seen whole ══
+          The finale is a place, not a panel: the campus the page described,
+          with the road running out toward the viewer and the closing words in
+          its sky. The site footer floats over the world as a rounded card. */}
       <section className="hv3-final">
-        {/* The recurring moment: every ~14s the plane crosses the finale and
-            rests. One element, transform-only, gone under reduced motion. */}
-        <img
-          src="/brand/scenes/sendoff.webp"
-          alt=""
-          aria-hidden="true"
-          className="hv3-flyby"
-          width={768}
-          height={576}
-        />
         <div className="hv3-container">
-          <figure className="hv3-navy-scene hv3-sendoff">
-            <img
-              src="/brand/scenes/sendoff.webp"
-              alt="A paper plane folded from a sealed creative, climbing with a trail of approved work behind it"
-              loading="lazy"
-              width={1536}
-              height={1024}
-            />
-          </figure>
           <h2 className="hv3-final-headline">
             Your line is ready.
           </h2>
@@ -303,11 +288,11 @@ export default function HomeV3Page() {
               <span>Start producing</span>
               <ArrowRight size={18} />
             </Link>
-            <Link href="/workflows" className="hv3-btn hv3-btn--ghost hv3-btn--ghost-dark">
+            <Link href="/workflows" className="hv3-btn hv3-btn--ghost">
               Browse workflow templates
             </Link>
           </div>
-          <div className="hv3-pipeline" aria-label="Esy operating model">
+          <div className="hv3-pipeline hv3-pipeline--light" aria-label="Esy operating model">
             <span>Brief</span>
             <span className="hv3-pipeline-arrow" aria-hidden="true">→</span>
             <span>Production</span>
@@ -317,6 +302,14 @@ export default function HomeV3Page() {
             <span className="hv3-pipeline-accent">Shipped</span>
           </div>
         </div>
+        <figure className="hv3-world">
+          <SceneMedia
+            name="world"
+            alt="The whole campus at once, quietly running: cards gliding the conveyor path, the stamp pressing, the dock loading"
+            width={1536}
+            height={799}
+          />
+        </figure>
       </section>
     </div>
   );
