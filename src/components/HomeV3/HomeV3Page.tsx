@@ -28,7 +28,6 @@ const cormorant = Cormorant_Garamond({
 });
 
 import ProcessScrubber from './ProcessScrubber';
-import SceneMedia from './SceneMedia';
 import LightHeader from '@/components/LightHeader/LightHeader';
 import CountUp from './CountUp';
 import './HomeV3.css';
@@ -299,14 +298,6 @@ export default function HomeV3Page() {
             <span className="hv3-pipeline-accent">Shipped</span>
           </div>
         </div>
-        <figure className="hv3-world">
-          <SceneMedia
-            name="world"
-            alt="One brief travels in on a single belt; finished creatives travel out on three — one belt for each outlet, each ending at its own truck"
-            width={2400}
-            height={1600}
-          />
-        </figure>
       </section>
     </div>
   );

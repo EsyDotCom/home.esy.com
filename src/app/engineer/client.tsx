@@ -163,7 +163,9 @@ export default function AgenticClient({ videos }: { videos: AgenticVideo[] }) {
         color: theme.text,
         fontFamily: "var(--font-inter)",
         paddingTop: 0,
-        overflowX: "hidden",
+        // clip, not hidden: hidden makes this a scroll container and
+        // silently breaks the sticky header inside it.
+        overflowX: "clip",
         width: "100%",
       }}
     >

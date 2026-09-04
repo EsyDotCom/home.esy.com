@@ -294,24 +294,6 @@
 /* The world: TRUE full bleed. The campus plate is scaled past the viewport
    so its plinth runs off both sides — the page ends inside the world, not
    looking at a picture of one. The footer card floats over it. */
-.hv3-world {
-  margin: -30px 0 0;
-  display: flex; justify-content: center;
-  /* clip, not visible: the plate is wider than the viewport on purpose, and
-     without this it makes the whole PAGE scroll sideways — which is what threw
-     the footer card off centre (margin:auto centres inside the scroll width,
-     not the viewport). */
-  overflow: clip;
-}
-.hv3-world img, .hv3-world video {
-  /* Sized to be READ, not cropped: this scene's story runs from the desk at
-     the left to the top of the arc, so it has to fit. Slight bleed only. */
-  width: min(1500px, 104vw);
-  max-width: none;
-  height: auto; display: block;
-  flex: none;
-}
-
 /* ══ Responsive ══ */
 @media (max-width: 900px) {
   .hv3-split, .hv3-split--rev { grid-template-columns: 1fr; }
@@ -335,25 +317,4 @@
   .hv3-scrub-stage { position: static; height: auto; }
 }
 
-/* ── The floating footer card (this page only) ──
-   The world continues behind and around it, clay.com-style; the footer's own
-   light theme handles its colours, this handles only its shape and lift. */
-body:has(.hv3) { background: #FFFFFF; }
-body:has(.hv3) footer.footer {
-  position: relative;
-  z-index: 5;
-  max-width: 1240px;
-  width: calc(100% - 80px);
-  margin: -180px auto 40px;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow:
-    0 0 0 1px rgba(10, 37, 64, 0.08),
-    0 40px 90px -30px rgba(10, 37, 64, 0.35);
-}
-@media (max-width: 900px) {
-  /* auto, not a fixed inset: the base rule already narrows the card, so a
-     literal 16px left margin pinned it left and left the remainder on the
-     right — the off-centre card on phones. */
-  body:has(.hv3) footer.footer { width: calc(100% - 32px); margin: -60px auto 24px; }
-}
+  
