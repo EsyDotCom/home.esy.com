@@ -1,19 +1,14 @@
-import IntelligenceCircuitryPage from '@/components/IntelligenceCircuitry/IntelligenceCircuitryPage';
+import HomeV2Page from '@/components/HomeV2/HomeV2Page';
 
 export const metadata = {
-  title: 'Esy — Citation-First Research Workflows',
-  description: 'Start from real sources — PDFs, citations, or notes — and use citation-first templates to produce structured, publishable research artifacts.',
-  keywords: 'research templates, AI writing, citation-first, defensible artifacts, visual essays, academic writing',
-  openGraph: {
-    title: 'Esy — Citation-First Research Workflows',
-    description: 'Start from real sources — PDFs, citations, or notes — and use citation-first templates to produce structured, publishable research artifacts.',
-    url: 'https://esy.com',
-    siteName: 'Esy',
-    locale: 'en_US',
-    type: 'website',
-  },
+  title: 'Esy — Put Marketing Production on Autopilot',
+  description:
+    'One brief becomes a coordinated campaign — research, angles, creative, copy, a landing page — produced by Esy, reviewed by you.',
+  // v2 is a side-by-side candidate for the homepage, not a second indexed
+  // copy of it — keep crawlers out until it either replaces / or dies.
+  robots: { index: false, follow: false },
 };
 
 export default function HomepageV2() {
-  return <IntelligenceCircuitryPage />;
+  return <HomeV2Page />;
 }
