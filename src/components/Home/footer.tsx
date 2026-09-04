@@ -71,6 +71,9 @@ export default function Footer () {
                                normalizedPath === '/404' || 
                                normalizedPath === '/not-found' ||
                                hasNotFoundBodyClass;
+        // The homepage-v3 candidate is light-first with a light header, so its
+        // footer uses the existing light theme (same footer, light skin).
+        const isHomepageV3 = normalizedPath === '/homepage-v3';
 
         // Reference unused page flags so future per-page overrides can re-attach
         // without re-discovering them. Navy Dark is the sitewide default footer;
@@ -80,7 +83,10 @@ export default function Footer () {
         // user wants a single, consistent footer treatment across the site.
         void (isHomepage || isEssaysPage || isAboutPage || isAgenticPage || isTemplatesPage || isDocsPage || isAgentsPage || isContactPage || isTermsPage || isPrivacyPage || isGlossaryPage || isInfographicsPage);
 
-        if (isModelsPage) {
+        if (isHomepageV3) {
+          setIsLightMode(true);
+          setIsNavyDark(false);
+        } else if (isModelsPage) {
           // Check localStorage for models page theme
           const storedTheme = localStorage.getItem('theme-models');
           if (storedTheme === 'light') {

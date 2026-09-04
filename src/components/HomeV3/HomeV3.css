@@ -1,0 +1,393 @@
+/* HomeV3 — one continuous story, one continuous surface.
+ *
+ * The rule that runs the whole sheet: a scene's painted ground and the
+ * section behind it are the SAME colour, so the world sits on the page rather
+ * than in boxes. The renders are white-balanced onto BRAND surfaces (white,
+ * #F8F9FA, navy) — cream is not an Esy colour, so the art moves to the brand,
+ * never the page to the art. */
+
+.hv3 {
+  --hv3-navy: #0A2540;
+  --hv3-jade: #00A896;
+  --hv3-jade-bright: #00D4AA;
+  --hv3-bg: #FFFFFF;
+  --hv3-bg-alt: #F8F9FA;
+  --hv3-ink: #102033;
+  --hv3-ink-soft: #41566D;
+  --hv3-seam: rgba(10, 37, 64, 0.1);
+  background: var(--hv3-bg);
+  color: var(--hv3-ink);
+  /* clip, NOT hidden: `overflow: hidden` creates a scroll container and
+     silently breaks the scrubber's `position: sticky`. */
+  overflow-x: clip;
+}
+.hv3-container { max-width: 1120px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+/* ── The page's own light header ── */
+.hv3-header {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--hv3-seam);
+}
+.hv3-header-inner {
+  max-width: 1120px; margin: 0 auto; padding: 0 24px;
+  height: 64px; display: flex; align-items: center; justify-content: space-between;
+}
+.hv3-wordmark {
+  font-family: var(--font-black-ops-one), sans-serif;
+  font-weight: 400; /* the only cut — synthetic bold fills the stencil gaps */
+  font-synthesis: none;
+  font-size: 1.5rem; line-height: 1;
+  color: var(--hv3-navy); text-decoration: none; letter-spacing: 0.01em;
+}
+.hv3-wordmark-e { color: var(--hv3-jade); }
+.hv3-header-nav { display: flex; align-items: center; gap: 12px; }
+.hv3-header-signin {
+  font-size: 0.94rem; font-weight: 600; color: var(--hv3-ink-soft);
+  text-decoration: none; padding: 9px 14px; border-radius: 8px;
+}
+.hv3-header-signin:hover { color: var(--hv3-navy); }
+.hv3-header-cta {
+  font-size: 0.94rem; font-weight: 600; color: #fff;
+  background: var(--hv3-jade); text-decoration: none;
+  padding: 10px 18px; border-radius: 8px;
+  transition: background 0.15s ease;
+}
+.hv3-header-cta:hover { background: var(--hv3-jade-bright); }
+
+/* ── Type ── */
+.hv3-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--hv3-jade); margin-bottom: 16px;
+}
+.hv3-eyebrow--onDark { color: var(--hv3-jade-bright); }
+.hv3-title {
+  font-family: var(--hv3-serif, 'Cormorant Garamond'), Georgia, serif;
+  font-weight: 700; font-size: clamp(1.9rem, 3.1vw, 2.5rem);
+  letter-spacing: -0.02em; color: var(--hv3-navy); margin: 0 0 14px; text-wrap: balance;
+}
+.hv3-title--onDark { color: #FFFFFF; }
+.hv3-lede { font-size: 1.06rem; line-height: 1.7; color: var(--hv3-ink-soft); max-width: 54ch; margin: 0 0 20px; }
+.hv3-lede--onDark { color: rgba(255, 255, 255, 0.78); }
+.hv3-lede--center { margin-left: auto; margin-right: auto; }
+
+/* ══ ACT I · Hero — vertical, and the scene IS the section ══ */
+.hv3-hero {
+  /* The master scene is balanced to pure white; copy, sky and page are one
+     surface, and that surface is a brand one. */
+  background: var(--hv3-bg);
+  padding-top: 72px;
+  text-align: center;
+}
+.hv3-hero-copy { display: flex; flex-direction: column; align-items: center; }
+.hv3-badge {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 0.85rem; color: var(--hv3-ink-soft);
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--hv3-seam);
+  border-radius: 999px; padding: 7px 15px; margin-bottom: 26px;
+}
+.hv3-badge strong { color: var(--hv3-navy); font-weight: 600; }
+.hv3-badge-dot {
+  width: 7px; height: 7px; border-radius: 999px; background: var(--hv3-jade);
+  animation: hv3Pulse 2.4s ease-in-out infinite;
+}
+@keyframes hv3Pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.35 } }
+.hv3-headline {
+  font-family: var(--hv3-serif, 'Cormorant Garamond'), Georgia, serif;
+  font-weight: 700; font-size: clamp(2.5rem, 5.2vw, 4.1rem);
+  line-height: 1.06; letter-spacing: -0.03em; color: var(--hv3-navy);
+  margin: 0 0 18px; max-width: 24ch; text-wrap: balance;
+}
+.hv3-headline-accent { color: var(--hv3-jade); }
+.hv3-sub {
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.65;
+  color: var(--hv3-ink-soft); margin: 0 0 30px; max-width: 52ch;
+}
+/* The scene runs edge to edge under the copy — no frame, no card, no seam.
+   Its top is empty sky in the same colour the section paints. */
+.hv3-master {
+  margin: 12px 0 0;
+  display: flex; justify-content: center;
+}
+.hv3-master img {
+  width: min(1500px, 100vw);
+  height: auto; display: block;
+  /* The render's ground vignettes slightly toward its edges; a soft
+     horizontal fade melts them into the section so no border can appear. */
+  mask-image: linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%);
+}
+
+/* ── Entrance — one orchestrated arrival, then stillness ──
+   The loader's own easing (the brand's "lock"), staggered down the hero
+   stack. `backwards` keeps each piece invisible until its turn; the global
+   reduced-motion block flattens all of it to instant. */
+.hv3-enter {
+  animation: hv3Enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+@keyframes hv3Enter {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── Story reveals — scroll-driven, compositor-only ──
+   Native CSS view timelines where supported (~90% of browsers, zero JS);
+   everyone else simply sees the figures in place. */
+@supports (animation-timeline: view()) {
+  .hv3-figure {
+    animation: hv3Rise both cubic-bezier(0.16, 1, 0.3, 1);
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+}
+@keyframes hv3Rise {
+  from { opacity: 0.2; transform: translateY(26px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── CTAs ── */
+.hv3-ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.hv3-ctas--center { justify-content: center; }
+.hv3-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; font-size: 1rem; font-weight: 600;
+  text-decoration: none; border-radius: 8px;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.hv3-btn--primary { background: var(--hv3-jade); color: #fff; }
+.hv3-btn--primary:hover { background: var(--hv3-jade-bright); }
+.hv3-btn--ghost { color: var(--hv3-navy); box-shadow: inset 0 0 0 1px rgba(10, 37, 64, 0.2); }
+.hv3-btn--ghost:hover { box-shadow: inset 0 0 0 1px var(--hv3-jade); color: var(--hv3-jade); }
+.hv3-btn--ghost-dark { color: #FFFFFF; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28); }
+.hv3-btn--ghost-dark:hover { box-shadow: inset 0 0 0 1px var(--hv3-jade-bright); color: var(--hv3-jade-bright); }
+
+/* ══ Story sections ══
+   Each act that carries a clay scene takes that scene's ground as its own
+   background, and the figure loses its box: blend, don't frame. */
+.hv3-section { padding: 88px 0; position: relative; }
+.hv3-section--alt { background: var(--hv3-bg-alt); }
+.hv3-monday { background: var(--hv3-bg-alt); }
+.hv3-friday { background: var(--hv3-bg-alt); }
+.hv3-split {
+  display: grid; grid-template-columns: 1.02fr 0.98fr;
+  gap: 56px; align-items: center;
+}
+.hv3-split--rev { grid-template-columns: 0.98fr 1.02fr; }
+.hv3-figure { margin: 0; }
+.hv3-figure img, .hv3-media { width: 100%; height: auto; display: block; }
+/* Machine scenes keep a soft card (their grounds vary); clay acts blend. */
+.hv3-figure:not(.hv3-figure--monday):not(.hv3-figure--friday):not(.hv3-figure--review) {
+  border-radius: 14px; overflow: hidden;
+  background: #FEFCF9;
+  box-shadow: 0 0 0 1px rgba(10, 37, 64, 0.07), 0 18px 44px -26px rgba(10, 37, 64, 0.3);
+}
+
+/* ══ ACT IV · The line ══ */
+.hv3-press {
+  /* The 'Watch the line run' anchor lands here; keep the heading clear of
+     the fixed nav. */
+  scroll-margin-top: 72px;
+  /* The frames are balanced to the brand alt ground: boxless, on-theme. */
+  background: var(--hv3-bg-alt);
+  padding-top: 84px;
+}
+.hv3-press-copy { text-align: center; }
+.hv3-scrub { height: 320vh; position: relative; }
+.hv3-scrub-stage {
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 22px; padding: 20px;
+}
+.hv3-scrub-canvas {
+  /* Constrained on BOTH axes so the stage always leaves room for the readout;
+     the width/height attributes keep the aspect ratio honest. */
+  max-width: min(1240px, 96vw);
+  max-height: 72vh;
+  width: auto; height: auto; display: block;
+}
+/* The live readout: a hairline track, a jade fill, and one line naming what
+   the machine is doing right now. */
+.hv3-scrub-readout {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  width: min(420px, 80vw);
+}
+.hv3-scrub-label {
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--hv3-ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.hv3-scrub-track {
+  position: relative;
+  width: 100%; height: 3px; border-radius: 2px;
+  background: rgba(10, 37, 64, 0.12);
+}
+/* Tick marks at the five stage boundaries, so the readout reads as stations
+   on a line rather than a loading bar. */
+.hv3-scrub-track::after {
+  content: '';
+  position: absolute; inset: -2px 0;
+  background:
+    linear-gradient(90deg, transparent calc(20% - 1px), rgba(10, 37, 64, 0.35) 20%, transparent calc(20% + 1px)),
+    linear-gradient(90deg, transparent calc(40% - 1px), rgba(10, 37, 64, 0.35) 40%, transparent calc(40% + 1px)),
+    linear-gradient(90deg, transparent calc(60% - 1px), rgba(10, 37, 64, 0.35) 60%, transparent calc(60% + 1px)),
+    linear-gradient(90deg, transparent calc(80% - 1px), rgba(10, 37, 64, 0.35) 80%, transparent calc(80% + 1px));
+}
+.hv3-scrub-bar { border-radius: 2px; }
+.hv3-scrub-bar { height: 100%; width: 0%; background: var(--hv3-jade); }
+
+/* Navy scenes: their painted navy is deeper than the band's, so any direct
+   placement draws a darker box. `lighten` ends the argument per-pixel — the
+   ground (darker than the band) becomes the band, the lit artwork (brighter)
+   survives untouched. The feathered edges then only smooth the shadows. */
+.hv3-navy-scene { margin: 0; }
+.hv3-navy-scene img { width: 100%; height: auto; display: block; }
+
+/* ══ Receipts ══ */
+.hv3-live-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--hv3-jade-bright); }
+.hv3-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px; margin: 36px 0; padding: 0;
+}
+.hv3-stats dt {
+  font-family: var(--hv3-serif, 'Cormorant Garamond'), Georgia, serif;
+  font-size: clamp(2rem, 3.4vw, 2.8rem); font-weight: 700; color: var(--hv3-navy);
+}
+.hv3-stats dd { margin: 4px 0 0; font-size: 0.9rem; color: var(--hv3-ink-soft); }
+/* Six finished assets on white tiles — the marketplace's own goods. */
+.hv3-catalog {
+  list-style: none; margin: 8px 0 28px; padding: 0;
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px;
+}
+.hv3-catalog li {
+  background: var(--hv3-bg-alt);
+  border: 1px solid var(--hv3-seam);
+  border-radius: 12px;
+  padding: 12px;
+}
+.hv3-catalog img { width: 100%; height: auto; display: block; }
+@media (max-width: 900px) {
+  .hv3-catalog { grid-template-columns: repeat(3, 1fr); }
+}
+
+.hv3-inline-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 600; font-size: 0.98rem; color: var(--hv3-jade); text-decoration: none;
+}
+.hv3-inline-link:hover { color: var(--hv3-jade-bright); }
+
+/* ══ Navy bands ══ */
+.hv3-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  pointer-events: none;
+}
+.hv3-channels-section {
+  position: relative; background: var(--hv3-navy); padding: 90px 0 56px; overflow: hidden;
+}
+.hv3-channels-section .hv3-container { z-index: 2; }
+.hv3-channel-list { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 12px; max-width: 620px; }
+.hv3-channel-list li {
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px; padding: 16px 20px; color: #FFFFFF;
+}
+.hv3-channel-name { font-weight: 600; }
+.hv3-channel-formats { margin-left: auto; font-size: 0.86rem; color: rgba(255, 255, 255, 0.6); }
+.hv3-check {
+  display: grid; place-items: center; width: 24px; height: 24px; flex-shrink: 0;
+  border-radius: 999px; background: var(--hv3-jade); color: #fff; font-size: 0.8rem;
+}
+
+/* ══ The ask ══ */
+.hv3-final {
+  background: var(--hv3-bg);
+  padding: 96px 0 0;
+  text-align: center;
+  position: relative;
+}
+.hv3-final-headline {
+  font-family: var(--hv3-serif, 'Cormorant Garamond'), Georgia, serif;
+  font-weight: 700; font-size: clamp(2.1rem, 3.6vw, 3rem);
+  letter-spacing: -0.02em; color: var(--hv3-navy); margin: 0 0 14px;
+}
+.hv3-final-sub { font-size: 1.06rem; line-height: 1.7; color: var(--hv3-ink-soft); margin: 0 auto 30px; max-width: 48ch; }
+.hv3-pipeline {
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  margin-top: 44px; font-size: 0.88rem; font-weight: 600; letter-spacing: 0.04em;
+  color: var(--hv3-ink-soft); flex-wrap: wrap;
+}
+.hv3-pipeline-arrow { color: rgba(10, 37, 64, 0.3); }
+.hv3-pipeline-accent { color: var(--hv3-jade); }
+
+/* The world: TRUE full bleed. The campus plate is scaled past the viewport
+   so its plinth runs off both sides — the page ends inside the world, not
+   looking at a picture of one. The footer card floats over it. */
+.hv3-world {
+  margin: -30px 0 0;
+  display: flex; justify-content: center;
+  /* clip, not visible: the plate is wider than the viewport on purpose, and
+     without this it makes the whole PAGE scroll sideways — which is what threw
+     the footer card off centre (margin:auto centres inside the scroll width,
+     not the viewport). */
+  overflow: clip;
+}
+.hv3-world img, .hv3-world video {
+  /* Sized to be READ, not cropped: this scene's story runs from the desk at
+     the left to the top of the arc, so it has to fit. Slight bleed only. */
+  width: min(1500px, 104vw);
+  max-width: none;
+  height: auto; display: block;
+  flex: none;
+}
+
+/* ══ Responsive ══ */
+@media (max-width: 900px) {
+  .hv3-split, .hv3-split--rev { grid-template-columns: 1fr; }
+  .hv3-split--rev figure { order: -1; }
+  .hv3-section { padding: 60px 0; }
+  .hv3-hero { padding-top: 52px; }
+  .hv3-master { margin-top: 0; }
+  .hv3-master img { width: 140vw; max-width: none; margin-left: -20vw; }
+  .hv3-scrub { height: 240vh; }
+}
+
+/* ══ Reduced motion ══
+   CSS animation flattens here; the video and scrubber opt out in JS. */
+@media (prefers-reduced-motion: reduce) {
+  .hv3 *, .hv3 *::before, .hv3 *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hv3-scrub { height: auto; }
+  .hv3-scrub-stage { position: static; height: auto; }
+}
+
+/* ── The floating footer card (this page only) ──
+   The world continues behind and around it, clay.com-style; the footer's own
+   light theme handles its colours, this handles only its shape and lift. */
+body:has(.hv3) { background: #FFFFFF; }
+body:has(.hv3) footer.footer {
+  position: relative;
+  z-index: 5;
+  max-width: 1240px;
+  width: calc(100% - 80px);
+  margin: -180px auto 40px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(10, 37, 64, 0.08),
+    0 40px 90px -30px rgba(10, 37, 64, 0.35);
+}
+@media (max-width: 900px) {
+  /* auto, not a fixed inset: the base rule already narrows the card, so a
+     literal 16px left margin pinned it left and left the remainder on the
+     right — the off-centre card on phones. */
+  body:has(.hv3) footer.footer { width: calc(100% - 32px); margin: -60px auto 24px; }
+}
