@@ -305,6 +305,7 @@ export default function HomeV3Page() {
             alt="One brief travels in on a single belt; finished creatives travel out on three — one belt for each outlet, each ending at its own truck"
             width={2400}
             height={1600}
+            minWidth={768}
           />
         </figure>
       </section>

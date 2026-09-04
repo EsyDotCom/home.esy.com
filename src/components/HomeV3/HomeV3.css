@@ -355,6 +355,11 @@
   .hv3-master { margin-top: 0; }
   .hv3-master img { width: 140vw; max-width: none; margin-left: -20vw; }
   .hv3-scrub { height: 240vh; }
+  /* On phones the whole scene would shrink to a strip, with its white sky
+     taking half of that. Scale it past the viewport (the wrapper clips the
+     overflow) and pull the sky up, so the campus reads at thumb size. */
+  .hv3-world { margin-top: 0; }
+  .hv3-world img, .hv3-world video { width: 210vw; margin-top: -20vw; }
 }
 
 /* ══ Reduced motion ══
