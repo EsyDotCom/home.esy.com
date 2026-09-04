@@ -328,11 +328,20 @@
 /* The world: TRUE full bleed. The campus plate is scaled past the viewport
    so its plinth runs off both sides — the page ends inside the world, not
    looking at a picture of one. The footer card floats over it. */
-.hv3-world { margin: -30px 0 0; display: flex; justify-content: center; overflow: visible; }
+.hv3-world {
+  margin: -30px 0 0;
+  display: flex; justify-content: center;
+  /* clip, not visible: the plate is wider than the viewport on purpose, and
+     without this it makes the whole PAGE scroll sideways — which is what threw
+     the footer card off centre (margin:auto centres inside the scroll width,
+     not the viewport). */
+  overflow: clip;
+}
 .hv3-world img, .hv3-world video {
-  width: max(132vw, 1900px);
+  width: max(128vw, 1700px);
   max-width: none;
   height: auto; display: block;
+  flex: none;
 }
 
 /* ══ Responsive ══ */

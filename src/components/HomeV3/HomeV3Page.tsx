@@ -305,7 +305,7 @@ export default function HomeV3Page() {
         <figure className="hv3-world">
           <SceneMedia
             name="world"
-            alt="The whole campus at once, quietly running: cards gliding the conveyor path, the stamp pressing, the dock loading"
+            alt="The whole campus quietly running: cards gliding the conveyor path between the stations, the seal pressing, the dock loaded"
             width={1536}
             height={799}
           />

@@ -19,6 +19,7 @@ export default function SceneMedia({
   width = 1024,
   height = 768,
   priority = false,
+  motion = true,
 }: {
   name: string;
   alt: string;
@@ -26,14 +27,18 @@ export default function SceneMedia({
   width?: number;
   height?: number;
   priority?: boolean;
+  /* Set false while a scene has no clip yet: a <video> whose sources 404
+     falls back to its raw attribute size and drags the layout with it. */
+  motion?: boolean;
 }) {
   const [motionOk, setMotionOk] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
+    if (!motion) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     setMotionOk(true);
-  }, []);
+  }, [motion]);
 
   useEffect(() => {
     const el = videoRef.current;
