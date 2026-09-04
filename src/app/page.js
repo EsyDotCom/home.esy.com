@@ -6,7 +6,7 @@ import HomeV3Page from "../components/HomeV3/HomeV3Page";
 //   "Automate research, verify citations, and produce publishable artifacts — all through agentic workflow templates. Structured, auditable output by default."
 
 const HOME_META_DESCRIPTION =
-  "Write one brief. Esy produces the campaign — Pinterest pins, Instagram and Facebook posts, and landing pages — and nothing ships until you approve it.";
+  "Put marketing production on autopilot with ESY. Create campaigns, creative, SEO, and content with AI, quality control, and human review built in.";
 
 export const metadata = {
   title: "Esy — Put Marketing Production on Autopilot",
