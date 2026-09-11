@@ -186,6 +186,22 @@ export const navigation: NavSection[] = [
         description: 'Channels for publishing artifacts of any kind from os.esy.com — separate from Publications.',
         icon: 'globe',
       },
+      {
+        title: 'The Library',
+        href: '/docs/concepts/library',
+        description:
+          'Standards, directions and axes: where creative intent is authored once, versioned, and pointed at. Editing publishes; promoting changes what runs.',
+        icon: 'book',
+        since: '2026-09-11',
+      },
+      {
+        title: 'Experiments & benchmarks',
+        href: '/docs/concepts/experiments',
+        description:
+          'How Esy decides with measurement: a frozen design, arms, a versioned case set, trials that are ordinary runs, scores in their own table, and a report you can hand to someone.',
+        icon: 'compass',
+        since: '2026-09-11',
+      },
     ],
   },
   {
