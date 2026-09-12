@@ -3,6 +3,12 @@ import { Eyebrow } from '@/components/docs/Primitives';
 
 const atlas = [
   {
+    href: '/docs/concepts/source-policies',
+    label: 'Concepts · Source policies',
+    title: 'Source policies',
+    desc: 'Which approved sources a subject may be researched from. A source describes one place once; a policy says which of them a subject may use, what it covers, and where it stops.',
+  },
+  {
     href: '/docs/concepts/workflow-schemas',
     label: 'Concepts · Workflow primitives',
     title: 'Workflow schemas',
