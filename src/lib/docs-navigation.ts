@@ -139,6 +139,13 @@ export const navigation: NavSection[] = [
         icon: 'image',
       },
       {
+        title: 'Source policies',
+        href: '/docs/concepts/source-policies',
+        description: 'Which approved sources a subject may be researched from, and what a run records about them.',
+        icon: 'book',
+        since: '2026-09-12',
+      },
+      {
         title: 'Sub-workflows',
         href: '/docs/concepts/sub-workflows',
         description: 'How a workflow composes another workflow as a child run, with linked artifacts and rolled-up cost.',

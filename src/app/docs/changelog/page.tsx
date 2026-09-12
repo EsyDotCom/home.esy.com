@@ -9,6 +9,18 @@ export const metadata = {
 
 const entries = [
   {
+    date: '2026-09-12',
+    tag: 'platform',
+    title: 'Source policies: a subject picks the sources it may be researched from',
+    items: [
+      'Two new Library resources. /v1/sources holds one approved source per item — its domain derived from the URL, the edition that makes a quote checkable, and what it is good for. /v1/source-policies holds one subject’s standing decision: which of those sources, what the subject covers, and where it stops.',
+      'They are peers, not a nesting: a policy names several sources and a source is named by several policies, so neither owns the other.',
+      'A policy’s slug IS its subject, so a run names researchSubject and preflight resolves it by name — no mapping table, and no way for two policies to claim one subject.',
+      'A subject with no policy, or a member that will not resolve, fails the run in preflight at zero spend. Researching the wrong sources quietly is worse than stopping.',
+      'Provenance keeps the policy version and every member version, and each retrieved passage is stamped with when it was read, so a citation read back months later resolves to what that run actually had.',
+    ],
+  },
+  {
     date: '2026-07-07',
     tag: 'platform',
     title: 'Specialty: the demand hierarchy — team produces → worker specialty → goals',

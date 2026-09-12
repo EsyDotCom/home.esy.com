@@ -73,7 +73,9 @@ export default function ArtifactsPage() {
         lead={
           <>
             Artifacts are the durable outputs produced by workflow runs — visual, video, research, or knowledge.
-            Every artifact carries provenance back to the workflow and run that produced it.
+            Every artifact carries provenance back to the workflow and run that produced it. An artifact that
+            prints a checkable fact also carries the passages it was drawn from and the{' '}
+            <a href="/docs/concepts/source-policies">source policy</a> that approved them.
           </>
         }
       />
